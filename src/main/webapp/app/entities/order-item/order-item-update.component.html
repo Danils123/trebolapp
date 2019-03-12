@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-order-item-heading">Create or edit a Order Item</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!orderItem.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="orderItem.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="orderItem.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_date">Date</label>
+                    <div class="d-flex">
+                        <input id="field_date" type="datetime-local" class="form-control" name="date" [(ngModel)]="date" placeholder="YYYY-MM-DD HH:mm"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_total">Total</label>
+                    <input type="number" class="form-control" name="total" id="field_total"
+                        [(ngModel)]="orderItem.total" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_discount">Discount</label>
+                    <input type="number" class="form-control" name="discount" id="field_discount"
+                        [(ngModel)]="orderItem.discount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_points">Points</label>
+                    <input type="number" class="form-control" name="points" id="field_points"
+                        [(ngModel)]="orderItem.points" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_seller">Seller</label>
+                    <select class="form-control" id="field_seller" name="seller" [(ngModel)]="orderItem.seller" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userExtraOption.id === orderItem.seller?.id ? orderItem.seller : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_commerce">Commerce</label>
+                    <select class="form-control" id="field_commerce" name="commerce" [(ngModel)]="orderItem.commerce" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="commerceOption.id === orderItem.commerce?.id ? orderItem.commerce : commerceOption" *ngFor="let commerceOption of commerce; trackBy: trackCommerceById">{{commerceOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_offer">Offer</label>
+                    <select class="form-control" id="field_offer" name="offer" [(ngModel)]="orderItem.offer" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="offerOption.id === orderItem.offer?.id ? orderItem.offer : offerOption" *ngFor="let offerOption of offers; trackBy: trackOfferById">{{offerOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

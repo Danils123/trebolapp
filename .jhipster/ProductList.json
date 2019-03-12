@@ -1,0 +1,34 @@
+{
+    "name": "ProductList",
+    "fields": [
+        {
+            "fieldName": "state",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "listSchedule",
+            "otherEntityRelationshipName": "productList",
+            "relationshipName": "listSchedule"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "productCommerce",
+            "otherEntityRelationshipName": "productList",
+            "relationshipName": "productCommerce",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190312191712",
+    "entityTableName": "product_list",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

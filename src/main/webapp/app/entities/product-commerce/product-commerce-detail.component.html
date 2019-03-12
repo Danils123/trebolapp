@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productCommerce">
+            <h2><span>Product Commerce</span> {{productCommerce.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Price</span></dt>
+                <dd>
+                    <span>{{productCommerce.price}}</span>
+                </dd>
+                <dt><span>Quantity</span></dt>
+                <dd>
+                    <span>{{productCommerce.quantity}}</span>
+                </dd>
+                <dt><span>Product</span></dt>
+                <dd>
+                    <div *ngIf="productCommerce.product">
+                        <a [routerLink]="['/product', productCommerce.product?.id, 'view']">{{productCommerce.product?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Product List</span></dt>
+                <dd>
+                    <span *ngFor="let productList of productCommerce.productLists; let last = last">
+                        <a [routerLink]="['/product-list', productList?.id, 'view' ]">{{productList.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product-commerce', productCommerce.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

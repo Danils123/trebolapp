@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ScheduleCommerce.
+    -->
+    <changeSet id="20190312191718-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="commerce_id"
+                                 baseTableName="schedule_commerce"
+                                 constraintName="fk_schedule_commerce_commerce_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="commerce"/>
+
+    </changeSet>
+</databaseChangeLog>

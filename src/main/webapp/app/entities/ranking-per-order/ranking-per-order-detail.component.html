@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="rankingPerOrder">
+            <h2><span>Ranking Per Order</span> {{rankingPerOrder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Comment From Buyer</span></dt>
+                <dd>
+                    <span>{{rankingPerOrder.commentFromBuyer}}</span>
+                </dd>
+                <dt><span>Comment From Seller</span></dt>
+                <dd>
+                    <span>{{rankingPerOrder.commentFromSeller}}</span>
+                </dd>
+                <dt><span>Ranking</span></dt>
+                <dd>
+                    <span>{{rankingPerOrder.ranking}}</span>
+                </dd>
+                <dt><span>Buyer</span></dt>
+                <dd>
+                    <span *ngFor="let buyer of rankingPerOrder.buyers; let last = last">
+                        <a [routerLink]="['/user-extra', buyer?.id, 'view' ]">{{buyer.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span>Seller</span></dt>
+                <dd>
+                    <span *ngFor="let seller of rankingPerOrder.sellers; let last = last">
+                        <a [routerLink]="['/user-extra', seller?.id, 'view' ]">{{seller.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/ranking-per-order', rankingPerOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

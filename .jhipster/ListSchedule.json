@@ -1,0 +1,34 @@
+{
+    "name": "ListSchedule",
+    "fields": [
+        {
+            "fieldName": "day",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "time",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "state",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "productList",
+            "otherEntityName": "productList",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190312191715",
+    "entityTableName": "list_schedule",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

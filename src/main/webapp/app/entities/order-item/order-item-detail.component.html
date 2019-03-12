@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="orderItem">
+            <h2><span>Order Item</span> {{orderItem.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{orderItem.description}}</span>
+                </dd>
+                <dt><span>Date</span></dt>
+                <dd>
+                    <span>{{orderItem.date}}</span>
+                </dd>
+                <dt><span>Total</span></dt>
+                <dd>
+                    <span>{{orderItem.total}}</span>
+                </dd>
+                <dt><span>Discount</span></dt>
+                <dd>
+                    <span>{{orderItem.discount}}</span>
+                </dd>
+                <dt><span>Points</span></dt>
+                <dd>
+                    <span>{{orderItem.points}}</span>
+                </dd>
+                <dt><span>Seller</span></dt>
+                <dd>
+                    <div *ngIf="orderItem.seller">
+                        <a [routerLink]="['/user-extra', orderItem.seller?.id, 'view']">{{orderItem.seller?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Commerce</span></dt>
+                <dd>
+                    <div *ngIf="orderItem.commerce">
+                        <a [routerLink]="['/commerce', orderItem.commerce?.id, 'view']">{{orderItem.commerce?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Offer</span></dt>
+                <dd>
+                    <div *ngIf="orderItem.offer">
+                        <a [routerLink]="['/offer', orderItem.offer?.id, 'view']">{{orderItem.offer?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/order-item', orderItem.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

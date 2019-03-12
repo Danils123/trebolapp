@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="userExtra">
+            <h2><span>User Extra</span> {{userExtra.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Second Last Name</span></dt>
+                <dd>
+                    <span>{{userExtra.secondLastName}}</span>
+                </dd>
+                <dt><span>Phone</span></dt>
+                <dd>
+                    <span>{{userExtra.phone}}</span>
+                </dd>
+                <dt><span>Cell Phone</span></dt>
+                <dd>
+                    <span>{{userExtra.cellPhone}}</span>
+                </dd>
+                <dt><span>Address</span></dt>
+                <dd>
+                    <span>{{userExtra.address}}</span>
+                </dd>
+                <dt><span>Ranking</span></dt>
+                <dd>
+                    <span>{{userExtra.ranking}}</span>
+                </dd>
+                <dt><span>Photograph</span></dt>
+                <dd>
+                    <span>{{userExtra.photograph}}</span>
+                </dd>
+                <dt><span>Notification</span></dt>
+                <dd>
+                    <span>{{userExtra.notification}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    {{userExtra.user?.id}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/user-extra', userExtra.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

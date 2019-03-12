@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="listSchedule">
+            <h2><span>List Schedule</span> {{listSchedule.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Day</span></dt>
+                <dd>
+                    <span>{{listSchedule.day}}</span>
+                </dd>
+                <dt><span>Time</span></dt>
+                <dd>
+                    <span>{{listSchedule.time}}</span>
+                </dd>
+                <dt><span>State</span></dt>
+                <dd>
+                    <span>{{listSchedule.state}}</span>
+                </dd>
+                <dt><span>Product List</span></dt>
+                <dd>
+                    <div *ngIf="listSchedule.productList">
+                        <a [routerLink]="['/product-list', listSchedule.productList?.id, 'view']">{{listSchedule.productList?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/list-schedule', listSchedule.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

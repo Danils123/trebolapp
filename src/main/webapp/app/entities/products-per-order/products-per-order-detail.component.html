@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productsPerOrder">
+            <h2><span>Products Per Order</span> {{productsPerOrder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Quantity</span></dt>
+                <dd>
+                    <span>{{productsPerOrder.quantity}}</span>
+                </dd>
+                <dt><span>Product Commerce</span></dt>
+                <dd>
+                    <div *ngIf="productsPerOrder.productCommerce">
+                        <a [routerLink]="['/product-commerce', productsPerOrder.productCommerce?.id, 'view']">{{productsPerOrder.productCommerce?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Order Item</span></dt>
+                <dd>
+                    <div *ngIf="productsPerOrder.orderItem">
+                        <a [routerLink]="['/order-item', productsPerOrder.orderItem?.id, 'view']">{{productsPerOrder.orderItem?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/products-per-order', productsPerOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

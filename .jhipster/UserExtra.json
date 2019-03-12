@@ -1,0 +1,74 @@
+{
+    "name": "UserExtra",
+    "fields": [
+        {
+            "fieldName": "secondLastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cellPhone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ranking",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "photograph",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "notification",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "userExtra",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "commerce",
+            "otherEntityRelationshipName": "userExtra",
+            "relationshipName": "commerces"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "rankingPerOrder",
+            "otherEntityRelationshipName": "buyer",
+            "relationshipName": "orderBuyer",
+            "otherEntityField": "id",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "rankingPerOrder",
+            "otherEntityRelationshipName": "seller",
+            "relationshipName": "orderSeller",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190312191720",
+    "entityTableName": "user_extra",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

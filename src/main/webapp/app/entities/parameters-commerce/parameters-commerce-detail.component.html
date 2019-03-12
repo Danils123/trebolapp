@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="parametersCommerce">
+            <h2><span>Parameters Commerce</span> {{parametersCommerce.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Key</span></dt>
+                <dd>
+                    <span>{{parametersCommerce.key}}</span>
+                </dd>
+                <dt><span>Value</span></dt>
+                <dd>
+                    <span>{{parametersCommerce.value}}</span>
+                </dd>
+                <dt><span>State</span></dt>
+                <dd>
+                    <span>{{parametersCommerce.state}}</span>
+                </dd>
+                <dt><span>Commerce</span></dt>
+                <dd>
+                    <div *ngIf="parametersCommerce.commerce">
+                        <a [routerLink]="['/commerce', parametersCommerce.commerce?.id, 'view']">{{parametersCommerce.commerce?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/parameters-commerce', parametersCommerce.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

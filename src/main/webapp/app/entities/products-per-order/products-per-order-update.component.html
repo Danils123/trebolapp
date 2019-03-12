@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-products-per-order-heading">Create or edit a Products Per Order</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!productsPerOrder.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="productsPerOrder.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                        [(ngModel)]="productsPerOrder.quantity" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productCommerce">Product Commerce</label>
+                    <select class="form-control" id="field_productCommerce" name="productCommerce" [(ngModel)]="productsPerOrder.productCommerce" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="productCommerceOption.id === productsPerOrder.productCommerce?.id ? productsPerOrder.productCommerce : productCommerceOption" *ngFor="let productCommerceOption of productcommerces; trackBy: trackProductCommerceById">{{productCommerceOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_orderItem">Order Item</label>
+                    <select class="form-control" id="field_orderItem" name="orderItem" [(ngModel)]="productsPerOrder.orderItem" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="orderItemOption.id === productsPerOrder.orderItem?.id ? productsPerOrder.orderItem : orderItemOption" *ngFor="let orderItemOption of orderitems; trackBy: trackOrderItemById">{{orderItemOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

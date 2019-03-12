@@ -1,0 +1,64 @@
+<div>
+    <h2 id="page-heading">
+        <span>Parameters Commerces</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-parameters-commerce" [routerLink]="['/parameters-commerce/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Parameters Commerce
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="parametersCommerces">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Key</span></th>
+            <th><span>Value</span></th>
+            <th><span>State</span></th>
+            <th><span>Commerce</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let parametersCommerce of parametersCommerces ;trackBy: trackId">
+                <td><a [routerLink]="['/parameters-commerce', parametersCommerce.id, 'view' ]">{{parametersCommerce.id}}</a></td>
+                <td>{{parametersCommerce.key}}</td>
+                <td>{{parametersCommerce.value}}</td>
+                <td>{{parametersCommerce.state}}</td>
+                <td>
+                    <div *ngIf="parametersCommerce.commerce">
+                        <a [routerLink]="['../commerce', parametersCommerce.commerce?.id, 'view' ]" >{{parametersCommerce.commerce?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/parameters-commerce', parametersCommerce.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/parameters-commerce', parametersCommerce.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'parameters-commerce', { outlets: { popup: parametersCommerce.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

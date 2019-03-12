@@ -1,0 +1,33 @@
+{
+    "name": "ProductsPerOrder",
+    "fields": [
+        {
+            "fieldName": "quantity",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "productCommerce",
+            "otherEntityRelationshipName": "productsPerOrder",
+            "relationshipName": "productCommerce",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "orderItem",
+            "otherEntityName": "orderItem",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190312191713",
+    "entityTableName": "products_per_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,34 @@
+{
+    "name": "Offer",
+    "fields": [
+        {
+            "fieldName": "discount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "orderItem",
+            "otherEntityRelationshipName": "offer",
+            "relationshipName": "orderItem"
+        }
+    ],
+    "changelogDate": "20190312191719",
+    "entityTableName": "offer",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
