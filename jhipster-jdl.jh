@@ -1,0 +1,192 @@
+entity RankingPerOrder{
+commentFromBuyer String,
+commentFromSeller String,
+ranking Integer
+}
+
+entity PointsCommerce{
+points Integer
+}
+
+entity Category{
+name String,
+description String
+}
+
+entity SubCategory{
+name String,
+description String
+}
+
+entity Product{
+barCode String,
+name String,
+brand String,
+description String,
+image String
+}
+
+entity ProductCommerce{
+price Float,
+quantity Integer
+}
+
+entity ListPurchase{
+name String,
+description String,
+state Boolean
+}
+
+entity ProductList{
+state Boolean
+}
+
+entity ProductsPerOrder{
+quantity Integer
+}
+
+entity OrderItem{
+description String,
+date Instant,
+total Float,
+discount Float,
+points Integer
+}
+
+entity ListSchedule{
+day String,
+time Instant,
+state Boolean
+}
+
+entity ParametersCommerce{
+key String,
+value String,
+state Boolean
+}
+
+entity Commerce{
+identification Long,
+name String,
+address String,
+latitude Float,
+longitud Float,
+email String,
+ranking Float,
+photograph String,
+state Boolean,
+phone String
+}
+
+entity ScheduleCommerce{
+day String,
+openTime Instant,
+closingtime Instant
+}
+
+entity Offer {
+	discount Float,
+	description String,
+	type Integer
+}
+
+entity PointsCommerce{
+points Integer
+}
+
+entity UserExtra {
+	secondLastName String
+    phone String
+    cellPhone String
+    address String
+    ranking String
+    photograph String
+    notification String
+}
+
+relationship OneToOne {
+    UserExtra{user} to User
+}
+
+relationship ManyToOne {
+      ListPurchase{seller} to UserExtra
+}
+
+relationship ManyToOne {
+      OrderItem{seller} to UserExtra
+}
+
+relationship OneToOne {
+      PointsCommerce{commerce} to Commerce
+}
+
+relationship OneToOne {
+	ListPurchase {productList} to ProductList
+}
+
+relationship OneToOne {
+	Commerce {offer} to Offer
+}
+
+
+relationship ManyToMany {
+	ProductCommerce {productList} to ProductList{productCommerce}
+}
+
+relationship OneToMany {
+ProductCommerce {Commerce} to Commerce
+}
+
+relationship OneToMany {
+Category{product} to Product
+}
+
+relationship OneToMany {
+SubCategory{product} to Product
+}
+
+relationship OneToMany {
+Product {productCommerce} to ProductCommerce
+}
+
+relationship OneToMany {
+Commerce {orderItem} to OrderItem
+}
+
+relationship OneToMany {
+Offer {orderItem} to OrderItem
+}
+
+relationship OneToMany {
+OrderItem {productsPerOrder} to ProductsPerOrder
+}
+
+relationship OneToMany {
+ProductList {listSchedule} to ListSchedule
+}
+
+relationship OneToMany {
+Commerce {parametersCommerce} to ParametersCommerce
+}
+
+relationship OneToMany {
+Commerce {scheduleCommerce} to ScheduleCommerce
+}
+
+relationship OneToMany {
+	UserExtra {commerces} to Commerce 
+}
+
+relationship ManyToOne {
+	Commerce {owner} to UserExtra
+}
+
+relationship ManyToOne {
+	ProductsPerOrder {productCommerce} to ProductCommerce
+}
+
+relationship ManyToMany {
+	RankingPerOrder {buyer} to UserExtra {orderBuyer},
+    RankingPerOrder {seller} to UserExtra {orderSeller}
+}
+

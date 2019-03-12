@@ -1,0 +1,44 @@
+{
+    "name": "RankingPerOrder",
+    "fields": [
+        {
+            "fieldName": "commentFromBuyer",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "commentFromSeller",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ranking",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "userExtra",
+            "otherEntityRelationshipName": "orderBuyer",
+            "relationshipName": "buyer",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "userExtra",
+            "otherEntityRelationshipName": "orderSeller",
+            "relationshipName": "seller",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190312191705",
+    "entityTableName": "ranking_per_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

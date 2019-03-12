@@ -1,0 +1,61 @@
+{
+    "name": "OrderItem",
+    "fields": [
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "total",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "discount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "points",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "productsPerOrder",
+            "otherEntityRelationshipName": "orderItem",
+            "relationshipName": "productsPerOrder"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "userExtra",
+            "otherEntityRelationshipName": "orderItem",
+            "relationshipName": "seller",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "commerce",
+            "otherEntityName": "commerce",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "offer",
+            "otherEntityName": "offer",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190312191714",
+    "entityTableName": "order_item",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

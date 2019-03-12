@@ -1,0 +1,43 @@
+{
+    "name": "ListPurchase",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "state",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "productList",
+            "otherEntityRelationshipName": "listPurchase",
+            "relationshipName": "productList",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "userExtra",
+            "otherEntityRelationshipName": "listPurchase",
+            "relationshipName": "seller",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190312191711",
+    "entityTableName": "list_purchase",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

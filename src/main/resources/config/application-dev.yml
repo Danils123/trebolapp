@@ -37,8 +37,8 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/Trebol
-        username: Trebol
-        password:
+        username: postgres
+        password: root
         hikari:
             poolName: Hikari
             auto-commit: false

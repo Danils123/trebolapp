@@ -1,0 +1,34 @@
+{
+    "name": "ScheduleCommerce",
+    "fields": [
+        {
+            "fieldName": "day",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "openTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "closingtime",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "commerce",
+            "otherEntityName": "commerce",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190312191718",
+    "entityTableName": "schedule_commerce",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

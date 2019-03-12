@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="listPurchase">
+            <h2><span>List Purchase</span> {{listPurchase.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{listPurchase.name}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{listPurchase.description}}</span>
+                </dd>
+                <dt><span>State</span></dt>
+                <dd>
+                    <span>{{listPurchase.state}}</span>
+                </dd>
+                <dt><span>Product List</span></dt>
+                <dd>
+                    <div *ngIf="listPurchase.productList">
+                        <a [routerLink]="['/product-list', listPurchase.productList?.id, 'view']">{{listPurchase.productList?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Seller</span></dt>
+                <dd>
+                    <div *ngIf="listPurchase.seller">
+                        <a [routerLink]="['/user-extra', listPurchase.seller?.id, 'view']">{{listPurchase.seller?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/list-purchase', listPurchase.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity RankingPerOrder.
+    -->
+    <changeSet id="20190312191705-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="ranking_per_order_id"
+                                 baseTableName="ranking_per_order_buyer"
+                                 constraintName="fk_ranking_per_order_buyer_ranking_per_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ranking_per_order"/>
+        <addForeignKeyConstraint baseColumnNames="buyer_id"
+                                 baseTableName="ranking_per_order_buyer"
+                                 constraintName="fk_ranking_per_order_buyer_buyer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_extra"/>
+        
+        <addForeignKeyConstraint baseColumnNames="ranking_per_order_id"
+                                 baseTableName="ranking_per_order_seller"
+                                 constraintName="fk_ranking_per_order_seller_ranking_per_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ranking_per_order"/>
+        <addForeignKeyConstraint baseColumnNames="seller_id"
+                                 baseTableName="ranking_per_order_seller"
+                                 constraintName="fk_ranking_per_order_seller_seller_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_extra"/>
+        
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ProductsPerOrder.
+    -->
+    <changeSet id="20190312191713-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="product_commerce_id"
+                                 baseTableName="products_per_order"
+                                 constraintName="fk_products_per_order_product_commerce_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_commerce"/>
+
+        <addForeignKeyConstraint baseColumnNames="order_item_id"
+                                 baseTableName="products_per_order"
+                                 constraintName="fk_products_per_order_order_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_item"/>
+
+    </changeSet>
+</databaseChangeLog>

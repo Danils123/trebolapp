@@ -1,0 +1,101 @@
+{
+    "name": "Commerce",
+    "fields": [
+        {
+            "fieldName": "identification",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "latitude",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "longitud",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ranking",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "photograph",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "state",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "productCommerce",
+            "otherEntityName": "productCommerce",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "offer",
+            "otherEntityRelationshipName": "commerce",
+            "relationshipName": "offer",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "orderItem",
+            "otherEntityRelationshipName": "commerce",
+            "relationshipName": "orderItem"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "parametersCommerce",
+            "otherEntityRelationshipName": "commerce",
+            "relationshipName": "parametersCommerce"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "scheduleCommerce",
+            "otherEntityRelationshipName": "commerce",
+            "relationshipName": "scheduleCommerce"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "userExtra",
+            "otherEntityRelationshipName": "commerce",
+            "relationshipName": "owner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "userExtra",
+            "otherEntityName": "userExtra",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190312191717",
+    "entityTableName": "commerce",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

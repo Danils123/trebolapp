@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ListPurchase.
+    -->
+    <changeSet id="20190312191711-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="product_list_id"
+                                 baseTableName="list_purchase"
+                                 constraintName="fk_list_purchase_product_list_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_list"/>
+
+        <addForeignKeyConstraint baseColumnNames="seller_id"
+                                 baseTableName="list_purchase"
+                                 constraintName="fk_list_purchase_seller_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_extra"/>
+
+    </changeSet>
+</databaseChangeLog>

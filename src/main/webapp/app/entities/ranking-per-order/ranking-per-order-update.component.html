@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-ranking-per-order-heading">Create or edit a Ranking Per Order</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!rankingPerOrder.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="rankingPerOrder.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_commentFromBuyer">Comment From Buyer</label>
+                    <input type="text" class="form-control" name="commentFromBuyer" id="field_commentFromBuyer"
+                        [(ngModel)]="rankingPerOrder.commentFromBuyer" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_commentFromSeller">Comment From Seller</label>
+                    <input type="text" class="form-control" name="commentFromSeller" id="field_commentFromSeller"
+                        [(ngModel)]="rankingPerOrder.commentFromSeller" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ranking">Ranking</label>
+                    <input type="number" class="form-control" name="ranking" id="field_ranking"
+                        [(ngModel)]="rankingPerOrder.ranking" />
+                </div>
+
+                <div class="form-group">
+                    <label for="field_buyer">Buyer</label>
+                    <select class="form-control" id="field_buyer" multiple name="buyer" [(ngModel)]="rankingPerOrder.buyers">
+                        <option [ngValue]="getSelected(rankingPerOrder.buyers, userExtraOption)" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_seller">Seller</label>
+                    <select class="form-control" id="field_seller" multiple name="seller" [(ngModel)]="rankingPerOrder.sellers">
+                        <option [ngValue]="getSelected(rankingPerOrder.sellers, userExtraOption)" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
