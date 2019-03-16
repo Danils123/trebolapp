@@ -7,4 +7,3 @@ export * from './navbar/navbar.route';
 export * from './profiles/page-ribbon.component';
 export * from './profiles/profile.service';
 export * from './profiles/profile-info.model';
-export * from './sidebar/sidebar.component';

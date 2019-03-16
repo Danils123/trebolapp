@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { ISubCategory } from 'app/shared/model/sub-category.model';
 import { SubCategoryService } from './sub-category.service';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-sub-category-update',
@@ -14,7 +15,11 @@ export class SubCategoryUpdateComponent implements OnInit {
     subCategory: ISubCategory;
     isSaving: boolean;
 
-    constructor(protected subCategoryService: SubCategoryService, protected activatedRoute: ActivatedRoute) {}
+    constructor(
+        protected subCategoryService: SubCategoryService,
+        protected activatedRoute: ActivatedRoute,
+        private toastr: ToastrService
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -42,6 +47,17 @@ export class SubCategoryUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'SubCategoria agregada satisfactoriamente'
+        });
         this.previousState();
     }
 
