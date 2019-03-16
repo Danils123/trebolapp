@@ -8,46 +8,34 @@
             </span>
         </button>
     </h2>
-    <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="authorities">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    Roles
+                </div>
+                <div class="card-body">
+
         <table class="table table-striped">
             <thead>
-            <tr>
-            <th><span>Name</span></th>
+            <tr class = "row">
+            <th class="col-md-3"><span>Name</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let authority of authorities ;trackBy: trackName">
-                <td><a [routerLink]="['/authority', authority.name, 'view' ]">{{authority.name}}</a></td>
-                <td>{{authority.name}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/authority', authority.name, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/authority', authority.name, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'authority', { outlets: { popup: authority.name + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
+                <td class="col-md-3"><a [routerLink]="['/authority', authority.name, 'view' ]">{{authority.name}}</a></td>
+                <td class="col-md-3">{{authority.name}}</td>
+                <td class="col-md-3 text-right">
+
                 </td>
             </tr>
             </tbody>
         </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

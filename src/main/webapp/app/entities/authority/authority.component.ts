@@ -6,6 +6,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { AccountService } from 'app/core';
 import { AuthorityService } from 'app/entities/authority/authority.service';
 import { IAuthority } from 'app/shared/model/authority.model';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-authority',
@@ -15,6 +16,16 @@ export class AuthorityComponent implements OnInit, OnDestroy {
     authorities: IAuthority[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    _filterQuery = '';
+    filteredAuthorities: IAuthority[];
+
+    private swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success ml-3',
+            cancelButton: 'btn btn-danger ml-3'
+        },
+        buttonsStyling: false
+    });
 
     constructor(
         protected authorityService: AuthorityService,
@@ -33,6 +44,7 @@ export class AuthorityComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IAuthority[]) => {
                     this.authorities = res;
+                    this.filteredAuthorities = res;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -60,5 +72,46 @@ export class AuthorityComponent implements OnInit, OnDestroy {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    deleteItem(name: string) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea eliminar la categoría?',
+                text: 'Si continúa, no podrá revertir el cambio',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, eliminar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmDelete(name);
+                }
+            });
+    }
+    confirmDelete(name: string) {
+        this.authorityService.delete(name).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'authorityListModification',
+                content: 'Deleted an authority'
+            });
+            this.swalWithBootstrapButtons.fire('Eliminada!', 'El Rol ha sido eliminado.', 'success');
+        });
+    }
+
+    get filterQuery(): string {
+        return this._filterQuery;
+    }
+
+    set filterQuery(value: string) {
+        this._filterQuery = value;
+        this.filteredAuthorities = this.filterQuery ? this.doFilter(this.filterQuery) : this.authorities;
+    }
+
+    doFilter(filterBy: string): IAuthority[] {
+        filterBy = filterBy.toLocaleLowerCase();
+        return this.authorities.filter((authority: IAuthority) => authority.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
 }
