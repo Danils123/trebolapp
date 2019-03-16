@@ -16,6 +16,9 @@ import { TrebolAppRoutingModule } from './app-routing.module';
 import { TrebolHomeModule } from './home/home.module';
 import { TrebolAccountModule } from './account/account.module';
 import { TrebolEntityModule } from './entities/entity.module';
+
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
@@ -37,7 +40,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         TrebolEntityModule,
         TrebolAppRoutingModule
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
