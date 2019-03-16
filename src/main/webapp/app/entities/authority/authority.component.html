@@ -1,12 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span>Authorities</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-authority" [routerLink]="['/authority/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Authority
-            </span>
-        </button>
+        <span>Roles</span>
     </h2>
     <br/>
     <div class="table-responsive" *ngIf="authorities">
@@ -27,7 +21,6 @@
             <tbody>
             <tr *ngFor="let authority of authorities ;trackBy: trackName">
                 <td class="col-md-3"><a [routerLink]="['/authority', authority.name, 'view' ]">{{authority.name}}</a></td>
-                <td class="col-md-3">{{authority.name}}</td>
                 <td class="col-md-3 text-right">
 
                 </td>
