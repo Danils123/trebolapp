@@ -1,56 +1,66 @@
 <div>
     <h2 id="page-heading">
-        <span>Sub Categories</span>
+        <span>Subcategorías</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-sub-category" [routerLink]="['/sub-category/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new Sub Category
+            Crear nueva Subcategoría
             </span>
         </button>
     </h2>
-    <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="subCategories">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Description</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let subCategory of subCategories ;trackBy: trackId">
-                <td><a [routerLink]="['/sub-category', subCategory.id, 'view' ]">{{subCategory.id}}</a></td>
-                <td>{{subCategory.name}}</td>
-                <td>{{subCategory.description}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/sub-category', subCategory.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/sub-category', subCategory.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'sub-category', { outlets: { popup: subCategory.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    SubCategorías
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 offset-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><fa-icon [icon]="'search'"></fa-icon></span>
+                                </div>
+                                <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por nombre" />
+                            </div>
+                        </div>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <table class="table table-striped table-hover table-responsive-lg">
+                        <thead>
+                            <tr class="row">
+                                <th class="col-md-3"><span>ID</span></th>
+                                <th class="col-md-3"><span>Nombre</span></th>
+                                <th class="col-md-3"><span>Descripción</span></th>
+                                <th class="col-md-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let subCategory of filteredsubCategories ;trackBy: trackId" class="row">
+                                <td class="col-md-3"><a [routerLink]="['/sub-category', subCategory.id, 'view' ]">{{subCategory.id}}</a></td>
+                                <td class="col-md-3">{{subCategory.name}}</td>
+                                <td class="col-md-3">{{subCategory.description}}</td>
+                                <td class="col-md-3">
+                                    <div class="btn-group flex-btn-group-container text-center">
+                                        <button type="submit" [routerLink]="['/sub-category', subCategory.id, 'view' ]" class="btn-info tableButtons ml-2 btn-sm">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                        <span class="d-none d-md-inline">Ver</span>
+                                    </button>
+                                        <button type="submit" [routerLink]="['/sub-category', subCategory.id, 'edit']" class="btn-primary tableButtons ml-2 btn-sm">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                        <span class="d-none d-md-inline">Editar</span>
+                                    </button>
+                                        <button type="submit" class="btn-danger tableButtons ml-2 btn-sm" (click)='deleteItem(subCategory.id)'>
+                                        <fa-icon [icon]="'times'"></fa-icon>
+                                        <span class="d-none d-md-inline">Eliminar</span>
+                                    </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

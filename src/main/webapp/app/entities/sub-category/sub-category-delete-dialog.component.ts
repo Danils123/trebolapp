@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-
+import { default as swal } from 'sweetalert2';
 import { ISubCategory } from 'app/shared/model/sub-category.model';
 import { SubCategoryService } from './sub-category.service';
 
@@ -17,7 +17,8 @@ export class SubCategoryDeleteDialogComponent {
     constructor(
         protected subCategoryService: SubCategoryService,
         public activeModal: NgbActiveModal,
-        protected eventManager: JhiEventManager
+        protected eventManager: JhiEventManager,
+        private toastr: ToastrService
     ) {}
 
     clear() {
@@ -30,6 +31,7 @@ export class SubCategoryDeleteDialogComponent {
                 name: 'subCategoryListModification',
                 content: 'Deleted an subCategory'
             });
+            this.toastr.warning('SubCategoria borrada correctamente!');
             this.activeModal.dismiss(true);
         });
     }

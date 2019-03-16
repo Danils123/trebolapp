@@ -10,6 +10,7 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { ISubCategory } from 'app/shared/model/sub-category.model';
 import { SubCategoryService } from 'app/entities/sub-category';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-product-update',
@@ -71,6 +72,17 @@ export class ProductUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Producto agregado satisfactoriamente'
+        });
         this.previousState();
     }
 
