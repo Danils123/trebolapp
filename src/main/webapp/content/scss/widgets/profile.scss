@@ -1,5 +1,5 @@
 /*******************/
-/*social-profile-first*/ 
+/*social-profile-first*/
 /*******************/
 
 .social-profile-first {
@@ -21,8 +21,8 @@
     position: relative;
     padding-left: 40px;
     margin-right: 10px;
-    border-left:1px solid $border;
-    margin-left:30px;
+    border-left: 1px solid $border;
+    margin-left: 30px;
     .sl-left {
         float: left;
         margin-left: -60px;
@@ -48,7 +48,7 @@
     padding-bottom: 1px;
     position: relative;
     &:before {
-        content: " ";
+        content: ' ';
         display: table;
     }
     &:after {
@@ -70,7 +70,7 @@
 
 .profiletimeline .time-item-item {
     &:after {
-        content: " ";
+        content: ' ';
         display: table;
     }
 }
@@ -84,20 +84,20 @@
 }
 
 /*little-profile*/
-.little-profile{
-    .pro-img{
+.little-profile {
+    .pro-img {
         margin-bottom: 20px;
-        img{
-            width:128px;
+        img {
+            width: 128px;
             height: 128px;
-            box-shadow: 0 0 15px rgba(0, 0, 0,0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             border-radius: 100%;
         }
     }
-    .soc-pro a{
-        color:$muted;
-        &:hover{
-            color:$dark;
+    .soc-pro a {
+        color: $muted;
+        &:hover {
+            color: $dark;
         }
     }
 }

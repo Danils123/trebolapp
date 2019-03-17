@@ -5,7 +5,6 @@ Email: niravjoshi87@gmail.com
 File: scss
 */
 
-
 /**
  * Table Of Content
  *
@@ -27,7 +26,6 @@ Global Styles
 
 * {
     outline: none;
-    
 }
 
 body {
@@ -37,7 +35,6 @@ body {
     overflow-x: hidden;
     color: $bodytext;
     font-weight: 300;
-    
 }
 
 html {
@@ -45,7 +42,7 @@ html {
     min-height: 100%;
     background: $white;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale; 
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a:hover,
@@ -76,7 +73,6 @@ html body .mdi-set {
     line-height: initial;
 }
 
-
 /*******************
 Headings
 *******************/
@@ -94,22 +90,22 @@ h6 {
 
 h1 {
     line-height: 40px;
-    font-size: 36px
+    font-size: 36px;
 }
 
 h2 {
     line-height: 36px;
-    font-size: 24px
+    font-size: 24px;
 }
 
 h3 {
     line-height: 30px;
-    font-size: 21px
+    font-size: 21px;
 }
 
 h4 {
     line-height: 22px;
-    font-size: 18px
+    font-size: 18px;
 }
 
 h5 {
@@ -153,7 +149,6 @@ html body {
     }
 }
 
-
 /*******************
 Blockquote
 *******************/
@@ -171,7 +166,6 @@ html body blockquote {
 ol li {
     margin: 5px 0;
 }
-
 
 /*******************
 Paddings
@@ -245,7 +239,6 @@ html body {
         padding-bottom: 40px;
     }
 }
-
 
 /*******************
 Margin
@@ -335,7 +328,6 @@ html body {
     }
 }
 
-
 /*******************
 vertical alignment
 *******************/
@@ -351,7 +343,6 @@ html body {
         vertical-align: bottom;
     }
 }
-
 
 /*******************
 Opacity
@@ -398,14 +389,13 @@ html body {
     }
 }
 
-
 /*******************
 Border
 *******************/
 
 html body {
     .b-0 {
-        border: none!important;
+        border: none !important;
     }
     .b-r {
         border-right: 1px solid $border;
@@ -420,10 +410,9 @@ html body {
         border-top: 1px solid $border;
     }
     .b-all {
-        border: 1px solid $border!important;
+        border: 1px solid $border !important;
     }
 }
-
 
 /*******************
 Thumb size
@@ -456,37 +445,36 @@ Thumb size
     border-radius: $radius;
 }
 
-
 /*******************
 Text Colors
 *******************/
 
 .text-white {
-    color: $white!important;
+    color: $white !important;
 }
 
 .text-danger {
-    color: $danger!important;
+    color: $danger !important;
 }
 
 .text-muted {
-    color: $muted!important;
+    color: $muted !important;
 }
 
 .text-warning {
-    color: $warning!important;
+    color: $warning !important;
 }
 
 .text-success {
-    color: $success!important;
+    color: $success !important;
 }
 
 .text-info {
-    color: $info!important;
+    color: $info !important;
 }
 
 .text-inverse {
-    color: $inverse!important;
+    color: $inverse !important;
 }
 
 html body {
@@ -497,7 +485,7 @@ html body {
         color: $purple;
     }
     .text-primary {
-        color: $primary!important;
+        color: $primary !important;
     }
     .text-megna {
         color: $megna;
@@ -509,7 +497,6 @@ html body {
         color: $themecolor;
     }
 }
-
 
 /*******************
 Background Colors
@@ -580,7 +567,6 @@ html body {
     }
 }
 
-
 /*******************
 Rounds
 *******************/
@@ -626,7 +612,6 @@ Rounds
 .round.round-primary {
     background: $primary;
 }
-
 
 /*******************
 Labels
@@ -728,7 +713,6 @@ Labels
     color: $inverse;
 }
 
-
 /*******************
  Badge
 ******************/
@@ -763,7 +747,7 @@ Labels
 
 .badge-warning {
     background-color: $warning;
-    color:$white;
+    color: $white;
 }
 
 .badge-danger {
@@ -781,7 +765,6 @@ Labels
 .badge-inverse {
     background-color: $inverse;
 }
-
 
 /*******************
 List-style-none
@@ -804,7 +787,6 @@ ul.list-style-none {
     }
 }
 
-
 /*******************
 dropdown-item
 ******************/
@@ -813,7 +795,6 @@ dropdown-item
     padding: 8px 1rem;
     color: $bodytext;
 }
-
 
 /*******************
 Layouts
@@ -848,7 +829,6 @@ Layouts
     z-index: 9999;
     overflow: auto;
 }
-
 
 /*******************/
 /*single column*/

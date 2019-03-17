@@ -5,63 +5,59 @@ Email: niravjoshi87@gmail.com
 File: scss
 */
 
-
 /*============================================================== 
  For Laptop & above all (1650px) 
  ============================================================== */
 
-@media(min-width:1650px) {
+@media (min-width: 1650px) {
     .widget-app-columns {
         column-count: 3;
     }
     .campaign {
         height: 365px !important;
     }
-    .website-visitor{
-        height:445px; 
+    .website-visitor {
+        height: 445px;
     }
-    .auto-height{
-        max-height:315px;   
+    .auto-height {
+        max-height: 315px;
     }
 }
-@media(max-width:1600px) {
-    .website-visitor{
-        height:333px; 
+@media (max-width: 1600px) {
+    .website-visitor {
+        height: 333px;
     }
-    .auto-height{
-        min-height:240px;   
+    .auto-height {
+        min-height: 240px;
     }
 }
 /*============================================================== 
  For Laptop & above all (1370px) 
  ============================================================== */
 
-@media(max-width:1370px) {
+@media (max-width: 1370px) {
     .widget-app-columns {
         column-count: 2;
     }
-    .website-visitor{
-        height:353px; 
+    .website-visitor {
+        height: 353px;
     }
-    .auto-height{
-        min-height:186px;   
+    .auto-height {
+        min-height: 186px;
     }
 }
-
-
 
 /*-- ============================================================== 
  Small Desktop & above all (1024px) 
  ============================================================== */
 
-@media(min-width:1024px) {
+@media (min-width: 1024px) {
     .page-wrapper {
         margin-left: 240px;
     }
-    
 }
 
-@media(max-width:1023px) {
+@media (max-width: 1023px) {
     .page-wrapper {
         margin-left: 70px;
         transition: 0.2s ease-in;
@@ -76,7 +72,7 @@ File: scss
     .hdr-nav-bar {
         .navbar {
             .navbar-nav {
-                >li {
+                > li {
                     a {
                         padding: 12px 15px;
                         border-bottom: 0px solid transparent;
@@ -94,21 +90,19 @@ File: scss
             }
         }
     }
-    .d-flex{
-        display:block!important; 
-        &.no-block{
-            display:flex!important;
+    .d-flex {
+        display: block !important;
+        &.no-block {
+            display: flex !important;
         }
     }
 }
-
-
 
 /*-- ============================================================== 
  Ipad & above all(768px) 
  ============================================================== */
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     .navbar-header {
         width: 240px;
         flex-shrink: 0;
@@ -138,18 +132,16 @@ File: scss
         }
     }
     .flex-wrap {
-        flex-wrap: nowrap!important;
-        -webkit-flex-wrap: nowrap!important;
+        flex-wrap: nowrap !important;
+        -webkit-flex-wrap: nowrap !important;
     }
 }
-
-
 
 /*-- ============================================================== 
  Phone and below ipad(767px) 
  ============================================================== */
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .container-fluid {
         padding: 25px 15px 25px 15px;
     }
@@ -169,16 +161,16 @@ File: scss
             }
             .navbar-nav {
                 flex-direction: row;
-                >.nav-item.show {
+                > .nav-item.show {
                     position: static;
                     .dropdown-menu {
                         width: 100%;
                         margin-top: 0px;
                     }
                 }
-                >.nav-item>.nav-link {
-                    padding-left: .50rem;
-                    padding-right: .50rem;
+                > .nav-item > .nav-link {
+                    padding-left: 0.5rem;
+                    padding-right: 0.5rem;
                 }
                 .dropdown-menu {
                     position: absolute;
@@ -264,24 +256,24 @@ File: scss
     ul.timeline:before {
         left: 40px;
     }
-    ul.timeline>li>.timeline-panel {
+    ul.timeline > li > .timeline-panel {
         width: calc(100% - 90px);
     }
-    ul.timeline>li>.timeline-badge {
+    ul.timeline > li > .timeline-badge {
         top: 16px;
         left: 15px;
         margin-left: 0;
     }
-    ul.timeline>li>.timeline-panel {
+    ul.timeline > li > .timeline-panel {
         float: right;
     }
-    ul.timeline>li>.timeline-panel:before {
+    ul.timeline > li > .timeline-panel:before {
         right: auto;
         left: -15px;
         border-right-width: 15px;
         border-left-width: 0;
     }
-    ul.timeline>li>.timeline-panel:after {
+    ul.timeline > li > .timeline-panel:after {
         right: auto;
         left: -14px;
         border-right-width: 14px;
@@ -297,16 +289,18 @@ File: scss
         margin-left: 0px;
     }
     .flex-wrap {
-        flex-wrap: wrap!important;
-        -webkit-flex-wrap: wrap!important;
+        flex-wrap: wrap !important;
+        -webkit-flex-wrap: wrap !important;
     }
     .chat-list li .chat-content {
         width: calc(100% - 80px);
     }
-    
+
     /*Calendar*/
-    .fc-toolbar .fc-left, .fc-toolbar .fc-right, .fc-toolbar .fc-center{
-        float:none;
+    .fc-toolbar .fc-left,
+    .fc-toolbar .fc-right,
+    .fc-toolbar .fc-center {
+        float: none;
         display: block;
         text-align: center;
         margin-top: 10px;

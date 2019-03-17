@@ -9,11 +9,11 @@ File: scss
 $themecolor: #1e88e5;
 $themecolor-dark: #028ee1;
 $topbar: #1e88e5;
-$sidebar:#242a33;
+$sidebar: #242a33;
 $sidebar-text: #687384;
 $sidebar-icons: #424a56;
 $sidebar-dark: #1c2128;
-$sidebar-alt:#1c2128;
+$sidebar-alt: #1c2128;
 $themecolor-alt: #26c6da;
 $topbar-alt: #272c33;
 /*******************
@@ -31,15 +31,15 @@ $topbar-alt: #272c33;
     }
     .navbar-nav .nav-item > {
         a.nav-link {
-            color: rgba(255, 255, 255, 0.8); 
+            color: rgba(255, 255, 255, 0.8);
             &:hover,
             &:focus {
-                color:$white!important;
+                color: $white !important;
             }
         }
     }
-    .top-navbar .navbar-nav>.nav-item>span{
-        color:$white;
+    .top-navbar .navbar-nav > .nav-item > span {
+        color: $white;
     }
     .navbar-header {
         background: $topbar-alt;
@@ -60,7 +60,6 @@ $topbar-alt: #272c33;
     }
 }
 
-
 /*******************
 /*General Elements
 *******************/
@@ -72,7 +71,7 @@ a {
 a.link {
     &:hover,
     &:focus {
-        color: $themecolor!important;
+        color: $themecolor !important;
     }
 }
 
@@ -106,7 +105,7 @@ a.link {
 }
 
 .text-themecolor {
-    color: $themecolor!important;
+    color: $themecolor !important;
 }
 
 .profile-tab,
@@ -123,7 +122,6 @@ a.link {
         }
     }
 }
-
 
 /*******************
 /*Buttons
@@ -145,7 +143,6 @@ a.link {
     }
 }
 
-
 /*******************
 /*sidebar navigation
 *******************/
@@ -160,7 +157,7 @@ a.link {
 }
 
 @media (min-width: 768px) {
-    .mini-sidebar .sidebar-nav #sidebarnav>li>ul {
+    .mini-sidebar .sidebar-nav #sidebarnav > li > ul {
         background: $sidebar-dark;
     }
 }
@@ -170,7 +167,7 @@ a.link {
 }
 
 .user-profile .profile-text a {
-    color: $sidebar-text!important;
+    color: $sidebar-text !important;
 }
 
 .card-no-border .sidebar-footer {
@@ -181,7 +178,7 @@ a.link {
     background: $themecolor;
 }
 
-.sidebar-nav>ul>li.active>a {
+.sidebar-nav > ul > li.active > a {
     color: $white;
     border-color: $themecolor;
     i {
@@ -202,9 +199,8 @@ a.link {
 .sidebar-nav ul li.nav-small-cap {
     color: $sidebar-text;
 }
-@media (min-width: 768px){
+@media (min-width: 768px) {
     .mini-sidebar .sidebar-nav #sidebarnav > li:hover > a {
-        
         background: $sidebar-alt;
     }
-} 
+}

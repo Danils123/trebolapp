@@ -5,7 +5,6 @@ Email: niravjoshi87@gmail.com
 File: scss
 */
 
-
 /*******************
 Main sidebar
 ******************/
@@ -25,7 +24,6 @@ Main sidebar
     position: fixed;
 }
 
-
 /*******************
 use profile section
 ******************/
@@ -38,11 +36,10 @@ use profile section
             margin-right: 10px;
         }
     }
-    >ul {
+    > ul {
         padding-left: 40px;
     }
 }
-
 
 /*******************
 sidebar navigation
@@ -168,15 +165,15 @@ sidebar navigation
         -o-transform-origin: top;
         transform-origin: top;
         top: 47%;
-        -webkit-transition: all .3s ease-out;
-        -o-transition: all .3s ease-out;
-        transition: all .3s ease-out;
+        -webkit-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
     }
 }
 
 .sidebar-nav .active > .has-arrow::after,
 .sidebar-nav li > .has-arrow.active::after,
-.sidebar-nav .has-arrow[aria-expanded="true"]::after {
+.sidebar-nav .has-arrow[aria-expanded='true']::after {
     -webkit-transform: rotate(-135deg) translate(0, -50%);
     -ms-transform: rotate(-135deg) translate(0, -50%);
     -o-transform: rotate(-135deg) translate(0, -50%);
@@ -185,12 +182,11 @@ sidebar navigation
     transform: rotate(-135deg) translate(0, -50%);
 }
 
-
 /****************
 When click on sidebar toggler and also for tablet
 *****************/
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     .mini-sidebar .sidebar-nav #sidebarnav li {
         position: relative;
     }
@@ -229,7 +225,7 @@ When click on sidebar toggler and also for tablet
         .left-sidebar {
             width: 70px;
         }
-        .sidebar-nav #sidebarnav .user-profile >a {
+        .sidebar-nav #sidebarnav .user-profile > a {
             padding: 12px 20px;
         }
         .scroll-sidebar {
@@ -240,7 +236,7 @@ When click on sidebar toggler and also for tablet
         .nav-small-cap,
         .sidebar-footer,
         .user-profile .profile-text,
-        >.label {
+        > .label {
             display: none;
         }
         .nav-devider {
@@ -266,7 +262,7 @@ When click on sidebar toggler and also for tablet
     }
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .mini-sidebar {
         .left-sidebar {
             position: fixed;

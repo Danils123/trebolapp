@@ -7,9 +7,6 @@ File: scss
 
 @import '../variable';
 
-
-
-
 /*******************
 Table Cell
 *******************/
@@ -60,9 +57,6 @@ Table Cell
         vertical-align: middle;
     }
 }
-
-
-
 
 /*******************
 Table-Layout
@@ -304,7 +298,7 @@ Table-Layout
 }
 
 .full-color-table.full-dark-table {
-    background-color: rgba(43, 43, 43, .8);
+    background-color: rgba(43, 43, 43, 0.8);
     thead th {
         background-color: $dark;
         border: 0;
@@ -353,7 +347,7 @@ Table-Layout
 }
 
 .full-color-table.full-muted-table {
-    background-color: rgba(152, 166, 173, .2);
+    background-color: rgba(152, 166, 173, 0.2);
     thead th {
         background-color: $muted;
         border: 0;
@@ -368,15 +362,12 @@ Table-Layout
     }
 }
 
-
-
-
 /*******************
 Table-Data Table
 ******************/
 
 .dataTables_wrapper {
-    padding-top: 10px
+    padding-top: 10px;
 }
 
 .dt-buttons {
@@ -455,31 +446,31 @@ table.dataTable thead .sorting_desc_disabled {
 }
 
 table.dataTable thead .sorting_asc:after {
-    content: "\f0de";
+    content: '\f0de';
     margin-left: 10px;
     font-family: fontawesome;
     cursor: pointer;
 }
 
 table.dataTable thead .sorting_desc:after {
-    content: "\f0dd";
+    content: '\f0dd';
     margin-left: 10px;
     font-family: fontawesome;
     cursor: pointer;
 }
 
 table.dataTable thead .sorting:after {
-    content: "\f0dc";
+    content: '\f0dc';
     margin-left: 10px;
     font-family: fontawesome !important;
     cursor: pointer;
-    color: rgba(50, 50, 50, .5);
+    color: rgba(50, 50, 50, 0.5);
 }
 
 .dataTables_wrapper .dataTables_paginate {
     float: right;
     text-align: right;
-    padding-top: 0.25em
+    padding-top: 0.25em;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -509,7 +500,7 @@ table.dataTable thead .sorting:after {
     color: $bodytext;
     border: 1px solid #ddd;
     background: transparent;
-    box-shadow: none
+    box-shadow: none;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -524,23 +515,16 @@ table.dataTable thead .sorting:after {
 }
 
 .dataTables_wrapper .dataTables_paginate .ellipsis {
-    padding: 0 1em
+    padding: 0 1em;
 }
-
-
-
-
 
 /*******************
 Table- responsive
 ******************/
 
 .tablesaw-bar .btn-group label {
-    color: $bodytext!important;
+    color: $bodytext !important;
 }
-
-
-
 
 /*******************
 Table- editable table
@@ -571,10 +555,11 @@ Table- editable table
     }
 }
 .stylish-table {
-    tbody tr{
-        border-left:3px solid transparent;
-        &:hover, &.active{
-            border-color:$themecolor;
+    tbody tr {
+        border-left: 3px solid transparent;
+        &:hover,
+        &.active {
+            border-color: $themecolor;
         }
     }
 }

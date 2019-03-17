@@ -4,8 +4,7 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@import '../variable'; 
-
+@import '../variable';
 
 /*******************/
 /*Floating Label*/
@@ -16,7 +15,6 @@ File: scss
 }
 
 .floating-labels .form-control {
-    
     padding: 10px 10px 10px 0;
     display: block;
     border: none;
@@ -25,7 +23,7 @@ File: scss
     border-bottom: 1px solid $light;
 }
 
-.floating-labels select.form-control>option {
+.floating-labels select.form-control > option {
     font-size: 14px;
 }
 
@@ -48,7 +46,7 @@ File: scss
 
 .floating-labels label {
     color: $bodytext;
-    
+
     position: absolute;
     cursor: auto;
     top: 5px;
@@ -89,8 +87,8 @@ File: scss
     right: 50%;
 }
 
-.floating-labels .form-control:focus~.bar:before,
-.floating-labels .form-control:focus~.bar:after {
+.floating-labels .form-control:focus ~ .bar:before,
+.floating-labels .form-control:focus ~ .bar:after {
     width: 50%;
 }
 
@@ -104,12 +102,12 @@ File: scss
     opacity: 0.5;
 }
 
-.floating-labels .input-lg~label,
+.floating-labels .input-lg ~ label,
 .floating-labels .input-lg {
     font-size: 24px;
 }
 
-.floating-labels .input-sm~label,
+.floating-labels .input-sm ~ label,
 .floating-labels .input-sm {
     font-size: 16px;
 }
@@ -129,45 +127,49 @@ File: scss
     background: $danger;
 }
 
-.has-warning .form-control:focus~label,
-.has-warning .form-control:valid~label {
+.has-warning .form-control:focus ~ label,
+.has-warning .form-control:valid ~ label {
     color: $warning;
 }
 
-.has-success .form-control:focus~label,
-.has-success .form-control:valid~label {
+.has-success .form-control:focus ~ label,
+.has-success .form-control:valid ~ label {
     color: $success;
 }
 
-.has-error .form-control:focus~label,
-.has-error .form-control:valid~label {
+.has-error .form-control:focus ~ label,
+.has-error .form-control:valid ~ label {
     color: $danger;
 }
 
-.has-feedback label~.t-0 {
+.has-feedback label ~ .t-0 {
     top: 0;
 }
-.form-group.error input, .form-group.error select, .form-group.error textarea {
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
     border: 1px solid $danger;
 }
-.form-group.validate input, .form-group.validate select, .form-group.validate textarea{
-    border:1px solid $success;
+.form-group.validate input,
+.form-group.validate select,
+.form-group.validate textarea {
+    border: 1px solid $success;
 }
-.form-group.error .help-block{
-    ul{
+.form-group.error .help-block {
+    ul {
         padding: 0px;
-        color:$danger;
-            li{
-                list-style:none;
-                }
+        color: $danger;
+        li {
+            list-style: none;
+        }
     }
 }
-.form-group.issue .help-block{
-    ul{
+.form-group.issue .help-block {
+    ul {
         padding: 0px;
-        color:$warning;
-            li{
-                list-style:none;
-                }
+        color: $warning;
+        li {
+            list-style: none;
+        }
     }
 }

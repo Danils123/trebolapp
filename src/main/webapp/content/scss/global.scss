@@ -24,7 +24,6 @@ a:hover {
     cursor: pointer;
 }
 
-
 /* ==========================================================================
 Browser Upgrade Prompt
 ========================================================================== */
@@ -36,11 +35,9 @@ Browser Upgrade Prompt
     padding: 0.2em 0;
 }
 
-
 /* ==========================================================================
 Generic styles
 ========================================================================== */
-
 
 /* Error highlight on input fields */
 
@@ -52,7 +49,6 @@ Generic styles
 .ng-invalid:not(form) {
     border-left: 5px solid red;
 }
-
 
 /* other generic styles */
 
@@ -98,7 +94,6 @@ Generic styles
     cursor: pointer;
 }
 
-
 /* ==========================================================================
 Custom alerts for notification
 ========================================================================== */
@@ -142,22 +137,19 @@ Custom alerts for notification
     }
 }
 
-
 /* ==========================================================================
 entity tables helpers
 ========================================================================== */
-
 
 /* Remove Bootstrap padding from the element
 http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
 
 @mixin no-padding($side) {
-    @if $side=='all' {
+    @if $side== 'all' {
         .no-padding {
             padding: 0 !important;
         }
-    }
-    @else {
+    } @else {
         .no-padding-#{$side} {
             padding-#{$side}: 0 !important;
         }
@@ -177,7 +169,6 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
     width: 1% !important;
 }
 
-
 /* Makes toolbar not wrap on smaller screens
 http://www.sketchingwithcss.com/samplechapter/cheatsheet.html#right */
 
@@ -190,19 +181,18 @@ http://www.sketchingwithcss.com/samplechapter/cheatsheet.html#right */
     justify-content: flex-end;
 }
 
-
 /* ==========================================================================
 entity detail page css
 ========================================================================== */
 
-.row.jh-entity-details> {
+.row.jh-entity-details > {
     dd {
         margin-bottom: 15px;
     }
 }
 
 @media screen and (min-width: 768px) {
-    .row.jh-entity-details> {
+    .row.jh-entity-details > {
         dt {
             margin-bottom: 15px;
         }
@@ -213,7 +203,6 @@ entity detail page css
         }
     }
 }
-
 
 /* ==========================================================================
 ui bootstrap tweaks
@@ -226,13 +215,13 @@ ui bootstrap tweaks
     cursor: pointer;
 }
 
-.datetime-picker-dropdown>li.date-picker-menu div>table .btn-default,
-.uib-datepicker-popup>li>div.uib-datepicker>table .btn-default {
+.datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
+.uib-datepicker-popup > li > div.uib-datepicker > table .btn-default {
     border: 0;
 }
 
-.datetime-picker-dropdown>li.date-picker-menu div>table:focus,
-.uib-datepicker-popup>li>div.uib-datepicker>table:focus {
+.datetime-picker-dropdown > li.date-picker-menu div > table:focus,
+.uib-datepicker-popup > li > div.uib-datepicker > table:focus {
     outline: none;
 }
 
@@ -243,13 +232,11 @@ ui bootstrap tweaks
     white-space: nowrap;
 }
 
-
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 .tableButtons {
     width: 100px !important;
 }
-
 
 /*
 Template Name: Admin Pro Admin
@@ -257,7 +244,6 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-
 
 /**
  * Table Of Content
@@ -282,7 +268,7 @@ File: scss
 @import '../scss/icons/linea-icons/linea.css';
 @import '../scss/icons/themify-icons/themify-icons.css';
 @import '../scss/icons/flag-icon-css/flag-icon.min.css';
-@import "../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import '../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css';
 @import 'widgets/widgets';
 @import 'grid';
 @import 'responsive';

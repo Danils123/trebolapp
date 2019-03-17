@@ -4,7 +4,7 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@import '../variable'; 
+@import '../variable';
 
 /*******************
 chat application Page
@@ -12,7 +12,7 @@ chat application Page
 
 .chat-main-box {
     position: relative;
-    
+
     overflow: hidden;
     .chat-left-aside {
         position: relative;
@@ -29,22 +29,22 @@ chat application Page
             top: 50%;
             z-index: 100;
             background-color: #fff;
-            -webkit-box-shadow: 1px 0 3px rgba(0, 0, 0, .2);
-            box-shadow: 1px 0 3px rgba(0, 0, 0, .2);
+            -webkit-box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
             border-radius: 0 100px 100px 0;
             line-height: 1;
             padding: 15px 8px 15px 4px;
         }
         .chat-left-inner {
             position: relative;
-            .chatonline{
+            .chatonline {
                 position: relative;
                 height: 90%;
             }
             .form-control {
                 height: 60px;
-                padding:15px;
-                background-image:linear-gradient($info, $info),linear-gradient($border, $border);
+                padding: 15px;
+                background-image: linear-gradient($info, $info), linear-gradient($border, $border);
             }
             .style-none {
                 padding: 0px;
@@ -64,8 +64,8 @@ chat application Page
     }
     .chat-right-aside {
         width: calc(100% - 250px);
-        float:left;
-        .chat-rbox{
+        float: left;
+        .chat-rbox {
             height: auto;
             position: relative;
         }
@@ -86,7 +86,7 @@ chat application Page
                 height: 80px;
                 padding-right: 180px;
                 &:focus {
-                    border-color: $border; 
+                    border-color: $border;
                 }
             }
             .custom-send {
@@ -101,5 +101,3 @@ chat application Page
         }
     }
 }
-
-

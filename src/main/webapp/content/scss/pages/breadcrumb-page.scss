@@ -18,7 +18,7 @@ Breadcrumb
             opacity: 0.7;
         }
     }
-    .breadcrumb-item+.breadcrumb-item::before {
+    .breadcrumb-item + .breadcrumb-item::before {
         color: rgba(255, 255, 255, 0.4);
     }
 }

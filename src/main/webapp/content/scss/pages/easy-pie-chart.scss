@@ -5,7 +5,7 @@ Email: niravjoshi87@gmail.com
 File: scss
 */
 
-@import '../variable'; 
+@import '../variable';
 
 /*============================================================== 
 Easy pie chart 
@@ -64,6 +64,6 @@ Easy pie chart
     &:after {
         content: '%';
         margin-left: 0.1em;
-        font-size: .8em;
+        font-size: 0.8em;
     }
 }

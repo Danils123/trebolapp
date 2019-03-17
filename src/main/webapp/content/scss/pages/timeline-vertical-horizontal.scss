@@ -7,11 +7,6 @@ File: scss
 
 @import '../variable';
 
-
-
-
-
-
 /*******************
 Timeline page
 ******************/
@@ -25,7 +20,7 @@ Timeline page
 }
 
 .timeline:before {
-    content: " ";
+    content: ' ';
     position: absolute;
     top: 0;
     bottom: 0;
@@ -35,32 +30,32 @@ Timeline page
     background-color: $light;
 }
 
-.timeline>li {
+.timeline > li {
     position: relative;
     margin-bottom: 20px;
 }
 
-.timeline>li:before,
-.timeline>li:after {
-    content: " ";
+.timeline > li:before,
+.timeline > li:after {
+    content: ' ';
     display: table;
 }
 
-.timeline>li:after {
+.timeline > li:after {
     clear: both;
 }
 
-.timeline>li:before,
-.timeline>li:after {
-    content: " ";
+.timeline > li:before,
+.timeline > li:after {
+    content: ' ';
     display: table;
 }
 
-.timeline>li:after {
+.timeline > li:after {
     clear: both;
 }
 
-.timeline>li>.timeline-panel {
+.timeline > li > .timeline-panel {
     float: left;
     position: relative;
     width: 46%;
@@ -71,8 +66,8 @@ Timeline page
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
-.timeline>li>.timeline-panel:before {
-    content: " ";
+.timeline > li > .timeline-panel:before {
+    content: ' ';
     display: inline-block;
     position: absolute;
     top: 26px;
@@ -83,8 +78,8 @@ Timeline page
     border-left: 8px solid $border;
 }
 
-.timeline>li>.timeline-panel:after {
-    content: " ";
+.timeline > li > .timeline-panel:after {
+    content: ' ';
     display: inline-block;
     position: absolute;
     top: 27px;
@@ -95,7 +90,7 @@ Timeline page
     border-left: 7px solid $white;
 }
 
-.timeline>li>.timeline-badge {
+.timeline > li > .timeline-badge {
     z-index: 10;
     position: absolute;
     top: 16px;
@@ -111,18 +106,18 @@ Timeline page
     overflow: hidden;
 }
 
-.timeline>li.timeline-inverted>.timeline-panel {
+.timeline > li.timeline-inverted > .timeline-panel {
     float: right;
 }
 
-.timeline>li.timeline-inverted>.timeline-panel:before {
+.timeline > li.timeline-inverted > .timeline-panel:before {
     right: auto;
     left: -8px;
     border-right-width: 8px;
     border-left-width: 0;
 }
 
-.timeline>li.timeline-inverted>.timeline-panel:after {
+.timeline > li.timeline-inverted > .timeline-panel:after {
     right: auto;
     left: -7px;
     border-right-width: 7px;
@@ -155,18 +150,14 @@ Timeline page
     font-weight: 400;
 }
 
-.timeline-body>p,
-.timeline-body>ul {
+.timeline-body > p,
+.timeline-body > ul {
     margin-bottom: 0;
 }
 
-.timeline-body>p+p {
+.timeline-body > p + p {
     margin-top: 5px;
 }
-
-
-
-
 
 /*******************
 Horizontal Timeline page
@@ -187,5 +178,5 @@ Horizontal Timeline page
 }
 
 .cd-horizontal-timeline .m-t-40 {
-    margin-top: 40px!important;
+    margin-top: 40px !important;
 }

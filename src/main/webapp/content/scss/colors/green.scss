@@ -11,47 +11,45 @@ $themecolor-dark: #028ee1;
 $topbar: #06d79c;
 $themecolor-alt: #26c6da;
 $topbar-alt: #ffffff;
-$sidebar-icons: #a6b7bf; 
+$sidebar-icons: #a6b7bf;
 /*******************
 /*Top bar
 *******************/
 
 .topbar {
     background: $topbar;
-    .navbar-header{
+    .navbar-header {
         background: $topbar-alt;
     }
-    
-    
-    .top-navbar .navbar-header .navbar-brand .light-logo{
+
+    .top-navbar .navbar-header .navbar-brand .light-logo {
         display: none;
-        color:rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.8);
     }
     .navbar-light .navbar-nav .nav-item > {
         a.nav-link {
-           
-            color: $white!important;
+            color: $white !important;
             &:hover,
             &:focus {
-                 color: rgba(255, 255, 255, 0.8)!important;
+                color: rgba(255, 255, 255, 0.8) !important;
             }
         }
     }
 }
 
-.hdr-nav-bar .navbar .navbar-nav>li.active>a{
+.hdr-nav-bar .navbar .navbar-nav > li.active > a {
     border-color: $themecolor;
 }
 /*******************
 /*General Elements
 *******************/
-.lstick{
+.lstick {
     background: $themecolor;
 }
 a.link {
     &:hover,
     &:focus {
-        color: $themecolor!important;
+        color: $themecolor !important;
     }
 }
 
@@ -83,8 +81,8 @@ a.link {
         }
     }
 }
-.text-themecolor{
-    color:$themecolor!important;
+.text-themecolor {
+    color: $themecolor !important;
 }
 .profile-tab,
 .customtab {
@@ -100,7 +98,6 @@ a.link {
         }
     }
 }
-
 
 /*******************
 /*Buttons
@@ -122,32 +119,31 @@ a.link {
     }
 }
 
-
 /*******************
 /*sidebar navigation
 *******************/
 
-.label-themecolor{
-    background:$themecolor; 
+.label-themecolor {
+    background: $themecolor;
 }
 
-.sidebar-nav>ul>li.active>a {
+.sidebar-nav > ul > li.active > a {
     color: $themecolor;
     border-color: $themecolor;
     i {
-       color: $themecolor; 
+        color: $themecolor;
     }
 }
 
 .sidebar-nav ul li a {
     &.active,
     &:hover {
-      color: $themecolor;
-      i {
         color: $themecolor;
-      }    
+        i {
+            color: $themecolor;
+        }
     }
 }
-.sidebar-nav>ul>li>a i{
-    color:$sidebar-icons;
+.sidebar-nav > ul > li > a i {
+    color: $sidebar-icons;
 }

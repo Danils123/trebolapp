@@ -4,7 +4,7 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@import '../variable'; 
+@import '../variable';
 
 /*******************
 Form icheck
@@ -17,7 +17,7 @@ Form icheck
     list-style: none;
 }
 
-.icolors>li {
+.icolors > li {
     padding: 0;
     margin: 2px;
     float: left;
@@ -28,41 +28,41 @@ Form icheck
     text-align: center;
 }
 
-.icolors>li.active:after {
-    content: "\2713 ";
+.icolors > li.active:after {
+    content: '\2713 ';
     color: $white;
     line-height: 30px;
 }
 
-.icolors>li:first-child {
+.icolors > li:first-child {
     margin-left: 0;
 }
 
-.icolors>li.orange {
+.icolors > li.orange {
     background: $danger;
 }
 
-.icolors>li.yellow {
+.icolors > li.yellow {
     background: $warning;
 }
 
-.icolors>li.info {
+.icolors > li.info {
     background: $info;
 }
 
-.icolors>li.green {
+.icolors > li.green {
     background: $success;
 }
 
-.icolors>li.red {
+.icolors > li.red {
     background: $red;
 }
 
-.icolors>li.purple {
+.icolors > li.purple {
     background: $purple;
 }
 
-.icolors>li.blue {
+.icolors > li.blue {
     background: $blue;
 }
 

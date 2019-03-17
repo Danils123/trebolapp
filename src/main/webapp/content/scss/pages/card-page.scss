@@ -5,7 +5,7 @@ Email: niravjoshi87@gmail.com
 File: scss
 */
 
-@import '../variable';    
+@import '../variable';
 /*******************
  Card title
 *******************/
@@ -13,15 +13,15 @@ File: scss
 .card-inverse .card-link,
 .card-inverse .card-subtitle,
 .card-inverse .card-text {
-    color: rgba(255, 255, 255, .65);
+    color: rgba(255, 255, 255, 0.65);
 }
 
-.card-default{
-    .card-header{
-        background:$white;
-        border-bottom:0px;
+.card-default {
+    .card-header {
+        background: $white;
+        border-bottom: 0px;
     }
-} 
+}
 .card-success {
     background: $success;
     border-color: $success;
@@ -80,8 +80,8 @@ File: scss
 }
 
 .collapsing {
-    -webkit-transition: height .08s ease;
-    transition: height .08s ease;
+    -webkit-transition: height 0.08s ease;
+    transition: height 0.08s ease;
 }
 
 .card-info {
@@ -140,5 +140,4 @@ File: scss
         background: $primary;
         border-color: $primary;
     }
-} 
-
+}

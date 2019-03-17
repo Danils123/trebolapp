@@ -6,21 +6,21 @@
     position: relative;
     margin-bottom: 10px;
     .comment-row {
-        border-bottom:1px solid $border;
+        border-bottom: 1px solid $border;
         padding: 15px;
-        &:last-child{
-            border-bottom:0px;
+        &:last-child {
+            border-bottom: 0px;
         }
         &:hover,
         &.active {
-            background:$bglight;
+            background: $bglight;
         }
     }
 }
 
 .comment-text {
     padding: 15px 15px 15px 20px;
-    width:80%;
+    width: 80%;
     &:hover .comment-footer,
     &.active .comment-footer {
         .action-icons {
@@ -29,10 +29,9 @@
     }
     p {
         max-height: 50px;
-        width:100%;
+        width: 100%;
         overflow: hidden;
-        
-    } 
+    }
 }
 
 .comment-footer {
@@ -49,5 +48,3 @@
         }
     }
 }
-
-

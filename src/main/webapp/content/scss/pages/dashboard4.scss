@@ -9,7 +9,7 @@ File: scss
 /*******************
  Sales overview Chart 1
 *******************/
-#ct-sales3-chart{
+#ct-sales3-chart {
     .ct-series-a {
         .ct-bar {
             stroke: rgba(57, 139, 247, 1);
@@ -29,22 +29,21 @@ File: scss
 /*******************
  Sales overview Chart 2
 *******************/
-#sales-overview2{
-    .ct-point{
-        stroke-width:6px;
-        stroke:$info; 
+#sales-overview2 {
+    .ct-point {
+        stroke-width: 6px;
+        stroke: $info;
     }
-    .ct-grid{
-        stroke-dasharray:0px;
-        stroke:$border;
-        
+    .ct-grid {
+        stroke-dasharray: 0px;
+        stroke: $border;
     }
-    .ct-area{
-        fill-opacity:0;
+    .ct-area {
+        fill-opacity: 0;
     }
-    .ct-line{
-        stroke-width:3px;
-        stroke:$info;
+    .ct-line {
+        stroke-width: 3px;
+        stroke: $info;
     }
 }
 
@@ -56,20 +55,20 @@ File: scss
 /*******************
  Project of the month
 *******************/
-.pro-of-month{
-    h6{
-        font-weight:500;
-        margin-bottom:0px;
+.pro-of-month {
+    h6 {
+        font-weight: 500;
+        margin-bottom: 0px;
     }
 }
 /*******************
  This is for responsive dashboard1 element
 *******************/
-@media(max-width:1023px) {
-.r-aside{
-        padding-right:30px;
+@media (max-width: 1023px) {
+    .r-aside {
+        padding-right: 30px;
     }
-    .right-side-panel{
-        display:none;
+    .right-side-panel {
+        display: none;
     }
-}    
+}

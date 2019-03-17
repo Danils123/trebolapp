@@ -7,7 +7,6 @@ File: scss
 
 @import '../variable';
 
-
 /*============================================================== 
 widget-chart-page product review
  ============================================================== */
@@ -50,7 +49,6 @@ widget-chart-page product review
     }
 }
 
-
 /*******************/
 /*widgets -app*/
 /*******************/
@@ -59,7 +57,7 @@ widget-chart-page product review
     z-index: 1;
 }
 
-.css-bar>i {
+.css-bar > i {
     z-index: 10;
 }
 
@@ -78,7 +76,6 @@ ul.list-icons {
             }
         }
         i {
-           
             padding-right: 8px;
         }
     }
@@ -88,7 +85,7 @@ ul.list-icons {
 
 .total-revenue4 {
     position: relative;
-    .ct-series-a .ct-line { 
+    .ct-series-a .ct-line {
         stroke: $info;
         stroke-width: 1px;
     }

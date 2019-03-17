@@ -7,7 +7,6 @@ File: scss
 
 @import '../variable';
 
-
 /*******************
 FAQs Page
 ******************/
@@ -25,9 +24,6 @@ FAQs Page
         }
     }
 }
-
-
-
 
 /*******************
 Seach listing Page
@@ -56,7 +52,6 @@ Seach listing Page
     }
 }
 
-
 /*******************
 Gridstack Dragable portlet
 ******************/
@@ -69,11 +64,9 @@ Gridstack Dragable portlet
     font-size: 20px;
 }
 
-.grid-stack>.grid-stack-item>.grid-stack-item-content {
+.grid-stack > .grid-stack-item > .grid-stack-item-content {
     border: 1px solid $border;
 }
-
-
 
 /*******************
 Grid page
@@ -81,29 +74,27 @@ Grid page
 
 .show-grid {
     margin-bottom: 10px;
-    padding: 0 15px
+    padding: 0 15px;
 }
 
-.show-grid [class^=col-] {
+.show-grid [class^='col-'] {
     padding-top: 10px;
     padding-bottom: 10px;
     border: 1px solid $form-brd;
     background-color: $light;
 }
 
-
 /*******************
 Date paginator page
 ******************/
 
 .dp-selected[style] {
-    background-color: $themecolor!important;
+    background-color: $themecolor !important;
 }
 
 .datepaginator-sm,
 .datepaginator-lg,
 .datepaginator {
-
     .pagination {
         li {
             a {
@@ -116,8 +107,6 @@ Date paginator page
         }
     }
 }
-
-
 
 /*******************
 Notification page Jquery toaster
@@ -147,7 +136,6 @@ Notification page Jquery toaster
     border-radius: 60px;
 }
 
-
 /*******************
 list and media
 ******************/
@@ -172,7 +160,6 @@ list and media
     margin-bottom: 10px;
     padding: 15px;
 }
-
 
 /*******************
 /*Documentation page

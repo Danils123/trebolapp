@@ -11,8 +11,8 @@
             width: 100%;
             label {
                 font-weight: 400;
-                color:$headingtext;
-                width:100%;
+                color: $headingtext;
+                width: 100%;
             }
         }
         &:last-child {
@@ -44,5 +44,3 @@
 .list-task .task-done span {
     text-decoration: line-through;
 }
-
-

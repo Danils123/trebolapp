@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService, LoginModalService, LoginService} from "app/core";
+import { AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-import {Router} from "@angular/router";
-import {NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'jhi-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: []
+    selector: 'jhi-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: []
 })
 export class SidebarComponent implements OnInit {
     inProduction: boolean;
@@ -15,20 +15,20 @@ export class SidebarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
 
-  constructor(
-      private loginService: LoginService,
-      private accountService: AccountService,
-      private loginModalService: LoginModalService,
-      private profileService: ProfileService,
-      private router: Router
-  ) { }
+    constructor(
+        private loginService: LoginService,
+        private accountService: AccountService,
+        private loginModalService: LoginModalService,
+        private profileService: ProfileService,
+        private router: Router
+    ) {}
 
-  ngOnInit() {
-      this.profileService.getProfileInfo().then(profileInfo => {
-          this.inProduction = profileInfo.inProduction;
-          this.swaggerEnabled = profileInfo.swaggerEnabled;
-      });
-  }
+    ngOnInit() {
+        this.profileService.getProfileInfo().then(profileInfo => {
+            this.inProduction = profileInfo.inProduction;
+            this.swaggerEnabled = profileInfo.swaggerEnabled;
+        });
+    }
 
     isAuthenticated() {
         return this.accountService.isAuthenticated();
@@ -46,5 +46,4 @@ export class SidebarComponent implements OnInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
-
 }

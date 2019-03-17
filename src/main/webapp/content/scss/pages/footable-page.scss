@@ -4,7 +4,7 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@import '../variable';  
+@import '../variable';
 
 /*******************
 Table- Footable
@@ -47,20 +47,20 @@ Table- Footable
         box-shadow: none;
         transition-duration: 0.3s;
     }
-}    
-.footable .pagination{
-    li{
+}
+.footable .pagination {
+    li {
         a {
             position: relative;
             display: block;
-            padding: .5rem .75rem;
+            padding: 0.5rem 0.75rem;
             margin-left: -1px;
             line-height: 1.25;
             color: #0275d8;
             background-color: $white;
-            border: 1px solid #ddd;    
+            border: 1px solid #ddd;
         }
-        &.active a{
+        &.active a {
             z-index: 2;
             color: #fff;
             background-color: #0275d8;
@@ -79,9 +79,8 @@ Table- Footable
     li:first-child {
         a {
             margin-left: 0;
-            border-bottom-left-radius: .25rem;
-            border-top-left-radius: .25rem;
+            border-bottom-left-radius: 0.25rem;
+            border-top-left-radius: 0.25rem;
         }
     }
 }
-

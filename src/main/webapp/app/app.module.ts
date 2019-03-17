@@ -45,7 +45,15 @@ import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.componen
         HttpClientModule,
         FormsModule
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, BreadcrumbsComponent],
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent,
+        SidebarComponent,
+        BreadcrumbsComponent
+    ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,

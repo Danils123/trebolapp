@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {AccountService, LoginModalService, LoginService} from "app/core";
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'jhi-navbar',
-  templateUrl: './navbar.component.html',
-  styles: []
+    selector: 'jhi-navbar',
+    templateUrl: './navbar.component.html',
+    styles: []
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
@@ -17,20 +17,20 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
 
-  constructor(
-      private loginService: LoginService,
-      private accountService: AccountService,
-      private loginModalService: LoginModalService,
-      private router: Router,
-      private profileService: ProfileService
-  ) { }
+    constructor(
+        private loginService: LoginService,
+        private accountService: AccountService,
+        private loginModalService: LoginModalService,
+        private router: Router,
+        private profileService: ProfileService
+    ) {}
 
-  ngOnInit() {
-      this.profileService.getProfileInfo().then(profileInfo => {
-          this.inProduction = profileInfo.inProduction;
-          this.swaggerEnabled = profileInfo.swaggerEnabled;
-      });
-  }
+    ngOnInit() {
+        this.profileService.getProfileInfo().then(profileInfo => {
+            this.inProduction = profileInfo.inProduction;
+            this.swaggerEnabled = profileInfo.swaggerEnabled;
+        });
+    }
 
     isAuthenticated() {
         return this.accountService.isAuthenticated();
@@ -48,5 +48,4 @@ export class NavbarComponent implements OnInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
-
 }

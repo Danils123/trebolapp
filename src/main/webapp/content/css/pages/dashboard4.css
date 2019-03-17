@@ -19,48 +19,60 @@ File: scss
  Sales overview Chart 1
 *******************/
 #ct-sales3-chart .ct-series-a .ct-bar {
-  stroke: #398bf7; }
+    stroke: #398bf7;
+}
 
 #ct-sales3-chart .ct-series-b .ct-bar {
-  stroke: rgba(57, 139, 247, 0.8); }
+    stroke: rgba(57, 139, 247, 0.8);
+}
 
 #ct-sales3-chart .ct-series-c .ct-bar {
-  stroke: rgba(57, 139, 247, 0.4); }
+    stroke: rgba(57, 139, 247, 0.4);
+}
 
 /*******************
  Sales overview Chart 2
 *******************/
 #sales-overview2 .ct-point {
-  stroke-width: 6px;
-  stroke: #398bf7; }
+    stroke-width: 6px;
+    stroke: #398bf7;
+}
 
 #sales-overview2 .ct-grid {
-  stroke-dasharray: 0px;
-  stroke: rgba(120, 130, 140, 0.13); }
+    stroke-dasharray: 0px;
+    stroke: rgba(120, 130, 140, 0.13);
+}
 
 #sales-overview2 .ct-area {
-  fill-opacity: 0; }
+    fill-opacity: 0;
+}
 
 #sales-overview2 .ct-line {
-  stroke-width: 3px;
-  stroke: #398bf7; }
+    stroke-width: 3px;
+    stroke: #398bf7;
+}
 
 .browser td {
-  vertical-align: middle;
-  padding-left: 0px; }
+    vertical-align: middle;
+    padding-left: 0px;
+}
 
 /*******************
  Project of the month
 *******************/
 .pro-of-month h6 {
-  font-weight: 500;
-  margin-bottom: 0px; }
+    font-weight: 500;
+    margin-bottom: 0px;
+}
 
 /*******************
  This is for responsive dashboard1 element
 *******************/
 @media (max-width: 1023px) {
-  .r-aside {
-    padding-right: 30px; }
-  .right-side-panel {
-    display: none; } }
+    .r-aside {
+        padding-right: 30px;
+    }
+    .right-side-panel {
+        display: none;
+    }
+}
