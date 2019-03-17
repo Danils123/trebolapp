@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-dark">
+npm<nav class="navbar navbar-dark navbar-expand-md bg-dark">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
         <span class="navbar-title">Trebol</span> <span class="navbar-version">{{version}}</span>
@@ -123,6 +123,12 @@
                             <span>User Extra</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="authority" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span>Authority</span>
+                        </a>
+                    </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
@@ -187,13 +193,13 @@
             </li>
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
-                  <span *ngIf="!getImageUrl()">
+                    <span *ngIf="!getImageUrl()">
                     <fa-icon icon="user"></fa-icon>
                     <span>
                       Account
                     </span>
-                  </span>
-                  <span *ngIf="getImageUrl()">
+                    </span>
+                    <span *ngIf="getImageUrl()">
                       <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
                   </span>
                 </a>

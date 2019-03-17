@@ -1,0 +1,34 @@
+<div>
+    <h2 id="page-heading">
+        <span>Roles</span>
+    </h2>
+    <br/>
+    <div class="table-responsive" *ngIf="authorities">
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    Roles
+                </div>
+                <div class="card-body">
+
+        <table class="table table-striped">
+            <thead>
+            <tr class = "row">
+            <th class="col-md-3"><span>Name</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let authority of authorities ;trackBy: trackName">
+                <td class="col-md-3"><a [routerLink]="['/authority', authority.name, 'view' ]">{{authority.name}}</a></td>
+                <td class="col-md-3 text-right">
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
