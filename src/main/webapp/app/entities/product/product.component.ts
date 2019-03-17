@@ -98,7 +98,7 @@ export class ProductComponent implements OnInit, OnDestroy {
                 name: 'productListModification',
                 content: 'Deleted an product'
             });
-            this.swalWithBootstrapButtons.fire('Eliminada!', 'El producto ha sido eliminado.', 'success');
+            this.swalWithBootstrapButtons.fire('Eliminado!', 'El producto ha sido eliminado.', 'success');
         });
     }
 
