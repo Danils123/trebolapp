@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
-import { VERSION } from 'app/app.constants';
-import { AccountService, LoginModalService, LoginService } from 'app/core';
+import {NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {AccountService, LoginModalService, LoginService} from "app/core";
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import {Router} from "@angular/router";
 
 @Component({
-    selector: 'jhi-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['navbar.scss']
+  selector: 'jhi-navbar',
+  templateUrl: './navbar.component.html',
+  styles: []
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
@@ -19,47 +17,36 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
 
-    constructor(
-        private loginService: LoginService,
-        private accountService: AccountService,
-        private loginModalService: LoginModalService,
-        private profileService: ProfileService,
-        private router: Router
-    ) {
-        this.version = VERSION ? 'v' + VERSION : '';
-        this.isNavbarCollapsed = true;
-    }
+  constructor(
+      private loginService: LoginService,
+      private accountService: AccountService,
+      private loginModalService: LoginModalService,
+      private router: Router,
+      private profileService: ProfileService
+  ) { }
 
-    ngOnInit() {
-        this.profileService.getProfileInfo().then(profileInfo => {
-            this.inProduction = profileInfo.inProduction;
-            this.swaggerEnabled = profileInfo.swaggerEnabled;
-        });
-    }
-
-    collapseNavbar() {
-        this.isNavbarCollapsed = true;
-    }
+  ngOnInit() {
+      this.profileService.getProfileInfo().then(profileInfo => {
+          this.inProduction = profileInfo.inProduction;
+          this.swaggerEnabled = profileInfo.swaggerEnabled;
+      });
+  }
 
     isAuthenticated() {
         return this.accountService.isAuthenticated();
+    }
+
+    logout() {
+        this.loginService.logout();
+        this.router.navigate(['']);
+    }
+
+    getImageUrl() {
+        return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
     }
 
     login() {
         this.modalRef = this.loginModalService.open();
     }
 
-    logout() {
-        this.collapseNavbar();
-        this.loginService.logout();
-        this.router.navigate(['']);
-    }
-
-    toggleNavbar() {
-        this.isNavbarCollapsed = !this.isNavbarCollapsed;
-    }
-
-    getImageUrl() {
-        return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
-    }
 }
