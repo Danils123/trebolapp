@@ -8,6 +8,7 @@
         "node_modules"
     ],
     "dependencies": {
+        "@angular/animations": "^7.2.9",
         "@angular/common": "7.2.4",
         "@angular/compiler": "7.2.4",
         "@angular/core": "^7.2.4",
@@ -44,8 +45,7 @@
         "tslib": "1.9.3",
         "web-animations-js": "^2.3.1",
         "webstomp-client": "1.2.6",
-        "zone.js": "0.8.29",
-        "@angular/animations": "^4.0.1"
+        "zone.js": "0.8.29"
     },
     "devDependencies": {
         "@angular/cli": "7.3.1",
