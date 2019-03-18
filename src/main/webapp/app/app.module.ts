@@ -28,6 +28,8 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.component';
 
 import { CONFIG_FIREBASE } from './app.constants';
 
@@ -57,7 +59,15 @@ import { CONFIG_FIREBASE } from './app.constants';
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
         AngularFireStorageModule // imports firebase/storage only needed for storage features,
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent,
+        SidebarComponent,
+        BreadcrumbsComponent
+    ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,

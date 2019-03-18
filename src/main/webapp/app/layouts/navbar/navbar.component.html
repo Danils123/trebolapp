@@ -1,247 +1,145 @@
-<nav *ngIf="nav.visible" class="navbar navbar-dark navbar-expand-md bg-dark">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <span class="logo-img"></span>
-        <span class="navbar-title">Trebol</span> <span class="navbar-version">{{version}}</span>
-    </a>
-    <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-        <fa-icon icon="bars"></fa-icon>
-    </a>
-    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
-                    <span>
-                        <fa-icon icon="home"></fa-icon>
-                        <span>Home</span>
-                    </span>
-                </a>
-            </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-                    <span>
-                        <fa-icon icon="th-list"></fa-icon>
-                        <span>
-                            Entities
-                        </span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="ranking-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Ranking Per Order</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="points-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Points Commerce</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Category</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="sub-category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Sub Category</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="product" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Product</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="product-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Product Commerce</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="list-purchase" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>List Purchase</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Product List</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="products-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Products Per Order</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="order-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Order Item</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="list-schedule" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>List Schedule</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="parameters-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Parameters Commerce</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Commerce</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="schedule-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Schedule Commerce</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="offer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Offer</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="user-extra" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>User Extra</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="authority" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span>Authority</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
-            </li>
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
-                    <span>
-                        <fa-icon icon="user-plus"></fa-icon>
-                        <span>Administration</span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="user" fixedWidth="true"></fa-icon>
-                            <span>User management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/jhi-tracker" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="eye" fixedWidth="true"></fa-icon>
-                            <span>User tracker</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/jhi-metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
-                            <span>Metrics</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/jhi-health" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="heart" fixedWidth="true"></fa-icon>
-                            <span>Health</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/jhi-configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="list" fixedWidth="true"></fa-icon>
-                            <span>Configuration</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="bell" fixedWidth="true"></fa-icon>
-                            <span>Audits</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="tasks" fixedWidth="true"></fa-icon>
-                            <span>Logs</span>
-                        </a>
-                    </li>
-                    <li *ngIf="swaggerEnabled">
-                        <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="book" fixedWidth="true"></fa-icon>
-                            <span>API</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                </ul>
-            </li>
-            <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
-                    <span *ngIf="!getImageUrl()">
-                    <fa-icon icon="user"></fa-icon>
-                    <span>
-                      Account
-                    </span>
-                    </span>
-                    <span *ngIf="getImageUrl()">
-                      <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
-                  </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="clock" fixedWidth="true"></fa-icon>
-                            <span>Password</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="sessions" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="cloud" fixedWidth="true"></fa-icon>
-                            <span>Sessions</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" (click)="logout()" id="logout">
-                            <fa-icon icon="sign-out-alt" fixedWidth="true"></fa-icon>
-                            <span>Sign out</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" (click)="login()" id="login">
-                            <fa-icon icon="sign-in-alt" fixedWidth="true"></fa-icon>
-                            <span>Sign in</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="user-plus" fixedWidth="true"></fa-icon>
-                            <span>Register</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav>
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header *ngIf="nav.visible" class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/">
+                <!-- Logo icon --><b>
+                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                <!-- Dark Logo icon -->
+                <img src="../../../content/images/logo-trebol.png" alt="homepage" class="dark-logo" />
+                <!-- Light Logo icon -->
+                <img src="../../../content/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+            </b>
+                <!--End Logo icon -->
+                <!-- Logo text --><span>
+                         <!-- dark Logo text -->
+                         <img src="../../../content/images/logo-text.png" alt="homepage" class="dark-logo" />
+                <!-- Light Logo text -->
+                         <img src="../../../content/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto">
+                <!-- This is  -->
+                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item hidden-sm-down"></li>
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- ============================================================== -->
+                <!-- Search -->
+                <!-- ============================================================== -->
+                <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                    <form class="app-search">
+                        <input type="text" class="form-control" placeholder="Buscar & entrar"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                </li>
+
+                <!-- ============================================================== -->
+                <!-- Messages -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown" *ngIf="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
+                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                    </a>
+                    <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
+                        <ul>
+                            <li>
+                                <div class="drop-title">Tienes 4 nuevos mensajes</div>
+                            </li>
+                            <li>
+                                <div class="message-center">
+                                    <!-- Message -->
+                                    <a href="#">
+                                        <div class="user-img"> <img src="../../../content/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
+                                    </a>
+                                    <!-- Message -->
+                                    <a href="#">
+                                        <div class="user-img"> <img src="../../../content/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                                    </a>
+                                    <!-- Message -->
+                                    <a href="#">
+                                        <div class="user-img"> <img src="../../../content/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
+                                    </a>
+                                    <!-- Message -->
+                                    <a href="#">
+                                        <div class="user-img"> <img src="../../../content/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                        <div class="mail-contnet">
+                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="nav-link text-center" href="javascript:void(0);"> <strong>Ver todos los correos</strong> <i class="fa fa-angle-right"></i> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Messages -->
+                <!-- ============================================================== -->
+
+                <!-- ============================================================== -->
+                <!-- Language -->
+                <!-- ============================================================== -->
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right animated bounceInDown"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a>                        <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                </li> -->
+                <!-- ============================================================== -->
+                <!-- Profile -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown" *ngIf="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../../../content/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                    <div class="dropdown-menu dropdown-menu-right animated fadeIn">
+                        <ul class="dropdown-user">
+                            <li>
+                                <div class="dw-user-box">
+                                    <span *ngIf="!getImageUrl()">
+                                    <div class="u-img"><img src="../../../content/images/users/1.jpg" alt="user"></div>
+                                    </span>
+                                    <span *ngIf="getImageUrl()">
+                                             <div class="u-img"><img [src]="getImageUrl()" alt="user"></div>
+                                        </span>
+                                    <div class="u-text">
+                                        <h4>Steave Jobs</h4>
+                                        <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="ti-user"></i> Mí Perfil</a></li>
+                            <li><a href="#"><i class="ti-wallet"></i> Mí balance</a></li>
+                            <li><a href="#"><i class="ti-email"></i> Correo</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="ti-settings"></i> Configuración de Cuenta</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a (click)="logout()" routerLink="/"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->

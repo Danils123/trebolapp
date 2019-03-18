@@ -238,6 +238,28 @@ ui bootstrap tweaks
     width: 100px !important;
 }
 
+<<<<<<< HEAD
+=======
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+/**
+ * Table Of Content
+ *
+ * 	1. Globals
+ *	2. Headers
+ *	3. Navigations
+ *	4. Banners
+ *	5. Footers
+ *	6. app
+ *	7. Widgets
+ *	8. Custom Templates
+ */
+
 @import 'variable';
 @import 'app';
 @import 'sidebar';
@@ -265,3 +287,4 @@ ui bootstrap tweaks
         }
     }
 }
+@import 'colors/default-dark';
