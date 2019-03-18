@@ -1,10 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AngularFireModule } from '@angular/fire';
 import { TrebolSharedModule } from 'app/shared';
-import { FirebaseEnvironment } from './firebase-environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { NgDropFilesDirective } from '../../directives/ng-drop-files.directive';
 import {
     ProductComponent,
     ProductDetailComponent,
@@ -18,19 +15,17 @@ import {
 const ENTITY_STATES = [...productRoute, ...productPopupRoute];
 
 @NgModule({
-    imports: [
-        TrebolSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        AngularFireModule.initializeApp(FirebaseEnvironment.firebase),
-        AngularFirestoreModule
-    ],
+    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         ProductComponent,
         ProductDetailComponent,
         ProductUpdateComponent,
         ProductDeleteDialogComponent,
-        ProductDeletePopupComponent
+        ProductDeletePopupComponent,
+        NgDropFilesDirective
     ],
+    providers: [],
+
     entryComponents: [ProductComponent, ProductUpdateComponent, ProductDeleteDialogComponent, ProductDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

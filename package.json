@@ -25,6 +25,7 @@
         "@ngx-translate/http-loader": "4.0.0",
         "acorn": "^6.1.1",
         "ajv": "^6.10.0",
+        "angularfire2": "^5.1.2",
         "animations": "0.0.0",
         "babel-core": "^6.26.3",
         "bootstrap": "4.2.1",

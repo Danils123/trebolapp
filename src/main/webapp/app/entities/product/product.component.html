@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new Product
+            Crear nuevo producto
             </span>
         </button>
     </h2>
@@ -34,7 +34,6 @@
                                 <th><span>Nombre</span></th>
                                 <th><span>Marca</span></th>
                                 <th><span>Descripción</span></th>
-                                <th><span>Imágen</span></th>
                                 <th><span>Categoría</span></th>
                                 <th><span>Subcategoría</span></th>
                                 <th></th>
@@ -47,7 +46,6 @@
                                 <td>{{product.name}}</td>
                                 <td>{{product.brand}}</td>
                                 <td>{{product.description}}</td>
-                                <td>{{product.image}}</td>
                                 <td>
                                     <div *ngIf="product.category">
                                         <a [routerLink]="['../category', product.category?.id, 'view' ]">{{product.category?.name}}</a>

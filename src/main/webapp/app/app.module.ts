@@ -7,7 +7,9 @@ import { Ng2Webstorage } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
+import { FirebaseEnvironment } from './app.constants';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -41,7 +43,9 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         ToastrModule.forRoot(),
         BrowserAnimationsModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        AngularFireModule.initializeApp(FirebaseEnvironment.firebase),
+        AngularFirestoreModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [
@@ -59,7 +63,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationInterceptor,
             multi: true
-        }
+        },
+        AngularFirestoreModule
     ],
     bootstrap: [JhiMainComponent]
 })

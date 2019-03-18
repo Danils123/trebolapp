@@ -1,0 +1,31 @@
+.main-container {
+    margin-top: 40px;
+}
+
+/* Drop Zone */
+
+.drop-zone {
+    border: dotted 3px lightgray;
+    opacity: 0.5;
+    color: #666;
+    text-align: center;
+}
+
+.file-over {
+    border: dotted 3px dodgerblue;
+}
+
+.table {
+    margin-top: 30px;
+}
+
+.text-green {
+    color: green;
+}
+
+.hovereffect:hover img {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}

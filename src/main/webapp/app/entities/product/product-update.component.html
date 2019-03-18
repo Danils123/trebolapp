@@ -35,11 +35,47 @@
                         Este campo es requerido
                     </div>
                 </div>
+
+
                 <div class="form-group">
-                    <label class="form-control-label" for="field_image">Imágen</label>
-                    <input type="text" class="form-control" name="image" id="field_image" [(ngModel)]="product.image" #image="ngModel" [ngClass]="{'is-invalid': image.errors?.required && image.touched}" required/>
-                    <div *ngIf="image.errors?.required && image.touched" class="text-danger">
-                        Este campo es requerido
+                    <div class="row">
+                        <div class="col-md-6">
+                            Imágen (Puede arrastrar la imágen)
+                            <div (isOverDrop)="isOverDropMethod = $event " [ngClass]="{ 'file-over': isOverDrop}" class="well drop-zone">
+                                <label class="form-control-label" for="field_image"></label>
+                                <br>
+                                <img src="../../../content/images/drop-images.png">
+                            </div>
+                            <input type="text" class="form-control" name="image" id="field_image" [(ngModel)]="product.image" #image="ngModel" [ngClass]="{'is-invalid': image.errors?.required && image.touched}" required/>
+                            <div *ngIf="image.errors?.required && image.touched" class="text-danger">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <button class="btn btn-success" (click)="loadImage()" [disabled]="imagen === undefined"> Agregar Imagen</button>
+                            <button class="btn btn-danger" (click)="cleanImage()">Limpiar</button>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th *ngIf="imagen != undefined">Nombre archivo</th>
+                                        <th *ngIf="imagen != undefined">Tamaño</th>
+                                        <th *ngIf="imagen != undefined">Progreso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td *ngIf="imagen != undefined">{{ imagen.fileName }}</td>
+                                        <td *ngIf="imagen != undefined">{{ imagen.file.size /1024 /1024 | number: '.2-2' }} MB</td>
+                                        <td *ngIf="imagen != undefined">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': imagen.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -68,7 +104,7 @@
                 <button type="button" id="cancel-save" class="btn btn-sm btn-danger" (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-sm btn-success">
+                <button id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-sm btn-success" (click)="saveProduct()">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
                 </button>
             </div>
