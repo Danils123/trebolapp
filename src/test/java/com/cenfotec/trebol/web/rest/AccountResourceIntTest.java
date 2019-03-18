@@ -7,6 +7,7 @@ import com.cenfotec.trebol.domain.PersistentToken;
 import com.cenfotec.trebol.domain.User;
 import com.cenfotec.trebol.repository.AuthorityRepository;
 import com.cenfotec.trebol.repository.PersistentTokenRepository;
+import com.cenfotec.trebol.repository.UserExtraRepository;
 import com.cenfotec.trebol.repository.UserRepository;
 import com.cenfotec.trebol.security.AuthoritiesConstants;
 import com.cenfotec.trebol.service.MailService;
@@ -62,6 +63,9 @@ public class AccountResourceIntTest {
     private AuthorityRepository authorityRepository;
 
     @Autowired
+    private UserExtraRepository userExtraRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -91,10 +95,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository);
+            new AccountResource(userRepository, userService, mockMailService, userExtraRepository, persistentTokenRepository);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository);
+            new AccountResource(userRepository, mockUserService, mockMailService, userExtraRepository, persistentTokenRepository);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)

@@ -234,6 +234,10 @@ ui bootstrap tweaks
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
+.tableButtons {
+    width: 100px !important;
+}
+
 @import 'variable';
 @import 'app';
 @import 'sidebar';
@@ -250,6 +254,14 @@ ui bootstrap tweaks
 @import 'responsive';
 @import '../css/spinners.css';
 @import '../css/animate.css';
-.tableButtons {
-    width: 100px !important;
+.custom-switches {
+    .switch {
+        background: #fb6542;
+        small {
+            background: #375e97;
+        }
+        &.checked {
+            background: #3f681c;
+        }
+    }
 }

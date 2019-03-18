@@ -23,8 +23,16 @@ export class UserExtraService {
         return this.http.put<IUserExtra>(this.resourceUrl, userExtra, { observe: 'response' });
     }
 
+    updateWithoutId(userExtra: IUserExtra): Observable<EntityResponseType> {
+        return this.http.put<IUserExtra>(`${this.resourceUrl}-WithoutId`, userExtra, { observe: 'response' });
+    }
+
     find(id: number): Observable<EntityResponseType> {
         return this.http.get<IUserExtra>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    findByUserId(userId: number): Observable<EntityResponseType> {
+        return this.http.get<IUserExtra>(`${this.resourceUrl}-byUserId/${userId}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {

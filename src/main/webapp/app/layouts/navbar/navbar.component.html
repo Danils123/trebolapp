@@ -1,4 +1,4 @@
-npm<nav class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav *ngIf="nav.visible" class="navbar navbar-dark navbar-expand-md bg-dark">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
         <span class="navbar-title">Trebol</span> <span class="navbar-version">{{version}}</span>

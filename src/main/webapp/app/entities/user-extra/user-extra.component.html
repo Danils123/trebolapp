@@ -13,57 +13,47 @@
     <div class="table-responsive" *ngIf="userExtras">
         <table class="table table-striped">
             <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Second Last Name</span></th>
-            <th><span>Phone</span></th>
-            <th><span>Cell Phone</span></th>
-            <th><span>Address</span></th>
-            <th><span>Ranking</span></th>
-            <th><span>Photograph</span></th>
-            <th><span>Notification</span></th>
-            <th><span>User</span></th>
-            <th></th>
-            </tr>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Second Last Name</span></th>
+                    <th><span>Phone</span></th>
+                    <th><span>Cell Phone</span></th>
+                    <th><span>Address</span></th>
+                    <th><span>Ranking</span></th>
+                    <th><span>Photograph</span></th>
+                    <th><span>Notification</span></th>
+                    <th><span>User</span></th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let userExtra of userExtras ;trackBy: trackId">
-                <td><a [routerLink]="['/user-extra', userExtra.id, 'view' ]">{{userExtra.id}}</a></td>
-                <td>{{userExtra.secondLastName}}</td>
-                <td>{{userExtra.phone}}</td>
-                <td>{{userExtra.cellPhone}}</td>
-                <td>{{userExtra.address}}</td>
-                <td>{{userExtra.ranking}}</td>
-                <td>{{userExtra.photograph}}</td>
-                <td>{{userExtra.notification}}</td>
-                <td>
-                    {{userExtra.user?.id}}
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/user-extra', userExtra.id, 'view' ]"
-                                class="btn btn-info btn-sm">
+                <tr *ngFor="let userExtra of userExtras ;trackBy: trackId">
+                    <td><a [routerLink]="['/user-extra', userExtra.id, 'view' ]">{{userExtra.id}}</a></td>
+                    <td>{{userExtra.secondLastName}}</td>
+                    <td>{{userExtra.phone}}</td>
+                    <td>{{userExtra.cellPhone}}</td>
+                    <td>{{userExtra.address}}</td>
+                    <td>{{userExtra.ranking}}</td>
+                    <td>{{userExtra.photograph}}</td>
+                    <td>{{userExtra.notification}}</td>
+                    <td>{{userExtra.userId}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit" [routerLink]="['/user-extra', userExtra.id, 'view' ]" class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/user-extra', userExtra.id, 'edit']"
-                                class="btn btn-primary btn-sm">
+                            <button type="submit" [routerLink]="['/user-extra', userExtra.id, 'edit']" class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline">Edit</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'user-extra', { outlets: { popup: userExtra.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
+                            <button type="submit" [routerLink]="['/', 'user-extra', { outlets: { popup: userExtra.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline">Delete</span>
                         </button>
-                    </div>
-                </td>
-            </tr>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

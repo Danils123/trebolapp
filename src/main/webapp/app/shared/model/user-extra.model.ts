@@ -11,7 +11,7 @@ export interface IUserExtra {
     ranking?: string;
     photograph?: string;
     notification?: string;
-    user?: IUser;
+    userId?: number;
     commerces?: ICommerce[];
     orderBuyers?: IRankingPerOrder[];
     orderSellers?: IRankingPerOrder[];
@@ -27,7 +27,7 @@ export class UserExtra implements IUserExtra {
         public ranking?: string,
         public photograph?: string,
         public notification?: string,
-        public user?: IUser,
+        userId?: number,
         public commerces?: ICommerce[],
         public orderBuyers?: IRankingPerOrder[],
         public orderSellers?: IRankingPerOrder[]
