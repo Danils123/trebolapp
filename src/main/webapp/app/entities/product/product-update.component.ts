@@ -11,7 +11,7 @@ import { CategoryService } from 'app/entities/category';
 import { ISubCategory } from 'app/shared/model/sub-category.model';
 import { SubCategoryService } from 'app/entities/sub-category';
 import Swal from 'sweetalert2';
-import { StylesCompileDependency } from '@angular/compiler';
+
 import { FileItem } from './file-item';
 import { HostListener } from '@angular/core';
 
@@ -26,7 +26,7 @@ export class ProductUpdateComponent implements OnInit {
     imagen: FileItem;
     isOverDrop = false;
     loadedImage = false;
-
+    existing = false;
     categories: ICategory[];
 
     subcategories: ISubCategory[];
@@ -43,6 +43,12 @@ export class ProductUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ product }) => {
             this.product = product;
+            if (this.product.image !== undefined && this.product.image !== '' && this.product.image !== null) {
+                this.loadedImage = true;
+            }
+            if (this.product.id !== undefined) {
+                this.existing = true;
+            }
         });
         this.categoryService
             .query()
@@ -66,6 +72,10 @@ export class ProductUpdateComponent implements OnInit {
 
     saveProduct() {
         this.isSaving = true;
+        if (this.imagen != undefined) {
+            this.product.image = this.imagen.url;
+            this.loadedImage = true;
+        }
         if (this.product.id !== undefined) {
             this.subscribeToSaveResponse(this.productService.update(this.product));
         } else {
@@ -111,12 +121,16 @@ export class ProductUpdateComponent implements OnInit {
 
     loadImage() {
         this.productService.saveImageFirebase(this.imagen);
+        this.product.image = this.imagen.url;
+        console.log(this.product.image);
+        this.loadedImage = true;
     }
 
     save() {}
 
     cleanImage() {
         this.imagen = undefined;
+        this.loadedImage = false;
     }
 
     @HostListener('dragover', ['$event'])

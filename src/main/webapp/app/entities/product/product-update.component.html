@@ -44,11 +44,9 @@
                             <div (isOverDrop)="isOverDropMethod = $event " [ngClass]="{ 'file-over': isOverDrop}" class="well drop-zone">
                                 <label class="form-control-label" for="field_image"></label>
                                 <br>
-                                <img src="../../../content/images/drop-images.png">
-                            </div>
-                            <input type="text" class="form-control" name="image" id="field_image" [(ngModel)]="product.image" #image="ngModel" [ngClass]="{'is-invalid': image.errors?.required && image.touched}" required/>
-                            <div *ngIf="image.errors?.required && image.touched" class="text-danger">
-                                Este campo es requerido
+                                <img *ngIf="loadedImage === true && existing === false" src="{{imagen.url}}" style="width: 400px; height: 280px">
+                                <img *ngIf="loadedImage === false " src="../../../content/images/drop-images.png">
+                                <img *ngIf="existing === true && product.image != undefined && product.image != ''" src="{{product.image}}" style="width: 400px; height: 280px">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -65,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td *ngIf="imagen != undefined">{{ imagen.fileName }}</td>
+                                        <td *ngIf="imagen != undefined" [ngClass]="{ 'text-green': imagen.progress >= 100}">{{ imagen.fileName }}</td>
                                         <td *ngIf="imagen != undefined">{{ imagen.file.size /1024 /1024 | number: '.2-2' }} MB</td>
                                         <td *ngIf="imagen != undefined">
                                             <div class="progress">

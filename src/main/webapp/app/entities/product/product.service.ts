@@ -50,15 +50,14 @@ export class ProductService {
             (snapshot: firebase.storage.UploadTaskSnapshot) => (image.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100),
             error => console.error('Error to upload', error),
             () => {
-                image.url = uploadTask.snapshot.downloadURL;
                 image.isUploading = false;
-                console.log(image.fileName);
+
+                uploadTask.then(snapshot => {
+                    snapshot.ref.getDownloadURL().then(url => {
+                        image.url = url;
+                    });
+                });
             }
         );
-        uploadTask.then(snapshot => {
-            snapshot.ref.getDownloadURL().then(url => {
-                console.log(url);
-            });
-        });
     }
 }
