@@ -4,7 +4,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new Product
+            Crear nuevo producto
             </span>
         </button>
     </h2>
@@ -34,7 +34,6 @@
                                 <th><span>Nombre</span></th>
                                 <th><span>Marca</span></th>
                                 <th><span>Descripción</span></th>
-                                <th><span>Imágen</span></th>
                                 <th><span>Categoría</span></th>
                                 <th><span>Subcategoría</span></th>
                                 <th></th>
@@ -47,7 +46,6 @@
                                 <td>{{product.name}}</td>
                                 <td>{{product.brand}}</td>
                                 <td>{{product.description}}</td>
-                                <td>{{product.image}}</td>
                                 <td>
                                     <div *ngIf="product.category">
                                         <a [routerLink]="['../category', product.category?.id, 'view' ]">{{product.category?.name}}</a>
@@ -62,15 +60,15 @@
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit" [routerLink]="['/product', product.id, 'view' ]" class="btn-info tableButtons ml-2">
                                         <fa-icon [icon]="'eye'"></fa-icon>
-                                        <span class="d-none d-md-inline">View</span>
+                                        <span class="d-none d-md-inline">Ver</span>
                                     </button>
                                         <button type="submit" [routerLink]="['/product', product.id, 'edit']" class="btn-primary tableButtons ml-2">
                                         <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                        <span class="d-none d-md-inline">Edit</span>
+                                        <span class="d-none d-md-inline">Editar</span>
                                     </button>
-                                        <button type="submit" [routerLink]="['/', 'product', { outlets: { popup: product.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge" class="btn-danger tableButtons ml-2">
+                                        <button type="submit" (click)='deleteItem(product.id)' class="btn-danger tableButtons ml-2 btn-sm">
                                         <fa-icon [icon]="'times'"></fa-icon>
-                                        <span class="d-none d-md-inline">Delete</span>
+                                        <span class="d-none d-md-inline">Eliminar</span>
                                     </button>
                                     </div>
                                 </td>

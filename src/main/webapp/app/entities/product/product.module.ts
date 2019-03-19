@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { TrebolSharedModule } from 'app/shared';
+import { NgDropFilesDirective } from '../../directives/ng-drop-files.directive';
 import {
     ProductComponent,
     ProductDetailComponent,
@@ -21,8 +21,11 @@ const ENTITY_STATES = [...productRoute, ...productPopupRoute];
         ProductDetailComponent,
         ProductUpdateComponent,
         ProductDeleteDialogComponent,
-        ProductDeletePopupComponent
+        ProductDeletePopupComponent,
+        NgDropFilesDirective
     ],
+    providers: [],
+
     entryComponents: [ProductComponent, ProductUpdateComponent, ProductDeleteDialogComponent, ProductDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
