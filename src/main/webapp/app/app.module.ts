@@ -23,6 +23,8 @@ import { TrebolEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.component';
 
 @NgModule({
     imports: [
@@ -47,7 +49,15 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         AngularFireModule.initializeApp(FirebaseEnvironment.firebase),
         AngularFirestoreModule
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent,
+        SidebarComponent,
+        BreadcrumbsComponent
+    ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,

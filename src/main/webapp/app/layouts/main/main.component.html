@@ -1,11 +1,20 @@
-<jhi-page-ribbon></jhi-page-ribbon>
-<div>
-    <router-outlet name="navbar"></router-outlet>
-</div>
-<div class="">
-    <div class="">
-        <router-outlet></router-outlet>
-        <router-outlet name="popup"></router-outlet>
+<div id="main-wrapper">
+    <jhi-page-ribbon></jhi-page-ribbon>
+    <div>
+        <router-outlet name="navbar"></router-outlet>
+    </div>
+    <jhi-sidebar></jhi-sidebar>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!--<jhi-breadcrumbs></jhi-breadcrumbs>-->
+            <div class="">
+             <div class="">
+                <router-outlet></router-outlet>
+                <router-outlet name="popup"></router-outlet>
+            </div>
+
+            </div>
+        </div>
     </div>
     <jhi-footer></jhi-footer>
 </div>
