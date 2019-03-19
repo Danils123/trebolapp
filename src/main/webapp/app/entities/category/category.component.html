@@ -29,18 +29,18 @@
                     <table class="table table-striped">
                         <thead>
                             <tr class="row">
-                                <th class="col-md-3"><span>ID</span></th>
+                                <th class="col-md-1"><span>ID</span></th>
                                 <th class="col-md-3"><span>Nombre</span></th>
-                                <th class="col-md-3"><span>Descripción</span></th>
-                                <th class="col-md-3"></th>
+                                <th class="col-md-4"><span>Descripción</span></th>
+                                <th class="col-md-4"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let category of filteredCategories ;trackBy: trackId" class="row">
-                                <td class="col-md-3"><a [routerLink]="['/category', category.id, 'view' ]">{{category.id}}</a></td>
+                                <td class="col-md-1"><a [routerLink]="['/category', category.id, 'view' ]">{{category.id}}</a></td>
                                 <td class="col-md-3">{{category.name}}</td>
-                                <td class="col-md-3">{{category.description}}</td>
-                                <td class="col-md-3" class="text-right">
+                                <td class="col-md-4">{{category.description}}</td>
+                                <td class="col-md-4">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit" [routerLink]="['/category', category.id, 'view' ]" class="btn-info tableButtons ml-2 btn-sm">
                                         <fa-icon [icon]="'eye'"></fa-icon>
