@@ -44,30 +44,30 @@
                             <div (isOverDrop)="isOverDropMethod = $event " [ngClass]="{ 'file-over': isOverDrop}" class="well drop-zone">
                                 <label class="form-control-label" for="field_image"></label>
                                 <br>
-                                <img *ngIf="loadedImage === true && existing === false" src="{{imagen.url}}" style="width: 400px; height: 280px">
-                                <img *ngIf="loadedImage === false " src="../../../content/images/drop-images.png">
-                                <img *ngIf="existing === true && product.image != undefined && product.image != ''" src="{{product.image}}" style="width: 400px; height: 280px">
+                                <img *ngIf="loadedImage === true" src="{{imageFirebase.url}}" style="width: 400px; height: 280px">
+                                <img *ngIf="loadedImage === false && imageFromDatabase === false" src="../../../content/images/drop-images.png">
+                                <img *ngIf="imageFromDatabase === true && loadedImage === false" src="{{product.image}}" style="width: 400px; height: 280px"> {{product.image}}
                             </div>
                         </div>
                         <div class="col-md-6">
 
-                            <button class="btn btn-success" (click)="loadImage()" [disabled]="imagen === undefined"> Agregar Imagen</button>
+                            <button class="btn btn-success" (click)="loadImage()" [disabled]="imageFirebase === undefined"> Agregar Imagen</button>
                             <button class="btn btn-danger" (click)="cleanImage()">Limpiar</button>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th *ngIf="imagen != undefined">Nombre archivo</th>
-                                        <th *ngIf="imagen != undefined">Tamaño</th>
-                                        <th *ngIf="imagen != undefined">Progreso</th>
+                                        <th *ngIf="imageFirebase != undefined">Nombre archivo</th>
+                                        <th *ngIf="imageFirebase != undefined">Tamaño</th>
+                                        <th *ngIf="imageFirebase != undefined">Progreso</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td *ngIf="imagen != undefined" [ngClass]="{ 'text-green': imagen.progress >= 100}">{{ imagen.fileName }}</td>
-                                        <td *ngIf="imagen != undefined">{{ imagen.file.size /1024 /1024 | number: '.2-2' }} MB</td>
-                                        <td *ngIf="imagen != undefined">
+                                        <td *ngIf="imageFirebase != undefined" [ngClass]="{ 'text-green': imageFirebase.progress >= 100}">{{ imageFirebase.fileName }}</td>
+                                        <td *ngIf="imageFirebase != undefined">{{ imageFirebase.file.size /1024 /1024 | number: '.2-2' }} MB</td>
+                                        <td *ngIf="imageFirebase != undefined">
                                             <div class="progress">
-                                                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': imagen.progress + '%' }"></div>
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': imageFirebase.progress + '%' }"></div>
                                             </div>
                                         </td>
                                     </tr>

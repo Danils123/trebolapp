@@ -23,10 +23,11 @@ import { HostListener } from '@angular/core';
 export class ProductUpdateComponent implements OnInit {
     product: IProduct;
     isSaving: boolean;
-    imagen: FileItem;
+    imageFirebase: FileItem;
     isOverDrop = false;
     loadedImage = false;
     existing = false;
+    imageFromDatabase = false;
     categories: ICategory[];
 
     subcategories: ISubCategory[];
@@ -44,7 +45,7 @@ export class ProductUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ product }) => {
             this.product = product;
             if (this.product.image !== undefined && this.product.image !== '' && this.product.image !== null) {
-                this.loadedImage = true;
+                this.imageFromDatabase = true;
             }
             if (this.product.id !== undefined) {
                 this.existing = true;
@@ -72,8 +73,8 @@ export class ProductUpdateComponent implements OnInit {
 
     saveProduct() {
         this.isSaving = true;
-        if (this.imagen != undefined) {
-            this.product.image = this.imagen.url;
+        if (this.imageFirebase != undefined) {
+            this.product.image = this.imageFirebase.url;
             this.loadedImage = true;
         }
         if (this.product.id !== undefined) {
@@ -120,8 +121,8 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     loadImage() {
-        this.productService.saveImageFirebase(this.imagen);
-        this.product.image = this.imagen.url;
+        this.productService.saveImageFirebase(this.imageFirebase);
+        this.product.image = this.imageFirebase.url;
         console.log(this.product.image);
         this.loadedImage = true;
     }
@@ -129,7 +130,7 @@ export class ProductUpdateComponent implements OnInit {
     save() {}
 
     cleanImage() {
-        this.imagen = undefined;
+        this.imageFirebase = undefined;
         this.loadedImage = false;
     }
 
@@ -176,8 +177,8 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     private imageHasBeenDropped(imageName: string): boolean {
-        if (this.imagen !== undefined) {
-            if (this.imagen.fileName === imageName) {
+        if (this.imageFirebase !== undefined) {
+            if (this.imageFirebase.fileName === imageName) {
                 console.log('Este archivo ya lo subio bestia apocaliptica');
                 return true;
             }
@@ -196,7 +197,7 @@ export class ProductUpdateComponent implements OnInit {
 
             if (this._fileCanBeUploaded(temporaryFile)) {
                 const newFile = new FileItem(temporaryFile);
-                this.imagen = newFile;
+                this.imageFirebase = newFile;
             }
         }
     }
