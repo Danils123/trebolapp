@@ -7,7 +7,6 @@ import { Ng2Webstorage } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
@@ -20,7 +19,7 @@ import { TrebolHomeModule } from './home/home.module';
 import { TrebolAccountModule } from './account/account.module';
 import { TrebolEntityModule } from './entities/entity.module';
 
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import * as moment from 'moment';
@@ -52,7 +51,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
         FormsModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
-        AngularFireStorageModule // imports firebase/storage only needed for storage features,
+        AngularFireStorageModule, // imports firebase/storage only needed for storage features,
+        AngularFirestoreModule
     ],
 
     declarations: [

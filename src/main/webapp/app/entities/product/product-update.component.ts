@@ -201,4 +201,6 @@ export class ProductUpdateComponent implements OnInit {
             }
         }
     }
+
+    isOverDropMethod() {}
 }

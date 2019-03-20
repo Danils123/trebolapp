@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FileItem } from './file-item';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore/firestore';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption, ITEMS_PER_PAGE } from 'app/shared';
 import { IProduct } from 'app/shared/model/product.model';
