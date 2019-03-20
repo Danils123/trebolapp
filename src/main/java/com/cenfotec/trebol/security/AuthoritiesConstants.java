@@ -19,4 +19,14 @@ public final class AuthoritiesConstants {
 
     private AuthoritiesConstants() {
     }
+
+    public static String getAuthoritiesConstants(int rolNumber) {
+        switch (rolNumber) {
+            case 0:
+                return COMPRA;
+            case 1:
+                return VENTA;
+        }
+        return COMPRA;
+    }
 }

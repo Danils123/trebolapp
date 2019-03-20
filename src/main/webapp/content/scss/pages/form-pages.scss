@@ -4,22 +4,6 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
-<<<<<<< HEAD
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*Theme Colors*/
-/*bootstrap Color*/
-/*Light colors*/
-/*Normal Color*/
-/*Extra Variable*/
-/*******************
-Custom-select
-******************/
-=======
 
 @import '../variable';
 
@@ -27,7 +11,6 @@ Custom-select
 Custom-select
 ******************/
 
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 .custom-select {
     background: url(../../content/images/custom-select.png) right 0.75rem center no-repeat;
 }
@@ -35,10 +18,7 @@ Custom-select
 /*******************
 textarea
 ******************/
-<<<<<<< HEAD
-=======
 
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 textarea {
     resize: none;
 }
@@ -46,14 +26,9 @@ textarea {
 /*******************
 Form-control
 ******************/
-<<<<<<< HEAD
-.form-control {
-    color: #67757c;
-=======
 
 .form-control {
     color: $bodytext;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     min-height: 38px;
     display: initial;
 }
@@ -68,19 +43,11 @@ Form-control
 }
 
 .custom-control-input:focus ~ .custom-control-indicator {
-<<<<<<< HEAD
-    -webkit-box-shadow: none;
-=======
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     box-shadow: none;
 }
 
 .custom-control-input:checked ~ .custom-control-indicator {
-<<<<<<< HEAD
-    background-color: #26dad2;
-=======
     background-color: $success;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 form label {
@@ -100,25 +67,13 @@ form label {
 }
 
 .form-bordered .form-group {
-<<<<<<< HEAD
-    border-bottom: 1px solid rgba(120, 130, 140, 0.13);
-=======
     border-bottom: 1px solid $border;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     padding-bottom: 20px;
 }
 
 /*******************
 Form Dropzone
 ******************/
-<<<<<<< HEAD
-.dropzone {
-    border: 1px dashed #b1b8bb;
-}
-.dropzone .dz-message {
-    padding: 5% 0;
-    margin: 0px;
-=======
 
 .dropzone {
     border: 1px dashed $form-brd;
@@ -126,16 +81,12 @@ Form Dropzone
         padding: 5% 0;
         margin: 0px;
     }
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 /*******************
 Form Pickers
 ******************/
-<<<<<<< HEAD
-=======
 
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 .asColorPicker-dropdown {
     max-width: 260px;
 }
@@ -163,24 +114,15 @@ table th {
 
 .daterangepicker td.active,
 .daterangepicker td.active:hover {
-<<<<<<< HEAD
-    background-color: #398bf7;
-=======
     background-color: $themecolor;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 .datepicker table tr td.today,
 .datepicker table tr td.today.disabled,
 .datepicker table tr td.today.disabled:hover,
 .datepicker table tr td.today:hover {
-<<<<<<< HEAD
-    background: #398bf7;
-    color: #ffffff;
-=======
     background: $themecolor;
     color: $white;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 .datepicker td,
@@ -191,29 +133,18 @@ table th {
 /*******************
 Form summernote
 ******************/
-<<<<<<< HEAD
-=======
 
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 .note-popover,
 .note-icon-caret {
     display: none;
 }
 
 .note-editor.note-frame {
-<<<<<<< HEAD
-    border: 1px solid #b1b8bb;
-}
-.note-editor.note-frame .panel-heading {
-    padding: 6px 10px 10px;
-    border-bottom: 1px solid rgba(120, 130, 140, 0.13);
-=======
     border: 1px solid $form-brd;
     .panel-heading {
         padding: 6px 10px 10px;
         border-bottom: 1px solid $border;
     }
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 .label {
@@ -223,32 +154,13 @@ Form summernote
 /*============================================================== 
 Form addons page
 ============================================================== */
-<<<<<<< HEAD
-/*Bootstrap select*/
-=======
 
 /*Bootstrap select*/
 
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 .bootstrap-select:not([class*='col-']):not([class*='form-control']):not(.input-group-btn) {
     width: 100%;
 }
 
-<<<<<<< HEAD
-.bootstrap-select .dropdown-menu li a {
-    display: block;
-    padding: 7px 20px;
-    clear: both;
-    font-weight: 400;
-    line-height: 1.42857143;
-    color: #67757c;
-    white-space: nowrap;
-}
-.bootstrap-select .dropdown-menu li a:hover,
-.bootstrap-select .dropdown-menu li a:focus {
-    color: #398bf7;
-    background: #f2f4f8;
-=======
 .bootstrap-select {
     .dropdown-menu {
         li a {
@@ -269,26 +181,12 @@ Form addons page
     .show > .dropdown-menu {
         display: block;
     }
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 .bootstrap-touchspin .input-group-btn-vertical > .btn {
     padding: 9px 10px;
 }
 
-<<<<<<< HEAD
-.select2-container--default .select2-selection--single {
-    border-color: #b1b8bb;
-    height: 38px;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 38px;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 33px;
-=======
 .select2-container--default {
     .select2-selection--single {
         border-color: $form-brd;
@@ -317,58 +215,33 @@ Form addons page
 
 .input-form .btn {
     padding: 8px 12px;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 /*============================================================== 
 Form Material page
  ============================================================== */
-<<<<<<< HEAD
-/*Material inputs*/
-=======
 
 /*Material inputs*/
 
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 .form-material .form-group {
     overflow: hidden;
 }
 
 .form-material .form-control {
-<<<<<<< HEAD
-    background-color: transparent;
-=======
     background-color: rgba(0, 0, 0, 0);
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     background-position: center bottom, center calc(100% - 1px);
     background-repeat: no-repeat;
     background-size: 0 2px, 100% 1px;
     padding: 0;
-<<<<<<< HEAD
-    -webkit-transition: background 0s ease-out 0s;
-    -o-transition: background 0s ease-out 0s;
-=======
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     transition: background 0s ease-out 0s;
 }
 
 .form-material .form-control,
 .form-material .form-control.focus,
 .form-material .form-control:focus {
-<<<<<<< HEAD
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#398bf7), to(#398bf7)),
-        -webkit-gradient(linear, left top, left bottom, from(#b1b8bb), to(#b1b8bb));
-    background-image: -webkit-linear-gradient(#398bf7, #398bf7), -webkit-linear-gradient(#b1b8bb, #b1b8bb);
-    background-image: -o-linear-gradient(#398bf7, #398bf7), -o-linear-gradient(#b1b8bb, #b1b8bb);
-    background-image: linear-gradient(#398bf7, #398bf7), linear-gradient(#b1b8bb, #b1b8bb);
-    border: 0 none;
-    border-radius: 0;
-    -webkit-box-shadow: none;
-=======
     background-image: linear-gradient($themecolor, $themecolor), linear-gradient($light, $light);
     border: 0 none;
     border-radius: 0;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     box-shadow: none;
     float: none;
 }
@@ -377,11 +250,6 @@ Form Material page
 .form-material .form-control:focus {
     background-size: 100% 2px, 100% 1px;
     outline: 0 none;
-<<<<<<< HEAD
-    -webkit-transition-duration: 0.3s;
-    -o-transition-duration: 0.3s;
-=======
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
     transition-duration: 0.3s;
 }
 
@@ -393,12 +261,6 @@ Form Material page
     border: 0px;
     border-radius: 0px;
     padding-left: 0px;
-<<<<<<< HEAD
-    border-bottom: 1px solid #b1b8bb;
-}
-.form-control-line .form-control:focus {
-    border-bottom: 1px solid #398bf7;
-=======
     border-bottom: 1px solid #f6f9ff;
     &:focus {
         border-bottom: 1px solid $themecolor;
@@ -411,28 +273,11 @@ Form validation error
 
 .error .help-block {
     color: $red;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }
 
 /*******************
 File Upload 
 ******************/
-<<<<<<< HEAD
-.fileupload {
-    overflow: hidden;
-    position: relative;
-}
-.fileupload input.upload {
-    cursor: pointer;
-    filter: alpha(opacity=0);
-    font-size: 20px;
-    margin: 0;
-    opacity: 0;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-=======
 
 .fileupload {
     overflow: hidden;
@@ -449,9 +294,11 @@ File Upload
         top: 0;
     }
 }
+
 /*******************
 This is for the checkbox radio button and switch 
 ******************/
+
 $btn-box-shadow: 0 3px 4px 1px rgba(0, 0, 0, 0.1);
 $btn-box-shadow-hover: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 $box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
@@ -482,6 +329,7 @@ $colors: (
 
 /* Radio Buttons
    ========================================================================== */
+
 [type='radio']:not(:checked),
 [type='radio']:checked {
     position: absolute;
@@ -520,6 +368,7 @@ $colors: (
 }
 
 /* Unchecked styles */
+
 [type='radio']:not(:checked) + label:before,
 [type='radio']:not(:checked) + label:after,
 [type='radio']:checked + label:before,
@@ -541,6 +390,7 @@ $colors: (
 }
 
 /* Checked styles */
+
 [type='radio']:checked + label:before {
     border: 2px solid transparent;
     animation: ripple 0.2s linear forwards;
@@ -564,18 +414,21 @@ $colors: (
 }
 
 /* Radio With gap */
+
 [type='radio'].with-gap:checked + label:after {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);
 }
 
 /* Focused styles */
+
 [type='radio'].tabbed:focus + label:before {
     box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
     animation: ripple 0.2s linear forwards;
 }
 
 /* Disabled Radio With gap */
+
 [type='radio'].with-gap:disabled:checked + label:before {
     border: 2px solid rgba(0, 0, 0, 0.26);
     animation: ripple 0.2s linear forwards;
@@ -587,6 +440,7 @@ $colors: (
 }
 
 /* Disabled style */
+
 [type='radio']:disabled:not(:checked) + label:before,
 [type='radio']:disabled:checked + label:before {
     background-color: transparent;
@@ -609,7 +463,9 @@ $colors: (
 
 /* Checkboxes
    ========================================================================== */
+
 /* CUSTOM CSS CHECKBOXES */
+
 form p {
     margin-bottom: 10px;
     text-align: left;
@@ -620,6 +476,7 @@ form p:last-child {
 }
 
 /* Remove default checkbox */
+
 [type='checkbox']:not(:checked),
 [type='checkbox']:checked {
     position: absolute;
@@ -707,6 +564,7 @@ form p:last-child {
 }
 
 /* Indeterminate checkbox */
+
 [type='checkbox']:indeterminate + label:before {
     top: -11px;
     left: -12px;
@@ -821,6 +679,7 @@ form p:last-child {
 
 /* Switch
    ========================================================================== */
+
 .switch,
 .switch * {
     -webkit-user-select: none;
@@ -903,6 +762,7 @@ input[type='checkbox']:not(:disabled).tabbed:focus ~ .lever::after {
     display: inline-block;
     transform-origin: right 0px;
 }
+
 .scale-up-left {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -911,15 +771,19 @@ input[type='checkbox']:not(:disabled).tabbed:focus ~ .lever::after {
     display: inline-block;
     transform-origin: left 0px;
 }
+
 .show > .scale-up {
     transform: scale(1);
     transform-origin: right 0px;
 }
+
 .show > .scale-up-left {
     transform: scale(1);
     transform-origin: left 0px;
 }
+
 /*panels*/
+
 .card {
     box-shadow: $box-shadow;
     border-radius: $radius;
@@ -933,6 +797,7 @@ pre {
 .page-titles .justify-content-end:last-child .d-flex {
     margin-right: 10px;
 }
+
 .btn-circle.right-side-toggle {
     position: fixed;
     bottom: 20px;
@@ -942,6 +807,7 @@ pre {
 }
 
 /*Radio button*/
+
 @keyframes ripple {
     0% {
         box-shadow: 0px 0px 0px 1px transparent;
@@ -955,7 +821,9 @@ pre {
 }
 
 /*Floating label*/
+
 /*Bootstrap Select*/
+
 .bootstrap-select.btn-group .dropdown-menu {
     box-shadow: $box-shadow;
 }
@@ -965,21 +833,21 @@ pre {
     min-width: 200px;
     margin-bottom: 20px;
 }
+
 .demo-swtich .demo-switch-title,
 .demo-swtich .switch {
     width: 150px;
     margin-bottom: 10px;
     display: inline-block;
 }
+
 [type='checkbox'] {
     + label {
         padding-left: 26px;
         height: 25px;
         line-height: 21px;
-
         font-weight: normal;
     }
-
     &:checked {
         + label {
             &:before {
@@ -990,7 +858,6 @@ pre {
             }
         }
     }
-
     @each $key, $val in $colors {
         &:checked.chk-col-#{'' + $key} {
             + label {
@@ -1014,14 +881,12 @@ pre {
                 background-color: #26a69a;
                 z-index: 0;
             }
-
             &:before {
                 border-right: 2px solid #fff !important;
                 border-bottom: 2px solid #fff !important;
             }
         }
     }
-
     @each $key, $val in $colors {
         &:checked.chk-col-#{'' + $key} {
             + label {
@@ -1040,17 +905,14 @@ pre {
             padding-left: 26px;
             height: 25px;
             line-height: 25px;
-
             font-weight: normal;
         }
     }
-
     &:checked {
         + label {
             padding-left: 26px;
             height: 25px;
             line-height: 25px;
-
             font-weight: normal;
         }
     }
@@ -1078,7 +940,6 @@ pre {
                     border: 2px solid $val;
                     animation: ripple 0.2s linear forwards;
                 }
-
                 &:after {
                     background-color: $val;
                     border: 2px solid $val;
@@ -1093,11 +954,9 @@ pre {
     label {
         font-weight: normal;
         font-size: 13px;
-
         .lever {
             margin: 0 14px;
         }
-
         input[type='checkbox'] {
             &:checked {
                 @each $key, $val in $colors {
@@ -1110,10 +969,8 @@ pre {
                             }
                         }
                     }
-
                     + .lever.switch-col-#{'' + $key} {
                         background-color: rgba($val, 0.5);
-
                         &:after {
                             background-color: $val;
                         }
@@ -1125,6 +982,7 @@ pre {
 }
 
 /*Form Validation*/
+
 .help-block ul {
     padding: 0px;
     margin: 0px;
@@ -1132,10 +990,11 @@ pre {
         list-style: none;
     }
 }
+
 .error .form-control {
     border-color: $danger;
 }
+
 .validate .form-control {
     border-color: $success;
->>>>>>> aa0503823380fbe435a771df48037321cb2e5b5a
 }

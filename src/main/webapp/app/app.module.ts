@@ -19,8 +19,6 @@ import { TrebolAppRoutingModule } from './app-routing.module';
 import { TrebolHomeModule } from './home/home.module';
 import { TrebolAccountModule } from './account/account.module';
 import { TrebolEntityModule } from './entities/entity.module';
-import { TextMaskModule } from 'angular2-text-mask';
-import { UiSwitchModule } from 'angular2-ui-switch';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -38,7 +36,6 @@ import { CONFIG_FIREBASE } from './app.constants';
         BrowserModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-' }),
         NgJhipsterModule.forRoot({
-            // set below to true to make alerts look like toast
             alertAsToast: false,
             alertTimeout: 5000
         }),
@@ -46,7 +43,6 @@ import { CONFIG_FIREBASE } from './app.constants';
         TrebolCoreModule,
         TrebolHomeModule,
         TrebolAccountModule,
-        // jhipster-needle-angular-add-module JHipster will add new module here
         TrebolEntityModule,
         TrebolAppRoutingModule,
         ToastrModule.forRoot(),
@@ -54,21 +50,18 @@ import { CONFIG_FIREBASE } from './app.constants';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        TextMaskModule,
-        UiSwitchModule,
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
-        AngularFireStorageModule, // imports firebase/storage only needed for storage features,
+        AngularFireStorageModule // imports firebase/storage only needed for storage features,
+    ],
+
+    declarations: [
         JhiMainComponent,
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
         FooterComponent,
         SidebarComponent,
-        BreadcrumbsComponent
-    ],
-
-    declarations: [
-        JhiMainComponent,
+        BreadcrumbsComponent,
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,

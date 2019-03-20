@@ -6,6 +6,7 @@ import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from '../../entities/user-extra/user-extra.service';
 
 import Swal from 'sweetalert2';
+import emailMask from 'text-mask-addons/dist/emailMask';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseService } from 'app/services/firebase.service';
 
@@ -27,6 +28,7 @@ export class SettingsComponent implements OnInit {
     public stars: 5;
     public phoneModel = '';
     public phoneMask: Array<string | RegExp>;
+    public emailMask = emailMask;
     constructor(
         private accountService: AccountService,
         public textMask: TextMaskModule,
@@ -34,7 +36,7 @@ export class SettingsComponent implements OnInit {
         private toastr: ToastrService,
         private firebase: FirebaseService
     ) {
-        this.phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+        this.phoneMask = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class SettingsComponent implements OnInit {
                 this.checked = JSON.parse(this.userExtra.notification);
                 this.ranking = new Array(JSON.parse(this.userExtra.notification));
 
-                console.log(this.settingsAccount);
+                console.log(this.emailMask);
             });
         });
     }

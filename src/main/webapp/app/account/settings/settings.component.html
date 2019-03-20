@@ -63,7 +63,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label class="form-control-label" for="email">Correo electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Su correo electrónico" [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>
+                            <input type="text" class="form-control" [textMask]="{mask: emailMask}" id="email" name="email" placeholder="Su correo electrónico" [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>
                             <div *ngIf="emailInput.dirty && emailInput.invalid">
                                 <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
                                             Su correo electrónico es requerido.
@@ -85,8 +85,8 @@
                     <div class="col">
                         <div class="form-group">
                             <label class="form-control-label" for="phone">Teléfono de casa</label>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Teléfono de casa" [(ngModel)]="settingsAccount.phone" minlength="8" maxlength="8" #phoneInput="ngModel" required>
-                            <small class="text-muted">ex. (999) 999-9999</small>
+                            <input type="text" class="form-control" id="phone" name="phone" [textMask]="{mask: phoneMask}" placeholder="Teléfono de casa" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" required>
+                            <small class="text-muted">ex. 9999-9999</small>
                             <div *ngIf="phoneInput.dirty && phoneInput.invalid">
                                 <small class="form-text text-danger" *ngIf="phoneInput.errors?.required">
                                             Su télefono es requerido.
@@ -103,7 +103,8 @@
                     <div class="col">
                         <div class="form-group">
                             <label class="form-control-label" for="cellPhone">Teléfono celular</label>
-                            <input type="text" class="form-control" id="cellPhone" name="cellPhone" placeholder="Teléfono celular" [(ngModel)]="settingsAccount.cellPhone" minlength="8" maxlength="8" #cellPhoneInput="ngModel" required>
+                            <input type="text" class="form-control" id="cellPhone" name="cellPhone" [textMask]="{mask: phoneMask}" placeholder="Teléfono celular" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel" required>
+                            <small class="text-muted">ex. 9999-9999</small>
                             <div *ngIf="cellPhoneInput.dirty && cellPhoneInput.invalid">
                                 <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.required">
                                         Su télefono es requerido
@@ -155,13 +156,16 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col">
                         <label for="file">File:</label>
                         <input type="file" (change)="upload($event)" accept=".png,.jpg" />
                     </div>
+                </div> -->
+                <div class="row">
+                    <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary pull-left">Guardar</button>
                 </div>
-                <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary">Save</button>
+
             </form>
         </div>
     </div>

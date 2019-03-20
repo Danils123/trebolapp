@@ -2,6 +2,7 @@ package com.cenfotec.trebol.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -51,9 +52,6 @@ public class UserExtra implements Serializable {
     @Column(name = "userId")
     private Long userId;
 
-//    @OneToOne
-//    @JoinColumn(unique = true)
-//    private User user;
 
     @OneToMany(mappedBy = "userExtra")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -175,19 +173,6 @@ public class UserExtra implements Serializable {
     public void setNotification(String notification) {
         this.notification = notification;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public UserExtra user(User user) {
-//        this.user = user;
-//        return this;
-//    }
-
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public Set<Commerce> getCommerces() {
         return commerces;

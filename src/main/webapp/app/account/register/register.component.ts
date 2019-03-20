@@ -10,10 +10,16 @@ import { FooterService } from 'app/layouts/footer/footer.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { SidebarService } from 'app/layouts/sidebar/sidebar.service';
+
+import { trigger, transition, useAnimation } from '@angular/animations';
+import { fadeIn } from 'ng-animate';
+
 @Component({
     selector: 'jhi-register',
     templateUrl: './register.component.html',
-    styleUrls: ['./register.component.scss']
+    styleUrls: ['./register.component.scss'],
+    animations: [trigger('fadeIn', [transition('* => *', useAnimation(fadeIn))])]
 })
 export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     confirmPassword: string;
@@ -24,6 +30,8 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
+    rolActive = 0;
+    fadeIn: any;
 
     constructor(
         private loginModalService: LoginModalService,
@@ -33,7 +41,8 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         public nav: NavbarService,
         private router: Router,
         public footer: FooterService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private sidebar: SidebarService
     ) {}
 
     ngOnInit() {
@@ -41,11 +50,13 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.registerAccount = {};
         this.nav.hide();
         this.footer.hide();
+        // this.sidebar.hide();
     }
 
     ngOnDestroy(): void {
         this.nav.show();
-        this.footer.hide();
+        this.footer.show();
+        this.sidebar.show();
     }
 
     ngAfterViewInit() {
@@ -61,6 +72,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorUserExists = null;
             this.errorEmailExists = null;
             this.registerAccount.langKey = 'en';
+            this.registerAccount.rolNumber = this.rolActive;
             this.registerService.save(this.registerAccount).subscribe(
                 () => {
                     this.success = true;
@@ -83,6 +95,10 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
     openLogin() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    cambiarRol(rol: number) {
+        this.rolActive = rol;
     }
 
     private processError(response: HttpErrorResponse) {

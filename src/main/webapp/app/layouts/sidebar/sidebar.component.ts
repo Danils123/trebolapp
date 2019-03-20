@@ -3,6 +3,7 @@ import { AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { SidebarService } from './sidebar.service';
 
 @Component({
     selector: 'jhi-sidebar',
@@ -20,7 +21,8 @@ export class SidebarComponent implements OnInit {
         private accountService: AccountService,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private sd: SidebarService
     ) {}
 
     ngOnInit() {
