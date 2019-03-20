@@ -52,6 +52,28 @@ public class UserExtraResource {
     }
 
     /**
+     * POST  /user-extras : Create a new userExtra.
+     *
+     * @param userExtra the userExtra to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new userExtra, or with status 400 (Bad Request) if the userExtra has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/user-extras-WithoutId")
+    public ResponseEntity<UserExtra> updateUserExtraWithoutId(@RequestBody UserExtra userExtra) throws URISyntaxException {
+        log.debug("REST request to update UserExtra : {}", userExtra);
+        if (userExtra.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+
+        Optional<UserExtra> userExtra1 = userExtraRepository.findByUserId(userExtra.getUserId());
+
+        UserExtra result = userExtraRepository.save(userExtra1.get());
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExtra.getId().toString()))
+            .body(result);
+    }
+
+    /**
      * PUT  /user-extras : Updates an existing userExtra.
      *
      * @param userExtra the userExtra to update
@@ -84,6 +106,18 @@ public class UserExtraResource {
     }
 
     /**
+     * GET  /user-extras : get all the userExtras.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of userExtras in body
+     */
+    @GetMapping("/user-extras-byUserId/{userId}")
+    public ResponseEntity<UserExtra>  getUserByUserId(@PathVariable Long userId) {
+        log.debug("REST request to get all UserExtras");
+        Optional<UserExtra> userExtra = userExtraRepository.findByUserId(userId);
+        return ResponseUtil.wrapOrNotFound(userExtra);
+    }
+
+    /**
      * GET  /user-extras/:id : get the "id" userExtra.
      *
      * @param id the id of the userExtra to retrieve
@@ -93,6 +127,13 @@ public class UserExtraResource {
     public ResponseEntity<UserExtra> getUserExtra(@PathVariable Long id) {
         log.debug("REST request to get UserExtra : {}", id);
         Optional<UserExtra> userExtra = userExtraRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(userExtra);
+    }
+
+    @GetMapping("/user-extras-byId/{id}")
+    public ResponseEntity<UserExtra> getUserExtraByUserId(@PathVariable Long id) {
+        log.debug("REST request to get UserExtra : {}", id);
+        Optional<UserExtra> userExtra = userExtraRepository.findByUserId(id);
         return ResponseUtil.wrapOrNotFound(userExtra);
     }
 

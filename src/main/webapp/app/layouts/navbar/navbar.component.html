@@ -1,7 +1,7 @@
 <!-- ============================================================== -->
 <!-- Topbar header - style you can find in pages.scss -->
 <!-- ============================================================== -->
-<header class="topbar">
+<header *ngIf="nav.visible" class="topbar">
     <nav class="navbar top-navbar navbar-expand-md navbar-light">
         <!-- ============================================================== -->
         <!-- Logo -->
@@ -25,7 +25,8 @@
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse" >
+
+        <div class="navbar-collapse">
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
@@ -113,16 +114,18 @@
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
-                                     <span *ngIf="!getImageUrl()">
+
+
+                                    <span *ngIf="!getImageUrl()">
                                     <div class="u-img"><img src="../../../content/images/users/1.jpg" alt="user"></div>
                                     </span>
-                                         <span *ngIf="getImageUrl()">
+                                    <span *ngIf="getImageUrl()">
                                              <div class="u-img"><img [src]="getImageUrl()" alt="user"></div>
                                         </span>
-                                         <div class="u-text">
+                                    <div class="u-text">
                                         <h4>Steave Jobs</h4>
                                         <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
-                                         </div>
+                                    </div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
@@ -142,4 +145,3 @@
 </header>
 <!-- ============================================================== -->
 <!-- End Topbar header -->
-<!-- ============================================================== -->

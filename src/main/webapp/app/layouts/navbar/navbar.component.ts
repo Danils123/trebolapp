@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { NavbarService } from 'app/layouts/navbar/navbar.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
         private accountService: AccountService,
         private loginModalService: LoginModalService,
         private router: Router,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        public nav: NavbarService
     ) {}
 
     ngOnInit() {

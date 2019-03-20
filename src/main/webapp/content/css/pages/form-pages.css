@@ -1,23 +1,17 @@
-/*
-Template Name: Admin pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
 /*Theme Colors*/
+
 /*bootstrap Color*/
+
 /*Light colors*/
+
 /*Normal Color*/
+
 /*Extra Variable*/
+
 /*******************
 Custom-select
 ******************/
+
 .custom-select {
     background: url(../../content/images/custom-select.png) right 0.75rem center no-repeat;
 }
@@ -25,6 +19,7 @@ Custom-select
 /*******************
 textarea
 ******************/
+
 textarea {
     resize: none;
 }
@@ -32,6 +27,7 @@ textarea {
 /*******************
 Form-control
 ******************/
+
 .form-control {
     color: #67757c;
     min-height: 38px;
@@ -80,9 +76,11 @@ form label {
 /*******************
 Form Dropzone
 ******************/
+
 .dropzone {
     border: 1px dashed #b1b8bb;
 }
+
 .dropzone .dz-message {
     padding: 5% 0;
     margin: 0px;
@@ -91,6 +89,7 @@ Form Dropzone
 /*******************
 Form Pickers
 ******************/
+
 .asColorPicker-dropdown {
     max-width: 260px;
 }
@@ -137,6 +136,7 @@ table th {
 /*******************
 Form summernote
 ******************/
+
 .note-popover,
 .note-icon-caret {
     display: none;
@@ -145,6 +145,7 @@ Form summernote
 .note-editor.note-frame {
     border: 1px solid #b1b8bb;
 }
+
 .note-editor.note-frame .panel-heading {
     padding: 6px 10px 10px;
     border-bottom: 1px solid rgba(120, 130, 140, 0.13);
@@ -157,7 +158,9 @@ Form summernote
 /*============================================================== 
 Form addons page
 ============================================================== */
+
 /*Bootstrap select*/
+
 .bootstrap-select:not([class*='col-']):not([class*='form-control']):not(.input-group-btn) {
     width: 100%;
 }
@@ -171,6 +174,7 @@ Form addons page
     color: #67757c;
     white-space: nowrap;
 }
+
 .bootstrap-select .dropdown-menu li a:hover,
 .bootstrap-select .dropdown-menu li a:focus {
     color: #398bf7;
@@ -197,7 +201,9 @@ Form addons page
 /*============================================================== 
 Form Material page
  ============================================================== */
+
 /*Material inputs*/
+
 .form-material .form-group {
     overflow: hidden;
 }
@@ -247,6 +253,7 @@ Form Material page
     padding-left: 0px;
     border-bottom: 1px solid #b1b8bb;
 }
+
 .form-control-line .form-control:focus {
     border-bottom: 1px solid #398bf7;
 }
@@ -254,10 +261,12 @@ Form Material page
 /*******************
 File Upload 
 ******************/
+
 .fileupload {
     overflow: hidden;
     position: relative;
 }
+
 .fileupload input.upload {
     cursor: pointer;
     filter: alpha(opacity=0);

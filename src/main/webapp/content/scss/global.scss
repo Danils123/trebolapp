@@ -269,9 +269,21 @@ File: scss
 @import '../scss/icons/themify-icons/themify-icons.css';
 @import '../scss/icons/flag-icon-css/flag-icon.min.css';
 @import '../scss/icons/material-design-iconic-font/css/materialdesignicons.min.css';
-//@import 'widgets/widgets';
+@import 'widgets/widgets';
 @import 'grid';
 @import 'responsive';
 @import '../css/spinners.css';
 @import '../css/animate.css';
+.custom-switches {
+    .switch {
+        background: #fb6542;
+        small {
+            background: #375e97;
+        }
+        &.checked {
+            background: #3f681c;
+        }
+    }
+}
+
 @import 'colors/default-dark';

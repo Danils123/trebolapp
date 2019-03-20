@@ -294,9 +294,11 @@ File Upload
         top: 0;
     }
 }
+
 /*******************
 This is for the checkbox radio button and switch 
 ******************/
+
 $btn-box-shadow: 0 3px 4px 1px rgba(0, 0, 0, 0.1);
 $btn-box-shadow-hover: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 $box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
@@ -327,6 +329,7 @@ $colors: (
 
 /* Radio Buttons
    ========================================================================== */
+
 [type='radio']:not(:checked),
 [type='radio']:checked {
     position: absolute;
@@ -365,6 +368,7 @@ $colors: (
 }
 
 /* Unchecked styles */
+
 [type='radio']:not(:checked) + label:before,
 [type='radio']:not(:checked) + label:after,
 [type='radio']:checked + label:before,
@@ -386,6 +390,7 @@ $colors: (
 }
 
 /* Checked styles */
+
 [type='radio']:checked + label:before {
     border: 2px solid transparent;
     animation: ripple 0.2s linear forwards;
@@ -409,18 +414,21 @@ $colors: (
 }
 
 /* Radio With gap */
+
 [type='radio'].with-gap:checked + label:after {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);
 }
 
 /* Focused styles */
+
 [type='radio'].tabbed:focus + label:before {
     box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
     animation: ripple 0.2s linear forwards;
 }
 
 /* Disabled Radio With gap */
+
 [type='radio'].with-gap:disabled:checked + label:before {
     border: 2px solid rgba(0, 0, 0, 0.26);
     animation: ripple 0.2s linear forwards;
@@ -432,6 +440,7 @@ $colors: (
 }
 
 /* Disabled style */
+
 [type='radio']:disabled:not(:checked) + label:before,
 [type='radio']:disabled:checked + label:before {
     background-color: transparent;
@@ -454,7 +463,9 @@ $colors: (
 
 /* Checkboxes
    ========================================================================== */
+
 /* CUSTOM CSS CHECKBOXES */
+
 form p {
     margin-bottom: 10px;
     text-align: left;
@@ -465,6 +476,7 @@ form p:last-child {
 }
 
 /* Remove default checkbox */
+
 [type='checkbox']:not(:checked),
 [type='checkbox']:checked {
     position: absolute;
@@ -552,6 +564,7 @@ form p:last-child {
 }
 
 /* Indeterminate checkbox */
+
 [type='checkbox']:indeterminate + label:before {
     top: -11px;
     left: -12px;
@@ -666,6 +679,7 @@ form p:last-child {
 
 /* Switch
    ========================================================================== */
+
 .switch,
 .switch * {
     -webkit-user-select: none;
@@ -748,6 +762,7 @@ input[type='checkbox']:not(:disabled).tabbed:focus ~ .lever::after {
     display: inline-block;
     transform-origin: right 0px;
 }
+
 .scale-up-left {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -756,15 +771,19 @@ input[type='checkbox']:not(:disabled).tabbed:focus ~ .lever::after {
     display: inline-block;
     transform-origin: left 0px;
 }
+
 .show > .scale-up {
     transform: scale(1);
     transform-origin: right 0px;
 }
+
 .show > .scale-up-left {
     transform: scale(1);
     transform-origin: left 0px;
 }
+
 /*panels*/
+
 .card {
     box-shadow: $box-shadow;
     border-radius: $radius;
@@ -778,6 +797,7 @@ pre {
 .page-titles .justify-content-end:last-child .d-flex {
     margin-right: 10px;
 }
+
 .btn-circle.right-side-toggle {
     position: fixed;
     bottom: 20px;
@@ -787,6 +807,7 @@ pre {
 }
 
 /*Radio button*/
+
 @keyframes ripple {
     0% {
         box-shadow: 0px 0px 0px 1px transparent;
@@ -800,7 +821,9 @@ pre {
 }
 
 /*Floating label*/
+
 /*Bootstrap Select*/
+
 .bootstrap-select.btn-group .dropdown-menu {
     box-shadow: $box-shadow;
 }
@@ -810,21 +833,21 @@ pre {
     min-width: 200px;
     margin-bottom: 20px;
 }
+
 .demo-swtich .demo-switch-title,
 .demo-swtich .switch {
     width: 150px;
     margin-bottom: 10px;
     display: inline-block;
 }
+
 [type='checkbox'] {
     + label {
         padding-left: 26px;
         height: 25px;
         line-height: 21px;
-
         font-weight: normal;
     }
-
     &:checked {
         + label {
             &:before {
@@ -835,7 +858,6 @@ pre {
             }
         }
     }
-
     @each $key, $val in $colors {
         &:checked.chk-col-#{'' + $key} {
             + label {
@@ -859,14 +881,12 @@ pre {
                 background-color: #26a69a;
                 z-index: 0;
             }
-
             &:before {
                 border-right: 2px solid #fff !important;
                 border-bottom: 2px solid #fff !important;
             }
         }
     }
-
     @each $key, $val in $colors {
         &:checked.chk-col-#{'' + $key} {
             + label {
@@ -885,17 +905,14 @@ pre {
             padding-left: 26px;
             height: 25px;
             line-height: 25px;
-
             font-weight: normal;
         }
     }
-
     &:checked {
         + label {
             padding-left: 26px;
             height: 25px;
             line-height: 25px;
-
             font-weight: normal;
         }
     }
@@ -923,7 +940,6 @@ pre {
                     border: 2px solid $val;
                     animation: ripple 0.2s linear forwards;
                 }
-
                 &:after {
                     background-color: $val;
                     border: 2px solid $val;
@@ -938,11 +954,9 @@ pre {
     label {
         font-weight: normal;
         font-size: 13px;
-
         .lever {
             margin: 0 14px;
         }
-
         input[type='checkbox'] {
             &:checked {
                 @each $key, $val in $colors {
@@ -955,10 +969,8 @@ pre {
                             }
                         }
                     }
-
                     + .lever.switch-col-#{'' + $key} {
                         background-color: rgba($val, 0.5);
-
                         &:after {
                             background-color: $val;
                         }
@@ -970,6 +982,7 @@ pre {
 }
 
 /*Form Validation*/
+
 .help-block ul {
     padding: 0px;
     margin: 0px;
@@ -977,9 +990,11 @@ pre {
         list-style: none;
     }
 }
+
 .error .form-control {
     border-color: $danger;
 }
+
 .validate .form-control {
     border-color: $success;
 }

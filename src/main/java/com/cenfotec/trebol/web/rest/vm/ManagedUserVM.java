@@ -12,6 +12,9 @@ public class ManagedUserVM extends UserDTO {
 
     public static final int PASSWORD_MAX_LENGTH = 100;
 
+
+    public int rolNumber;
+
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
@@ -25,6 +28,14 @@ public class ManagedUserVM extends UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getRolNumber() {
+        return rolNumber;
+    }
+
+    public void setRolNumber(int rolNumber) {
+        this.rolNumber = rolNumber;
     }
 
     @Override
