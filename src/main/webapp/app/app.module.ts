@@ -57,8 +57,16 @@ import { CONFIG_FIREBASE } from './app.constants';
         TextMaskModule,
         UiSwitchModule,
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
-        AngularFireStorageModule // imports firebase/storage only needed for storage features,
+        AngularFireStorageModule, // imports firebase/storage only needed for storage features,
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent,
+        SidebarComponent,
+        BreadcrumbsComponent
     ],
+
     declarations: [
         JhiMainComponent,
         NavbarComponent,

@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
         private loginModalService: LoginModalService,
         private router: Router,
         private profileService: ProfileService,
-        private nav: NavbarService
+        public nav: NavbarService
     ) {}
 
     ngOnInit() {

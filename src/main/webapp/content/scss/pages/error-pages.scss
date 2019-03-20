@@ -13,7 +13,10 @@ Error Page
 .error-box {
     height: 100%;
     position: fixed;
+    <<<<<<<HEAD
     background: url(../../../assets/images/background/error-bg.jpg) no-repeat center center #fff;
+    =======background: url(../../../content/images/background/error-bg.jpg) no-repeat center center #fff;
+    >>>>>>>aa0503823380fbe435a771df48037321cb2e5b5a
     width: 100%;
 
     .footer {
