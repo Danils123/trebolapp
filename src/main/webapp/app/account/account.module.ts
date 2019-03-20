@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 import { TrebolSharedModule } from 'app/shared';
 import { TextMaskModule } from 'angular2-text-mask';
-import { UiSwitchModule } from 'angular2-ui-switch';
 
 import {
     SessionsComponent,
@@ -18,7 +17,7 @@ import {
 } from './';
 
 @NgModule({
-    imports: [TrebolSharedModule, RouterModule.forChild(accountState), TextMaskModule, UiSwitchModule],
+    imports: [TrebolSharedModule, RouterModule.forChild(accountState), TextMaskModule],
     declarations: [
         ActivateComponent,
         RegisterComponent,
