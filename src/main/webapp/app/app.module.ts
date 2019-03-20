@@ -30,6 +30,7 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.component';
 
 import { CONFIG_FIREBASE } from './app.constants';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
     imports: [
