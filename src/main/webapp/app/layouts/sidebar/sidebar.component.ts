@@ -22,7 +22,7 @@ export class SidebarComponent implements OnInit {
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
         private router: Router,
-        private sd: SidebarService
+        public sd: SidebarService
     ) {}
 
     ngOnInit() {
