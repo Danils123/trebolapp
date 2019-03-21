@@ -33,7 +33,7 @@ export const subCategoryRoute: Routes = [
         path: '',
         component: SubCategoryComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const subCategoryRoute: Routes = [
             subCategory: SubCategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const subCategoryRoute: Routes = [
             subCategory: SubCategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const subCategoryRoute: Routes = [
             subCategory: SubCategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const subCategoryPopupRoute: Routes = [
             subCategory: SubCategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService],

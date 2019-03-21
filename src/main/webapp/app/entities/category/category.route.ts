@@ -33,8 +33,8 @@ export const categoryRoute: Routes = [
         path: '',
         component: CategoryComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Categories'
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
+            pageTitle: 'Categorias'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const categoryRoute: Routes = [
             category: CategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Categories'
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
+            pageTitle: 'Categorias'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const categoryRoute: Routes = [
             category: CategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Categories'
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
+            pageTitle: 'Categorias'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const categoryRoute: Routes = [
             category: CategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Categories'
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
+            pageTitle: 'Categorias'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const categoryPopupRoute: Routes = [
             category: CategoryResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Categories'
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
+            pageTitle: 'Categorias'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
