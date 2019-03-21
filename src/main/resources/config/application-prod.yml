@@ -107,7 +107,7 @@ jhipster:
             key: 0fae2d7539657388294691a5dbf9dc767089a9d6ec394d7cde840efb99805991fd22ccb8812fb103f04fe5aefd0373f28ac8
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: Trebol@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        base-url: https://trebolapp.herokuapp.com # Modify according to your server's URL
     metrics:
         logs: # Reports metrics in the logs
             enabled: false
