@@ -35,19 +35,15 @@
                 </dd>
                 <dt><span>User</span></dt>
                 <dd>
-                    {{userExtra.user?.id}}
+                    {{userExtra.userId}}
                 </dd>
             </dl>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
+            <button type="submit" (click)="previousState()" class="btn btn-info">
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
             </button>
 
-            <button type="button"
-                    [routerLink]="['/user-extra', userExtra.id, 'edit']"
-                    class="btn btn-primary">
+            <button type="button" [routerLink]="['/user-extra', userExtra.id, 'edit']" class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
             </button>
         </div>

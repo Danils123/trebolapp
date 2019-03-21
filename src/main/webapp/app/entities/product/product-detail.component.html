@@ -5,50 +5,46 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Bar Code</span></dt>
+                <dt><span>Código de barras</span></dt>
                 <dd>
                     <span>{{product.barCode}}</span>
                 </dd>
-                <dt><span>Name</span></dt>
+                <dt><span>Nombre</span></dt>
                 <dd>
                     <span>{{product.name}}</span>
                 </dd>
-                <dt><span>Brand</span></dt>
+                <dt><span>Marca</span></dt>
                 <dd>
                     <span>{{product.brand}}</span>
                 </dd>
-                <dt><span>Description</span></dt>
+                <dt><span>Descripción</span></dt>
                 <dd>
                     <span>{{product.description}}</span>
                 </dd>
-                <dt><span>Image</span></dt>
+                <dt><span>Imágen</span></dt>
                 <dd>
-                    <span>{{product.image}}</span>
+                    <img src="{{product.image}}">
                 </dd>
-                <dt><span>Category</span></dt>
+                <dt><span>Categoría</span></dt>
                 <dd>
                     <div *ngIf="product.category">
-                        <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.id}}</a>
+                        <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.name}}</a>
                     </div>
                 </dd>
-                <dt><span>Sub Category</span></dt>
+                <dt><span>Subcategoría</span></dt>
                 <dd>
                     <div *ngIf="product.subCategory">
-                        <a [routerLink]="['/sub-category', product.subCategory?.id, 'view']">{{product.subCategory?.id}}</a>
+                        <a [routerLink]="['/sub-category', product.subCategory?.id, 'view']">{{product.subCategory?.name}}</a>
                     </div>
                 </dd>
             </dl>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            <button type="submit" (click)="previousState()" class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
             </button>
 
-            <button type="button"
-                    [routerLink]="['/product', product.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            <button type="button" [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
             </button>
         </div>
     </div>

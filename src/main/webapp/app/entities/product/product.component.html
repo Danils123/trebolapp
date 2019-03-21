@@ -4,71 +4,79 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new Product
+            Crear nuevo producto
             </span>
         </button>
     </h2>
-    <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="products">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Bar Code</span></th>
-            <th><span>Name</span></th>
-            <th><span>Brand</span></th>
-            <th><span>Description</span></th>
-            <th><span>Image</span></th>
-            <th><span>Category</span></th>
-            <th><span>Sub Category</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let product of products ;trackBy: trackId">
-                <td><a [routerLink]="['/product', product.id, 'view' ]">{{product.id}}</a></td>
-                <td>{{product.barCode}}</td>
-                <td>{{product.name}}</td>
-                <td>{{product.brand}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.image}}</td>
-                <td>
-                    <div *ngIf="product.category">
-                        <a [routerLink]="['../category', product.category?.id, 'view' ]" >{{product.category?.id}}</a>
+        <div class="animated fadeIn">
+            <div class="card">
+                <div class="card-header">
+                    Productos
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 offset-md-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><fa-icon [icon]="'search'"></fa-icon></span>
+                                </div>
+                                <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por nombre" />
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <td>
-                    <div *ngIf="product.subCategory">
-                        <a [routerLink]="['../sub-category', product.subCategory?.id, 'view' ]" >{{product.subCategory?.id}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/product', product.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/product', product.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'product', { outlets: { popup: product.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><span>ID</span></th>
+                                <th><span>Código de barras</span></th>
+                                <th><span>Nombre</span></th>
+                                <th><span>Marca</span></th>
+                                <th><span>Descripción</span></th>
+                                <th><span>Categoría</span></th>
+                                <th><span>Subcategoría</span></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of filteredProducts ;trackBy: trackId">
+                                <td><a [routerLink]="['/product', product.id, 'view' ]">{{product.id}}</a></td>
+                                <td>{{product.barCode}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{product.brand}}</td>
+                                <td>{{product.description}}</td>
+                                <td>
+                                    <div *ngIf="product.category">
+                                        <a [routerLink]="['../category', product.category?.id, 'view' ]">{{product.category?.name}}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="product.subCategory">
+                                        <a [routerLink]="['../sub-category', product.subCategory?.id, 'view' ]">{{product.subCategory?.name}}</a>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit" [routerLink]="['/product', product.id, 'view' ]" class="btn-info tableButtons ml-2">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                        <span class="d-none d-md-inline">Ver</span>
+                                    </button>
+                                        <button type="submit" [routerLink]="['/product', product.id, 'edit']" class="btn-primary tableButtons ml-2">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                        <span class="d-none d-md-inline">Editar</span>
+                                    </button>
+                                        <button type="submit" (click)='deleteItem(product.id)' class="btn-danger tableButtons ml-2 btn-sm">
+                                        <fa-icon [icon]="'times'"></fa-icon>
+                                        <span class="d-none d-md-inline">Eliminar</span>
+                                    </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

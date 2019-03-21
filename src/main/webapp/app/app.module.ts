@@ -1,11 +1,13 @@
 import './vendor.ts';
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2Webstorage } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -16,16 +18,24 @@ import { TrebolAppRoutingModule } from './app-routing.module';
 import { TrebolHomeModule } from './home/home.module';
 import { TrebolAccountModule } from './account/account.module';
 import { TrebolEntityModule } from './entities/entity.module';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.component';
+
+import { CONFIG_FIREBASE } from './app.constants';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
     imports: [
         BrowserModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-' }),
         NgJhipsterModule.forRoot({
-            // set below to true to make alerts look like toast
             alertAsToast: false,
             alertTimeout: 5000
         }),
@@ -33,11 +43,33 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         TrebolCoreModule,
         TrebolHomeModule,
         TrebolAccountModule,
-        // jhipster-needle-angular-add-module JHipster will add new module here
         TrebolEntityModule,
-        TrebolAppRoutingModule
+        TrebolAppRoutingModule,
+        ToastrModule.forRoot(),
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AngularFireModule.initializeApp(CONFIG_FIREBASE),
+        AngularFireStorageModule, // imports firebase/storage only needed for storage features,
+        AngularFirestoreModule
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent,
+        SidebarComponent,
+        BreadcrumbsComponent,
+        NavbarComponent,
+        ErrorComponent,
+        PageRibbonComponent,
+        FooterComponent,
+        SidebarComponent,
+        BreadcrumbsComponent
+    ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
@@ -53,7 +85,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationInterceptor,
             multi: true
-        }
+        },
+        AngularFirestoreModule
     ],
     bootstrap: [JhiMainComponent]
 })

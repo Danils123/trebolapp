@@ -1,0 +1,97 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside *ngIf="sd.visible" class="left-sidebar" style="background: #242a33">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar" [ngSwitch]="isAuthenticated()">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="user-profile" *ngSwitchCase="true">
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <span *ngIf="!getImageUrl()">
+                        <img src="../../../content/images/users/profile.png" alt="user" />
+                            </span>
+                        <span *ngIf="getImageUrl()">
+                      <img [src]="getImageUrl()"  alt="user">
+                  </span>
+                        <span class="hide-menu">Steave Jobs </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="settings" routerLinkActive="active"><i class="ti-user"></i> Mí Perfíl </a></li>
+                        <li><a><i class="ti-wallet"></i> Mí Balance</a></li>
+                        <li><a><i class="ti-email"></i> Correo</a></li>
+                        <li><a><i class="ti-settings"></i> Configuración de Cuenta</a></li>
+                        <li>
+                            <a routerLink="password" routerLinkActive="active">
+                                <fa-icon icon="asterisk" fixedWidth="true"></fa-icon> Password</a>
+                        </li>
+                        <li><a (click)="logout()" routerLinkActive="active"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+
+                <li *ngSwitchCase="true"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Compras<span class="label label-rouded label-themecolor pull-right">10</span></span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="ranking-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Clasificación por orden</a></li>
+                        <li><a routerLink="points-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Puntos por comercio</a></li>
+                        <li><a routerLink="product-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto por comercio</a></li>
+                        <li><a routerLink="list-purchase" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de compras</a> </li>
+                        <li><a routerLink="products-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Productos por orden</a></li>
+                        <li><a routerLink="order-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Orden de artículo</a></li>
+                        <li><a routerLink="list-schedule" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista Programada</a></li>
+                        <li><a routerLink="schedule-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Horario de comercio</a></li>
+                        <li><a routerLink="offer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Oferta</a></li>
+                        <li><a routerLink="user-extra" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Usuario Extra</a></li>
+                    </ul>
+                </li>
+
+
+                <li *ngSwitchCase="true"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Comercio<span class="label label-rouded label-themecolor pull-right">7</span></span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Categoría</a></li>
+                        <li><a routerLink="sub-category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sub Categoría</a></li>
+                        <li><a routerLink="product" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto</a></li>
+                        <li><a routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de productos</a></li>
+                        <li><a routerLink="parameters-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuración de comerce</a></li>
+                        <li><a routerLink="commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Comercio</a></li>
+                        <li><a routerLink="authority" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Roles</a></li>
+                    </ul>
+                </li>
+
+
+                <li *jhiHasAnyAuthority="'ROLE_ADMIN'"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Administración <span class="label label-rouded label-themecolor pull-right">9</span></span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="admin/user-management" routerLinkActive="active">Mantenimiento de usuario</a></li>
+                        <li><a routerLink="admin/jhi-tracker" routerLinkActive="active">Rastreador de usuario</a></li>
+                        <li><a routerLink="admin/jhi-metrics" routerLinkActive="active">Métricas</a></li>
+                        <li><a routerLink="admin/jhi-health" routerLinkActive="active">Estado</a></li>
+                        <li><a routerLink="admin/jhi-configuration" routerLinkActive="active">Configuración</a></li>
+                        <li><a routerLink="admin/audits" routerLinkActive="active">Auditar</a></li>
+                        <li><a routerLink="admin/logs" routerLinkActive="active">Logs</a></li>
+                        <li *ngIf="swaggerEnabled"><a routerLink="admin/docs" routerLinkActive="active">API</a></li>
+                        <li><a routerLink="sessions" routerLinkActive="active">Sesiones</a></li>
+                    </ul>
+                </li>
+
+                <li *ngSwitchCase="false"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Inicio </span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li routerLinkActive="active">
+                            <a (click)="login()" id="login">
+                                <fa-icon icon="sign-in-alt" fixedWidth="true"></fa-icon><span> Iniciar Sesión</span></a>
+                        </li>
+                        <li>
+                            <a routerLink="register" routerLinkActive="active">
+                                <fa-icon icon="user-plus" fixedWidth="true"></fa-icon><span>Registrar</span></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

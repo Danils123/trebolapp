@@ -10,15 +10,24 @@ import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from 'app/entities/category';
 import { ISubCategory } from 'app/shared/model/sub-category.model';
 import { SubCategoryService } from 'app/entities/sub-category';
+import Swal from 'sweetalert2';
+
+import { FileItem } from './file-item';
+import { HostListener } from '@angular/core';
 
 @Component({
     selector: 'jhi-product-update',
-    templateUrl: './product-update.component.html'
+    templateUrl: './product-update.component.html',
+    styleUrls: ['./stylesImage.css']
 })
 export class ProductUpdateComponent implements OnInit {
     product: IProduct;
     isSaving: boolean;
-
+    imageFirebase: FileItem;
+    isOverDrop = false;
+    loadedImage = false;
+    existing = false;
+    imageFromDatabase = false;
     categories: ICategory[];
 
     subcategories: ISubCategory[];
@@ -35,6 +44,12 @@ export class ProductUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ product }) => {
             this.product = product;
+            if (this.product.image !== undefined && this.product.image !== '' && this.product.image !== null) {
+                this.imageFromDatabase = true;
+            }
+            if (this.product.id !== undefined) {
+                this.existing = true;
+            }
         });
         this.categoryService
             .query()
@@ -56,8 +71,12 @@ export class ProductUpdateComponent implements OnInit {
         window.history.back();
     }
 
-    save() {
+    saveProduct() {
         this.isSaving = true;
+        if (this.imageFirebase != undefined) {
+            this.product.image = this.imageFirebase.url;
+            this.loadedImage = true;
+        }
         if (this.product.id !== undefined) {
             this.subscribeToSaveResponse(this.productService.update(this.product));
         } else {
@@ -71,6 +90,17 @@ export class ProductUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Producto agregado satisfactoriamente'
+        });
         this.previousState();
     }
 
@@ -89,4 +119,88 @@ export class ProductUpdateComponent implements OnInit {
     trackSubCategoryById(index: number, item: ISubCategory) {
         return item.id;
     }
+
+    loadImage() {
+        this.productService.saveImageFirebase(this.imageFirebase);
+        this.product.image = this.imageFirebase.url;
+        console.log(this.product.image);
+        this.loadedImage = true;
+    }
+
+    save() {}
+
+    cleanImage() {
+        this.imageFirebase = undefined;
+        this.loadedImage = false;
+    }
+
+    @HostListener('dragover', ['$event'])
+    public onDragEnter(event: any) {
+        this.isOverDrop = true;
+        this._preventImageOpen(event);
+    }
+
+    @HostListener('dragleave', ['$event'])
+    public onDragLeave(event: any) {
+        this.isOverDrop = false;
+    }
+
+    @HostListener('drop', ['$event'])
+    public onDrop(event: any) {
+        const transference = this._getTransference(event);
+
+        if (!transference) {
+            return;
+        }
+        this._extractFiles(transference.files);
+        this._preventImageOpen(event);
+        this.isOverDrop = false;
+    }
+
+    private _getTransference(event: any) {
+        return event.dataTransfer ? event.dataTransfer : event.originalEvent.dataTransfer;
+    }
+
+    //Validations
+
+    private _fileCanBeUploaded(file: File): boolean {
+        if (!this.imageHasBeenDropped(file.name) && this._isImage(file.type)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private _preventImageOpen(event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    private imageHasBeenDropped(imageName: string): boolean {
+        if (this.imageFirebase !== undefined) {
+            if (this.imageFirebase.fileName === imageName) {
+                console.log('Este archivo ya lo subio bestia apocaliptica');
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private _isImage(fileType: string): boolean {
+        return fileType === '' || fileType === undefined ? false : fileType.startsWith('image');
+    }
+
+    private _extractFiles(listFiles: FileItem) {
+        // tslint:disable-next-line: forin
+        for (const properti in Object.getOwnPropertyNames(listFiles)) {
+            const temporaryFile = listFiles[properti];
+
+            if (this._fileCanBeUploaded(temporaryFile)) {
+                const newFile = new FileItem(temporaryFile);
+                this.imageFirebase = newFile;
+            }
+        }
+    }
+
+    isOverDropMethod() {}
 }
