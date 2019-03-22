@@ -80,4 +80,4 @@ library.add(faAsterisk);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here
 
-import '../content/js/waves.js';
+//import '../content/js/waves.js';
