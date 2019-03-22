@@ -73,7 +73,7 @@ export class ProductUpdateComponent implements OnInit {
 
     saveProduct() {
         this.isSaving = true;
-        if (this.imageFirebase != undefined) {
+        if (this.imageFirebase !== undefined) {
             this.product.image = this.imageFirebase.url;
             this.loadedImage = true;
         }
@@ -161,7 +161,7 @@ export class ProductUpdateComponent implements OnInit {
         return event.dataTransfer ? event.dataTransfer : event.originalEvent.dataTransfer;
     }
 
-    //Validations
+    // Validations
 
     private _fileCanBeUploaded(file: File): boolean {
         if (!this.imageHasBeenDropped(file.name) && this._isImage(file.type)) {
