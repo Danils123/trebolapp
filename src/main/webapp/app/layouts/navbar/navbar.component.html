@@ -123,8 +123,9 @@
                                              <div class="u-img"><img [src]="getImageUrl()" alt="user"></div>
                                         </span>
                                     <div class="u-text">
-                                        <h4>Steave Jobs</h4>
-                                        <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
+                                        <h4 *ngIf="userExtraService.user.firstName !== null">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</h4>
+                                        <h4 *ngIf="userExtraService.user.firstName == null">Nombre no configurado</h4>
+                                        <p class="text-muted">{{userExtraService.user.email}}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
                                     </div>
                                 </div>
                             </li>
@@ -133,7 +134,7 @@
                             <li><a href="#"><i class="ti-wallet"></i> Mí balance</a></li>
                             <li><a href="#"><i class="ti-email"></i> Correo</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Configuración de Cuenta</a></li>
+                            <li><a href="#"><i class="ti-settings"></i>Configuración de Cuenta</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a (click)="logout()" routerLink="/"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
                         </ul>

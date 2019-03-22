@@ -15,7 +15,8 @@
                         <span *ngIf="getImageUrl()">
                       <img [src]="getImageUrl()"  alt="user">
                   </span>
-                        <span class="hide-menu">Steave Jobs </span>
+                        <span *ngIf="userExtraService.user.firstName !== null" class="hide-menu">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</span>
+                        <span *ngIf="userExtraService.user.firstName == null" class="hide-menu">Nombre no configurado</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="settings" routerLinkActive="active"><i class="ti-user"></i> Mí Perfíl </a></li>

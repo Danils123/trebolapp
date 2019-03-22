@@ -34,7 +34,8 @@ export class SettingsComponent implements OnInit {
         public textMask: TextMaskModule,
         protected userExtraService: UserExtraService,
         private toastr: ToastrService,
-        private firebase: FirebaseService
+        private firebase: FirebaseService,
+        private usuarioExtraService: UserExtraService
     ) {
         this.phoneMask = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     }
@@ -78,6 +79,7 @@ export class SettingsComponent implements OnInit {
                     this.userExtra.commerces = this.settingsAccount.commerces;
                     this.userExtraService.update(this.userExtra).subscribe(user => {
                         this.success = 'OK';
+                        this.usuarioExtraService.refreshUser();
                         this.accountService = Object.assign(account, user.body);
                         const Toast = Swal.mixin({
                             toast: true,

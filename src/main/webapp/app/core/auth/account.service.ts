@@ -13,7 +13,7 @@ export class AccountService {
     private authenticated = false;
     private authenticationState = new Subject<any>();
 
-    constructor(private http: HttpClient, private trackerService: JhiTrackerService, private userExtraService: UserExtraService) {}
+    constructor(private http: HttpClient, private trackerService: JhiTrackerService) {}
 
     fetch(): Observable<HttpResponse<Account>> {
         return this.http.get<Account>(SERVER_API_URL + 'api/account', { observe: 'response' });
@@ -94,17 +94,6 @@ export class AccountService {
                 this.authenticationState.next(this.userIdentity);
                 return null;
             });
-    }
-
-    getUserExtra() {
-        this.identity(false).then(data => {
-            if (data) {
-                this.userExtraService.findByUserId(data.id).subscribe(user => {
-                    console.log(user);
-                    return user;
-                });
-            }
-        });
     }
 
     isAuthenticated(): boolean {
