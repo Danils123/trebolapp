@@ -162,39 +162,7 @@ File: js
 
                 this.init();
             }
-
-            AdminMenu.prototype.events = (self, el) => {
-                $(this._element).find(this._config.parentTrigger + '.' + this._config.activeClass).has(this._config.subMenu).children(this._config.subMenu).attr('aria-expanded', true).addClass(this._config.collapseClass + ' ' + this._config.collapseInClass);
-
-                $(this._element).find(this._config.parentTrigger).not('.' + this._config.activeClass).has(this._config.subMenu).children(this._config.subMenu).attr('aria-expanded', false).addClass(this._config.collapseClass);
-                $(this._element).find(this._config.parentTrigger).has(this._config.subMenu).children(this._config.triggerElement).on(Event.CLICK_DATA_API, function(e) {
-                    var _this = $(this);
-                    var _parent = _this.parent(self._config.parentTrigger);
-                    var _siblings = _parent.siblings(self._config.parentTrigger).children(self._config.triggerElement);
-                    var _list = _parent.children(self._config.subMenu);
-                    if (self._config.preventDefault) {
-                        e.preventDefault();
-                    }
-                    if (_this.attr('aria-disabled') === 'true') {
-                        return;
-                    }
-                    if (_parent.hasClass(self._config.activeClass)) {
-                        _this.attr('aria-expanded', false);
-                        self._hide(_list);
-                    } else {
-                        self._show(_list);
-                        _this.attr('aria-expanded', true);
-                        if (self._config.toggle) {
-                            _siblings.attr('aria-expanded', false);
-                        }
-                    }
-
-                    if (self._config.onTransitionStart) {
-                        self._config.onTransitionStart(e);
-                    }
-                });
-            };
-
+            
             AdminMenu.prototype.init = function init() {
                 var self = this;
                 // this.events(self);
@@ -208,9 +176,7 @@ File: js
                         var _parent = _this.parent(self._config.parentTrigger);
                         var _siblings = _parent.siblings(self._config.parentTrigger).children(self._config.triggerElement);
                         var _list = _parent.children(self._config.subMenu);
-                        debugger
-                        console.log([_parent, _siblings, _list]);
-
+                        
                         if (self._config.preventDefault) {
                             e.preventDefault();
                         }
@@ -218,14 +184,14 @@ File: js
                             return;
                         }
                         if (_this.parent().hasClass('active')) {
-                            _this.attr('aria-expanded', false);
+                            _this.prop('aria-expanded', false);
                             self._hide(_list);
                         } else {
                             self._show(_list);
-                            _this.attr('aria-expanded', true);
+                            _this.prop('aria-expanded', true);
 
                             if (self._config.toggle) {
-                                _siblings.attr('aria-expanded', false);
+                                _siblings.prop('aria-expanded', false);
                             }
                         }
 
@@ -234,6 +200,7 @@ File: js
                         }
                         let efect = $(".waves-ripple").get()[0];
                         $(".waves-ripple:not(first-child)").remove();
+                        $(_this).append(efect);
                         return;
                     });
                 });
