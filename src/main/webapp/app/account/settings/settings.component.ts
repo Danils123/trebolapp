@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 
 import { AccountService, IUser } from 'app/core';
 import { TextMaskModule } from 'angular2-text-mask';
@@ -50,23 +50,22 @@ export class SettingsComponent implements OnInit {
                 this.settingsAccount.id = account.id;
                 this.checked = JSON.parse(this.userExtra.notification);
                 this.ranking = new Array(JSON.parse(this.userExtra.notification));
-
-                console.log(this.emailMask);
             });
         });
     }
 
     save() {
+        this.user = {};
         this.user.login = this.settingsAccount.login;
         this.user.firstName = this.settingsAccount.firstName;
         this.user.lastName = this.settingsAccount.lastName;
         this.user.email = this.settingsAccount.email;
-
         this.accountService.save(this.user).subscribe(
             () => {
                 this.error = null;
                 this.accountService.identity(true).then(account => {
                     // this.settingsAccount = this.copyAccount(account);
+                    this.userExtra = {};
                     this.userExtra.id = this.settingsAccount.userExtraId;
                     this.userExtra.userId = this.settingsAccount.userId;
                     this.userExtra.secondLastName = this.settingsAccount.secondLastName;
@@ -77,10 +76,11 @@ export class SettingsComponent implements OnInit {
                     this.userExtra.photograph = this.settingsAccount.photograph;
                     this.userExtra.notification = this.settingsAccount.notification;
                     this.userExtra.commerces = this.settingsAccount.commerces;
+                    console.log(this.userExtra);
                     this.userExtraService.update(this.userExtra).subscribe(user => {
+                        this.userExtra = user.body;
                         this.success = 'OK';
-                        this.usuarioExtraService.refreshUser();
-                        this.accountService = Object.assign(account, user.body);
+                        // this.settingsAccount = Object.assign(account, user.body);
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -91,6 +91,7 @@ export class SettingsComponent implements OnInit {
                             type: 'success',
                             title: 'Se guardo exitosamente su información'
                         });
+                        this.usuarioExtraService.refreshUser();
                     });
                 });
             },

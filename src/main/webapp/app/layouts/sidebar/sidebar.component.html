@@ -13,10 +13,13 @@
                         <img src="../../../content/images/users/profile.png" alt="user" />
                             </span>
                         <span *ngIf="getImageUrl()">
-                      <img [src]="getImageUrl()"  alt="user">
-                  </span>
-                        <span *ngIf="userExtraService.user.firstName !== null" class="hide-menu">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</span>
-                        <span *ngIf="userExtraService.user.firstName == null" class="hide-menu">Nombre no configurado</span>
+                            <img [src]="getImageUrl()"  alt="user">
+                        </span>
+                        <span *ngIf="userExtraService.user != null && userExtraService.user.firstName !== null" class="hide-menu">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</span>
+                        <span *ngIf="userExtraService.user != null && userExtraService.user.firstName == null" class="hide-menu">Nombre no configurado</span>
+                        <div *ngIf="userExtraService.user == null">
+                            <span class="hide-menu">Cargando...</span>
+                        </div>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="settings" routerLinkActive="active"><i class="ti-user"></i> Mí Perfíl </a></li>

@@ -122,10 +122,15 @@
                                     <span *ngIf="getImageUrl()">
                                              <div class="u-img"><img [src]="getImageUrl()" alt="user"></div>
                                         </span>
-                                    <div class="u-text">
+                                    <div class="u-text" *ngIf="userExtraService.user">
                                         <h4 *ngIf="userExtraService.user.firstName !== null">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</h4>
                                         <h4 *ngIf="userExtraService.user.firstName == null">Nombre no configurado</h4>
                                         <p class="text-muted">{{userExtraService.user.email}}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
+                                    </div>
+
+                                    <div class="u-text" *ngIf="!userExtraService.user">
+                                        <h4>Cargando ...</h4>
+                                        <p class="text-muted">Cargando</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
                                     </div>
                                 </div>
                             </li>
