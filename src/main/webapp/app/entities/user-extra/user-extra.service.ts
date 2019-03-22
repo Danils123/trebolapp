@@ -53,7 +53,7 @@ export class UserExtraService {
     getUserExtraAndUser() {
         this.accountService.identity().then(data => {
             // console.log(data);
-            if (data.hasOwnProperty('userId')) {
+            if (!!data.userId) {
                 this.user = {
                     id: data.id,
                     login: data.login,
