@@ -194,7 +194,6 @@ File: js
                                 _siblings.prop('aria-expanded', false);
                             }
                         }
-
                         if (self._config.onTransitionStart) {
                             self._config.onTransitionStart(e);
                         }
