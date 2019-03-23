@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
+import { UserExtraService } from 'app/entities/user-extra';
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {

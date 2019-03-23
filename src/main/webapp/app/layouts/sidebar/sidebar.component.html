@@ -55,12 +55,12 @@
                     <ul aria-expanded="false" class="collapse">
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Categoría</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="sub-category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sub Categoría</a></li>
-                        <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="product" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto</a></li>
+                        <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="product" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="schedule-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Horario de comercio</a></li>
                         <!-- <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="parameters-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuración de comerce</a></li> -->
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Mi comercio</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="offer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ofertas</a></li>
-                        <li><a routerLink="product-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto por comercio</a></li>
+                        <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="product-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto por comercio</a></li>
 
                     </ul>
                 </li>

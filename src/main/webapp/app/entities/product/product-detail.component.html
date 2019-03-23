@@ -1,51 +1,61 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="product">
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
             <h2><span>Product</span> {{product.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Código de barras</span></dt>
-                <dd>
-                    <span>{{product.barCode}}</span>
-                </dd>
-                <dt><span>Nombre</span></dt>
-                <dd>
-                    <span>{{product.name}}</span>
-                </dd>
-                <dt><span>Marca</span></dt>
-                <dd>
-                    <span>{{product.brand}}</span>
-                </dd>
-                <dt><span>Descripción</span></dt>
-                <dd>
-                    <span>{{product.description}}</span>
-                </dd>
-                <dt><span>Imágen</span></dt>
-                <dd>
-                    <img src="{{product.image}}">
-                </dd>
-                <dt><span>Categoría</span></dt>
-                <dd>
-                    <div *ngIf="product.category">
-                        <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.name}}</a>
-                    </div>
-                </dd>
-                <dt><span>Subcategoría</span></dt>
-                <dd>
-                    <div *ngIf="product.subCategory">
-                        <a [routerLink]="['/sub-category', product.subCategory?.id, 'view']">{{product.subCategory?.name}}</a>
-                    </div>
-                </dd>
-            </dl>
+        </div>
+        <div class="card-body">
 
-            <button type="submit" (click)="previousState()" class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
-            </button>
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div *ngIf="product">
 
-            <button type="button" [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
-            </button>
+                        <hr>
+                        <jhi-alert-error></jhi-alert-error>
+                        <dl class="row-md jh-entity-details">
+                            <dt><span>Código de barras</span></dt>
+                            <dd>
+                                <span>{{product.barCode}}</span>
+                            </dd>
+                            <dt><span>Nombre</span></dt>
+                            <dd>
+                                <span>{{product.name}}</span>
+                            </dd>
+                            <dt><span>Marca</span></dt>
+                            <dd>
+                                <span>{{product.brand}}</span>
+                            </dd>
+                            <dt><span>Descripción</span></dt>
+                            <dd>
+                                <span>{{product.description}}</span>
+                            </dd>
+                            <dt><span>Imágen</span></dt>
+                            <dd>
+                                <img src="{{product.image}}">
+                            </dd>
+                            <dt><span>Categoría</span></dt>
+                            <dd>
+                                <div *ngIf="product.category">
+                                    <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.name}}</a>
+                                </div>
+                            </dd>
+                            <dt><span>Subcategoría</span></dt>
+                            <dd>
+                                <div *ngIf="product.subCategory">
+                                    <a [routerLink]="['/sub-category', product.subCategory?.id, 'view']">{{product.subCategory?.name}}</a>
+                                </div>
+                            </dd>
+                        </dl>
+
+                        <button type="submit" (click)="previousState()" class="btn btn-info">
+                    <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                </button>
+
+                        <button type="button" [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary">
+                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

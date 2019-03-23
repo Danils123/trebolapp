@@ -1,111 +1,126 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
             <h2 id="jhi-product-heading">Crear o editar un producto</h2>
-            <div>
-                <div class="form-group" [hidden]="!product.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" [(ngModel)]="product.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_barCode">Código de barras</label>
-                    <input type="text" class="form-control" name="barCode" id="field_barCode" [(ngModel)]="product.barCode" #barCode="ngModel" [ngClass]="{'is-invalid': barCode.errors?.required && barCode.touched}" required/>
-                    <div *ngIf="barCode.errors?.required && barCode.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Nombre</label>
-                    <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="product.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required/>
-                    <div *ngIf="name.errors?.required && name.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_brand">Marca</label>
-                    <input type="text" class="form-control" name="brand" id="field_brand" [(ngModel)]="product.brand" #brand="ngModel" [ngClass]="{'is-invalid': brand.errors?.required && brand.touched}" required/>
-                    <div *ngIf="brand.errors?.required && brand.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Descripción</label>
-                    <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="product.description" #description="ngModel" [ngClass]="{'is-invalid': description.errors?.required && description.touched}" required/>
-                    <div *ngIf="description.errors?.required && description.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+                        <div>
+                            <div class="form-group" [hidden]="!product.id">
+                                <label for="id">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" [(ngModel)]="product.id" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_barCode">Código de barras</label>
+                                <input type="text" class="form-control" name="barCode" id="field_barCode" [(ngModel)]="product.barCode" #barCode="ngModel" [ngClass]="{'is-invalid': barCode.errors?.required && barCode.touched}" required/>
+                                <div *ngIf="barCode.errors?.required && barCode.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_name">Nombre</label>
+                                <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="product.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required/>
+                                <div *ngIf="name.errors?.required && name.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_brand">Marca</label>
+                                <input type="text" class="form-control" name="brand" id="field_brand" [(ngModel)]="product.brand" #brand="ngModel" [ngClass]="{'is-invalid': brand.errors?.required && brand.touched}" required/>
+                                <div *ngIf="brand.errors?.required && brand.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Descripción</label>
+                                <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="product.description" #description="ngModel" [ngClass]="{'is-invalid': description.errors?.required && description.touched}" required/>
+                                <div *ngIf="description.errors?.required && description.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
 
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-6">
-                            Imágen (Puede arrastrar la imágen)
-                            <div (isOverDrop)="isOverDropMethod = $event " [ngClass]="{ 'file-over': isOverDrop}" class="well drop-zone">
-                                <label class="form-control-label" for="field_image"></label>
-                                <br>
-                                <img *ngIf="loadedImage === true" src="{{imageFirebase.url}}" style="width: 400px; height: 280px">
-                                <img *ngIf="loadedImage === false && imageFromDatabase === false" src="../../../content/images/drop-images.png">
-                                <img *ngIf="imageFromDatabase === true && loadedImage === false" src="{{product.image}}" style="width: 400px; height: 280px">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        Imágen (Puede arrastrar la imágen)
+                                    </div>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div (isOverDrop)="isOverDropMethod = $event " [ngClass]="{ 'file-over': isOverDrop}" class="well drop-zone">
+                                            <label class="form-control-label" for="field_image"></label>
+                                            <br>
+                                            <img *ngIf="loadedImage === true" src="{{imageFirebase.url}}" style="width: 400px; height: 280px">
+                                            <img *ngIf="loadedImage === false && imageFromDatabase === false" src="../../../content/images/drop-images.png">
+                                            <img *ngIf="imageFromDatabase === true && loadedImage === false" src="{{product.image}}" style="width: 400px; height: 280px">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+
+                                        <button class="btn btn-info" (click)="loadImage()" [hidden]="imageFirebase === undefined" [disabled]="imageFirebase === undefined"> Agregar Imagen</button>
+                                        <button class="btn btn-secondary" (click)="cleanImage()" [hidden]="imageFirebase === undefined">Limpiar</button>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th *ngIf="imageFirebase != undefined">Nombre archivo</th>
+                                                    <th *ngIf="imageFirebase != undefined">Tamaño</th>
+                                                    <th *ngIf="imageFirebase != undefined">Progreso</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td *ngIf="imageFirebase != undefined" [ngClass]="{ 'text-green': imageFirebase.progress >= 100}">{{ imageFirebase.fileName }}</td>
+                                                    <td *ngIf="imageFirebase != undefined">{{ imageFirebase.file.size /1024 /1024 | number: '.2-2' }} MB</td>
+                                                    <td *ngIf="imageFirebase != undefined">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': imageFirebase.progress + '%' }"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_category">Categoría</label>
+                                <select class="form-control" id="field_category" name="category" [(ngModel)]="product.category" #category="ngModel" [ngClass]="{'is-invalid': category.errors?.required && category.touched}" required>
+                                            <option [ngValue]="null"></option>
+                                            <option [ngValue]="categoryOption.id === product.category?.id ? product.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
+                                        </select>
+                                <div *ngIf="category.errors?.required && category.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_subCategory">Subcategoría</label>
+                                <select class="form-control" id="field_subCategory" name="subCategory" [(ngModel)]="product.subCategory" #subCategory="ngModel" [ngClass]="{'is-invalid': subCategory.errors?.required && subCategory.touched}" required>
+                                            <option [ngValue]="null"></option>
+                                            <option [ngValue]="subCategoryOption.id === product.subCategory?.id ? product.subCategory : subCategoryOption" *ngFor="let subCategoryOption of subcategories; trackBy: trackSubCategoryById">{{subCategoryOption.name}}</option>
+                                        </select>
+                                <div *ngIf="subCategory.errors?.required && subCategory.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-
-                            <button class="btn btn-success" (click)="loadImage()" [disabled]="imageFirebase === undefined"> Agregar Imagen</button>
-                            <button class="btn btn-danger" (click)="cleanImage()">Limpiar</button>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th *ngIf="imageFirebase != undefined">Nombre archivo</th>
-                                        <th *ngIf="imageFirebase != undefined">Tamaño</th>
-                                        <th *ngIf="imageFirebase != undefined">Progreso</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td *ngIf="imageFirebase != undefined" [ngClass]="{ 'text-green': imageFirebase.progress >= 100}">{{ imageFirebase.fileName }}</td>
-                                        <td *ngIf="imageFirebase != undefined">{{ imageFirebase.file.size /1024 /1024 | number: '.2-2' }} MB</td>
-                                        <td *ngIf="imageFirebase != undefined">
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': imageFirebase.progress + '%' }"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div>
+                            <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
+                                        <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
+                                    </button>
+                            <button id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success" (click)="saveProduct()">
+                                        <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
+                                    </button>
                         </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_category">Categoría</label>
-                    <select class="form-control" id="field_category" name="category" [(ngModel)]="product.category" #category="ngModel" [ngClass]="{'is-invalid': category.errors?.required && category.touched}" required>
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="categoryOption.id === product.category?.id ? product.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
-                    </select>
-                    <div *ngIf="category.errors?.required && category.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_subCategory">Subcategoría</label>
-                    <select class="form-control" id="field_subCategory" name="subCategory" [(ngModel)]="product.subCategory" #subCategory="ngModel" [ngClass]="{'is-invalid': subCategory.errors?.required && subCategory.touched}" required>
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="subCategoryOption.id === product.subCategory?.id ? product.subCategory : subCategoryOption" *ngFor="let subCategoryOption of subcategories; trackBy: trackSubCategoryById">{{subCategoryOption.name}}</option>
-                    </select>
-                    <div *ngIf="subCategory.errors?.required && subCategory.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-sm btn-danger" (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
-                </button>
-                <button id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-sm btn-success" (click)="saveProduct()">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
