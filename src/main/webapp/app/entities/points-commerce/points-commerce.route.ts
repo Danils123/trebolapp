@@ -33,8 +33,8 @@ export const pointsCommerceRoute: Routes = [
         path: '',
         component: PointsCommerceComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'PointsCommerces'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Puntos por comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const pointsCommerceRoute: Routes = [
             pointsCommerce: PointsCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'PointsCommerces'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Puntos por comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const pointsCommerceRoute: Routes = [
             pointsCommerce: PointsCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'PointsCommerces'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Puntos por comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const pointsCommerceRoute: Routes = [
             pointsCommerce: PointsCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'PointsCommerces'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Puntos por comercio'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const pointsCommercePopupRoute: Routes = [
             pointsCommerce: PointsCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'PointsCommerces'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Puntos por comercio'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

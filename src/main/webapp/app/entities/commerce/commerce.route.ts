@@ -33,8 +33,8 @@ export const commerceRoute: Routes = [
         path: '',
         component: CommerceComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Commerce'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Mi comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const commerceRoute: Routes = [
             commerce: CommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Commerce'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Mi comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const commerceRoute: Routes = [
             commerce: CommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Commerce'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Mi comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const commerceRoute: Routes = [
             commerce: CommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Commerce'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Mi comercio'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const commercePopupRoute: Routes = [
             commerce: CommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Commerce'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Mi comercio'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

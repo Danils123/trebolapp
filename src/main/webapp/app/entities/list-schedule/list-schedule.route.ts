@@ -33,8 +33,8 @@ export const listScheduleRoute: Routes = [
         path: '',
         component: ListScheduleComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListSchedules'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Compras programadas'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const listScheduleRoute: Routes = [
             listSchedule: ListScheduleResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListSchedules'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Compras programadas'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const listScheduleRoute: Routes = [
             listSchedule: ListScheduleResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListSchedules'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Compras programadas'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const listScheduleRoute: Routes = [
             listSchedule: ListScheduleResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListSchedules'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Compras programadas'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const listSchedulePopupRoute: Routes = [
             listSchedule: ListScheduleResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListSchedules'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Compras programadas'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

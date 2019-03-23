@@ -8,6 +8,7 @@ import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { AccountService, IUser } from 'app/core';
 import { NavbarService } from 'app/layouts/navbar/navbar.service';
 import { SidebarService } from 'app/layouts/sidebar/sidebar.service';
+import { CommerceService } from '../commerce';
 
 type EntityResponseType = HttpResponse<IUserExtra>;
 type EntityArrayResponseType = HttpResponse<IUserExtra[]>;
@@ -50,6 +51,7 @@ export class UserExtraService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
     getUserExtraAndUser() {
         this.accountService.identity().then(data => {
             // console.log(data);
