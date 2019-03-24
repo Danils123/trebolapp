@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 
 import { FileItem } from './file-item';
 import { HostListener } from '@angular/core';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'jhi-product-update',
@@ -29,6 +30,8 @@ export class ProductUpdateComponent implements OnInit {
     existing = false;
     imageFromDatabase = false;
     categories: ICategory[];
+    validBarCode = true;
+    allProducts: IProduct[];
 
     subcategories: ISubCategory[];
 
@@ -65,6 +68,13 @@ export class ProductUpdateComponent implements OnInit {
                 map((response: HttpResponse<ISubCategory[]>) => response.body)
             )
             .subscribe((res: ISubCategory[]) => (this.subcategories = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.productService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<ISubCategory[]>) => mayBeOk.ok),
+                map((response: HttpResponse<ISubCategory[]>) => response.body)
+            )
+            .subscribe((res: ISubCategory[]) => (this.allProducts = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -72,15 +82,19 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     saveProduct() {
-        this.isSaving = true;
-        if (this.imageFirebase !== undefined) {
-            this.product.image = this.imageFirebase.url;
-            this.loadedImage = true;
-        }
-        if (this.product.id !== undefined) {
-            this.subscribeToSaveResponse(this.productService.update(this.product));
-        } else {
-            this.subscribeToSaveResponse(this.productService.create(this.product));
+        this.validateBarCode();
+
+        if (this.validBarCode) {
+            this.isSaving = true;
+            if (this.imageFirebase !== undefined) {
+                this.product.image = this.imageFirebase.url;
+                this.loadedImage = true;
+            }
+            if (this.product.id !== undefined) {
+                this.subscribeToSaveResponse(this.productService.update(this.product));
+            } else {
+                this.subscribeToSaveResponse(this.productService.create(this.product));
+            }
         }
     }
 
@@ -203,4 +217,15 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     isOverDropMethod() {}
+
+    validateBarCode() {
+        let valid = true;
+        this.allProducts.forEach(product => {
+            if (product.barCode === product.barCode) {
+                valid = false;
+            }
+        });
+
+        this.validBarCode = valid;
+    }
 }
