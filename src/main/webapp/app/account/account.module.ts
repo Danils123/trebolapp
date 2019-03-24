@@ -4,30 +4,11 @@ import { RouterModule } from '@angular/router';
 import { TrebolSharedModule } from 'app/shared';
 import { TextMaskModule } from 'angular2-text-mask';
 
-import {
-    SessionsComponent,
-    PasswordStrengthBarComponent,
-    RegisterComponent,
-    ActivateComponent,
-    PasswordComponent,
-    PasswordResetInitComponent,
-    PasswordResetFinishComponent,
-    SettingsComponent,
-    accountState
-} from './';
+import { SessionsComponent, ActivateComponent, SettingsComponent, accountState } from './';
 
 @NgModule({
     imports: [TrebolSharedModule, RouterModule.forChild(accountState), TextMaskModule],
-    declarations: [
-        ActivateComponent,
-        RegisterComponent,
-        PasswordComponent,
-        PasswordStrengthBarComponent,
-        PasswordResetInitComponent,
-        PasswordResetFinishComponent,
-        SessionsComponent,
-        SettingsComponent
-    ],
+    declarations: [ActivateComponent, SessionsComponent, SettingsComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TrebolAccountModule {}

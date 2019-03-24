@@ -4,8 +4,19 @@ import { errorRoute, navbarRoute } from './layouts';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { HOME_ROUTE } from './home';
 import { LANDING_ROUTE } from './landing/landing.route';
-
-const LAYOUT_ROUTES = [navbarRoute, HOME_ROUTE, LANDING_ROUTE, ...errorRoute];
+import { registerRoute } from './account/register';
+import { passwordRoute, passwordResetFinishRoute } from './account';
+import { passwordResetInitRoute } from './account/password-reset/init/password-reset-init.route';
+const LAYOUT_ROUTES = [
+    navbarRoute,
+    HOME_ROUTE,
+    registerRoute,
+    passwordRoute,
+    passwordResetFinishRoute,
+    passwordResetInitRoute,
+    LANDING_ROUTE,
+    ...errorRoute
+];
 
 @NgModule({
     imports: [
