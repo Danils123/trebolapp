@@ -5,6 +5,9 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { LandingService } from 'app/landing/landing.service';
+import { UserExtraService } from 'app/entities/user-extra';
+import { AccountService } from 'app/core';
 
 @Component({
     selector: 'jhi-login-modal',

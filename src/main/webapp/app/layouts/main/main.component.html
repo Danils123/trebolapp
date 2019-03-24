@@ -1,4 +1,6 @@
-<div id="main-wrapper">
+<jhi-landing [hidden]="accountService.isAuthenticated()"></jhi-landing>
+<div id="main-wrapper" [hidden]="!accountService.isAuthenticated()">
+    <!-- accountService.isAuthenticated() -->
     <jhi-page-ribbon></jhi-page-ribbon>
     <div>
         <router-outlet name="navbar"></router-outlet>

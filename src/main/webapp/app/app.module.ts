@@ -30,6 +30,7 @@ import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.componen
 
 import { CONFIG_FIREBASE } from './app.constants';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
     imports: [
@@ -68,7 +69,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
         PageRibbonComponent,
         FooterComponent,
         SidebarComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        LandingComponent
     ],
     providers: [
         {

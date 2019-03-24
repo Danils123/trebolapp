@@ -1,36 +1,44 @@
-<div class="row justify-content-center w-50 p-3">
-    <div class="col-8">
-        <form name="editForm" role="form" (ngSubmit)="save()" #editForm="ngForm">
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
             <h2 id="jhi-sub-category-heading">Crear o editar una Subcategoría</h2>
-            <div>
-                <div class="form-group" [hidden]="!subCategory.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" [(ngModel)]="subCategory.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Nombre</label>
-                    <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="subCategory.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required />
-                    <div *ngIf="name.errors?.required && name.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Descripción</label>
-                    <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="subCategory.description" #desc="ngModel" [ngClass]="{'is-invalid': desc.errors?.required && desc.touched}" required/>
-                    <div *ngIf="desc.errors?.required && desc.touched" class="text-danger">
-                        Este campo es requerido
-                    </div>
-                </div>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form name="editForm" role="form" (ngSubmit)="save()" #editForm="ngForm">
+                        <div>
+                            <div class="form-group" [hidden]="!subCategory.id">
+                                <label for="id">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" [(ngModel)]="subCategory.id" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_name">Nombre</label>
+                                <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="subCategory.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required />
+                                <div *ngIf="name.errors?.required && name.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Descripción</label>
+                                <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="subCategory.description" #desc="ngModel" [ngClass]="{'is-invalid': desc.errors?.required && desc.touched}" required/>
+                                <div *ngIf="desc.errors?.required && desc.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
 
+                        </div>
+                        <div>
+                            <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
+                                            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
+                                    </button>
+                            <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+                                        <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
+                                    </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-sm btn-danger" (click)="previousState()">
-                        <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-sm btn-success">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

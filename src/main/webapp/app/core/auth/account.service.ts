@@ -6,12 +6,16 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { Account } from 'app/core/user/account.model';
 import { JhiTrackerService } from '../tracker/tracker.service';
 import { UserExtraService } from 'app/entities/user-extra';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { IUser } from '..';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userIdentity: any;
     private authenticated = false;
     private authenticationState = new Subject<any>();
+    public userExtra: IUserExtra;
+    public user: IUser;
 
     constructor(private http: HttpClient, private trackerService: JhiTrackerService) {}
 
@@ -94,6 +98,27 @@ export class AccountService {
                 this.authenticationState.next(this.userIdentity);
                 return null;
             });
+    }
+
+    findByUserId(userId: number): Observable<any> {
+        return this.http.get<IUserExtra>(`api/user-extras-byUserId/${userId}`, { observe: 'response' });
+    }
+
+    getUserExtraAndUser() {
+        this.user = {};
+        this.userExtra = {};
+        this.identity().then(data => {
+            if (data) {
+                this.user = data;
+                this.findByUserId(this.user.id).subscribe(user => {
+                    this.userExtra = user.body;
+                });
+            }
+        });
+    }
+
+    refreshUser() {
+        this.getUserExtraAndUser();
     }
 
     isAuthenticated(): boolean {

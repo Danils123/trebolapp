@@ -114,21 +114,19 @@
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
-
-
                                     <span *ngIf="!getImageUrl()">
                                     <div class="u-img"><img src="../../../content/images/users/1.jpg" alt="user"></div>
                                     </span>
                                     <span *ngIf="getImageUrl()">
                                              <div class="u-img"><img [src]="getImageUrl()" alt="user"></div>
                                         </span>
-                                    <div class="u-text" *ngIf="userExtraService.user">
-                                        <h4 *ngIf="userExtraService.user.firstName !== null">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</h4>
-                                        <h4 *ngIf="userExtraService.user.firstName == null">Nombre no configurado</h4>
-                                        <p class="text-muted">{{userExtraService.user.email}}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
+                                    <div class="u-text" *ngIf="accountService.user">
+                                        <h4 *ngIf="accountService.user.firstName !== null">{{accountService.user.firstName}} {{accountService.user.lastName}}</h4>
+                                        <h4 *ngIf="accountService.user.firstName == null">Nombre no configurado</h4>
+                                        <p class="text-muted">{{accountService.user.email}}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
                                     </div>
 
-                                    <div class="u-text" *ngIf="!userExtraService.user">
+                                    <div class="u-text" *ngIf="!accountService.user">
                                         <h4>Cargando ...</h4>
                                         <p class="text-muted">Cargando</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
                                     </div>
