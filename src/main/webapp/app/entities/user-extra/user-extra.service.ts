@@ -53,38 +53,12 @@ export class UserExtraService {
     }
 
     getUserExtraAndUser() {
+        this.user = {};
+        this.userExtra = {};
         this.accountService.identity().then(data => {
-            // console.log(data);
-            if (!!data.userId) {
-                this.user = {
-                    id: data.id,
-                    login: data.login,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    email: data.email,
-                    activated: data.activated,
-                    langKey: data.langKey,
-                    authorities: data.authorities,
-                    createdBy: data.createdBy,
-                    createdDate: data.createdDate,
-                    lastModifiedBy: data.lastModifiedBy,
-                    lastModifiedDate: data.lastModifiedDate,
-                    password: data.password
-                };
-                this.userExtra = {
-                    id: data.id,
-                    secondLastName: data.secondLastName,
-                    phone: data.phone,
-                    cellPhone: data.cellPhone,
-                    address: data.address,
-                    ranking: data.ranking,
-                    photograph: data.photograph,
-                    notification: data.notification,
-                    userId: data.userId
-                };
-            } else {
+            if (data) {
                 this.user = data;
-                this.findByUserId(data.id).subscribe(user => {
+                this.findByUserId(this.user.id).subscribe(user => {
                     this.userExtra = user.body;
                 });
             }

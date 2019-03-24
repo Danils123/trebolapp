@@ -15,9 +15,9 @@
                         <span *ngIf="getImageUrl()">
                             <img [src]="getImageUrl()"  alt="user">
                         </span>
-                        <span *ngIf="userExtraService.user != null && userExtraService.user.firstName !== null" class="hide-menu">{{userExtraService.user.firstName}} {{userExtraService.user.lastName}}</span>
-                        <span *ngIf="userExtraService.user != null && userExtraService.user.firstName == null" class="hide-menu">Nombre no configurado</span>
-                        <div *ngIf="userExtraService.user == null">
+                        <span *ngIf="accountService.user != null && accountService.user.firstName !== null" class="hide-menu">{{accountService.user.firstName}} {{accountService.user.lastName}}</span>
+                        <span *ngIf="accountService.user != null && accountService.user.firstName == null" class="hide-menu">Nombre no configurado</span>
+                        <div *ngIf="accountService.user == null">
                             <span class="hide-menu">Cargando...</span>
                         </div>
                     </a>
