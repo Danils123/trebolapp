@@ -52,76 +52,26 @@
         </table>
     </div>
 </div>-->
-
 <!--==============================================================================================-->
+<script src="product-list.component.ts"></script>
+<div class="animated fadeIn">
+    <br>
+    <h2 id="page-heading">
+        <span>Listas de compras</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-list" [routerLink]="['/product-list/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Nueva lista
+            </span>
+        </button>
+    </h2>
+    <br>
+    <div class="row" *ngIf="productLists">
+       <!-- <jhi-card *ngFor="let productListMaster of productLists ; trackBy: trackId" [productList]="productListMaster"></jhi-card>-->
+        <jhi-card></jhi-card>
+    </div><!--/.col-->
 
-<div class="col-sm-6 col-md-4">
-    <div class="card">
-        <div class="card-header">
-            Card with label
-
-
-
-           <a data-toggle="tooltip" title="Eliminar">
-               <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
-           </a>
-            <a data-toggle="tooltip" title="Guardar">
-                <i class="col-md-1 float-right icon-disc icons font-2xl "></i>
-            </a>
-            <a data-toggle="tooltip" title="Calendarizar">
-                <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
-            </a>
-            <a data-toggle="tooltip" title="Pantalla completa">
-                <i class="col-md-1 float-right icon-size-fullscreen icons font-2xl "></i>
-            </a>
-
-
-        </div>
-        <div class="card-body">
-            <jhi-alert></jhi-alert>
-            <div class="table-responsive" *ngIf="productLists">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th><span>Input</span></th>
-                        <th><span>Nombre</span></th>
-                        <th><span>Marca</span></th>
-                        <th><span>Cantidad</span></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let productList of productLists ;trackBy: trackId">
-                        <td align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
-                        <td>{{productList.name}}</td>
-                        <td>{{productList.brand}}</td>
-                        <td align="center">{{productList.quantity}}</td>
-                        <td class="text-right">
-                            <div class="btn-group flex-btn-group-container">
-                                <!--<button type="submit"
-                                        [routerLink]="['/product-list', productList.id, 'view' ]"
-                                        class="btn btn-info btn-sm">
-                                    <fa-icon [icon]="'eye'"></fa-icon>
-                                    <span class="d-none d-md-inline">View</span>
-                                </button>-->
-
-                                <a class="col-md-4"[routerLink]="['/product-list', productList.id, 'edit']">
-                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                </a>
-                                <a class="col-md-4" [routerLink]="['/', 'product-list', { outlets: { popup: productList.id + '/delete'} }]"
-                                        replaceUrl="true"
-                                        queryParamsHandling="merge">
-                                    <fa-icon [icon]="'times'"></fa-icon>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div><!--/.col-->
+</div>
 
 
 

@@ -1,26 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProductList } from 'app/shared/model/product-list.model';
+import Swal from 'sweetalert2';
+import { ProductListService } from 'app/entities/product-list';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { AccountService } from 'app/core';
+import { IListPurchase, ListPurchase } from 'app/shared/model/list-purchase.model';
+import { ListPurchaseService } from 'app/entities/list-purchase';
+import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-
-import { IListPurchase } from 'app/shared/model/list-purchase.model';
-import { AccountService } from 'app/core';
-import { ListPurchaseService } from './list-purchase.service';
-import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
-import { ICategory } from 'app/shared/model/category.model';
+import { ListPurchaseAll } from 'app/shared/model/listpurchaseall.model';
 
 @Component({
-    selector: 'jhi-list-purchase',
-    templateUrl: './list-purchase.component.html'
+    selector: 'jhi-card',
+    templateUrl: './card.component.html',
+    styles: []
 })
-export class ListPurchaseComponent implements OnInit, OnDestroy {
-    listPurchases: IListPurchase[];
+export class CardComponent implements OnInit {
+    @Input() productList: ProductList;
+    productListarray: ProductList[];
+    list: ListPurchase;
     currentAccount: any;
     eventSubscriber: Subscription;
-    _filterQuery = '';
-    filteredListPurchase: IListPurchase[];
+    listpurchaseall: ListPurchaseAll;
+    listpurchaseallArray: ListPurchaseAll[];
 
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -31,10 +34,11 @@ export class ListPurchaseComponent implements OnInit, OnDestroy {
     });
 
     constructor(
-        protected listPurchaseService: ListPurchaseService,
+        protected productListService: ProductListService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected listPurchaseService: ListPurchaseService
     ) {}
 
     loadAll() {
@@ -46,7 +50,22 @@ export class ListPurchaseComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: IListPurchase[]) => {
-                    this.listPurchases = res;
+                    for (const value of res) {
+                        if (value.id === this.productList.idlistpurchase) {
+                            this.list = value;
+                        }
+                    }
+
+                    for (const purchase of res) {
+                        for (const product of this.productListarray) {
+                            if (purchase.id === product.idlistpurchase) {
+                                this.listpurchaseall.productlist.push(product);
+                            }
+                        }
+                        this.listpurchaseallArray.push(this.listpurchaseall);
+                        console.log('lista de compras');
+                        console.log(this.listpurchaseallArray);
+                    }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -59,15 +78,6 @@ export class ListPurchaseComponent implements OnInit, OnDestroy {
         });
         this.registerChangeInListPurchases();
     }
-
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    trackId(index: number, item: IListPurchase) {
-        return item.id;
-    }
-
     registerChangeInListPurchases() {
         this.eventSubscriber = this.eventManager.subscribe('listPurchaseListModification', response => this.loadAll());
     }
@@ -79,7 +89,7 @@ export class ListPurchaseComponent implements OnInit, OnDestroy {
     deleteItem(id: number) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar la lista?',
+                title: 'Está seguro que desea eliminar el producto?',
                 text: 'Si continúa, no podrá revertir el cambio',
                 type: 'warning',
                 showCancelButton: true,
@@ -94,26 +104,12 @@ export class ListPurchaseComponent implements OnInit, OnDestroy {
             });
     }
     confirmDelete(id: number) {
-        this.listPurchaseService.delete(id).subscribe(response => {
+        this.productListService.delete(id).subscribe(response => {
             this.eventManager.broadcast({
-                name: 'listPurchaseListModification',
-                content: 'Deleted an list'
+                name: 'productListListModification',
+                content: 'Deleted an productList'
             });
             this.swalWithBootstrapButtons.fire('Eliminada!', 'La lista ha sido eliminada.', 'success');
         });
-    }
-
-    get filterQuery(): string {
-        return this._filterQuery;
-    }
-
-    set filterQuery(value: string) {
-        this._filterQuery = value;
-        this.filteredListPurchase = this.filterQuery ? this.doFilter(this.filterQuery) : this.listPurchases;
-    }
-
-    doFilter(filterBy: string): ICategory[] {
-        filterBy = filterBy.toLocaleLowerCase();
-        return this.listPurchases.filter((listPurchase: IListPurchase) => listPurchase.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
 }

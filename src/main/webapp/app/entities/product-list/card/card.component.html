@@ -1,0 +1,66 @@
+<script src="../../category/category-delete-dialog.component.ts"></script>
+<div class="col-sm-6 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <div *ngIf="list != null">
+                 {{list.name}}
+            </div>
+
+            <a data-toggle="tooltip" title="Eliminar">
+                <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
+            </a>
+            <a data-toggle="tooltip" title="Guardar">
+                <i class="col-md-1 float-right icon-disc icons font-2xl "></i>
+            </a>
+            <a data-toggle="tooltip" title="Calendarizar">
+                <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
+            </a>
+
+
+        </div>
+        <div class="card-body">
+            <jhi-alert></jhi-alert>
+            <div class="table-responsive" >
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span><a data-toggle="tooltip" title="Todos"><i class="icon-check icons font-2xl  mt-4"></i></a></span></th>
+                        <th><span>Nombre</span></th>
+                        <th><span>Marca</span></th>
+                        <th><span>Cantidad</span></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr >
+                        <td align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
+                        <td>{{productList.name}}</td>
+                        <td>{{productList.brand}}</td>
+                        <td align="center">{{productList.quantity}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <!--<button type="submit"
+                                        [routerLink]="['/product-list', productList.id, 'view' ]"
+                                        class="btn btn-info btn-sm">
+                                    <fa-icon [icon]="'eye'"></fa-icon>
+                                    <span class="d-none d-md-inline">View</span>
+                                </button>-->
+
+                                <a class="col-md-4"[routerLink]="['/product-list', productList.id, 'edit']">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                </a>
+                                <a class="col-md-4" (click)='deleteItem(productList.id)'
+                                   replaceUrl="true"
+                                   queryParamsHandling="merge">
+                                    <fa-icon [icon]="'times'"></fa-icon>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

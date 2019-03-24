@@ -2,10 +2,7 @@
     <br>
 
     <div class="btn-group flex-btn-group-container row justify-content-center">
-        <a *ngIf="view" data-toggle="tooltip" title="Vista tabla" (click)="viewGrid()">
-            <i class="col-md-1 float-right icon-grid icons font-2xl "></i>
-        </a>
-        <a *ngIf="!view" data-toggle="tooltip" title="Vista tarjetas" (click)="viewTag()">
+        <a data-toggle="tooltip" title="Vista tarjetas" routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="col-md-1 float-right icon-docs icons font-2xl "></i>
         </a>
     </div>
@@ -54,12 +51,12 @@
                                 </td>
                                 <td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
-                                      <!--  <button type="submit"
+                                      <button type="submit"
                                                 [routerLink]="['/list-purchase', listPurchase.id, 'view' ]"
                                                 class="btn btn-info btn-sm">
                                             <fa-icon [icon]="'eye'"></fa-icon>
                                             <span class="d-none d-md-inline">Ver</span>
-                                        </button> -->
+                                        </button>
                                         <button type="submit"
                                                 [routerLink]="['/list-purchase', listPurchase.id, 'edit']"
                                                 class="btn btn-primary btn-sm">
@@ -88,58 +85,6 @@
 
 
 
-<!--================================================================================================================-->
-<div class="animated fadeIn" *ngIf="view">
-    <div class="row">
-<div class="col-sm-6 col-md-4">
-    <div class="card">
-        <div class="card-header">
-            Card with label
-            <span class="badge badge-success float-right">Success</span>
-        </div>
-        <div class="card-body">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-        </div>
-    </div>
-</div><!--/.col-->
 
-<div class="col-sm-6 col-md-4">
-    <div class="card">
-        <div class="card-header">
-            Card with label
-            <span class="badge badge-success float-right">Success</span>
-        </div>
-        <div class="card-body">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-        </div>
-    </div>
-</div><!--/.col-->
-
-<div class="col-sm-6 col-md-4">
-    <div class="card">
-        <div class="card-header">
-            Card with label
-            <span class="badge badge-success float-right">Success</span>
-        </div>
-        <div class="card-body">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-        </div>
-    </div>
-</div><!--/.col-->
-
-        <div class="col-sm-6 col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Card with label
-                    <span class="badge badge-success float-right">Success</span>
-                </div>
-                <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                </div>
-            </div>
-        </div><!--/.col-->
-
-    </div>
-</div>
 
 </div>
