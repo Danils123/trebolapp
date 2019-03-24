@@ -6,8 +6,6 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { AccountService, IUser } from 'app/core';
-import { NavbarService } from 'app/layouts/navbar/navbar.service';
-import { SidebarService } from 'app/layouts/sidebar/sidebar.service';
 import { CommerceService } from '../commerce';
 
 type EntityResponseType = HttpResponse<IUserExtra>;

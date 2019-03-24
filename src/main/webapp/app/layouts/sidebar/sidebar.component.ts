@@ -3,7 +3,6 @@ import { AccountService, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { SidebarService } from './sidebar.service';
 import { UserExtraService } from 'app/entities/user-extra';
 
 @Component({
@@ -23,7 +22,6 @@ export class SidebarComponent implements OnInit {
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
         private router: Router,
-        public sd: SidebarService,
         public userExtraService: UserExtraService
     ) {}
 
