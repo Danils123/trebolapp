@@ -169,6 +169,7 @@ export class ProductUpdateComponent implements OnInit {
         this._extractFiles(transference.files);
         this._preventImageOpen(event);
         this.isOverDrop = false;
+        this.loadImage();
     }
 
     private _getTransference(event: any) {
