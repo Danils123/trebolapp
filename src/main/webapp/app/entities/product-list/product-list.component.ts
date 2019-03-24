@@ -34,6 +34,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IProductList[]) => {
                     this.productLists = res;
+                    console.log(this.productLists);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
