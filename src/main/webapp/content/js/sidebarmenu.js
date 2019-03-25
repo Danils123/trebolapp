@@ -162,12 +162,12 @@ File: js
 
                 this.init();
             }
-            
+
             AdminMenu.prototype.init = function init() {
                 var self = this;
                 // this.events(self);
 
-                $(document).on("click", "#sidebarnav", function(e) {
+                $(document).on("click", ".menu1", function(e) {
                     let toggle = false;
                     $("#sidebarnav li.active").has("lu").children("lu").attr('aria-expanded', true).addClass("collapse in");
                     $("#sidebarnav li").not(".active").has("ul").children("lu").attr('aria-expanded', false).addClass("collapse");
@@ -176,7 +176,7 @@ File: js
                         var _parent = _this.parent(self._config.parentTrigger);
                         var _siblings = _parent.siblings(self._config.parentTrigger).children(self._config.triggerElement);
                         var _list = _parent.children(self._config.subMenu);
-                        
+
                         if (self._config.preventDefault) {
                             e.preventDefault();
                         }

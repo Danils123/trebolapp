@@ -4,6 +4,7 @@ import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '
 import { Title } from '@angular/platform-browser';
 import { AccountService } from 'app/core';
 import { Register } from 'app/account/register/register.service';
+import { LoadingService } from 'app/loading/loading.service';
 
 @Component({
     selector: 'jhi-main',
@@ -14,7 +15,8 @@ export class JhiMainComponent implements OnInit {
         private titleService: Title,
         private router: Router,
         public accountService: AccountService,
-        public registerService: Register
+        public registerService: Register,
+        public loadingService: LoadingService
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
@@ -35,5 +37,6 @@ export class JhiMainComponent implements OnInit {
             }
         });
         this.accountService.refreshUser();
+        this.loadingService.stopLoading();
     }
 }

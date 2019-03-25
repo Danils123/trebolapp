@@ -8,6 +8,7 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { LandingService } from 'app/landing/landing.service';
 import { UserExtraService } from 'app/entities/user-extra';
 import { AccountService } from 'app/core';
+import { LoadingService } from 'app/loading/loading.service';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -27,7 +28,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer,
         private router: Router,
-        public activeModal: NgbActiveModal
+        public activeModal: NgbActiveModal,
+        private loadingService: LoadingService
     ) {
         this.credentials = {};
     }
@@ -56,7 +58,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
             .then(() => {
                 this.authenticationError = false;
                 this.activeModal.dismiss('login success');
+                this.loadingService.startLoading();
                 if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
+                    // this.loadingService.stopLoading();
                     this.router.navigate(['']);
                 }
 
@@ -70,8 +74,10 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 const redirect = this.stateStorageService.getUrl();
                 if (redirect) {
                     this.stateStorageService.storeUrl(null);
+                    // this.loadingService.stopLoading();
                     this.router.navigate([redirect]);
                 }
+                this.loadingService.stopLoading();
             })
             .catch(() => {
                 this.authenticationError = true;
