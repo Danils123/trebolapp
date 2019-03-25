@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductList } from 'app/shared/model/product-list.model';
+import { IProductList, ProductList } from 'app/shared/model/product-list.model';
 import Swal from 'sweetalert2';
 import { ProductListService } from 'app/entities/product-list';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
@@ -18,7 +18,7 @@ import { ListPurchaseAll } from 'app/shared/model/listpurchaseall.model';
 })
 export class CardComponent implements OnInit {
     @Input() productList: ProductList;
-    productListarray: ProductList[];
+    productListarray: IProductList[];
     list: ListPurchase;
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -63,8 +63,6 @@ export class CardComponent implements OnInit {
                             }
                         }
                         this.listpurchaseallArray.push(this.listpurchaseall);
-                        console.log('lista de compras');
-                        console.log(this.listpurchaseallArray);
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
