@@ -16,7 +16,7 @@ import { Register } from 'app/account/register';
             transition(
                 '* => *',
                 useAnimation(slideInUp, {
-                    params: { timing: 0.5, delay: 0 }
+                    params: { timing: 0.5, delay: 2.5 }
                 })
             )
         ])
