@@ -6,6 +6,7 @@ import { filter, map } from 'rxjs/operators';
 import { IOffer } from 'app/shared/model/offer.model';
 import { OfferService } from './offer.service';
 import Swal from 'sweetalert2';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'jhi-offer-update',
@@ -14,6 +15,8 @@ import Swal from 'sweetalert2';
 export class OfferUpdateComponent implements OnInit {
     offer: IOffer;
     isSaving: boolean;
+    minValue = true;
+    maxValue = true;
 
     constructor(protected offerService: OfferService, protected activatedRoute: ActivatedRoute) {}
 
@@ -61,5 +64,23 @@ export class OfferUpdateComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    validateMinMax() {
+        this.minValue = true;
+        this.maxValue = true;
+        if (this.offer.discount != null) {
+            if (this.offer.discount < 1) {
+                this.minValue = false;
+            } else {
+                this.minValue = true;
+            }
+
+            if (this.offer.discount > 100) {
+                this.maxValue = false;
+            } else {
+                this.maxValue = true;
+            }
+        }
     }
 }

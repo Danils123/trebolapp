@@ -8,16 +8,22 @@
                 <div class="col-8">
                     <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
                         <div>
-                            <jhi-alert-error></jhi-alert-error>
                             <div class="form-group" [hidden]="!offer.id">
                                 <label for="id">ID</label>
                                 <input type="text" class="form-control" id="id" name="id" [(ngModel)]="offer.id" readonly />
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_discount">Descuento(Solo números)</label>
-                                <input type="number" class="form-control" name="discount" id="field_discount" [(ngModel)]="offer.discount" #discount="ngModel" [ngClass]="{'is-invalid': discount.errors?.required && discount.touched}" required />
+                                <input type="number" (keyup)="validateMinMax()" (change)="validateMinMax()" class="form-control" name="discount" id="field_discount" [(ngModel)]="offer.discount" #discount="ngModel" [ngClass]="{'is-invalid': discount.errors?.required && discount.touched || minValue === false || maxValue === false}"
+                                    required />
                                 <div *ngIf="discount.errors?.required && discount.touched" class="text-danger">
                                     Este campo es requerido
+                                </div>
+                                <div *ngIf="minValue === false" class="text-danger">
+                                    El valor minimo es 1
+                                </div>
+                                <div *ngIf="maxValue === false" class="text-danger">
+                                    El valor máximo es 100
                                 </div>
                             </div>
                             <div class="form-group">
@@ -32,7 +38,7 @@
                             <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
                                 <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
                             </button>
-                            <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+                            <button type="submit" id="save-entity" [disabled]="(editForm.form.invalid || minValue ===false || maxValue === false) || isSaving" class="btn btn-success">
                                 <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
                             </button>
                         </div>
