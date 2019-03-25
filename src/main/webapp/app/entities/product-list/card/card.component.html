@@ -2,8 +2,8 @@
 <div class="col-sm-6 col-md-12">
     <div class="card">
         <div class="card-header">
-            <div *ngIf="list != null">
-                 {{list.name}}
+            <div *ngIf="listpurchaseAll.listpurchase != null">
+                 {{listpurchaseAll.listpurchase.name}}
             </div>
 
             <a data-toggle="tooltip" title="Eliminar">
@@ -19,7 +19,6 @@
 
         </div>
         <div class="card-body">
-            <jhi-alert></jhi-alert>
             <div class="table-responsive" >
                 <table class="table table-striped">
                     <thead>
@@ -32,11 +31,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr >
+                    <tr *ngFor="let productMaster of listpurchaseAll.productlist">
                         <td align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
-                        <td>{{productList.name}}</td>
-                        <td>{{productList.brand}}</td>
-                        <td align="center">{{productList.quantity}}</td>
+                        <td>{{productMaster.name}}</td>
+                        <td>{{productMaster.brand}}</td>
+                        <td align="center">{{productMaster.quantity}}</td>
                         <td class="text-right">
                             <div class="btn-group flex-btn-group-container">
                                 <!--<button type="submit"
@@ -46,10 +45,10 @@
                                     <span class="d-none d-md-inline">View</span>
                                 </button>-->
 
-                                <a class="col-md-4"[routerLink]="['/product-list', productList.id, 'edit']">
+                                <a class="col-md-4"[routerLink]="['/product-list', productMaster.id, 'edit']">
                                     <fa-icon [icon]="'pencil-alt'"></fa-icon>
                                 </a>
-                                <a class="col-md-4" (click)='deleteItem(productList.id)'
+                                <a class="col-md-4" (click)='deleteItem(productMaster.id)'
                                    replaceUrl="true"
                                    queryParamsHandling="merge">
                                     <fa-icon [icon]="'times'"></fa-icon>

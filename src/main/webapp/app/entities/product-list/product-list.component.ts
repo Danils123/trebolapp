@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     list: IListPurchase;
 
-    productListarray: IProductList[];
+    productListarray: ProductList[];
     listpurchaseall: Ilistpurchaseall;
     listpurchaseallArray: Ilistpurchaseall[];
 
@@ -35,7 +35,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAllPurchase() {
-        this.listpurchaseall = new ListPurchaseAll(new ListPurchase(), []);
         this.listpurchaseallArray = [];
         this.productListarray = [];
 
@@ -48,21 +47,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IListPurchase[]) => {
                     for (const purchase of res) {
+                        this.listpurchaseall = new ListPurchaseAll(new ListPurchase(), []);
                         for (const product of this.productLists) {
                             if (purchase.id === product.idlistpurchase) {
-                                this.productListarray.push(product);
+                                this.listpurchaseall.productlist.push(product);
                             }
                         }
-                        this.listpurchaseall.productlist.push(this.productListarray);
-                        this.productListarray = [];
+                        this.listpurchaseall.listpurchase = purchase;
+                        this.listpurchaseallArray.push(this.listpurchaseall);
                     }
-                    this.listpurchaseallArray.push(this.listpurchaseall);
-
                     console.log('lista de compras');
-                    // console.log(res);
                     console.log(this.listpurchaseallArray);
-
-                    // console.log(this.listpurchaseall);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -78,8 +73,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IProductList[]) => {
                     this.productLists = res;
-                    console.log('productos');
-                    console.log(this.productLists);
                     this.loadAllPurchase();
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -92,7 +85,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
             this.currentAccount = account;
         });
         this.registerChangeInProductLists();
-        // this.registerChangeInListPurchases();
     }
 
     ngOnDestroy() {

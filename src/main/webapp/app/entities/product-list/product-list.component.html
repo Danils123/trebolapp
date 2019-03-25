@@ -67,8 +67,7 @@
     </h2>
     <br>
     <div class="row" *ngIf="productLists">
-       <!-- <jhi-card *ngFor="let productListMaster of productLists ; trackBy: trackId" [productList]="productListMaster"></jhi-card>-->
-       <!-- <jhi-card></jhi-card> -->
+        <jhi-card *ngFor="let listpurchaseMaster of listpurchaseallArray ; trackBy: trackId" [listpurchaseAll]="listpurchaseMaster"></jhi-card>
     </div><!--/.col-->
 
 </div>
