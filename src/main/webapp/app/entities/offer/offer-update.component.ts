@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IOffer } from 'app/shared/model/offer.model';
 import { OfferService } from './offer.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-offer-update',
@@ -20,6 +21,7 @@ export class OfferUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ offer }) => {
             this.offer = offer;
+            this.offer.type = 1;
         });
     }
 
@@ -42,6 +44,18 @@ export class OfferUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Categoria agregada satisfactoriamente'
+        });
         this.previousState();
     }
 

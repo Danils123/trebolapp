@@ -33,7 +33,7 @@ export const offerRoute: Routes = [
         path: '',
         component: OfferComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const offerRoute: Routes = [
             offer: OfferResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const offerRoute: Routes = [
             offer: OfferResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const offerRoute: Routes = [
             offer: OfferResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const offerPopupRoute: Routes = [
             offer: OfferResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService],
