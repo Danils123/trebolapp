@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { AccountService } from 'app/core';
 import { Register } from 'app/account/register/register.service';
 import { LoadingService } from 'app/loading/loading.service';
+import { MainService } from './main.service';
 
 @Component({
     selector: 'jhi-main',
@@ -16,7 +17,8 @@ export class JhiMainComponent implements OnInit {
         private router: Router,
         public accountService: AccountService,
         public registerService: Register,
-        public loadingService: LoadingService
+        public loadingService: LoadingService,
+        public mainService: MainService
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {

@@ -1,21 +1,32 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer, ElementRef, OnDestroy } from '@angular/core';
 import { EMAIL_NOT_FOUND_TYPE } from 'app/shared';
 import { PasswordResetInitService } from './password-reset-init.service';
+import { MainService } from 'app/layouts/main/main.service';
 
 @Component({
     selector: 'jhi-password-reset-init',
     templateUrl: './password-reset-init.component.html'
 })
-export class PasswordResetInitComponent implements OnInit, AfterViewInit {
+export class PasswordResetInitComponent implements OnInit, AfterViewInit, OnDestroy {
     error: string;
     errorEmailNotExists: string;
     resetAccount: any;
     success: string;
 
-    constructor(private passwordResetInitService: PasswordResetInitService, private elementRef: ElementRef, private renderer: Renderer) {}
+    constructor(
+        private passwordResetInitService: PasswordResetInitService,
+        private elementRef: ElementRef,
+        private renderer: Renderer,
+        private mainService: MainService
+    ) {}
 
     ngOnInit() {
         this.resetAccount = {};
+        this.mainService.show();
+    }
+
+    ngOnDestroy() {
+        this.mainService.hide();
     }
 
     ngAfterViewInit() {
