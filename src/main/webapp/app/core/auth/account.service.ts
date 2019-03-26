@@ -5,9 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { Account } from 'app/core/user/account.model';
 import { JhiTrackerService } from '../tracker/tracker.service';
-import { UserExtraService } from 'app/entities/user-extra';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
-import { IUser } from '..';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -15,7 +13,7 @@ export class AccountService {
     private authenticated = false;
     private authenticationState = new Subject<any>();
     public userExtra: IUserExtra;
-    public user: IUser;
+    public user: Account;
 
     constructor(private http: HttpClient, private trackerService: JhiTrackerService) {}
 
@@ -105,12 +103,13 @@ export class AccountService {
     }
 
     getUserExtraAndUser() {
-        this.user = {};
-        this.userExtra = {};
-        this.identity().then(data => {
+        this.user = null;
+        this.userExtra = null;
+        this.fetch().subscribe(data => {
             if (data) {
-                this.user = data;
-                this.findByUserId(this.user.id).subscribe(user => {
+                this.user = data.body;
+                console.log(data.body.id);
+                this.findByUserId(data.body.id).subscribe(user => {
                     this.userExtra = user.body;
                 });
             }

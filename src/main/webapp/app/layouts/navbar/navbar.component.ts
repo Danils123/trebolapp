@@ -50,4 +50,8 @@ export class NavbarComponent implements OnInit {
     login() {
         this.modalRef = this.loginModalService.open();
     }
+
+    refresh() {
+        this.accountService.refreshUser();
+    }
 }

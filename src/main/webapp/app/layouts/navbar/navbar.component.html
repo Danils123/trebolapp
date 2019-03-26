@@ -7,7 +7,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header">
-            <a class="navbar-brand" routerLink="/">
+            <a class="navbar-brand" (click)="refresh()" routerLink="/">
                 <!-- Logo icon --><b>
                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                 <!-- Dark Logo icon -->
@@ -16,11 +16,14 @@
                 <img src="../../../content/images/logo-light-icon.png" alt="homepage" class="light-logo" />
             </b>
                 <!--End Logo icon -->
-                <!-- Logo text --><span>
+                <!-- Logo text -->
+                <span>
                          <!-- dark Logo text -->
                          <img src="../../../content/images/logo-text.png" alt="homepage" class="dark-logo" />
                 <!-- Light Logo text -->
-                         <img src="../../../content/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                         <img src="../../../content/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                </span>
+            </a>
         </div>
         <!-- ============================================================== -->
         <!-- End Logo -->
@@ -123,17 +126,17 @@
                                     <div class="u-text" *ngIf="accountService.user">
                                         <h4 *ngIf="accountService.user.firstName !== null">{{accountService.user.firstName}} {{accountService.user.lastName}}</h4>
                                         <h4 *ngIf="accountService.user.firstName == null">Nombre no configurado</h4>
-                                        <p class="text-muted">{{accountService.user.email}}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
+                                        <p class="text-muted">{{accountService.user.email}}</p><a *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_COMPRADOR']" routerLink="settings" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
                                     </div>
 
                                     <div class="u-text" *ngIf="!accountService.user">
                                         <h4>Cargando ...</h4>
-                                        <p class="text-muted">Cargando</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
+                                        <p class="text-muted">Cargando</p><a *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_COMPRADOR']" routerLink="" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a>
                                     </div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-user"></i> Mí Perfil</a></li>
+                            <li><a *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_COMPRADOR']" routerLink="settings"><i class="ti-user"></i> Mí Perfil</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> Mí balance</a></li>
                             <li><a href="#"><i class="ti-email"></i> Correo</a></li>
                             <li role="separator" class="divider"></li>
