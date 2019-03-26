@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { IOffer } from 'app/shared/model/offer.model';
 import { OfferService } from './offer.service';
 import Swal from 'sweetalert2';
-import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { filter, map } from 'rxjs/operators';
+import { AccountService } from '../../core/auth/account.service';
+import { ICommerce } from 'app/shared/model/commerce.model';
+import { CommerceService } from '../commerce';
+import { UserExtraService } from '../user-extra';
 
 @Component({
     selector: 'jhi-offer-update',
@@ -18,7 +21,13 @@ export class OfferUpdateComponent implements OnInit {
     minValue = true;
     maxValue = true;
 
-    constructor(protected offerService: OfferService, protected activatedRoute: ActivatedRoute) {}
+    constructor(
+        protected offerService: OfferService,
+        protected activatedRoute: ActivatedRoute,
+        protected accountService: AccountService,
+        protected commerceService: CommerceService,
+        protected userExtraService: UserExtraService
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -29,7 +38,19 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        //window.history.back();
+
+        this.commerceService.find(1901).subscribe((res: HttpResponse<ICommerce>) => {
+            let commerce: ICommerce;
+            let userExtra = this.accountService.userExtra;
+            let comerces: ICommerce[] = [];
+            commerce = res.body;
+            comerces.push(commerce);
+            userExtra.commerces = comerces;
+            this.userExtraService.update(userExtra);
+            this.accountService.refreshUser();
+            console.log(this.accountService.userExtra.commerces);
+        });
     }
 
     save() {
@@ -42,12 +63,18 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IOffer>>) {
-        result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
     }
 
-    protected onSaveSuccess() {
+    protected onSaveSuccess(res: HttpResponse<IOffer>) {
         this.isSaving = false;
+        if (this.accountService.userExtra.commerces != null) {
+            let commerce: ICommerce = this.accountService.userExtra.commerces[0];
+        } else {
+            console.log(res.body);
+        }
 
+        /*
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -60,6 +87,7 @@ export class OfferUpdateComponent implements OnInit {
             title: 'Categoria agregada satisfactoriamente'
         });
         this.previousState();
+        */
     }
 
     protected onSaveError() {
