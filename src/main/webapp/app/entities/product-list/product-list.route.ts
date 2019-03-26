@@ -33,8 +33,8 @@ export const productListRoute: Routes = [
         path: '',
         component: ProductListComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ProductLists'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de productos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const productListRoute: Routes = [
             productList: ProductListResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ProductLists'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de productos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const productListRoute: Routes = [
             productList: ProductListResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ProductLists'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de productos'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const productListRoute: Routes = [
             productList: ProductListResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ProductLists'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de productos'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const productListPopupRoute: Routes = [
             productList: ProductListResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ProductLists'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de productos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

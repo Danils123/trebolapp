@@ -1,172 +1,187 @@
 <div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 *ngIf="settingsAccount">Perfil de <b>{{settingsAccount.login}}</b></h2>
+        <div class="col-md-9">
+            <div class="card m-t-10 p-l-10 p-r-10">
+                <div class="card-header" style="margin: 0px -9px">
+                    <h2 *ngIf="settingsAccount">Perfil de <b>{{settingsAccount.login}}</b></h2>
+                </div>
+                <div class="card-body ">
+                    <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="settingsAccount" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="firstName">Primer nombre</label>
+                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
+                                    <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
+                                        <small class="form-text text-danger" *ngIf="firstNameInput.errors?.required">
+                                                                        El primer nombre es requerido.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="firstNameInput.errors?.minlength">
+                                                                    El primer nombre requiere al menos 1 cáracter.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="firstNameInput.errors?.pattern">
+                                                                        Solo puede ingresar letras.
+                                        </small>
+                                        <small class="form-text text-danger" *ngIf="firstNameInput.errors?.maxlength">
+                                                                    El primer nombre requere al menos 50 caracteres
+                                                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="lastName">Primer apellido</label>
+                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="lastName" name="lastName" placeholder="Primer Apellido" [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
+                                    <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
+                                        <small class="form-text text-danger" *ngIf="lastNameInput.errors?.required">
+                                                                    El primer apellido es requerido.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="lastNameInput.errors?.pattern">
+                                                                        Solo puede ingresar letras.
+                                        </small>
+                                        <small class="form-text text-danger" *ngIf="lastNameInput.errors?.minlength">
+                                                                    El primer apellido requiere al menos 1 cáracter.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="lastNameInput.errors?.maxlength">
+                                                                    El primer apellido requere al menos 50 caracteres.
+                                                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_secondLastName">Segundo Apellido</label>
+                                    <input type="text" class="form-control" name="secondLastName" pattern="^[A-Za-z]+$" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
+                                    <small class="text-muted">Solo se admiten caracteres</small>
+                                    <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.minlength">
+                                                                El segundo apellido requiere al menos 1 cáracter.
+                                                                </small>
+                                    <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.pattern">
+                                                                    Solo puede ingresar letras.
+                                    </small>
+                                    <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.maxlength">
+                                                                El segundo apellido requere al menos 50 caracteres.
+                                                            </small>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="email">Correo electrónico</label>
+                                    <input type="text" class="form-control" [textMask]="{mask: emailMask}" id="email" name="email" placeholder="Su correo electrónico" [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>
+                                    <div *ngIf="emailInput.dirty && emailInput.invalid">
+                                        <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
+                                                                        Su correo electrónico es requerido.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="emailInput.errors?.email">
+                                                                        Su correo electrónico no es válido.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="emailInput.errors?.minlength">
+                                                                    Su correo electrónico requiere al menos 1 cáracter.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="emailInput.errors?.maxlength">
+                                                                    Su correo electrónico requiere al menos 50 caracteres.
+                                                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="phone">Número teléfonico principal</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" [textMask]="{mask: phoneMask}" placeholder="Teléfono principal" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" required>
+                                    <small class="text-muted">ex. 9999-9999</small>
+                                    <div *ngIf="phoneInput.dirty && phoneInput.invalid">
+                                        <small class="form-text text-danger" *ngIf="phoneInput.errors?.required">
+                                                                        Su télefono es requerido.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="phoneInput.errors?.minlength">
+                                                                    Su télefono requiere al menos 8 caracteres.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="phoneInput.errors?.maxlength">
+                                                                    Su télefono requiere al menos 8 characters.
+                                                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="cellPhone">Número teléfonico secundario</label>
+                                    <input type="text" class="form-control" id="cellPhone" name="cellPhone" [textMask]="{mask: phoneMask}" placeholder="Teléfono secundario" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel">
+                                    <small class="text-muted">ex. 9999-9999</small>
+                                    <div *ngIf="cellPhoneInput.dirty && cellPhoneInput.invalid">
+                                        <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.required">
+                                                                    Su télefono es requerido
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.minlength">
+                                                                    Su télefono requiere al menos 8 caracteres.
+                                                                    </small>
+                                        <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.maxlength">
+                                                                    Su télefono requiere al menos 8 caracteres.
+                                                                    </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="address">Dirección</label>
+                            <textarea class="form-control" id="address" name="address" rows="4" placeholder="Dirección" [(ngModel)]="settingsAccount.address" minlength="5" maxlength="255" #addressInput="ngModel" required>
+                                            
+                                                                </textarea>
+                            <div *ngIf="addressInput.dirty && addressInput.invalid">
+                                <small class="form-text text-danger" *ngIf="addressInput.errors?.required">
+                                                                        Su dirección es requerida.
+                                                    </small>
+                                <small class="form-text text-danger" *ngIf="addressInput.errors?.minlength">
+                                                                        Su dirección  requiere al menos 5 caracteres.
+                                                    </small>
+                                <small class="form-text text-danger" *ngIf="addressInput.errors?.maxlength">
+                                                                        Su dirección  requiere al menos 255 caracteres.
+                                                    </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="email">Ranking</label>
+                            <div class="row">
+                                <div class="col">
+                                    <fa-icon [icon]="'user'" *ngFor="let item of this.ranking"></fa-icon>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <!-- <label class="form-control-label" for="email"></label> -->
+                            <div class="checkbox checkbox-primary p-t-0">
+                                <input id="checkbox-notificaciones" [checked]="checked" (change)="checked = !checked;settingsAccount.notification = checked" name="notification" type="checkbox">
+                                <label for="checkbox-notificaciones"> ¿Quiero recibir notificaciones?</label>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                                                <div class="col">
+                                                    <label for="file">File:</label>
+                                                    <input type="file" (change)="upload($event)" accept=".png,.jpg" />
+                                                </div>
+                                            </div> -->
+                        <div class="row">
+                            <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary pull-left">Guardar</button>
+                        </div>
+
+                    </form>
+                    <jhi-alert-error></jhi-alert-error>
+                </div>
+            </div>
+
 
             <!-- <div class="alert alert-success" *ngIf="success">
                 <strong>Settings saved!</strong>
             </div> -->
-
-            <jhi-alert-error></jhi-alert-error>
-
-            <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="settingsAccount" novalidate>
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label class="form-control-label" for="firstName">Primer nombre</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
-                            <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
-                                <small class="form-text text-danger" *ngIf="firstNameInput.errors?.required">
-                                            El primer nombre es requerido.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="firstNameInput.errors?.minlength">
-                                        El primer nombre requiere al menos 1 cáracter.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="firstNameInput.errors?.maxlength">
-                                        El primer nombre requere al menos 50 caracteres
-                                        </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label class="form-control-label" for="lastName">Primer apellido</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Primer Apellido" [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
-                            <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
-                                <small class="form-text text-danger" *ngIf="lastNameInput.errors?.required">
-                                        El primer apellido es requerido.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="lastNameInput.errors?.minlength">
-                                        El primer apellido requiere al menos 1 cáracter.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="lastNameInput.errors?.maxlength">
-                                        El primer apellido requere al menos 50 caracteres.
-                                        </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="form-control-label" for="field_secondLastName">Segundo Apellido</label>
-                            <input type="text" class="form-control" name="secondLastName" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
-                            <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.minlength">
-                                    El segundo apellido requiere al menos 1 cáracter.
-                                    </small>
-                            <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.maxlength">
-                                    El segundo apellido requere al menos 50 caracteres.
-                                </small>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="form-control-label" for="email">Correo electrónico</label>
-                            <input type="text" class="form-control" [textMask]="{mask: emailMask}" id="email" name="email" placeholder="Su correo electrónico" [(ngModel)]="settingsAccount.email" minlength="5" maxlength="254" #emailInput="ngModel" email required>
-                            <div *ngIf="emailInput.dirty && emailInput.invalid">
-                                <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
-                                            Su correo electrónico es requerido.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="emailInput.errors?.email">
-                                            Su correo electrónico no es válido.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="emailInput.errors?.minlength">
-                                        Su correo electrónico requiere al menos 1 cáracter.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="emailInput.errors?.maxlength">
-                                        Su correo electrónico requiere al menos 50 caracteres.
-                                        </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="form-control-label" for="phone">Teléfono de casa</label>
-                            <input type="text" class="form-control" id="phone" name="phone" [textMask]="{mask: phoneMask}" placeholder="Teléfono de casa" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" required>
-                            <small class="text-muted">ex. 9999-9999</small>
-                            <div *ngIf="phoneInput.dirty && phoneInput.invalid">
-                                <small class="form-text text-danger" *ngIf="phoneInput.errors?.required">
-                                            Su télefono es requerido.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="phoneInput.errors?.minlength">
-                                        Su télefono requiere al menos 8 caracteres.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="phoneInput.errors?.maxlength">
-                                        Su télefono requiere al menos 8 characters.
-                                        </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="form-control-label" for="cellPhone">Teléfono celular</label>
-                            <input type="text" class="form-control" id="cellPhone" name="cellPhone" [textMask]="{mask: phoneMask}" placeholder="Teléfono celular" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel" required>
-                            <small class="text-muted">ex. 9999-9999</small>
-                            <div *ngIf="cellPhoneInput.dirty && cellPhoneInput.invalid">
-                                <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.required">
-                                        Su télefono es requerido
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.minlength">
-                                        Su télefono requiere al menos 8 caracteres.
-                                        </small>
-                                <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.maxlength">
-                                        Su télefono requiere al menos 8 caracteres.
-                                        </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="address">Dirección</label>
-                    <textarea class="form-control" id="address" name="address" rows="4" placeholder="Dirección" [(ngModel)]="settingsAccount.address" minlength="5" maxlength="255" #addressInput="ngModel" required>
-                
-                                    </textarea>
-                    <div *ngIf="addressInput.dirty && addressInput.invalid">
-                        <small class="form-text text-danger" *ngIf="addressInput.errors?.required">
-                                            Su dirección es requerida.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="addressInput.errors?.minlength">
-                                            Su dirección  requiere al menos 5 caracteres.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="addressInput.errors?.maxlength">
-                                            Su dirección  requiere al menos 255 caracteres.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="email">Ranking</label>
-                    <div class="row">
-                        <div class="col">
-                            <fa-icon [icon]="'user'" *ngFor="let item of this.ranking"></fa-icon>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <!-- <label class="form-control-label" for="email"></label> -->
-                    <div class="checkbox checkbox-primary p-t-0">
-                        <input id="checkbox-notificaciones" [checked]="checked" (change)="checked = !checked;settingsAccount.notification = checked" name="notification" type="checkbox">
-                        <label for="checkbox-notificaciones"> ¿Quiero recibir notificaciones?</label>
-                    </div>
-                </div>
-
-                <!-- <div class="row">
-                    <div class="col">
-                        <label for="file">File:</label>
-                        <input type="file" (change)="upload($event)" accept=".png,.jpg" />
-                    </div>
-                </div> -->
-                <div class="row">
-                    <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary pull-left">Guardar</button>
-                </div>
-
-            </form>
         </div>
     </div>
 

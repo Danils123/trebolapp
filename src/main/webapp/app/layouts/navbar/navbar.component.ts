@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AccountService, LoginModalService, LoginService } from 'app/core';
+import { AccountService, LoginModalService, LoginService, IUser } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-import { NavbarService } from 'app/layouts/navbar/navbar.service';
 import { Router } from '@angular/router';
+import { UserExtraService } from 'app/entities/user-extra';
 
 @Component({
     selector: 'jhi-navbar',
@@ -20,11 +20,11 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private loginService: LoginService,
-        private accountService: AccountService,
+        public accountService: AccountService,
         private loginModalService: LoginModalService,
         private router: Router,
         private profileService: ProfileService,
-        public nav: NavbarService
+        public userExtraService: UserExtraService
     ) {}
 
     ngOnInit() {
@@ -49,5 +49,9 @@ export class NavbarComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    refresh() {
+        this.accountService.refreshUser();
     }
 }

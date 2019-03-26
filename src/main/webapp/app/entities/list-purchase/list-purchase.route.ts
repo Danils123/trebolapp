@@ -33,8 +33,8 @@ export const listPurchaseRoute: Routes = [
         path: '',
         component: ListPurchaseComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListPurchases'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de compras'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const listPurchaseRoute: Routes = [
             listPurchase: ListPurchaseResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListPurchases'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de compras'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const listPurchaseRoute: Routes = [
             listPurchase: ListPurchaseResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListPurchases'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de compras'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const listPurchaseRoute: Routes = [
             listPurchase: ListPurchaseResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListPurchases'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de compras'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const listPurchasePopupRoute: Routes = [
             listPurchase: ListPurchaseResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ListPurchases'
+            authorities: ['ROLE_COMPRADOR'],
+            pageTitle: 'Lista de compras'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

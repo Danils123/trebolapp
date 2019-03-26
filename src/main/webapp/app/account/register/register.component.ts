@@ -5,15 +5,13 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
 import { Register } from './register.service';
-import { NavbarService } from 'app/layouts/navbar/navbar.service';
-import { FooterService } from 'app/layouts/footer/footer.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { SidebarService } from 'app/layouts/sidebar/sidebar.service';
 
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeIn } from 'ng-animate';
+import { LandingService } from 'app/landing/landing.service';
 
 @Component({
     selector: 'jhi-register',
@@ -38,25 +36,23 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         private registerService: Register,
         private elementRef: ElementRef,
         private renderer: Renderer,
-        public nav: NavbarService,
         private router: Router,
-        public footer: FooterService,
         private toastr: ToastrService,
-        private sidebar: SidebarService
-    ) {}
+        private landingPageService: LandingService
+    ) {
+        this.registerService.show();
+    }
 
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
-        this.nav.hide();
-        this.footer.hide();
+        this.landingPageService.hide();
         // this.sidebar.hide();
     }
 
     ngOnDestroy(): void {
-        this.nav.show();
-        this.footer.show();
-        this.sidebar.show();
+        this.landingPageService.show();
+        this.registerService.hide();
     }
 
     ngAfterViewInit() {
@@ -71,7 +67,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.error = null;
             this.errorUserExists = null;
             this.errorEmailExists = null;
-            this.registerAccount.langKey = 'en';
+            this.registerAccount.langKey = 'es';
             this.registerAccount.rolNumber = this.rolActive;
             this.registerService.save(this.registerAccount).subscribe(
                 () => {

@@ -30,6 +30,12 @@ import { BreadcrumbsComponent } from './layouts/breadcrumbs/breadcrumbs.componen
 
 import { CONFIG_FIREBASE } from './app.constants';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { LandingComponent } from './landing/landing.component';
+import { RegisterComponent } from './account/register';
+import { PasswordStrengthBarComponent, PasswordComponent } from './account';
+import { PasswordResetInitComponent } from 'app/account/password-reset/init/password-reset-init.component';
+import { PasswordResetFinishComponent } from 'app/account/password-reset/finish/password-reset-finish.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
     imports: [
@@ -68,7 +74,14 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
         PageRibbonComponent,
         FooterComponent,
         SidebarComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        LandingComponent,
+        RegisterComponent,
+        PasswordComponent,
+        PasswordStrengthBarComponent,
+        PasswordResetInitComponent,
+        PasswordResetFinishComponent,
+        LoadingComponent
     ],
     providers: [
         {

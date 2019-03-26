@@ -5,17 +5,21 @@ import { Observable, Subject } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { Account } from 'app/core/user/account.model';
 import { JhiTrackerService } from '../tracker/tracker.service';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { CommerceService } from 'app/entities/commerce';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userIdentity: any;
     private authenticated = false;
     private authenticationState = new Subject<any>();
+    public userExtra: IUserExtra;
+    public user: Account;
 
     constructor(private http: HttpClient, private trackerService: JhiTrackerService) {}
 
-    fetch(): Observable<HttpResponse<Account>> {
-        return this.http.get<Account>(SERVER_API_URL + 'api/account', { observe: 'response' });
+    fetch(): Observable<HttpResponse<any>> {
+        return this.http.get<any>(SERVER_API_URL + 'api/account', { observe: 'response' });
     }
 
     save(account: any): Observable<HttpResponse<any>> {
@@ -93,6 +97,28 @@ export class AccountService {
                 this.authenticationState.next(this.userIdentity);
                 return null;
             });
+    }
+
+    findByUserId(userId: number): Observable<any> {
+        return this.http.get<IUserExtra>(`api/user-extras-byUserId/${userId}`, { observe: 'response' });
+    }
+
+    getUserExtraAndUser() {
+        this.user = null;
+        this.userExtra = null;
+        this.fetch().subscribe(data => {
+            if (data) {
+                this.user = data.body;
+                console.log(data.body.id);
+                this.findByUserId(data.body.id).subscribe(user => {
+                    this.userExtra = user.body;
+                });
+            }
+        });
+    }
+
+    refreshUser() {
+        this.getUserExtraAndUser();
     }
 
     isAuthenticated(): boolean {

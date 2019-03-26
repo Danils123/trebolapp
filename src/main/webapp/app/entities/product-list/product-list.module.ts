@@ -11,6 +11,7 @@ import {
     productListRoute,
     productListPopupRoute
 } from './';
+import { CardComponent } from './card/card.component';
 
 const ENTITY_STATES = [...productListRoute, ...productListPopupRoute];
 
@@ -21,7 +22,8 @@ const ENTITY_STATES = [...productListRoute, ...productListPopupRoute];
         ProductListDetailComponent,
         ProductListUpdateComponent,
         ProductListDeleteDialogComponent,
-        ProductListDeletePopupComponent
+        ProductListDeletePopupComponent,
+        CardComponent
     ],
     entryComponents: [ProductListComponent, ProductListUpdateComponent, ProductListDeleteDialogComponent, ProductListDeletePopupComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
