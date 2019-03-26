@@ -4,7 +4,7 @@ import { ProductListService } from 'app/entities/product-list';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { AccountService } from 'app/core';
 import { Subscription } from 'rxjs';
-import { Ilistpurchaseall } from 'app/shared/model/listpurchaseall.model';
+import { Ilistpurchaseall } from '../../../shared/model/listpurchaseall.model';
 
 @Component({
     selector: 'jhi-card',
