@@ -47,7 +47,7 @@ public class AccountResource {
     private final PersistentTokenRepository persistentTokenRepository;
 
     public AccountResource(UserRepository userRepository, UserService userService, MailService mailService,
-                           UserExtraRepository userExtraRepository, PersistentTokenRepository persistentTokenRepository) {
+            UserExtraRepository userExtraRepository, PersistentTokenRepository persistentTokenRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
@@ -142,7 +142,7 @@ public class AccountResource {
             throw new InternalServerErrorException("User could not be found");
         }
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userDTO.getLangKey(),
-            userDTO.getImageUrl());
+                userDTO.getImageUrl());
     }
 
     /**

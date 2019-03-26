@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit {
             this.userTemp = account.body;
             this.userExtraService.findByUserId(account.body.id).subscribe(user => {
                 this.settingsAccount = Object.assign(this.userTemp, user.body);
-                this.userExtra = Object.assign(this.userExtra, user.body);
+                this.userExtra = user.body;
                 this.settingsAccount.userExtraId = user.body.id;
                 this.settingsAccount.id = account.body.id;
                 this.checked = JSON.parse(this.userExtra.notification);

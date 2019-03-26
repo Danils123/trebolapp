@@ -221,12 +221,15 @@ export class ProductUpdateComponent implements OnInit {
 
     validateBarCode() {
         let valid = true;
-        this.allProducts.forEach(product => {
-            if (product.barCode === this.product.barCode) {
-                valid = false;
-            }
-        });
-
-        this.validBarCode = valid;
+        if (this.product.id === undefined) {
+            this.allProducts.forEach(product => {
+                if (product.barCode === this.product.barCode) {
+                    valid = false;
+                }
+            });
+            this.validBarCode = valid;
+        } else {
+            this.validBarCode = valid;
+        }
     }
 }

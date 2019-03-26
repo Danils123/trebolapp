@@ -52,7 +52,7 @@ export class CategoryUpdateComponent implements OnInit {
 
         Toast.fire({
             type: 'success',
-            title: 'Categoria agregada satisfactoriamente'
+            title: 'Categoría agregada satisfactoriamente'
         });
         this.previousState();
     }

@@ -6,6 +6,7 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { Account } from 'app/core/user/account.model';
 import { JhiTrackerService } from '../tracker/tracker.service';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { CommerceService } from 'app/entities/commerce';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
