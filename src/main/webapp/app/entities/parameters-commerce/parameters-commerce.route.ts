@@ -33,8 +33,8 @@ export const parametersCommerceRoute: Routes = [
         path: '',
         component: ParametersCommerceComponent,
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ParametersCommerces'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Configuración de comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,8 +45,8 @@ export const parametersCommerceRoute: Routes = [
             parametersCommerce: ParametersCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ParametersCommerces'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Configuración de comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -57,8 +57,8 @@ export const parametersCommerceRoute: Routes = [
             parametersCommerce: ParametersCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ParametersCommerces'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Configuración de comercio'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -69,8 +69,8 @@ export const parametersCommerceRoute: Routes = [
             parametersCommerce: ParametersCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ParametersCommerces'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Configuración de comercio'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -84,8 +84,8 @@ export const parametersCommercePopupRoute: Routes = [
             parametersCommerce: ParametersCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'ParametersCommerces'
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'Configuración de comercio'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

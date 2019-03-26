@@ -1,4 +1,8 @@
-<div id="main-wrapper">
+<jhi-loading [hidden]="!loadingService._loading"></jhi-loading>
+<jhi-landing [hidden]="(accountService.isAuthenticated() === true  || registerService.visible || loadingService._loading) || mainService.visible"></jhi-landing>
+<jhi-register [hidden]="(accountService.isAuthenticated()===true || registerService.visible===false || loadingService._loading) || mainService.visible"></jhi-register>
+
+<div id="main-wrapper" [hidden]="(accountService.isAuthenticated()===false || registerService.visible===true) && !mainService.visible || loadingService._loading">
     <jhi-page-ribbon></jhi-page-ribbon>
     <div>
         <router-outlet name="navbar"></router-outlet>

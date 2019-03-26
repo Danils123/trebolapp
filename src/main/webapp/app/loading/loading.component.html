@@ -1,0 +1,18 @@
+<div class="main-loading">
+    <div class="loading in-middle" [ngClass]="{'animated fadeIn': loadingService.loading, 'animated fadeOut': loadingService.animated == true}">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="lds-ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+            </div>
+            <div class="col">
+                <img src="../../content/images/logo.png" alt="">
+            </div>
+        </div>
+
+    </div>

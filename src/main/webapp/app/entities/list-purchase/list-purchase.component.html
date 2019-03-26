@@ -1,70 +1,90 @@
-<div>
-    <h2 id="page-heading">
-        <span>List Purchases</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-list-purchase" [routerLink]="['/list-purchase/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new List Purchase
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="listPurchases">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Description</span></th>
-            <th><span>State</span></th>
-            <th><span>Product List</span></th>
-            <th><span>Seller</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let listPurchase of listPurchases ;trackBy: trackId">
-                <td><a [routerLink]="['/list-purchase', listPurchase.id, 'view' ]">{{listPurchase.id}}</a></td>
-                <td>{{listPurchase.name}}</td>
-                <td>{{listPurchase.description}}</td>
-                <td>{{listPurchase.state}}</td>
-                <td>
-                    <div *ngIf="listPurchase.productList">
-                        <a [routerLink]="['../product-list', listPurchase.productList?.id, 'view' ]" >{{listPurchase.productList?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="listPurchase.seller">
-                        <a [routerLink]="['../user-extra', listPurchase.seller?.id, 'view' ]" >{{listPurchase.seller?.id}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/list-purchase', listPurchase.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/list-purchase', listPurchase.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'list-purchase', { outlets: { popup: listPurchase.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div >
+    <br>
+
+    <div class="btn-group flex-btn-group-container row justify-content-center">
+        <a data-toggle="tooltip" title="Vista tarjetas" routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="col-md-1 float-right icon-docs icons font-2xl "></i>
+        </a>
     </div>
+
+    <br>
+
+    <div class="row justify-content-center ">
+
+        <div class="col-md-9">
+            <div class="card m-t-10 p-l-10 p-r-10">
+                <div class="card-header" style="margin: 0px -9px">
+                    <h2>Lista de compras</h2>
+                    <button id="jh-create-entit" class="btn btn-primary float-right jh-create-entity create-list-purchase" [routerLink]="['/list-purchase/new']">
+                        <fa-icon [icon]="'plus'"></fa-icon>
+                        <span >
+            Crear nueva lista de compra
+            </span>
+                    </button>
+                </div>
+                <div class="card-body ">
+
+                    <div class="table-responsive" *ngIf="listPurchases">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span>Nombre</span></th>
+                                <th><span>Descripción</span></th>
+                                <th><span>Lista de productos</span></th>
+                                <th><span>Comprador</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let listPurchase of listPurchases ;trackBy: trackId">
+                                <td>{{listPurchase.name}}</td>
+                                <td>{{listPurchase.description}}</td>
+                                <td>
+                                    <div *ngIf="listPurchase.productList">
+                                        <a [routerLink]="['../product-list', listPurchase.productList?.id, 'view' ]" >{{listPurchase.productList?.id}}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div *ngIf="listPurchase.seller">
+                                        <a [routerLink]="['../user-extra', listPurchase.seller?.id, 'view' ]" >{{listPurchase.seller?.id}}</a>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                      <button type="submit"
+                                                [routerLink]="['/list-purchase', listPurchase.id, 'view' ]"
+                                                class="btn btn-info btn-sm">
+                                            <fa-icon [icon]="'eye'"></fa-icon>
+                                            <span class="d-none d-md-inline">Ver</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/list-purchase', listPurchase.id, 'edit']"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline">Editar</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/', 'list-purchase', { outlets: { popup: listPurchase.id + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="btn btn-danger btn-sm">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline">Eliminar</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 </div>

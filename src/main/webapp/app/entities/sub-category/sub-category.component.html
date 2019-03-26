@@ -1,19 +1,19 @@
-<div>
-    <h2 id="page-heading">
-        <span>Subcategorías</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-sub-category" [routerLink]="['/sub-category/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Crear nueva Subcategoría
-            </span>
-        </button>
-    </h2>
-    <br/>
+<div class="container-fluid">
+
     <div class="table-responsive" *ngIf="subCategories">
         <div class="animated fadeIn">
             <div class="card">
                 <div class="card-header">
-                    SubCategorías
+                    <h2 id="page-heading">
+                        <span>Subcategorías</span>
+                        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-sub-category" [routerLink]="['/sub-category/new']">
+                                    <fa-icon [icon]="'plus'"></fa-icon>
+                                    <span >
+                                    Crear nueva Subcategoría
+                                    </span>
+                                </button>
+                    </h2>
+                    <br/>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">

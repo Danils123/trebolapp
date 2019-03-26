@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AccountService } from 'app/core';
 import { PasswordService } from './password.service';
+import { MainService } from 'app/layouts/main/main.service';
 
 @Component({
     selector: 'jhi-password',
     templateUrl: './password.component.html'
 })
-export class PasswordComponent implements OnInit {
+export class PasswordComponent implements OnInit, OnDestroy {
     doNotMatch: string;
     error: string;
     success: string;
@@ -16,12 +17,17 @@ export class PasswordComponent implements OnInit {
     newPassword: string;
     confirmPassword: string;
 
-    constructor(private passwordService: PasswordService, private accountService: AccountService) {}
+    constructor(private passwordService: PasswordService, private accountService: AccountService, private mainService: MainService) {}
 
     ngOnInit() {
+        this.mainService.show();
         this.accountService.identity().then(account => {
             this.account = account;
         });
+    }
+
+    ngOnDestroy() {
+        this.mainService.hide();
     }
 
     changePassword() {
