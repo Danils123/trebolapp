@@ -1,4 +1,4 @@
-<div>
+<!--<div>
     <h2 id="page-heading">
         <span>Product Lists</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-list" [routerLink]="['/product-list/new']">
@@ -51,4 +51,26 @@
             </tbody>
         </table>
     </div>
+</div>-->
+<!--==============================================================================================-->
+<script src="product-list.component.ts"></script>
+<div class="animated fadeIn">
+    <br>
+    <h2 id="page-heading">
+        <span>Listas de compras</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-list" [routerLink]="['/product-list/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Nueva lista
+            </span>
+        </button>
+    </h2>
+    <br>
+    <div class="row" *ngIf="productLists">
+        <jhi-card *ngFor="let listpurchaseMaster of listpurchaseallArray ; trackBy: trackId" [listpurchaseAll]="listpurchaseMaster"></jhi-card>
+    </div><!--/.col-->
+
 </div>
+
+
+

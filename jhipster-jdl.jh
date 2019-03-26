@@ -186,7 +186,7 @@ relationship ManyToOne {
 }
 
 relationship ManyToMany {
-	RankingPerOrder {buyer} to UserExtra {orderBuyer},
-    RankingPerOrder {seller} to UserExtra {orderSeller}
+	RankingPerOrder {buyer} to UserExtra {order},
+    RankingPerOrder {seller} to UserExtra {order}
 }
 
