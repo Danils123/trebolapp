@@ -12,6 +12,7 @@ import { IOffer } from 'app/shared/model/offer.model';
 import { OfferService } from 'app/entities/offer';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
+import { AccountService } from 'app/core';
 
 @Component({
     selector: 'jhi-commerce-update',
@@ -33,13 +34,15 @@ export class CommerceUpdateComponent implements OnInit {
         protected productCommerceService: ProductCommerceService,
         protected offerService: OfferService,
         protected userExtraService: UserExtraService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        private accountService: AccountService
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ commerce }) => {
             this.commerce = commerce;
+            this.commerce.email = this.accountService.user.email;
         });
         this.productCommerceService
             .query()

@@ -1,96 +1,95 @@
-<div>
-    <h2 id="page-heading">
-        <span>Commerce</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-commerce" [routerLink]="['/commerce/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Commerce
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="commerce">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Identification</span></th>
-            <th><span>Name</span></th>
-            <th><span>Address</span></th>
-            <th><span>Latitude</span></th>
-            <th><span>Longitud</span></th>
-            <th><span>Email</span></th>
-            <th><span>Ranking</span></th>
-            <th><span>Photograph</span></th>
-            <th><span>State</span></th>
-            <th><span>Phone</span></th>
-            <th><span>Product Commerce</span></th>
-            <th><span>Offer</span></th>
-            <th><span>Owner</span></th>
-            <th><span>User Extra</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let commerce of commerce ;trackBy: trackId">
-                <td><a [routerLink]="['/commerce', commerce.id, 'view' ]">{{commerce.id}}</a></td>
-                <td>{{commerce.identification}}</td>
-                <td>{{commerce.name}}</td>
-                <td>{{commerce.address}}</td>
-                <td>{{commerce.latitude}}</td>
-                <td>{{commerce.longitud}}</td>
-                <td>{{commerce.email}}</td>
-                <td>{{commerce.ranking}}</td>
-                <td>{{commerce.photograph}}</td>
-                <td>{{commerce.state}}</td>
-                <td>{{commerce.phone}}</td>
-                <td>
-                    <div *ngIf="commerce.productCommerce">
-                        <a [routerLink]="['../product-commerce', commerce.productCommerce?.id, 'view' ]" >{{commerce.productCommerce?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="commerce.offer">
-                        <a [routerLink]="['../offer', commerce.offer?.id, 'view' ]" >{{commerce.offer?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="commerce.owner">
-                        <a [routerLink]="['../user-extra', commerce.owner?.id, 'view' ]" >{{commerce.owner?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="commerce.userExtra">
-                        <a [routerLink]="['../user-extra', commerce.userExtra?.id, 'view' ]" >{{commerce.userExtra?.id}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/commerce', commerce.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/commerce', commerce.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'commerce', { outlets: { popup: commerce.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h2 id="page-heading">
+                <span>Commerce</span>
+                <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-commerce" [routerLink]="['/commerce/new']">
+                                    <fa-icon [icon]="'plus'"></fa-icon>
+                                    <span >
+                                    Create new Commerce
+                                    </span>
+                                </button>
+            </h2>
+            <jhi-alert></jhi-alert>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive" *ngIf="commerce">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><span>ID</span></th>
+                            <th><span>Identification</span></th>
+                            <th><span>Name</span></th>
+                            <th><span>Address</span></th>
+                            <th><span>Latitude</span></th>
+                            <th><span>Longitud</span></th>
+                            <th><span>Email</span></th>
+                            <th><span>Ranking</span></th>
+                            <th><span>Photograph</span></th>
+                            <th><span>State</span></th>
+                            <th><span>Phone</span></th>
+                            <th><span>Product Commerce</span></th>
+                            <th><span>Offer</span></th>
+                            <th><span>Owner</span></th>
+                            <th><span>User Extra</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let commerce of commerce ;trackBy: trackId">
+                            <td><a [routerLink]="['/commerce', commerce.id, 'view' ]">{{commerce.id}}</a></td>
+                            <td>{{commerce.identification}}</td>
+                            <td>{{commerce.name}}</td>
+                            <td>{{commerce.address}}</td>
+                            <td>{{commerce.latitude}}</td>
+                            <td>{{commerce.longitud}}</td>
+                            <td>{{commerce.email}}</td>
+                            <td>{{commerce.ranking}}</td>
+                            <td>{{commerce.photograph}}</td>
+                            <td>{{commerce.state}}</td>
+                            <td>{{commerce.phone}}</td>
+                            <td>
+                                <div *ngIf="commerce.productCommerce">
+                                    <a [routerLink]="['../product-commerce', commerce.productCommerce?.id, 'view' ]">{{commerce.productCommerce?.id}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="commerce.offer">
+                                    <a [routerLink]="['../offer', commerce.offer?.id, 'view' ]">{{commerce.offer?.id}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="commerce.owner">
+                                    <a [routerLink]="['../user-extra', commerce.owner?.id, 'view' ]">{{commerce.owner?.id}}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngIf="commerce.userExtra">
+                                    <a [routerLink]="['../user-extra', commerce.userExtra?.id, 'view' ]">{{commerce.userExtra?.id}}</a>
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit" [routerLink]="['/commerce', commerce.id, 'view' ]" class="btn btn-info btn-sm">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+                                    <button type="submit" [routerLink]="['/commerce', commerce.id, 'edit']" class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+                                    <button type="submit" [routerLink]="['/', 'commerce', { outlets: { popup: commerce.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
 </div>

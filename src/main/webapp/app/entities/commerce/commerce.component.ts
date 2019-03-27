@@ -25,18 +25,33 @@ export class CommerceComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAll() {
-        this.commerceService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<ICommerce[]>) => res.ok),
-                map((res: HttpResponse<ICommerce[]>) => res.body)
-            )
-            .subscribe(
-                (res: ICommerce[]) => {
-                    this.commerce = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        if (this.accountService.user.authorities.filter(item => item === 'ROLE_VENDEDOR').length > 0) {
+            this.commerceService
+                .queryByCommerce(this.accountService.userExtra.id)
+                .pipe(
+                    filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                    map((res: HttpResponse<ICommerce[]>) => res.body)
+                )
+                .subscribe(
+                    (res: ICommerce[]) => {
+                        this.commerce = res;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else {
+            this.commerceService
+                .query()
+                .pipe(
+                    filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                    map((res: HttpResponse<ICommerce[]>) => res.body)
+                )
+                .subscribe(
+                    (res: ICommerce[]) => {
+                        this.commerce = res;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
     }
 
     ngOnInit() {
