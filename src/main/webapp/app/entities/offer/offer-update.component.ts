@@ -38,19 +38,7 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     previousState() {
-        //window.history.back();
-
-        this.commerceService.find(1901).subscribe((res: HttpResponse<ICommerce>) => {
-            let commerce: ICommerce;
-            let userExtra = this.accountService.userExtra;
-            let comerces: ICommerce[] = [];
-            commerce = res.body;
-            comerces.push(commerce);
-            userExtra.commerces = comerces;
-            this.userExtraService.update(userExtra);
-            this.accountService.refreshUser();
-            console.log(this.accountService.userExtra.commerces);
-        });
+        window.history.back();
     }
 
     save() {
@@ -61,20 +49,11 @@ export class OfferUpdateComponent implements OnInit {
             this.subscribeToSaveResponse(this.offerService.create(this.offer));
         }
     }
-
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IOffer>>) {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     protected onSaveSuccess(res: HttpResponse<IOffer>) {
-        this.isSaving = false;
-        if (this.accountService.userExtra.commerces != null) {
-            let commerce: ICommerce = this.accountService.userExtra.commerces[0];
-        } else {
-            console.log(res.body);
-        }
-
-        /*
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -87,7 +66,6 @@ export class OfferUpdateComponent implements OnInit {
             title: 'Categoria agregada satisfactoriamente'
         });
         this.previousState();
-        */
     }
 
     protected onSaveError() {
