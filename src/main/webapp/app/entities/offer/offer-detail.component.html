@@ -1,31 +1,36 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="offer">
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
             <h2><span>Oferta</span> {{offer.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Descuento</span></dt>
-                <dd>
-                    <span>{{offer.discount}}</span>
-                </dd>
-                <dt><span>Descripción</span></dt>
-                <dd>
-                    <span>{{offer.description}}</span>
-                </dd>
-                <dt><span>Tipo</span></dt>
-                <dd>
-                    <span>{{offer.type}}</span>
-                </dd>
-            </dl>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div *ngIf="offer">
+                        <h2><span>Oferta</span> {{offer.id}}</h2>
+                        <hr>
 
-            <button type="submit" (click)="previousState()" class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Regresar</span>
-            </button>
+                        <dl class="row-md jh-entity-details">
+                            <dt><span>Descuento</span></dt>
+                            <dd>
+                                <span>{{offer.discount}} %</span>
+                            </dd>
+                            <dt><span>Descripción</span></dt>
+                            <dd>
+                                <span>{{offer.description}}</span>
+                            </dd>
+                        </dl>
 
-            <button type="button" [routerLink]="['/offer', offer.id, 'edit']" class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
-            </button>
+                        <button type="submit" (click)="previousState()" class="btn btn-info">
+                            <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Regresar</span>
+                        </button>
+
+                        <button type="button" [routerLink]="['/offer', offer.id, 'edit']" class="btn btn-primary">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
