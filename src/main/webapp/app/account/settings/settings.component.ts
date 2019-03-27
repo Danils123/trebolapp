@@ -1,5 +1,5 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
-
+import { NgForm } from '@angular/forms';
 import { AccountService, IUser } from 'app/core';
 import { TextMaskModule } from 'angular2-text-mask';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
@@ -20,7 +20,7 @@ export class SettingsComponent implements OnInit {
     success: string;
     checked = false;
     settingsAccount: any;
-    user: any;
+    userTemp: any;
     ranking: number[];
     userExtra: IUserExtra;
     languages: any[];
@@ -41,26 +41,28 @@ export class SettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.accountService.identity().then(account => {
-            this.userExtraService.findByUserId(account.id).subscribe(user => {
-                this.settingsAccount = Object.assign(account, user.body);
-                this.user = account;
+        this.accountService.fetch().subscribe(account => {
+            this.userTemp = null;
+            this.userTemp = account.body;
+            this.userExtraService.findByUserId(account.body.id).subscribe(user => {
+                this.settingsAccount = Object.assign(this.userTemp, user.body);
                 this.userExtra = user.body;
                 this.settingsAccount.userExtraId = user.body.id;
-                this.settingsAccount.id = account.id;
+                this.settingsAccount.id = account.body.id;
                 this.checked = JSON.parse(this.userExtra.notification);
                 this.ranking = new Array(JSON.parse(this.userExtra.notification));
             });
+            console.log(this.userTemp);
         });
     }
 
     save() {
-        this.user = {};
-        this.user.login = this.settingsAccount.login;
-        this.user.firstName = this.settingsAccount.firstName;
-        this.user.lastName = this.settingsAccount.lastName;
-        this.user.email = this.settingsAccount.email;
-        this.accountService.save(this.user).subscribe(
+        this.userTemp = {};
+        this.userTemp.login = this.settingsAccount.login;
+        this.userTemp.firstName = this.settingsAccount.firstName;
+        this.userTemp.lastName = this.settingsAccount.lastName;
+        this.userTemp.email = this.settingsAccount.email;
+        this.accountService.save(this.userTemp).subscribe(
             () => {
                 this.error = null;
                 this.accountService.identity(true).then(account => {

@@ -10,7 +10,7 @@
                 <li class="user-profile" *ngSwitchCase="true">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <span *ngIf="!getImageUrl()">
-                        <img src="../../../content/images/users/profile.png" alt="user" />
+                        <img src="../../../content/images/users/1.jpg" alt="user" />
                             </span>
                         <span *ngIf="getImageUrl()">
                             <img [src]="getImageUrl()"  alt="user">
@@ -33,7 +33,7 @@
                     </ul>
                 </li>
 
-                <li *jhiHasAnyAuthority="'ROLE_COMPRADOR'"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Compras</span></a>
+                <li *jhiHasAnyAuthority="'ROLE_COMPRADOR'"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Compras</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <!-- <li><a routerLink="ranking-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Clasificación por orden</a></li> -->
 
@@ -44,14 +44,14 @@
 
 
                         <!-- <li><a routerLink="user-extra" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Usuario Extra</a></li> -->
-                        <li><a routerLink="list-purchase" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de compras</a> </li>
-                        <li><a routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de productos</a></li>
+                        <!--<li><a routerLink="list-purchase" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de compras</a> </li>-->
+                        <li><a routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de compras</a></li>
                         <li><a routerLink="points-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Puntos por comercio</a></li>
                     </ul>
                 </li>
 
 
-                <li *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_ADMIN']"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Comercio</span></a>
+                <li *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_ADMIN']"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Comercio</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Categoría</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="sub-category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sub Categoría</a></li>
@@ -66,7 +66,7 @@
                 </li>
 
 
-                <li *jhiHasAnyAuthority="'ROLE_ADMIN'"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Administración</span></a>
+                <li *jhiHasAnyAuthority="'ROLE_ADMIN'"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Administración</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="admin/user-management" routerLinkActive="active">Mantenimiento de usuario</a></li>
                         <li><a routerLink="admin/jhi-tracker" routerLinkActive="active">Rastreador de usuario</a></li>
@@ -81,7 +81,7 @@
                     </ul>
                 </li>
 
-                <li *ngSwitchCase="false"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Inicio </span></a>
+                <li *ngSwitchCase="false"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Inicio </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li routerLinkActive="active">
                             <a (click)="login()" id="login">

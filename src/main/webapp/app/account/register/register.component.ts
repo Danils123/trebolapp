@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
             this.error = null;
             this.errorUserExists = null;
             this.errorEmailExists = null;
-            this.registerAccount.langKey = 'en';
+            this.registerAccount.langKey = 'es';
             this.registerAccount.rolNumber = this.rolActive;
             this.registerService.save(this.registerAccount).subscribe(
                 () => {

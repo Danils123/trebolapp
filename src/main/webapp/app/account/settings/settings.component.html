@@ -11,7 +11,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="firstName">Primer nombre</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
+                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
                                     <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.required">
                                                                         El primer nombre es requerido.
@@ -19,6 +19,9 @@
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.minlength">
                                                                     El primer nombre requiere al menos 1 cáracter.
                                                                     </small>
+                                        <small class="form-text text-danger" *ngIf="firstNameInput.errors?.pattern">
+                                                                        Solo puede ingresar letras.
+                                        </small>
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.maxlength">
                                                                     El primer nombre requere al menos 50 caracteres
                                                                     </small>
@@ -28,11 +31,14 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="lastName">Primer apellido</label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Primer Apellido" [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
+                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="lastName" name="lastName" placeholder="Primer Apellido" [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
                                     <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
                                         <small class="form-text text-danger" *ngIf="lastNameInput.errors?.required">
                                                                     El primer apellido es requerido.
                                                                     </small>
+                                        <small class="form-text text-danger" *ngIf="lastNameInput.errors?.pattern">
+                                                                        Solo puede ingresar letras.
+                                        </small>
                                         <small class="form-text text-danger" *ngIf="lastNameInput.errors?.minlength">
                                                                     El primer apellido requiere al menos 1 cáracter.
                                                                     </small>
@@ -48,10 +54,14 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_secondLastName">Segundo Apellido</label>
-                                    <input type="text" class="form-control" name="secondLastName" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
+                                    <input type="text" class="form-control" name="secondLastName" pattern="^[A-Za-z]+$" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
+                                    <small class="text-muted">Solo se admiten caracteres</small>
                                     <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.minlength">
                                                                 El segundo apellido requiere al menos 1 cáracter.
                                                                 </small>
+                                    <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.pattern">
+                                                                    Solo puede ingresar letras.
+                                    </small>
                                     <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.maxlength">
                                                                 El segundo apellido requere al menos 50 caracteres.
                                                             </small>
@@ -81,8 +91,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="phone">Teléfono de casa</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" [textMask]="{mask: phoneMask}" placeholder="Teléfono de casa" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" required>
+                                    <label class="form-control-label" for="phone">Número teléfonico principal</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" [textMask]="{mask: phoneMask}" placeholder="Teléfono principal" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" required>
                                     <small class="text-muted">ex. 9999-9999</small>
                                     <div *ngIf="phoneInput.dirty && phoneInput.invalid">
                                         <small class="form-text text-danger" *ngIf="phoneInput.errors?.required">
@@ -99,8 +109,8 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="cellPhone">Teléfono celular</label>
-                                    <input type="text" class="form-control" id="cellPhone" name="cellPhone" [textMask]="{mask: phoneMask}" placeholder="Teléfono celular" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel" required>
+                                    <label class="form-control-label" for="cellPhone">Número teléfonico secundario</label>
+                                    <input type="text" class="form-control" id="cellPhone" name="cellPhone" [textMask]="{mask: phoneMask}" placeholder="Teléfono secundario" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel">
                                     <small class="text-muted">ex. 9999-9999</small>
                                     <div *ngIf="cellPhoneInput.dirty && cellPhoneInput.invalid">
                                         <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.required">

@@ -56,7 +56,7 @@ export class SubCategoryUpdateComponent implements OnInit {
 
         Toast.fire({
             type: 'success',
-            title: 'SubCategoria agregada satisfactoriamente'
+            title: 'SubCategoría agregada satisfactoriamente'
         });
         this.previousState();
     }

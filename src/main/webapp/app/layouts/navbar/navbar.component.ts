@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private loginService: LoginService,
-        private accountService: AccountService,
+        public accountService: AccountService,
         private loginModalService: LoginModalService,
         private router: Router,
         private profileService: ProfileService,
@@ -49,5 +49,9 @@ export class NavbarComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    refresh() {
+        this.accountService.refreshUser();
     }
 }
