@@ -150,8 +150,8 @@
                             <label class="form-control-label" for="email">Ranking</label>
                             <div class="row">
                                 <div class="col">
-                                    <fa-icon [icon]="'user'" *ngFor="let item of this.ranking"></fa-icon>
-
+                                    <fa-icon [icon]="'user'" class="m-r-5" *ngFor="let item of this.ranking"></fa-icon>
+                                    <fa-icon [icon]="'minus'" class="m-r-5" *ngFor="let item of this.withoutRanking"></fa-icon>
                                 </div>
                             </div>
                         </div>
