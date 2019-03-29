@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { fadeIn } from 'ng-animate';
 import { LandingService } from 'app/landing/landing.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'jhi-register',
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     modalRef: NgbModalRef;
     rolActive = 0;
     fadeIn: any;
+    @ViewChild('registerForm') form: NgForm;
 
     constructor(
         private loginModalService: LoginModalService,
@@ -53,13 +55,23 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this.landingPageService.show();
         this.registerService.hide();
+        this.registerAccount = null;
     }
 
     ngAfterViewInit() {
         this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#login'), 'focus', []);
     }
 
-    register() {
+    resetForm() {
+        this.form.reset();
+        // console.log(this.form);
+        this.registerAccount.login = null;
+        this.registerAccount.email = null;
+        this.registerAccount.password = null;
+        this.registerAccount.confirmPasswordInput = null;
+    }
+
+    register(form: NgForm) {
         if (this.registerAccount.password !== this.confirmPassword) {
             this.doNotMatch = 'ERROR';
         } else {
@@ -82,6 +94,8 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
                         type: 'success',
                         title: 'Se ha registrado exitosamente, favor revise su correo'
                     });
+
+                    this.resetForm();
                     this.router.navigate(['/']);
                 },
                 response => this.processError(response)

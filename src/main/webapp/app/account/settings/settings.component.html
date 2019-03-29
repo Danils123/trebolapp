@@ -11,7 +11,8 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="firstName">Primer nombre</label>
-                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
+                                    <input type="text" class="form-control" pattern="^([a-zA-Z]+(_[a-zA-Z]+)*)(\s([a-zA-Z]+(_[a-zA-Z]+)*))*$" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel"
+                                        required>
                                     <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.required">
                                                                         El primer nombre es requerido.

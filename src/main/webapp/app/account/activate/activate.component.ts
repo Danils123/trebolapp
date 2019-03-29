@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginModalService } from 'app/core';
 import { ActivateService } from './activate.service';
 import { MainService } from 'app/layouts/main/main.service';
@@ -19,7 +18,8 @@ export class ActivateComponent implements OnInit, OnDestroy {
         private activateService: ActivateService,
         private loginModalService: LoginModalService,
         private route: ActivatedRoute,
-        private mainService: MainService
+        private mainService: MainService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -29,6 +29,9 @@ export class ActivateComponent implements OnInit, OnDestroy {
                 () => {
                     this.error = null;
                     this.success = 'OK';
+                    setTimeout(() => {
+                        this.router.navigate(['/']);
+                    }, 3000);
                 },
                 () => {
                     this.success = null;
