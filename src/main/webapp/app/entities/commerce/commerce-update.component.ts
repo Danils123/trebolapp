@@ -13,6 +13,7 @@ import { OfferService } from 'app/entities/offer';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
 import { AccountService } from 'app/core';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-commerce-update',
@@ -91,6 +92,7 @@ export class CommerceUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.commerce.userExtra = this.accountService.userExtra;
         if (this.commerce.id !== undefined) {
             this.subscribeToSaveResponse(this.commerceService.update(this.commerce));
         } else {
@@ -104,6 +106,17 @@ export class CommerceUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Commercio guardado satisfactoriamente'
+        });
         this.previousState();
     }
 
