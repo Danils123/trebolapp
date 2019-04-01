@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { filter, map } from 'rxjs/operators';
 import { AccountService } from '../../core/auth/account.service';
 import { ICommerce } from 'app/shared/model/commerce.model';
-import { CommerceService } from '../commerce';
+import { CommerceService } from '../commerce/commerce.service';
 import { UserExtraService } from '../user-extra';
 
 @Component({
@@ -38,7 +38,8 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        // window.history.back();
+        console.log(this.accountService.userExtra.commerces);
     }
 
     save() {
@@ -54,6 +55,16 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     protected onSaveSuccess(res: HttpResponse<IOffer>) {
+        let commercesSave = this.accountService.userExtra.commerces[0];
+        let userExtraSave = this.accountService.userExtra;
+        commercesSave.offer = res.body;
+        commercesSave.name = 'fuuuuuuuu';
+
+        this.commerceService.create(commercesSave);
+
+        this.accountService.refreshUser();
+        console.log(commercesSave);
+        /*
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -66,6 +77,7 @@ export class OfferUpdateComponent implements OnInit {
             title: 'Categoria agregada satisfactoriamente'
         });
         this.previousState();
+        */
     }
 
     protected onSaveError() {

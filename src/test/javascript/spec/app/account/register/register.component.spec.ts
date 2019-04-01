@@ -30,7 +30,7 @@ describe('Component Tests', () => {
             comp.registerAccount.password = 'password';
             comp.confirmPassword = 'non-matching';
 
-            comp.register();
+            //comp.register();
 
             expect(comp.doNotMatch).toEqual('ERROR');
         });
@@ -41,7 +41,7 @@ describe('Component Tests', () => {
                 spyOn(service, 'save').and.returnValue(of({}));
                 comp.registerAccount.password = comp.confirmPassword = 'password';
 
-                comp.register();
+                //comp.register();
                 tick();
 
                 expect(service.save).toHaveBeenCalledWith({
@@ -67,7 +67,7 @@ describe('Component Tests', () => {
                 );
                 comp.registerAccount.password = comp.confirmPassword = 'password';
 
-                comp.register();
+                //comp.register();
                 tick();
 
                 expect(comp.errorUserExists).toEqual('ERROR');
@@ -87,7 +87,7 @@ describe('Component Tests', () => {
                 );
                 comp.registerAccount.password = comp.confirmPassword = 'password';
 
-                comp.register();
+                //comp.register();
                 tick();
 
                 expect(comp.errorEmailExists).toEqual('ERROR');
@@ -106,7 +106,7 @@ describe('Component Tests', () => {
                 );
                 comp.registerAccount.password = comp.confirmPassword = 'password';
 
-                comp.register();
+                //comp.register();
                 tick();
 
                 expect(comp.errorUserExists).toBeNull();
