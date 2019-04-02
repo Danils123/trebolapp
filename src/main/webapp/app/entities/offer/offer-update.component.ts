@@ -39,8 +39,7 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     previousState() {
-        // window.history.back();
-        console.log(this.accountService.userExtra.commerces);
+        window.history.back();
     }
 
     save() {
@@ -62,25 +61,21 @@ export class OfferUpdateComponent implements OnInit {
         this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
             userExtraSave.commerces[0] = res.body;
             this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
-                console.log(res.body);
                 this.userExtraService.refreshUser();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                Toast.fire({
+                    type: 'success',
+                    title: 'Categoria agregada satisfactoriamente'
+                });
+                this.previousState();
             });
         });
-
-        /*
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-
-        Toast.fire({
-            type: 'success',
-            title: 'Categoria agregada satisfactoriamente'
-        });
-        this.previousState();
-        */
     }
 
     protected onSaveError() {

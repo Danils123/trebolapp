@@ -13,11 +13,11 @@ import Swal from 'sweetalert2';
     templateUrl: './offer.component.html'
 })
 export class OfferComponent implements OnInit, OnDestroy {
-    offers: IOffer[];
+    offers: IOffer[] = null;
     currentAccount: any;
     eventSubscriber: Subscription;
     _filterQuery = '';
-    filteredOffers: IOffer[];
+    filteredOffers: IOffer[] = null;
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success ml-3',
@@ -43,6 +43,15 @@ export class OfferComponent implements OnInit, OnDestroy {
                 (res: IOffer[]) => {
                     this.offers = res;
                     this.filteredOffers = res;
+                    if (
+                        this.accountService.userExtra.commerces[0].offer != null &&
+                        this.accountService.userExtra.commerces[0].offer != undefined
+                    ) {
+                        this.filteredOffers = [];
+                        this.offers = [];
+                        this.offers.push(this.accountService.userExtra.commerces[0].offer);
+                        this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
+                    }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
