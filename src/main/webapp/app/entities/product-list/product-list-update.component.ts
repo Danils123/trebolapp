@@ -28,6 +28,7 @@ export class ProductListUpdateComponent implements OnInit {
     productcommerces: IProductCommerce[];
     listPurchase: IListPurchase;
     index: number;
+    id: number;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -110,7 +111,9 @@ export class ProductListUpdateComponent implements OnInit {
     }
 
     addProduct() {
-        this.productArray.push(new ProductList());
+        this.productArray.push(new ProductList(this.id, this.nameProduct, this.brandProduct, this.quantityProduct));
+        console.log('lista');
+        console.log(this.productArray);
     }
 
     deleteProduct(product: IProductList) {
@@ -118,12 +121,8 @@ export class ProductListUpdateComponent implements OnInit {
         for (const item of this.productArray) {
             if (product.name === item.name && product.brand === item.brand) {
                 this.productArray.splice(i, 1);
-                console.log('Borrando');
-                console.log(i);
             }
             i++;
-            console.log('index');
-            console.log(i);
         }
     }
 }
