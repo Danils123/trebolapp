@@ -27,19 +27,17 @@
                     <table class="table table-striped table-hover" *ngIf="offers != []">
                         <thead>
                             <tr>
-                                <th><span>ID</span></th>
                                 <th><span>Descuento</span></th>
                                 <th><span>Descripción</span></th>
-                                <th><span>Tipo</span></th>
+                                <th><span>Fecha de caducidad</span></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let offer of filteredOffers ;trackBy: trackId">
-                                <td><a [routerLink]="['/offer', offer.id, 'view' ]">{{offer.id}}</a></td>
                                 <td>{{offer.discount}} %</td>
                                 <td>{{offer.description}}</td>
-                                <td>{{offer.type}}</td>
+                                <td>{{offer.expirationDate|date: "MM dd yyyy"}}</td>
                                 <td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit" [routerLink]="['/offer', offer.id, 'view' ]" class="btn-info tableButtons ml-2 btn-sm">

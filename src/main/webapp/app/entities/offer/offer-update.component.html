@@ -8,10 +8,7 @@
                 <div class="col-8">
                     <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
                         <div>
-                            <div class="form-group" [hidden]="!offer.id">
-                                <label for="id">ID</label>
-                                <input type="text" class="form-control" id="id" name="id" [(ngModel)]="offer.id" readonly />
-                            </div>
+
                             <div class="form-group">
                                 <label class="form-control-label" for="field_discount">Descuento(es porcentaje, solo números)</label>
                                 <input type="number" (keyup)="validateMinMax()" (change)="validateMinMax()" class="form-control" name="discount" id="field_discount" [(ngModel)]="offer.discount" #discount="ngModel" [ngClass]="{'is-invalid': discount.errors?.required && discount.touched || minValue === false || maxValue === false}"
