@@ -57,6 +57,9 @@ public class OfferResourceIntTest {
     private static final ZonedDateTime DEFAULT_EXPIRATION_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_EXPIRATION_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final Boolean DEFAULT_DISABLED = false;
+    private static final Boolean UPDATED_DISABLED = true;
+
     @Autowired
     private OfferRepository offerRepository;
 
@@ -102,7 +105,8 @@ public class OfferResourceIntTest {
             .discount(DEFAULT_DISCOUNT)
             .description(DEFAULT_DESCRIPTION)
             .type(DEFAULT_TYPE)
-            .expirationDate(DEFAULT_EXPIRATION_DATE);
+            .expirationDate(DEFAULT_EXPIRATION_DATE)
+            .disabled(DEFAULT_DISABLED);
         return offer;
     }
 
@@ -130,6 +134,7 @@ public class OfferResourceIntTest {
         assertThat(testOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testOffer.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testOffer.getExpirationDate()).isEqualTo(DEFAULT_EXPIRATION_DATE);
+        assertThat(testOffer.isDisabled()).isEqualTo(DEFAULT_DISABLED);
     }
 
     @Test
@@ -165,7 +170,8 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
-            .andExpect(jsonPath("$.[*].expirationDate").value(hasItem(sameInstant(DEFAULT_EXPIRATION_DATE))));
+            .andExpect(jsonPath("$.[*].expirationDate").value(hasItem(sameInstant(DEFAULT_EXPIRATION_DATE))))
+            .andExpect(jsonPath("$.[*].disabled").value(hasItem(DEFAULT_DISABLED.booleanValue())));
     }
     
     @Test
@@ -182,7 +188,8 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.discount").value(DEFAULT_DISCOUNT.doubleValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
-            .andExpect(jsonPath("$.expirationDate").value(sameInstant(DEFAULT_EXPIRATION_DATE)));
+            .andExpect(jsonPath("$.expirationDate").value(sameInstant(DEFAULT_EXPIRATION_DATE)))
+            .andExpect(jsonPath("$.disabled").value(DEFAULT_DISABLED.booleanValue()));
     }
 
     @Test
@@ -209,7 +216,8 @@ public class OfferResourceIntTest {
             .discount(UPDATED_DISCOUNT)
             .description(UPDATED_DESCRIPTION)
             .type(UPDATED_TYPE)
-            .expirationDate(UPDATED_EXPIRATION_DATE);
+            .expirationDate(UPDATED_EXPIRATION_DATE)
+            .disabled(UPDATED_DISABLED);
 
         restOfferMockMvc.perform(put("/api/offers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -224,6 +232,7 @@ public class OfferResourceIntTest {
         assertThat(testOffer.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testOffer.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testOffer.getExpirationDate()).isEqualTo(UPDATED_EXPIRATION_DATE);
+        assertThat(testOffer.isDisabled()).isEqualTo(UPDATED_DISABLED);
     }
 
     @Test

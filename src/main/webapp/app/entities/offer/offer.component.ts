@@ -95,30 +95,30 @@ export class OfferComponent implements OnInit, OnDestroy {
         return this.offers.filter((offer: IOffer) => offer.description.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
 
-    deleteItem(id: number) {
+    deleteItem(offer: IOffer) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar la oferta?',
-                text: 'Si continúa, no podrá revertir el cambio',
+                title: 'Está seguro que desea deshabilitar la oferta?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Si, eliminar!',
+                confirmButtonText: 'Si, deshabilitar!',
                 cancelButtonText: 'No, cancelar!',
                 reverseButtons: true
             })
             .then(result => {
                 if (result.value) {
-                    this.confirmDelete(id);
+                    this.confirmDelete(offer);
                 }
             });
     }
-    confirmDelete(id: number) {
-        this.offerService.delete(id).subscribe(response => {
+    confirmDelete(offer: IOffer) {
+        offer.disabled = true;
+        this.offerService.update(offer).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'offerListModification',
                 content: 'Deleted an offer'
             });
-            this.swalWithBootstrapButtons.fire('Eliminada!', 'La oferta ha sido eliminada.', 'success');
+            this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La oferta ha sido deshabilitada.', 'success');
         });
     }
 }

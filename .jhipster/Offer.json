@@ -26,6 +26,10 @@
         {
             "fieldName": "expirationDate",
             "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "disabled",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190312191719",

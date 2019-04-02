@@ -26,7 +26,7 @@ export class OfferUpdateComponent implements OnInit {
     options: DatepickerOptions = {
         minDate: new Date(Date.now()),
         placeholder: 'Click to select a date',
-        displayFormat: 'MM DD YYYY'
+        displayFormat: 'DD MM YYYY'
     };
 
     constructor(
@@ -42,7 +42,9 @@ export class OfferUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ offer }) => {
             this.offer = offer;
             this.offer.type = 1;
-            if (this.offer.expirationDate === null && this.offer.expirationDate === undefined) {
+            this.offer.disabled = false;
+            console.log(this.offer.expirationDate);
+            if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
                 this.offer.expirationDate = new Date();
             }
         });
@@ -81,7 +83,7 @@ export class OfferUpdateComponent implements OnInit {
 
                 Toast.fire({
                     type: 'success',
-                    title: 'Categoria agregada satisfactoriamente'
+                    title: 'Oferta agregada satisfactoriamente'
                 });
                 this.previousState();
             });

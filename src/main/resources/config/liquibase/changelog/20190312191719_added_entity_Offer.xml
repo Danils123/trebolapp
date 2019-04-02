@@ -37,6 +37,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="disabled" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="offer" columnName="expiration_date" columnDataType="datetime"/>

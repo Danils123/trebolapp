@@ -40,6 +40,9 @@ public class Offer implements Serializable {
     @Column(name = "expiration_date")
     private ZonedDateTime expirationDate;
 
+    @Column(name = "disabled")
+    private Boolean disabled;
+
     @OneToMany(mappedBy = "offer")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<OrderItem> orderItems = new HashSet<>();
@@ -104,6 +107,19 @@ public class Offer implements Serializable {
         this.expirationDate = expirationDate;
     }
 
+    public Boolean isDisabled() {
+        return disabled;
+    }
+
+    public Offer disabled(Boolean disabled) {
+        this.disabled = disabled;
+        return this;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
     public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -158,6 +174,7 @@ public class Offer implements Serializable {
             ", description='" + getDescription() + "'" +
             ", type=" + getType() +
             ", expirationDate='" + getExpirationDate() + "'" +
+            ", disabled='" + isDisabled() + "'" +
             "}";
     }
 }

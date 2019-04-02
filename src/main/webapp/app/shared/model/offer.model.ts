@@ -7,6 +7,7 @@ export interface IOffer {
     type?: number;
     orderItems?: IOrderItem[];
     expirationDate?: Date;
+    disabled?: boolean;
 }
 
 export class Offer implements IOffer {
@@ -16,6 +17,7 @@ export class Offer implements IOffer {
         public description?: string,
         public type?: number,
         public orderItems?: IOrderItem[],
-        public expirationDate?: Date
+        public expirationDate?: Date,
+        public disabled?: boolean
     ) {}
 }
