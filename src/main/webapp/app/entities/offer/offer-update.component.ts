@@ -10,6 +10,7 @@ import { AccountService } from '../../core/auth/account.service';
 import { ICommerce } from 'app/shared/model/commerce.model';
 import { CommerceService } from '../commerce/commerce.service';
 import { UserExtraService } from '../user-extra';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-offer-update',
@@ -58,12 +59,14 @@ export class OfferUpdateComponent implements OnInit {
         let commercesSave = this.accountService.userExtra.commerces[0];
         let userExtraSave = this.accountService.userExtra;
         commercesSave.offer = res.body;
-        commercesSave.name = 'fuuuuuuuu';
+        this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
+            userExtraSave.commerces[0] = res.body;
+            this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
+                console.log(res.body);
+                this.userExtraService.refreshUser();
+            });
+        });
 
-        this.commerceService.create(commercesSave);
-
-        this.accountService.refreshUser();
-        console.log(commercesSave);
         /*
         const Toast = Swal.mixin({
             toast: true,
