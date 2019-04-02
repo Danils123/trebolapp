@@ -4,10 +4,13 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
-import { IProductList } from 'app/shared/model/product-list.model';
+import { IProductList, ProductList } from 'app/shared/model/product-list.model';
 import { ProductListService } from './product-list.service';
 import { IProductCommerce } from 'app/shared/model/product-commerce.model';
 import { ProductCommerceService } from 'app/entities/product-commerce';
+import Swal from 'sweetalert2';
+import { ListPurchaseService } from 'app/entities/list-purchase';
+import { IListPurchase } from 'app/shared/model/list-purchase.model';
 
 @Component({
     selector: 'jhi-product-list-update',
@@ -16,15 +19,25 @@ import { ProductCommerceService } from 'app/entities/product-commerce';
 export class ProductListUpdateComponent implements OnInit {
     productList: IProductList;
     isSaving: boolean;
-
+    nameList: string;
+    nameProduct: string;
+    brandProduct: string;
+    descrList: string;
+    quantityProduct: number;
+    productArray: IProductList[];
     productcommerces: IProductCommerce[];
+    listPurchase: IListPurchase;
+    index: number;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected productListService: ProductListService,
         protected productCommerceService: ProductCommerceService,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+        protected activatedRoute: ActivatedRoute,
+        protected listPurchaseService: ListPurchaseService
+    ) {
+        this.productArray = [];
+    }
 
     ngOnInit() {
         this.isSaving = false;
@@ -59,6 +72,17 @@ export class ProductListUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Lista agregada satisfactoriamente'
+        });
         this.previousState();
     }
 
@@ -83,5 +107,23 @@ export class ProductListUpdateComponent implements OnInit {
             }
         }
         return option;
+    }
+
+    addProduct() {
+        this.productArray.push(new ProductList());
+    }
+
+    deleteProduct(product: IProductList) {
+        let i = 0;
+        for (const item of this.productArray) {
+            if (product.name === item.name && product.brand === item.brand) {
+                this.productArray.splice(i, 1);
+                console.log('Borrando');
+                console.log(i);
+            }
+            i++;
+            console.log('index');
+            console.log(i);
+        }
     }
 }

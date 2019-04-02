@@ -1,4 +1,4 @@
-<div class="row justify-content-center">
+<!--<div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-product-list-heading">Create or edit a Product List</h2>
@@ -26,4 +26,79 @@
             </div>
         </form>
     </div>
+</div>
+-->
+
+<!--==============================================================================================================================-->
+<div class="container-fluid justify-content-center">
+<div class="col-sm-6 col-md-8">
+    <div class="card">
+        <div class="card-header">
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Nombre de la lista" [(ngModel)]="listPurchase.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="Descr" id="Descr" placeholder="Descripción (Opcional)" [(ngModel)]="listPurchase.description">
+            </div>
+
+            <a data-toggle="tooltip" title="Eliminar" (click)='previousState()'>
+                <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
+            </a>
+            <a data-toggle="tooltip" title="Guardar">
+                <i class="col-md-1 float-right icon-disc icons font-2xl "></i>
+            </a>
+            <a data-toggle="tooltip" title="Calendarizar">
+                <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
+            </a>
+
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" >
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span>Nombre</span></th>
+                        <th><span>Marca</span></th>
+                        <th><span>Cantidad</span></th>
+                        <th>
+                            <a data-toggle="tooltip" title="Agregar producto" (click)="addProduct()">
+                                <i class="icon-plus icons font-2xl d-block mt-4"></i>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let product of productArray">
+                        <td><input type="text" class="form-control" name="nameProduct" id="nameProduct" placeholder="Producto" [(ngModel)]="nameProduct" #nameProd="ngModel" [ngClass]="{'is-invalid': nameProd.errors?.required && nameProd.touched}" required></td>
+                        <td><input type="text" class="form-control" name="brand" id="brand" placeholder="Marca" [(ngModel)]="brandProduct" #brandProd="ngModel" [ngClass]="{'is-invalid': brandProd.errors?.required && brandProd.touched}" required></td>
+                        <td align="center"><input type="number" class="form-control" name="quantity" id="quantity" placeholder="Cantidad" [(ngModel)]="quantityProduct" #quantityProd="ngModel" [ngClass]="{'is-invalid': quantityProd.errors?.required && quantityProd.touched}" required></td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <!--   <button type="submit"
+                                           [routerLink]="['/product-list', productList.id, 'view' ]"
+                                           class="btn btn-info btn-sm">
+                                       <fa-icon [icon]="'eye'"></fa-icon>
+                                       <span class="d-none d-md-inline">View</span>
+                                   </button>
+
+                                   <a class="col-md-4"[routerLink]="['/product-list', productMaster.id, 'edit']">
+                                       <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                   </a> -->
+                                <a class="col-md-4" (click)='deleteProduct(product)'
+                                   replaceUrl="true"
+                                   queryParamsHandling="merge">
+                                    <fa-icon [icon]="'times'"></fa-icon>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </div>
