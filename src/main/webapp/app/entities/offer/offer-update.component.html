@@ -36,6 +36,13 @@
                                     Este campo es requerido
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Fecha de caducidad (MM DD YYYY)</label>
+
+                                <ng-datepicker [(ngModel)]="date" [options]="options" class="form-control" name="expiration_date" #expiration_date="ngModel"></ng-datepicker>
+                            </div>
+
                         </div>
                         <div>
                             <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
@@ -46,6 +53,7 @@
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

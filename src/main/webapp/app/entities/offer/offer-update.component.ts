@@ -11,7 +11,8 @@ import { ICommerce } from 'app/shared/model/commerce.model';
 import { CommerceService } from '../commerce/commerce.service';
 import { UserExtraService } from '../user-extra';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
-
+import { DatepickerOptions } from 'ng2-datepicker';
+import * as enLocale from 'date-fns/locale/en';
 @Component({
     selector: 'jhi-offer-update',
     templateUrl: './offer-update.component.html'
@@ -22,13 +23,23 @@ export class OfferUpdateComponent implements OnInit {
     minValue = true;
     maxValue = true;
 
+    date: Date;
+    options: DatepickerOptions = {
+        locale: enLocale,
+        minDate: new Date(Date.now()),
+        placeholder: 'Click to select a date',
+        displayFormat: 'MM DD YYYY'
+    };
+
     constructor(
         protected offerService: OfferService,
         protected activatedRoute: ActivatedRoute,
         protected accountService: AccountService,
         protected commerceService: CommerceService,
         protected userExtraService: UserExtraService
-    ) {}
+    ) {
+        this.date = new Date();
+    }
 
     ngOnInit() {
         this.isSaving = false;
@@ -39,16 +50,20 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        console.log(this.date);
+        // window.history.back();
     }
 
     save() {
+        console.log('mafumba wamba');
+        /*
         this.isSaving = true;
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
             this.subscribeToSaveResponse(this.offerService.create(this.offer));
         }
+        */
     }
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IOffer>>) {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
