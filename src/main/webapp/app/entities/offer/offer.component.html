@@ -53,7 +53,11 @@
                                     </button>
                                         <button [hidden]="offer.disabled" type="submit" (click)='deleteItem(offer)' class="btn-danger tableButtons ml-2 btn-sm">
                                             <fa-icon [icon]="'times'"></fa-icon>
-                                            <span class="d-none d-md-inline">Eliminar</span>
+                                            <span class="d-none d-md-inline">Deshabilitar</span>
+                                        </button>
+                                        <button *ngIf="offer.disabled === true" type="submit" (click)='enableItem(offer)' class="btn-success tableButtons ml-2 btn-sm">
+                                                <fa-icon [icon]="'times'"></fa-icon>
+                                                <span class="d-none d-md-inline">Habilitar</span>
                                         </button>
                                     </div>
                                 </td>

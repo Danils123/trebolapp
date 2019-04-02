@@ -121,4 +121,31 @@ export class OfferComponent implements OnInit, OnDestroy {
             this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La oferta ha sido deshabilitada.', 'success');
         });
     }
+
+    enableItem(offer: IOffer) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea habilitar la oferta?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, habilitar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmEnable(offer);
+                }
+            });
+    }
+    confirmEnable(offer: IOffer) {
+        offer.disabled = false;
+        this.offerService.update(offer).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'offerListModification',
+                content: 'Deleted an offer'
+            });
+            this.swalWithBootstrapButtons.fire('Habilitada!', 'La oferta ha sido habilitada.', 'success');
+        });
+    }
 }
