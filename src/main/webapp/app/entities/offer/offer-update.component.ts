@@ -51,19 +51,16 @@ export class OfferUpdateComponent implements OnInit {
 
     previousState() {
         console.log(this.date);
-        // window.history.back();
+        window.history.back();
     }
 
     save() {
-        console.log('mafumba wamba');
-        /*
         this.isSaving = true;
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
             this.subscribeToSaveResponse(this.offerService.create(this.offer));
         }
-        */
     }
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IOffer>>) {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
