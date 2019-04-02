@@ -23,9 +23,7 @@ export class OfferUpdateComponent implements OnInit {
     minValue = true;
     maxValue = true;
 
-    date: Date;
     options: DatepickerOptions = {
-        locale: enLocale,
         minDate: new Date(Date.now()),
         placeholder: 'Click to select a date',
         displayFormat: 'MM DD YYYY'
@@ -37,20 +35,20 @@ export class OfferUpdateComponent implements OnInit {
         protected accountService: AccountService,
         protected commerceService: CommerceService,
         protected userExtraService: UserExtraService
-    ) {
-        this.date = new Date();
-    }
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ offer }) => {
             this.offer = offer;
             this.offer.type = 1;
+            if (this.offer.expirationDate === null && this.offer.expirationDate === undefined) {
+                this.offer.expirationDate = new Date();
+            }
         });
     }
 
     previousState() {
-        console.log(this.date);
         window.history.back();
     }
 
@@ -67,8 +65,8 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     protected onSaveSuccess(res: HttpResponse<IOffer>) {
-        let commercesSave = this.accountService.userExtra.commerces[0];
-        let userExtraSave = this.accountService.userExtra;
+        const commercesSave = this.accountService.userExtra.commerces[0];
+        const userExtraSave = this.accountService.userExtra;
         commercesSave.offer = res.body;
         this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
             userExtraSave.commerces[0] = res.body;
