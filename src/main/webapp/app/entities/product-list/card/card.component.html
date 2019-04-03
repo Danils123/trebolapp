@@ -3,19 +3,18 @@
     <div class="card">
         <div class="card-header">
             <div *ngIf="listpurchaseAll.listpurchase != null">
-                 {{listpurchaseAll.listpurchase.name}}
+                <a data-toggle="tooltip" title= "{{listpurchaseAll.listpurchase.description}}"> {{listpurchaseAll.listpurchase.name}}</a>
             </div>
 
-            <a data-toggle="tooltip" title="Eliminar">
+            <a data-toggle="tooltip" title="Eliminar" (click)='deleteItem(listpurchaseAll.listpurchase)'>
                 <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
             </a>
-            <a data-toggle="tooltip" title="Guardar">
-                <i class="col-md-1 float-right icon-disc icons font-2xl "></i>
-            </a>
+           <!-- <a data-toggle="tooltip" title="Editar" [routerLink]="['/product-list', listpurchaseAll.listpurchase.id, 'edit']">
+                <i class="col-md-1 float-right icon-pencil icons font-2xl "></i>
+            </a>-->
             <a data-toggle="tooltip" title="Calendarizar">
                 <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
             </a>
-
 
         </div>
         <div class="card-body">
@@ -37,23 +36,7 @@
                         <td>{{productMaster.brand}}</td>
                         <td align="center">{{productMaster.quantity}}</td>
                         <td class="text-right">
-                            <div class="btn-group flex-btn-group-container">
-                                <!--<button type="submit"
-                                        [routerLink]="['/product-list', productList.id, 'view' ]"
-                                        class="btn btn-info btn-sm">
-                                    <fa-icon [icon]="'eye'"></fa-icon>
-                                    <span class="d-none d-md-inline">View</span>
-                                </button>-->
 
-                                <a class="col-md-4"[routerLink]="['/product-list', productMaster.id, 'edit']">
-                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                </a>
-                                <a class="col-md-4" (click)='deleteItem(productMaster.id)'
-                                   replaceUrl="true"
-                                   queryParamsHandling="merge">
-                                    <fa-icon [icon]="'times'"></fa-icon>
-                                </a>
-                            </div>
                         </td>
                     </tr>
                     </tbody>
