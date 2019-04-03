@@ -12,6 +12,7 @@ export interface IProduct {
     category?: ICategory;
     subCategory?: ISubCategory;
     productCommerces?: IProductCommerce[];
+    disabled?: boolean;
 }
 
 export class Product implements IProduct {
@@ -24,6 +25,7 @@ export class Product implements IProduct {
         public image?: string,
         public category?: ICategory,
         public subCategory?: ISubCategory,
-        public productCommerces?: IProductCommerce[]
+        public productCommerces?: IProductCommerce[],
+        public disabled?: boolean
     ) {}
 }

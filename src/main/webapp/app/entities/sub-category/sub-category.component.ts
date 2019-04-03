@@ -80,7 +80,7 @@ export class SubCategoryComponent implements OnInit, OnDestroy {
                 title: 'Está seguro que desea deshabilitar la SubCategoría?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Si, eliminar!',
+                confirmButtonText: 'Si, deshabilitar!',
                 cancelButtonText: 'No, cancelar!',
                 reverseButtons: true
             })
@@ -98,7 +98,7 @@ export class SubCategoryComponent implements OnInit, OnDestroy {
                 name: 'subCategoryListModification',
                 content: 'Deleted an subCategory'
             });
-            this.swalWithBootstrapButtons.fire('deshabilitada!', 'La SubCategoría ha sido deshabilitada.', 'success');
+            this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La SubCategoría ha sido deshabilitada.', 'success');
         });
     }
 

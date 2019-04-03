@@ -55,6 +55,9 @@ public class ProductResourceIntTest {
     private static final String DEFAULT_IMAGE = "AAAAAAAAAA";
     private static final String UPDATED_IMAGE = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_DISABLED = false;
+    private static final Boolean UPDATED_DISABLED = true;
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -101,7 +104,8 @@ public class ProductResourceIntTest {
             .name(DEFAULT_NAME)
             .brand(DEFAULT_BRAND)
             .description(DEFAULT_DESCRIPTION)
-            .image(DEFAULT_IMAGE);
+            .image(DEFAULT_IMAGE)
+            .disabled(DEFAULT_DISABLED);
         return product;
     }
 
@@ -130,6 +134,7 @@ public class ProductResourceIntTest {
         assertThat(testProduct.getBrand()).isEqualTo(DEFAULT_BRAND);
         assertThat(testProduct.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testProduct.getImage()).isEqualTo(DEFAULT_IMAGE);
+        assertThat(testProduct.isDisabled()).isEqualTo(DEFAULT_DISABLED);
     }
 
     @Test
@@ -166,7 +171,8 @@ public class ProductResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(DEFAULT_IMAGE.toString())));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(DEFAULT_IMAGE.toString())))
+            .andExpect(jsonPath("$.[*].disabled").value(hasItem(DEFAULT_DISABLED.booleanValue())));
     }
     
     @Test
@@ -184,7 +190,8 @@ public class ProductResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.brand").value(DEFAULT_BRAND.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.image").value(DEFAULT_IMAGE.toString()));
+            .andExpect(jsonPath("$.image").value(DEFAULT_IMAGE.toString()))
+            .andExpect(jsonPath("$.disabled").value(DEFAULT_DISABLED.booleanValue()));
     }
 
     @Test
@@ -212,7 +219,8 @@ public class ProductResourceIntTest {
             .name(UPDATED_NAME)
             .brand(UPDATED_BRAND)
             .description(UPDATED_DESCRIPTION)
-            .image(UPDATED_IMAGE);
+            .image(UPDATED_IMAGE)
+            .disabled(UPDATED_DISABLED);
 
         restProductMockMvc.perform(put("/api/products")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -228,6 +236,7 @@ public class ProductResourceIntTest {
         assertThat(testProduct.getBrand()).isEqualTo(UPDATED_BRAND);
         assertThat(testProduct.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testProduct.getImage()).isEqualTo(UPDATED_IMAGE);
+        assertThat(testProduct.isDisabled()).isEqualTo(UPDATED_DISABLED);
     }
 
     @Test

@@ -74,31 +74,58 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    deleteItem(id: number) {
+    deleteItem(product: IProduct) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar el producto?',
-                text: 'Si continúa, no podrá revertir el cambio',
+                title: 'Está seguro que desea deshabilitar el producto?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Si, eliminar!',
+                confirmButtonText: 'Si, deshabilitar!',
                 cancelButtonText: 'No, cancelar!',
                 reverseButtons: true
             })
             .then(result => {
                 if (result.value) {
-                    this.confirmDelete(id);
+                    this.confirmDelete(product);
                 }
             });
     }
 
-    confirmDelete(id: number) {
-        this.productService.delete(id).subscribe(response => {
+    confirmDelete(product: IProduct) {
+        product.disabled = true;
+        this.productService.update(product).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'productListModification',
                 content: 'Deleted an product'
             });
-            this.swalWithBootstrapButtons.fire('Eliminado!', 'El producto ha sido eliminado.', 'success');
+            this.swalWithBootstrapButtons.fire('Deshabilitado!', 'El producto ha sido deshabilitado.', 'success');
+        });
+    }
+
+    enableItem(product: IProduct) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea habilitar el producto?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, habilitar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmEnable(product);
+                }
+            });
+    }
+    confirmEnable(product: IProduct) {
+        product.disabled = false;
+        this.productService.update(product).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'productListModification',
+                content: 'Deleted an offer'
+            });
+            this.swalWithBootstrapButtons.fire('Habilitado!', 'El producto ha sido habilitado.', 'success');
         });
     }
 
