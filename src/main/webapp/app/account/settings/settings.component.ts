@@ -1,5 +1,4 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { AccountService, IUser } from 'app/core';
 import { TextMaskModule } from 'angular2-text-mask';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
@@ -22,6 +21,7 @@ export class SettingsComponent implements OnInit {
     settingsAccount: any;
     userTemp: any;
     ranking: number[];
+    withoutRanking: number[];
     userExtra: IUserExtra;
     languages: any[];
 
@@ -51,8 +51,14 @@ export class SettingsComponent implements OnInit {
                 this.settingsAccount.id = account.body.id;
                 this.checked = JSON.parse(this.userExtra.notification);
                 this.ranking = new Array(JSON.parse(this.userExtra.notification));
+                console.log(JSON.parse(this.userExtra.notification));
+                if (this.ranking.length - 5 > 0 && JSON.parse(this.userExtra.notification) != null) {
+                    this.withoutRanking = new Array(JSON.parse(this.userExtra.notification) - 5);
+                } else {
+                    this.withoutRanking = new Array(4);
+                }
+                console.log(this.withoutRanking);
             });
-            console.log(this.userTemp);
         });
     }
 

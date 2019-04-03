@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h2><span>Oferta</span> {{offer.id}}</h2>
+            <h2><span>Oferta</span></h2>
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-8">
                     <div *ngIf="offer">
-                        <h2><span>Oferta</span> {{offer.id}}</h2>
+                        <h2><span>Oferta</span></h2>
                         <hr>
 
                         <dl class="row-md jh-entity-details">
@@ -18,6 +18,10 @@
                             <dt><span>Descripción</span></dt>
                             <dd>
                                 <span>{{offer.description}}</span>
+                            </dd>
+                            <dt><span>Fecha de caducidad (MM DD YYYY)</span></dt>
+                            <dd>
+                                <span>{{offer.expirationDate|date: "dd MM yyyy"}}</span>
                             </dd>
                         </dl>
 

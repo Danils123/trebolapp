@@ -33,6 +33,7 @@ export class CategoryUpdateComponent implements OnInit {
         if (this.category.id !== undefined) {
             this.subscribeToSaveResponse(this.categoryService.update(this.category));
         } else {
+            this.category.disabled = false;
             this.subscribeToSaveResponse(this.categoryService.create(this.category));
         }
     }

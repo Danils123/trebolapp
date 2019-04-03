@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h2><span>Subcategoría</span> {{subCategory.id}}</h2>
+            <h2><span>Subcategoría</span></h2>
         </div>
         <div class="card-body">
             <div class="row justify-content-center">
@@ -17,6 +17,11 @@
                             <dt><span>Descripción</span></dt>
                             <dd>
                                 <span>{{subCategory.description}}</span>
+                            </dd>
+                            <dt><span>Estado</span></dt>
+                            <dd>
+                                <span *ngIf="subCategory.disabled === true">Deshabilitada</span>
+                                <span *ngIf="subCategory.disabled === false">Habilitada</span>
                             </dd>
                         </dl>
 

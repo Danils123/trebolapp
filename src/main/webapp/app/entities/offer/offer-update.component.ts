@@ -8,9 +8,11 @@ import Swal from 'sweetalert2';
 import { filter, map } from 'rxjs/operators';
 import { AccountService } from '../../core/auth/account.service';
 import { ICommerce } from 'app/shared/model/commerce.model';
-import { CommerceService } from '../commerce';
+import { CommerceService } from '../commerce/commerce.service';
 import { UserExtraService } from '../user-extra';
-
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { DatepickerOptions } from 'ng2-datepicker';
+import * as enLocale from 'date-fns/locale/en';
 @Component({
     selector: 'jhi-offer-update',
     templateUrl: './offer-update.component.html'
@@ -20,6 +22,12 @@ export class OfferUpdateComponent implements OnInit {
     isSaving: boolean;
     minValue = true;
     maxValue = true;
+
+    options: DatepickerOptions = {
+        minDate: new Date(Date.now()),
+        placeholder: 'Click to select a date',
+        displayFormat: 'DD MM YYYY'
+    };
 
     constructor(
         protected offerService: OfferService,
@@ -34,6 +42,10 @@ export class OfferUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ offer }) => {
             this.offer = offer;
             this.offer.type = 1;
+
+            if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
+                this.offer.expirationDate = new Date();
+            }
         });
     }
 
@@ -46,6 +58,7 @@ export class OfferUpdateComponent implements OnInit {
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
+            this.offer.disabled = false;
             this.subscribeToSaveResponse(this.offerService.create(this.offer));
         }
     }
@@ -54,18 +67,27 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     protected onSaveSuccess(res: HttpResponse<IOffer>) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
+        const commercesSave = this.accountService.userExtra.commerces[0];
+        const userExtraSave = this.accountService.userExtra;
+        commercesSave.offer = res.body;
+        this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
+            userExtraSave.commerces[0] = res.body;
+            this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
+                this.userExtraService.refreshUser();
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
 
-        Toast.fire({
-            type: 'success',
-            title: 'Categoria agregada satisfactoriamente'
+                Toast.fire({
+                    type: 'success',
+                    title: 'Oferta agregada satisfactoriamente'
+                });
+                this.previousState();
+            });
         });
-        this.previousState();
     }
 
     protected onSaveError() {

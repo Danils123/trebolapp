@@ -1,5 +1,31 @@
 {
-    "name": "Product",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": true,
+            "otherEntityRelationshipName": "product"
+        },
+        {
+            "relationshipName": "subCategory",
+            "otherEntityName": "subCategory",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": true,
+            "otherEntityRelationshipName": "product"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "productCommerce",
+            "otherEntityRelationshipName": "product",
+            "relationshipName": "productCommerce",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "barCode",
@@ -20,35 +46,18 @@
         {
             "fieldName": "image",
             "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipName": "category",
-            "otherEntityName": "category",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
         },
         {
-            "relationshipName": "subCategory",
-            "otherEntityName": "subCategory",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "productCommerce",
-            "otherEntityRelationshipName": "product",
-            "relationshipName": "productCommerce"
+            "fieldName": "disabled",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190312191709",
-    "entityTableName": "product",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "product",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

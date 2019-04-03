@@ -33,6 +33,9 @@ public class SubCategory implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "disabled")
+    private Boolean disabled;
+
     @OneToMany(mappedBy = "subCategory")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Product> products = new HashSet<>();
@@ -69,6 +72,19 @@ public class SubCategory implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean isDisabled() {
+        return disabled;
+    }
+
+    public SubCategory disabled(Boolean disabled) {
+        this.disabled = disabled;
+        return this;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
     public Set<Product> getProducts() {
@@ -123,6 +139,7 @@ public class SubCategory implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", disabled='" + isDisabled() + "'" +
             "}";
     }
 }

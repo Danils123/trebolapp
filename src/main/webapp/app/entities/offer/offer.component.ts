@@ -13,11 +13,11 @@ import Swal from 'sweetalert2';
     templateUrl: './offer.component.html'
 })
 export class OfferComponent implements OnInit, OnDestroy {
-    offers: IOffer[];
+    offers: IOffer[] = null;
     currentAccount: any;
     eventSubscriber: Subscription;
     _filterQuery = '';
-    filteredOffers: IOffer[];
+    filteredOffers: IOffer[] = null;
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success ml-3',
@@ -43,6 +43,15 @@ export class OfferComponent implements OnInit, OnDestroy {
                 (res: IOffer[]) => {
                     this.offers = res;
                     this.filteredOffers = res;
+                    if (
+                        this.accountService.userExtra.commerces[0].offer != null &&
+                        this.accountService.userExtra.commerces[0].offer != undefined
+                    ) {
+                        this.filteredOffers = [];
+                        this.offers = [];
+                        this.offers.push(this.accountService.userExtra.commerces[0].offer);
+                        this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
+                    }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -86,30 +95,57 @@ export class OfferComponent implements OnInit, OnDestroy {
         return this.offers.filter((offer: IOffer) => offer.description.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
 
-    deleteItem(id: number) {
+    deleteItem(offer: IOffer) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar la oferta?',
-                text: 'Si continúa, no podrá revertir el cambio',
+                title: 'Está seguro que desea deshabilitar la oferta?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Si, eliminar!',
+                confirmButtonText: 'Si, deshabilitar!',
                 cancelButtonText: 'No, cancelar!',
                 reverseButtons: true
             })
             .then(result => {
                 if (result.value) {
-                    this.confirmDelete(id);
+                    this.confirmDelete(offer);
                 }
             });
     }
-    confirmDelete(id: number) {
-        this.offerService.delete(id).subscribe(response => {
+    confirmDelete(offer: IOffer) {
+        offer.disabled = true;
+        this.offerService.update(offer).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'offerListModification',
                 content: 'Deleted an offer'
             });
-            this.swalWithBootstrapButtons.fire('Eliminada!', 'La oferta ha sido eliminada.', 'success');
+            this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La oferta ha sido deshabilitada.', 'success');
+        });
+    }
+
+    enableItem(offer: IOffer) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea habilitar la oferta?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, habilitar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmEnable(offer);
+                }
+            });
+    }
+    confirmEnable(offer: IOffer) {
+        offer.disabled = false;
+        this.offerService.update(offer).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'offerListModification',
+                content: 'Deleted an offer'
+            });
+            this.swalWithBootstrapButtons.fire('Habilitada!', 'La oferta ha sido habilitada.', 'success');
         });
     }
 }
