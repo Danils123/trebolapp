@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { ProductListService } from 'app/entities/product-list';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { AccountService } from 'app/core';
 import { Subscription } from 'rxjs';
 import { Ilistpurchaseall } from '../../../shared/model/listpurchaseall.model';
+import { IListPurchase } from 'app/shared/model/list-purchase.model';
+import { ListPurchaseService } from 'app/entities/list-purchase';
 
 @Component({
     selector: 'jhi-card',
@@ -25,18 +26,18 @@ export class CardComponent implements OnInit {
     });
 
     constructor(
-        protected productListService: ProductListService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected listPurchaseService: ListPurchaseService
     ) {}
 
     ngOnInit() {}
 
-    deleteItem(id: number) {
+    deleteItem(listpurchase: IListPurchase) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar el producto?',
+                title: 'Está seguro que desea eliminar la lista?',
                 text: 'Si continúa, no podrá revertir el cambio',
                 type: 'warning',
                 showCancelButton: true,
@@ -46,12 +47,13 @@ export class CardComponent implements OnInit {
             })
             .then(result => {
                 if (result.value) {
-                    this.confirmDelete(id);
+                    this.confirmDelete(listpurchase);
                 }
             });
     }
-    confirmDelete(id: number) {
-        this.productListService.delete(id).subscribe(response => {
+    confirmDelete(listpurchase: IListPurchase) {
+        listpurchase.state = false;
+        this.listPurchaseService.update(listpurchase).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'productListListModification',
                 content: 'Deleted an productList'

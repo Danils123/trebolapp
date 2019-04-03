@@ -11,6 +11,9 @@ import { ProductCommerceService } from 'app/entities/product-commerce';
 import Swal from 'sweetalert2';
 import { ListPurchaseService } from 'app/entities/list-purchase';
 import { IListPurchase } from 'app/shared/model/list-purchase.model';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { AccountService } from 'app/core';
+import { UserExtraService } from 'app/entities/user-extra';
 
 @Component({
     selector: 'jhi-product-list-update',
@@ -27,17 +30,30 @@ export class ProductListUpdateComponent implements OnInit {
     productArray: IProductList[];
     productcommerces: IProductCommerce[];
     listPurchase: IListPurchase;
+    listPurchaseReturn: IListPurchase;
     index: number;
     id: number;
+    idUser: IUserExtra;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected productListService: ProductListService,
         protected productCommerceService: ProductCommerceService,
         protected activatedRoute: ActivatedRoute,
-        protected listPurchaseService: ListPurchaseService
+        protected listPurchaseService: ListPurchaseService,
+        protected accountService: AccountService,
+        protected userExtraService: UserExtraService
     ) {
+        this.idUser = this.userExtraService.userExtra;
         this.productArray = [];
+        this.listPurchase = new class implements IListPurchase {
+            description: string;
+            id: number;
+            name: string;
+            productList: IProductList;
+            seller: IUserExtra;
+            state: boolean;
+        }();
     }
 
     ngOnInit() {
@@ -60,15 +76,37 @@ export class ProductListUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.productList.id !== undefined) {
-            this.subscribeToSaveResponse(this.productListService.update(this.productList));
+
+        if (this.listPurchase.id !== undefined) {
+            this.subscribeToSaveResponsePurchase(this.listPurchaseService.update(this.listPurchase));
         } else {
-            this.subscribeToSaveResponse(this.productListService.create(this.productList));
+            this.listPurchase.seller = this.idUser;
+            this.listPurchase.state = true;
+            this.subscribeToSaveResponsePurchase(this.listPurchaseService.create(this.listPurchase));
         }
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IProductList>>) {
         result.subscribe((res: HttpResponse<IProductList>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    protected subscribeToSaveResponsePurchase(result: Observable<HttpResponse<IListPurchase>>) {
+        result.subscribe(
+            (res: HttpResponse<IListPurchase>) => {
+                this.listPurchaseReturn = res.body;
+
+                for (const productList of this.productArray) {
+                    if (productList.id !== undefined) {
+                        this.subscribeToSaveResponse(this.productListService.update(productList));
+                    } else {
+                        productList.idlistpurchase = this.listPurchaseReturn.id;
+                        productList.state = true;
+                        this.subscribeToSaveResponse(this.productListService.create(productList));
+                    }
+                }
+            },
+            (res: HttpErrorResponse) => this.onSaveError()
+        );
     }
 
     protected onSaveSuccess() {
