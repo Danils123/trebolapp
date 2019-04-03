@@ -42,8 +42,7 @@ export class OfferUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ offer }) => {
             this.offer = offer;
             this.offer.type = 1;
-            this.offer.disabled = false;
-            console.log(this.offer.expirationDate);
+
             if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
                 this.offer.expirationDate = new Date();
             }
@@ -59,6 +58,7 @@ export class OfferUpdateComponent implements OnInit {
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
+            this.offer.disabled = false;
             this.subscribeToSaveResponse(this.offerService.create(this.offer));
         }
     }

@@ -46,6 +46,9 @@ public class SubCategoryResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_DISABLED = false;
+    private static final Boolean UPDATED_DISABLED = true;
+
     @Autowired
     private SubCategoryRepository subCategoryRepository;
 
@@ -89,7 +92,8 @@ public class SubCategoryResourceIntTest {
     public static SubCategory createEntity(EntityManager em) {
         SubCategory subCategory = new SubCategory()
             .name(DEFAULT_NAME)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .disabled(DEFAULT_DISABLED);
         return subCategory;
     }
 
@@ -115,6 +119,7 @@ public class SubCategoryResourceIntTest {
         SubCategory testSubCategory = subCategoryList.get(subCategoryList.size() - 1);
         assertThat(testSubCategory.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testSubCategory.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testSubCategory.isDisabled()).isEqualTo(DEFAULT_DISABLED);
     }
 
     @Test
@@ -148,7 +153,8 @@ public class SubCategoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subCategory.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].disabled").value(hasItem(DEFAULT_DISABLED.booleanValue())));
     }
     
     @Test
@@ -163,7 +169,8 @@ public class SubCategoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(subCategory.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.disabled").value(DEFAULT_DISABLED.booleanValue()));
     }
 
     @Test
@@ -188,7 +195,8 @@ public class SubCategoryResourceIntTest {
         em.detach(updatedSubCategory);
         updatedSubCategory
             .name(UPDATED_NAME)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .disabled(UPDATED_DISABLED);
 
         restSubCategoryMockMvc.perform(put("/api/sub-categories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -201,6 +209,7 @@ public class SubCategoryResourceIntTest {
         SubCategory testSubCategory = subCategoryList.get(subCategoryList.size() - 1);
         assertThat(testSubCategory.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testSubCategory.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testSubCategory.isDisabled()).isEqualTo(UPDATED_DISABLED);
     }
 
     @Test
