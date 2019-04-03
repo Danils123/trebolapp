@@ -1,5 +1,15 @@
 {
-    "name": "SubCategory",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "product",
+            "otherEntityRelationshipName": "subCategory",
+            "relationshipName": "product",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",
@@ -8,23 +18,18 @@
         {
             "fieldName": "description",
             "fieldType": "String"
-        }
-    ],
-    "relationships": [
+        },
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "product",
-            "otherEntityRelationshipName": "subCategory",
-            "relationshipName": "product"
+            "fieldName": "disabled",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190312191708",
-    "entityTableName": "sub_category",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "sub_category",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }
