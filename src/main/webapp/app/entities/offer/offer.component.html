@@ -39,8 +39,8 @@
                                 <td>{{offer.discount}} %</td>
                                 <td>{{offer.description}}</td>
                                 <td>{{offer.expirationDate|date: "dd MM yyyy"}}</td>
-                                <td *ngIf="offer.disabled === true"> Deshabilado</td>
-                                <td *ngIf="offer.disabled === false"> Habilitado</td>
+                                <td *ngIf="offer.disabled === true"> Deshabilitada</td>
+                                <td *ngIf="offer.disabled === false"> Habilitada</td>
                                 <td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit" [routerLink]="['/offer', offer.id, 'view' ]" class="btn-info tableButtons ml-2 btn-sm">

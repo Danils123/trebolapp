@@ -77,7 +77,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.swalWithBootstrapButtons
             .fire({
                 title: 'Está seguro que desea deshabilitar la categoría?',
-                text: 'Si continúa, no podrá revertir el cambio',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Si, deshabilitar!',

@@ -18,6 +18,11 @@
                             <dd>
                                 <span>{{category.description}}</span>
                             </dd>
+                            <dt><span>Estado</span></dt>
+                            <dd>
+                                <span *ngIf="category.disabled === true">Deshabilitada</span>
+                                <span *ngIf="category.disabled === false">Habilitada</span>
+                            </dd>
                         </dl>
 
                         <button type="submit" (click)="previousState()" class="btn btn-info">

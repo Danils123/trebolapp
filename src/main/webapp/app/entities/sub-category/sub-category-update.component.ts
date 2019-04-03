@@ -37,6 +37,7 @@ export class SubCategoryUpdateComponent implements OnInit {
         if (this.subCategory.id !== undefined) {
             this.subscribeToSaveResponse(this.subCategoryService.update(this.subCategory));
         } else {
+            this.subCategory.disabled = false;
             this.subscribeToSaveResponse(this.subCategoryService.create(this.subCategory));
         }
     }

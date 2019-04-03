@@ -27,15 +27,20 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr class="row">
-                                <th class="col-md-3"><span>Nombre</span></th>
+                                <th class="col-md-2"><span>Nombre</span></th>
                                 <th class="col-md-4"><span>Descripción</span></th>
+                                <th class="col-md-1"><span>Estado</span></th>
                                 <th class="col-md-4"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let category of filteredCategories ;trackBy: trackId" class="row">
-                                <td class="col-md-3">{{category.name}}</td>
+                                <td class="col-md-2">{{category.name}}</td>
                                 <td class="col-md-4">{{category.description}}</td>
+
+                                <td *ngIf="category.disabled === true" class="col-md-2"> Deshabilitada</td>
+                                <td *ngIf="category.disabled === false" class="col-md-2"> Habilitada</td>
+
                                 <td class="col-md-4">
                                     <div class="btn-group flex-btn-group-container">
                                         <button type="submit" [routerLink]="['/category', category.id, 'view' ]" class="btn-info tableButtons ml-2 btn-sm">
