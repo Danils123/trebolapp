@@ -61,38 +61,27 @@
                     <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
                         <ul>
                             <li>
-                                <div class="drop-title">Tienes 4 nuevos mensajes</div>
+                                <div class="drop-title">Tiene {{informationArray.length}} ofertas disponibles</div>
                             </li>
                             <li>
                                 <div class="message-center">
                                     <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                    </a>
+                                    <div *ngFor="let information of informationArray">
+                                        <a>
+                                            <!--<div class="user-img"> <img src="../../../content/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
+                                            <div class="mail-contnet">
+                                                <h5>{{information.commerceName}}</h5> <span class="mail-desc">{{information.offerDescription}}</span>
+                                                <span class="mail-desc">Fecha de expiración</span>
+                                                <span class="mail-desc">{{information.expirationDate|date: "dd MM yyyy"}}</span> </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                             <li>
-                                <a class="nav-link text-center" href="javascript:void(0);"> <strong>Ver todos los correos</strong> <i class="fa fa-angle-right"></i> </a>
+                                <!-- PARA LA OPCION DE VER MAS
+                                    <a class="nav-link text-center" href="javascript:void(0);"> <strong>Ver todos los correos</strong> <i class="fa fa-angle-right"></i> </a>
+                                 -->
+
                             </li>
                         </ul>
                     </div>
