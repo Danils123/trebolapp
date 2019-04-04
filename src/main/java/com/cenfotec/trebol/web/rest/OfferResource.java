@@ -1,6 +1,7 @@
 package com.cenfotec.trebol.web.rest;
 import com.cenfotec.trebol.domain.Offer;
 import com.cenfotec.trebol.repository.OfferRepository;
+import com.cenfotec.trebol.service.MailService;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
 import com.cenfotec.trebol.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -28,8 +29,12 @@ public class OfferResource {
 
     private final OfferRepository offerRepository;
 
-    public OfferResource(OfferRepository offerRepository) {
+    private final MailService mailService;
+
+    public OfferResource(OfferRepository offerRepository, MailService mailService) {
         this.offerRepository = offerRepository;
+        this.mailService = mailService;
+
     }
 
     /**
@@ -46,6 +51,8 @@ public class OfferResource {
             throw new BadRequestAlertException("A new offer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Offer result = offerRepository.save(offer);
+        
+        this.mailService.sendEmail("aguerras@ucenfotec.ac.cr", "mamon", "correo de oferta lol", false, false);
         return ResponseEntity.created(new URI("/api/offers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
