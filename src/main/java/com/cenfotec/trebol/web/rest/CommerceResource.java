@@ -1,4 +1,5 @@
 package com.cenfotec.trebol.web.rest;
+
 import com.cenfotec.trebol.domain.Commerce;
 import com.cenfotec.trebol.repository.CommerceRepository;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
@@ -33,10 +34,12 @@ public class CommerceResource {
     }
 
     /**
-     * POST  /commerce : Create a new commerce.
+     * POST /commerce : Create a new commerce.
      *
      * @param commerce the commerce to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new commerce, or with status 400 (Bad Request) if the commerce has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new
+     *         commerce, or with status 400 (Bad Request) if the commerce has
+     *         already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/commerce")
@@ -47,17 +50,17 @@ public class CommerceResource {
         }
         Commerce result = commerceRepository.save(commerce);
         return ResponseEntity.created(new URI("/api/commerce/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
-     * PUT  /commerce : Updates an existing commerce.
+     * PUT /commerce : Updates an existing commerce.
      *
      * @param commerce the commerce to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated commerce,
-     * or with status 400 (Bad Request) if the commerce is not valid,
-     * or with status 500 (Internal Server Error) if the commerce couldn't be updated
+     * @return the ResponseEntity with status 200 (OK) and with body the updated
+     *         commerce, or with status 400 (Bad Request) if the commerce is not
+     *         valid, or with status 500 (Internal Server Error) if the commerce
+     *         couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/commerce")
@@ -67,15 +70,15 @@ public class CommerceResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Commerce result = commerceRepository.save(commerce);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, commerce.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, commerce.getId().toString()))
+                .body(result);
     }
 
     /**
-     * GET  /commerce : get all the commerce.
+     * GET /commerce : get all the commerce.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of commerce in body
+     * @return the ResponseEntity with status 200 (OK) and the list of commerce in
+     *         body
      */
     @GetMapping("/commerce")
     public List<Commerce> getAllCommerce() {
@@ -83,11 +86,18 @@ public class CommerceResource {
         return commerceRepository.findAll();
     }
 
+    @GetMapping("/commerce-byUserId/{id}")
+    public List<Commerce> getByUserId(@PathVariable Long id) {
+        log.debug("REST request to get all Commerce");
+        return commerceRepository.findByUserExtraId(id);
+    }
+
     /**
-     * GET  /commerce/:id : get the "id" commerce.
+     * GET /commerce/:id : get the "id" commerce.
      *
      * @param id the id of the commerce to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the commerce, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the commerce,
+     *         or with status 404 (Not Found)
      */
     @GetMapping("/commerce/{id}")
     public ResponseEntity<Commerce> getCommerce(@PathVariable Long id) {
@@ -97,7 +107,7 @@ public class CommerceResource {
     }
 
     /**
-     * DELETE  /commerce/:id : delete the "id" commerce.
+     * DELETE /commerce/:id : delete the "id" commerce.
      *
      * @param id the id of the commerce to delete
      * @return the ResponseEntity with status 200 (OK)

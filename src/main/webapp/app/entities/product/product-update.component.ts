@@ -14,7 +14,6 @@ import Swal from 'sweetalert2';
 
 import { FileItem } from './file-item';
 import { HostListener } from '@angular/core';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'jhi-product-update',
@@ -60,14 +59,35 @@ export class ProductUpdateComponent implements OnInit {
                 filter((mayBeOk: HttpResponse<ICategory[]>) => mayBeOk.ok),
                 map((response: HttpResponse<ICategory[]>) => response.body)
             )
-            .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
+            .subscribe(
+                (res: ICategory[]) => {
+                    this.categories = [];
+                    res.forEach(category => {
+                        if (category.disabled === false) {
+                            this.categories.push(category);
+                        }
+                    });
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+
         this.subCategoryService
             .query()
             .pipe(
                 filter((mayBeOk: HttpResponse<ISubCategory[]>) => mayBeOk.ok),
                 map((response: HttpResponse<ISubCategory[]>) => response.body)
             )
-            .subscribe((res: ISubCategory[]) => (this.subcategories = res), (res: HttpErrorResponse) => this.onError(res.message));
+            .subscribe(
+                (res: ISubCategory[]) => {
+                    this.subcategories = [];
+                    res.forEach(subCategory => {
+                        if (subCategory.disabled === false) {
+                            this.subcategories.push(subCategory);
+                        }
+                    });
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
         this.productService
             .query()
             .pipe(
@@ -93,6 +113,7 @@ export class ProductUpdateComponent implements OnInit {
             if (this.product.id !== undefined) {
                 this.subscribeToSaveResponse(this.productService.update(this.product));
             } else {
+                this.product.disabled = false;
                 this.subscribeToSaveResponse(this.productService.create(this.product));
             }
         }

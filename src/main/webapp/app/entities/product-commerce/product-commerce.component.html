@@ -1,68 +1,75 @@
-<div>
-    <h2 id="page-heading">
-        <span>Product Commerces</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-commerce" [routerLink]="['/product-commerce/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Product Commerce
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
+<div class="container-fluid">
+    <div class="card">
+            <div class="card-header">
+                    <h2 id="page-heading">
+                            <span>Producto por comercio</span>
+                            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-commerce" [routerLink]="['/product-commerce/new']">
+                                <fa-icon [icon]="'plus'"></fa-icon>
+                                <span >
+                                Crear nuevo inventario
+                                </span>
+                            </button>
+                        </h2>
+
+            </div>
+            <div class="card-body">
+                
     <div class="table-responsive" *ngIf="productCommerces">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Price</span></th>
-            <th><span>Quantity</span></th>
-            <th><span>Product</span></th>
-            <th><span>Product List</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let productCommerce of productCommerces ;trackBy: trackId">
-                <td><a [routerLink]="['/product-commerce', productCommerce.id, 'view' ]">{{productCommerce.id}}</a></td>
-                <td>{{productCommerce.price}}</td>
-                <td>{{productCommerce.quantity}}</td>
-                <td>
-                    <div *ngIf="productCommerce.product">
-                        <a [routerLink]="['../product', productCommerce.product?.id, 'view' ]" >{{productCommerce.product?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <span *ngFor="let productList of productCommerce.productLists; let last = last">
-                            <a class="form-control-static" [routerLink]="['../product-list', productList?.id, 'view' ]">{{productList.id}}</a>{{last ? '' : ', '}}
-                        </span>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/product-commerce', productCommerce.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/product-commerce', productCommerce.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'product-commerce', { outlets: { popup: productCommerce.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                <!-- <th><span>ID</span></th> -->
+                <th><span>Precio</span></th>
+                <th><span>Cantidad</span></th>
+                <th><span>Producto</span></th>
+                <!-- <th><span>Product List</span></th> -->
+                <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let productCommerce of productCommerces ;trackBy: trackId">
+                    <!-- <td><a [routerLink]="['/product-commerce', productCommerce.id, 'view' ]">{{productCommerce.id}}</a></td> -->
+                    <td>{{productCommerce.price}}</td>
+                    <td>{{productCommerce.quantity}}</td>
+                    <td>
+                        <div *ngIf="productCommerce.product">
+                            <a [routerLink]="['../product', productCommerce.product?.id, 'view' ]" >{{productCommerce.product?.id}}</a>
+                        </div>
+                    </td>
+                    <!-- <td>
+                        <span *ngFor="let productList of productCommerce.productLists; let last = last">
+                                <a class="form-control-static" [routerLink]="['../product-list', productList?.id, 'view' ]">{{productList.id}}</a>{{last ? '' : ', '}}
+                            </span>
+                    </td> -->
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="['/product-commerce', productCommerce.id, 'view' ]"
+                                    class="btn-info tableButtons ml-2">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline">Ver</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/product-commerce', productCommerce.id, 'edit']"
+                                    class="btn-primary tableButtons ml-2">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline">Editar</span>
+                            </button>
+                            <button type="submit"  (click)='deleteItem(productCommerce.id)' class="btn-danger tableButtons ml-2 btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline">Eliminar</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>  
+
+            </div>
+
     </div>
+
+
+
 </div>

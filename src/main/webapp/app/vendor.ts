@@ -3,10 +3,10 @@
 import '../content/scss/vendor.scss';
 
 // Imports all fontawesome core and solid icons
-
 import { library } from '@fortawesome/fontawesome-svg-core';
+
 import {
-    faUser,
+    // faUser,
     faSort,
     faSortUp,
     faSortDown,
@@ -39,11 +39,14 @@ import {
     faTrashAlt,
     faAsterisk,
     faTasks,
-    faHome
+    faHome,
+    faMinus,
+    fas
 } from '@fortawesome/free-solid-svg-icons';
 
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+
 // Adds the SVG icon to the library so you can use it in your page
-library.add(faUser);
 library.add(faSort);
 library.add(faSortUp);
 library.add(faSortDown);
@@ -77,7 +80,8 @@ library.add(faCalendarAlt);
 library.add(faSearch);
 library.add(faTrashAlt);
 library.add(faAsterisk);
-
+library.add(faMinus);
+library.add(fas);
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here
 
 //import '../content/js/waves.js';

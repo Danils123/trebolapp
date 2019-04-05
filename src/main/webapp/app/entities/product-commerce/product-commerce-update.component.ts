@@ -10,6 +10,7 @@ import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
 import { IProductList } from 'app/shared/model/product-list.model';
 import { ProductListService } from 'app/entities/product-list';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-product-commerce-update',
@@ -71,6 +72,17 @@ export class ProductCommerceUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Inventario guardado satisfactoriamente'
+        });
         this.previousState();
     }
 

@@ -9,10 +9,6 @@
                     <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
                         <div>
-                            <div class="form-group" [hidden]="!category.id">
-                                <label for="id">ID</label>
-                                <input type="text" class="form-control" id="id" name="id" [(ngModel)]="category.id" readonly />
-                            </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_name">Nombre</label>
                                 <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="category.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required/>

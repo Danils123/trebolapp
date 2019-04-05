@@ -22,9 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
 
+import static com.cenfotec.trebol.web.rest.TestUtil.sameInstant;
 import static com.cenfotec.trebol.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -48,6 +53,12 @@ public class OfferResourceIntTest {
 
     private static final Integer DEFAULT_TYPE = 1;
     private static final Integer UPDATED_TYPE = 2;
+
+    private static final ZonedDateTime DEFAULT_EXPIRATION_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_EXPIRATION_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final Boolean DEFAULT_DISABLED = false;
+    private static final Boolean UPDATED_DISABLED = true;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -93,7 +104,9 @@ public class OfferResourceIntTest {
         Offer offer = new Offer()
             .discount(DEFAULT_DISCOUNT)
             .description(DEFAULT_DESCRIPTION)
-            .type(DEFAULT_TYPE);
+            .type(DEFAULT_TYPE)
+            .expirationDate(DEFAULT_EXPIRATION_DATE)
+            .disabled(DEFAULT_DISABLED);
         return offer;
     }
 
@@ -120,6 +133,8 @@ public class OfferResourceIntTest {
         assertThat(testOffer.getDiscount()).isEqualTo(DEFAULT_DISCOUNT);
         assertThat(testOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testOffer.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testOffer.getExpirationDate()).isEqualTo(DEFAULT_EXPIRATION_DATE);
+        assertThat(testOffer.isDisabled()).isEqualTo(DEFAULT_DISABLED);
     }
 
     @Test
@@ -154,7 +169,9 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(offer.getId().intValue())))
             .andExpect(jsonPath("$.[*].discount").value(hasItem(DEFAULT_DISCOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
+            .andExpect(jsonPath("$.[*].expirationDate").value(hasItem(sameInstant(DEFAULT_EXPIRATION_DATE))))
+            .andExpect(jsonPath("$.[*].disabled").value(hasItem(DEFAULT_DISABLED.booleanValue())));
     }
     
     @Test
@@ -170,7 +187,9 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.id").value(offer.getId().intValue()))
             .andExpect(jsonPath("$.discount").value(DEFAULT_DISCOUNT.doubleValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
+            .andExpect(jsonPath("$.expirationDate").value(sameInstant(DEFAULT_EXPIRATION_DATE)))
+            .andExpect(jsonPath("$.disabled").value(DEFAULT_DISABLED.booleanValue()));
     }
 
     @Test
@@ -196,7 +215,9 @@ public class OfferResourceIntTest {
         updatedOffer
             .discount(UPDATED_DISCOUNT)
             .description(UPDATED_DESCRIPTION)
-            .type(UPDATED_TYPE);
+            .type(UPDATED_TYPE)
+            .expirationDate(UPDATED_EXPIRATION_DATE)
+            .disabled(UPDATED_DISABLED);
 
         restOfferMockMvc.perform(put("/api/offers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -210,6 +231,8 @@ public class OfferResourceIntTest {
         assertThat(testOffer.getDiscount()).isEqualTo(UPDATED_DISCOUNT);
         assertThat(testOffer.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testOffer.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testOffer.getExpirationDate()).isEqualTo(UPDATED_EXPIRATION_DATE);
+        assertThat(testOffer.isDisabled()).isEqualTo(UPDATED_DISABLED);
     }
 
     @Test

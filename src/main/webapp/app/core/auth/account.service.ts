@@ -112,6 +112,11 @@ export class AccountService {
                 console.log(data.body.id);
                 this.findByUserId(data.body.id).subscribe(user => {
                     this.userExtra = user.body;
+                    // this.commerceService.queryByCommerce(this.userExtra.id).subscribe(commerces => {
+                    //     this.userExtra.commerces =  commerces.body;
+                    //     console.log(this.userExtra);
+                    // });
+                    // console.log([this.user, this.userExtra]);
                 });
             }
         });

@@ -41,6 +41,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="disabled" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="category_id" type="bigint">
                 <constraints nullable="true" />
             </column>

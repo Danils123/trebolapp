@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -35,6 +36,12 @@ public class Offer implements Serializable {
 
     @Column(name = "jhi_type")
     private Integer type;
+
+    @Column(name = "expiration_date")
+    private ZonedDateTime expirationDate;
+
+    @Column(name = "disabled")
+    private Boolean disabled;
 
     @OneToMany(mappedBy = "offer")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -85,6 +92,32 @@ public class Offer implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public ZonedDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public Offer expirationDate(ZonedDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+        return this;
+    }
+
+    public void setExpirationDate(ZonedDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Boolean isDisabled() {
+        return disabled;
+    }
+
+    public Offer disabled(Boolean disabled) {
+        this.disabled = disabled;
+        return this;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
     public Set<OrderItem> getOrderItems() {
@@ -140,6 +173,8 @@ public class Offer implements Serializable {
             ", discount=" + getDiscount() +
             ", description='" + getDescription() + "'" +
             ", type=" + getType() +
+            ", expirationDate='" + getExpirationDate() + "'" +
+            ", disabled='" + isDisabled() + "'" +
             "}";
     }
 }

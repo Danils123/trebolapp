@@ -7,6 +7,7 @@ import { ISubCategory } from 'app/shared/model/sub-category.model';
 import { AccountService } from 'app/core';
 import { SubCategoryService } from './sub-category.service';
 import Swal from 'sweetalert2';
+import { ICategory } from 'app/shared/model/category.model';
 @Component({
     selector: 'jhi-sub-category',
     templateUrl: './sub-category.component.html'
@@ -73,31 +74,58 @@ export class SubCategoryComponent implements OnInit, OnDestroy {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    deleteItem(id: number) {
+    deleteItem(subCategory: ISubCategory) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar la SubCategoría?',
-                text: 'Si continúa, no podrá revertir el cambio',
+                title: 'Está seguro que desea deshabilitar la SubCategoría?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Si, eliminar!',
+                confirmButtonText: 'Si, deshabilitar!',
                 cancelButtonText: 'No, cancelar!',
                 reverseButtons: true
             })
             .then(result => {
                 if (result.value) {
-                    this.confirmDelete(id);
+                    this.confirmDelete(subCategory);
                 }
             });
     }
 
-    confirmDelete(id: number) {
-        this.subCategoryService.delete(id).subscribe(response => {
+    confirmDelete(subCategory: ISubCategory) {
+        subCategory.disabled = true;
+        this.subCategoryService.update(subCategory).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'subCategoryListModification',
                 content: 'Deleted an subCategory'
             });
-            this.swalWithBootstrapButtons.fire('Eliminada!', 'La SubCategoría ha sido eliminada.', 'success');
+            this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La SubCategoría ha sido deshabilitada.', 'success');
+        });
+    }
+
+    enableItem(subCategory: ISubCategory) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea habilitar la Subcategoría?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, habilitar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmEnable(subCategory);
+                }
+            });
+    }
+    confirmEnable(subCategory: ISubCategory) {
+        subCategory.disabled = false;
+        this.subCategoryService.update(subCategory).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'subCategoryListModification',
+                content: 'Deleted an subCategory'
+            });
+            this.swalWithBootstrapButtons.fire('Habilitada!', 'La Subcategoría ha sido habilitada.', 'success');
         });
     }
 

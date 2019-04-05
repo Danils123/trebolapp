@@ -1,39 +1,58 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-offer-heading">Create or edit a Offer</h2>
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!offer.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="offer.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_discount">Discount</label>
-                    <input type="number" class="form-control" name="discount" id="field_discount"
-                        [(ngModel)]="offer.discount" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                        [(ngModel)]="offer.description" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_type">Type</label>
-                    <input type="number" class="form-control" name="type" id="field_type"
-                        [(ngModel)]="offer.type" />
-                </div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h2 id="jhi-offer-heading">Crear o editar una oferta</h2>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                        <div>
 
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_discount">Descuento(es porcentaje, solo números)</label>
+                                <input type="number" (keyup)="validateMinMax()" (change)="validateMinMax()" class="form-control" name="discount" id="field_discount" [(ngModel)]="offer.discount" #discount="ngModel" [ngClass]="{'is-invalid': discount.errors?.required && discount.touched || minValue === false || maxValue === false}"
+                                    required pattern="(^[0][0-9]+)|([0-9]\d*)" />
+                                <div *ngIf="discount.errors?.required && discount.touched" class="text-danger">
+                                    Este campo es requerido y solo acepta números
+                                </div>
+                                <div *ngIf="minValue === false" class="text-danger">
+                                    El valor minimo es 1
+                                </div>
+                                <div *ngIf="maxValue === false" class="text-danger">
+                                    El valor máximo es 100
+                                </div>
+                                <div *ngIf="discount.errors?.pattern" class="text-danger">
+                                    Solo se aceptan numeros
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Descripción</label>
+                                <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="offer.description" #description="ngModel" [ngClass]="{'is-invalid': description.errors?.required && description.touched}" required />
+                                <div *ngIf="description.errors?.required && description.touched" class="text-danger">
+                                    Este campo es requerido
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_description">Fecha de caducidad (MM DD YYYY)</label>
+
+                                <ng-datepicker [(ngModel)]="offer.expirationDate" [options]="options" class="form-control" name="expiration_date" #expiration_date="ngModel"></ng-datepicker>
+                            </div>
+
+                        </div>
+                        <div>
+                            <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
+                                <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
+                            </button>
+                            <button type="submit" id="save-entity" [disabled]="(editForm.form.invalid || minValue ===false || maxValue === false) || isSaving" class="btn btn-success">
+                                <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

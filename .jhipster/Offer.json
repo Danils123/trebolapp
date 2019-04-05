@@ -1,5 +1,15 @@
 {
-    "name": "Offer",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "orderItem",
+            "otherEntityRelationshipName": "offer",
+            "relationshipName": "orderItem",
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "discount",
@@ -12,23 +22,22 @@
         {
             "fieldName": "type",
             "fieldType": "Integer"
-        }
-    ],
-    "relationships": [
+        },
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "orderItem",
-            "otherEntityRelationshipName": "offer",
-            "relationshipName": "orderItem"
+            "fieldName": "expirationDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "disabled",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20190312191719",
-    "entityTableName": "offer",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "offer",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

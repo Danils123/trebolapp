@@ -20,6 +20,7 @@ export class CommerceService {
     }
 
     update(commerce: ICommerce): Observable<EntityResponseType> {
+        //console.log(commerce);
         return this.http.put<ICommerce>(this.resourceUrl, commerce, { observe: 'response' });
     }
 
@@ -30,6 +31,10 @@ export class CommerceService {
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<ICommerce[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    queryByCommerce(userId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<ICommerce[]>(`${this.resourceUrl}-byUserId/${userId}`, { observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
