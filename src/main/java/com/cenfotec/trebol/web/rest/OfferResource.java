@@ -51,8 +51,10 @@ public class OfferResource {
             throw new BadRequestAlertException("A new offer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Offer result = offerRepository.save(offer);
+
+        // POR AHORA SE DEJA COMO DESESABLE EL ENVIO DE CORREO, RECOERDAR HACERLO LUEGO
+        //this.mailService.sendEmail("aguerras@ucenfotec.ac.cr", "Oferta", "correo de oferta", false, false);
         
-        this.mailService.sendEmail("aguerras@ucenfotec.ac.cr", "mamon", "correo de oferta lol", false, false);
         return ResponseEntity.created(new URI("/api/offers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

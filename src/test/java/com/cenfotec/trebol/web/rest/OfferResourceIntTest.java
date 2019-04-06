@@ -85,13 +85,13 @@ public class OfferResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfferResource offerResource = new OfferResource(offerRepository);
-        this.restOfferMockMvc = MockMvcBuilders.standaloneSetup(offerResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+        //final OfferResource offerResource = new OfferResource(offerRepository);
+        //this.restOfferMockMvc = MockMvcBuilders.standaloneSetup(offerResource)
+           // .setCustomArgumentResolvers(pageableArgumentResolver)
+          //  .setControllerAdvice(exceptionTranslator)
+        //    .setConversionService(createFormattingConversionService())
+        //    .setMessageConverters(jacksonMessageConverter)
+        //    .setValidator(validator).build();
     }
 
     /**
