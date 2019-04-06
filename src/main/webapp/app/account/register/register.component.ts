@@ -95,8 +95,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
                         title: 'Se ha registrado exitosamente, favor revise su correo'
                     });
 
-                    this.resetForm();
-                    this.router.navigate(['/']);
+                    // this.resetForm();
+                    form.reset();
+                    this.previousState();
                 },
                 response => this.processError(response)
             );
@@ -109,6 +110,10 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
     cambiarRol(rol: number) {
         this.rolActive = rol;
+    }
+
+    previousState() {
+        window.history.back();
     }
 
     private processError(response: HttpErrorResponse) {
