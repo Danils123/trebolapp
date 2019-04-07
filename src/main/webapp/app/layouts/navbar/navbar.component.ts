@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService, LoginModalService, LoginService, IUser } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
@@ -14,13 +14,17 @@ import { OrdersCounterService } from 'app/core/orders/orders_Counter.service';
 import { OrderItemService } from 'app/entities/order-item';
 import { IOrderItem } from 'app/shared/model/order-item.model';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
+import { JhiEventManager } from 'ng-jhipster';
+import { CommerceUserService } from 'app/entities/commerce-user';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-navbar',
     templateUrl: './navbar.component.html',
     styles: []
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];
@@ -29,6 +33,7 @@ export class NavbarComponent implements OnInit {
     version: string;
     offers: IOffer[] = [];
     informationArray: Information[] = [];
+    eventSubscriber: Subscription;
 
     totalOrders: number;
 
@@ -42,7 +47,9 @@ export class NavbarComponent implements OnInit {
         public orderItemService: OrderItemService,
         public commerceService: CommerceService,
         public orderCounter: OrdersCounterService,
-        public offerService: OfferService
+        public offerService: OfferService,
+        protected eventManager: JhiEventManager,
+        public commerceUserService: CommerceUserService
     ) {}
 
     ngOnInit() {
@@ -51,7 +58,7 @@ export class NavbarComponent implements OnInit {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
 
-        this.loadInfo();
+        this.registerChangeInOffers();
     }
 
     loadOrders() {
@@ -107,28 +114,40 @@ export class NavbarComponent implements OnInit {
 
     // This method loads the offers from the commerces for the notifications panel
     loadInfo() {
-        this.commerceService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<ICommerce[]>) => res.ok),
-                map((res: HttpResponse<ICommerce[]>) => res.body)
-            )
-            .subscribe((res: ICommerce[]) => {
-                let informationObject: Information = new Information();
-                res.forEach(commerce => {
-                    if (commerce.offer != null && commerce.offer !== undefined) {
-                        this.offers.push(commerce.offer);
-                        informationObject = new Information();
-                        informationObject.commerceName = commerce.name;
-                        informationObject.offerDescription = commerce.offer.description;
-                        informationObject.commerceId = commerce.id;
-                        informationObject.expirationDate = commerce.offer.expirationDate.toDate();
-                        this.informationArray.push(informationObject);
-                    }
+        this.informationArray = [];
+        let userExtra: IUserExtra;
+
+        this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
+            userExtra = res.body;
+            this.commerceUserService
+                .findCommercesByUser(userExtra.id)
+                .pipe(
+                    filter((res2: HttpResponse<ICommerce[]>) => res2.ok),
+                    map((res2: HttpResponse<ICommerce[]>) => res2.body)
+                )
+                .subscribe((res2: ICommerce[]) => {
+                    let informationObject: Information = new Information();
+                    res2.forEach(commerce => {
+                        if (commerce.offer != null && commerce.offer !== undefined) {
+                            this.offers.push(commerce.offer);
+                            informationObject = new Information();
+                            informationObject.commerceName = commerce.name;
+                            informationObject.offerDescription = commerce.offer.description;
+                            informationObject.commerceId = commerce.id;
+                            informationObject.expirationDate = commerce.offer.expirationDate.toDate();
+                            this.informationArray.push(informationObject);
+                        }
+                    });
                 });
-                console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-                console.log(this.informationArray);
-            });
+        });
+    }
+
+    registerChangeInOffers() {
+        this.eventSubscriber = this.eventManager.subscribe('newOffer', response => this.loadInfo());
+    }
+
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
     }
 }
 

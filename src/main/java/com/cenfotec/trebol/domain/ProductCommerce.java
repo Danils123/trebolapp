@@ -1,7 +1,6 @@
 package com.cenfotec.trebol.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -38,15 +37,16 @@ public class ProductCommerce implements Serializable {
     @JsonIgnoreProperties("productCommerces")
     private Product product;
 
-    @OneToMany(mappedBy = "productCommerce")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Commerce> commerce = new HashSet<>();
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "product_commerce_product_list",
                joinColumns = @JoinColumn(name = "product_commerce_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "product_list_id", referencedColumnName = "id"))
     private Set<ProductList> productLists = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("productCommerces")
+    private Commerce commerce;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -96,31 +96,6 @@ public class ProductCommerce implements Serializable {
         this.product = product;
     }
 
-    public Set<Commerce> getCommerce() {
-        return commerce;
-    }
-
-    public ProductCommerce commerce(Set<Commerce> commerce) {
-        this.commerce = commerce;
-        return this;
-    }
-
-    public ProductCommerce addCommerce(Commerce commerce) {
-        this.commerce.add(commerce);
-        commerce.setProductCommerce(this);
-        return this;
-    }
-
-    public ProductCommerce removeCommerce(Commerce commerce) {
-        this.commerce.remove(commerce);
-        commerce.setProductCommerce(null);
-        return this;
-    }
-
-    public void setCommerce(Set<Commerce> commerce) {
-        this.commerce = commerce;
-    }
-
     public Set<ProductList> getProductLists() {
         return productLists;
     }
@@ -144,6 +119,19 @@ public class ProductCommerce implements Serializable {
 
     public void setProductLists(Set<ProductList> productLists) {
         this.productLists = productLists;
+    }
+
+    public Commerce getCommerce() {
+        return commerce;
+    }
+
+    public ProductCommerce commerce(Commerce commerce) {
+        this.commerce = commerce;
+        return this;
+    }
+
+    public void setCommerce(Commerce commerce) {
+        this.commerce = commerce;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
