@@ -1,62 +1,42 @@
-<div>
-    <h2 id="page-heading">
-        <span>Order Items</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-order-item" [routerLink]="['/order-item/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
-            Create new Order Item
-            </span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="table-responsive" *ngIf="orderItems">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th><span>ID</span></th>
-                    <th><span>Description</span></th>
-                    <th><span>Date</span></th>
-                    <th><span>State</span></th>
-                    <th><span>Seller</span></th>
-                    <th><span>Commerce</span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let orderItem of orderItems ;trackBy: trackId">
-                    <td><a [routerLink]="['/order-item', orderItem.id, 'view' ]">{{orderItem.id}}</a></td>
-                    <td>{{orderItem.description}}</td>
-                    <td>{{orderItem.date | date:'medium'}}</td>
-                    <td>{{orderItem.state}}</td>
-                    <td>
-                        <div *ngIf="orderItem.seller">
-                            <a [routerLink]="['../user-extra', orderItem.seller?.id, 'view' ]">{{orderItem.seller?.id}}</a>
+<div class="container-fluid">
+    <div class="card text-center">
+        <div class="card-header">
+            <h1>Ordenes</h1>
+        </div>
+        <div class="card-body">
+            <div *ngFor="let order of orderItems">
+                <div class="row animated fadeIn" [ngClass]="{'animated slow fadeOut': order.state === 2}">
+                    <div class="col-lg-2 border-right">
+                        <h2 class="align-middle">#{{order.id}}</h2>
+                    </div>
+                    <div class="col text-center">
+                        <div class="row">
+                            <div class="col">
+                                <a href="javascript:void(0)" [routerLink]="['/', 'order-item', { outlets: { popup: order.id + '/update'} }]" replaceUrl="true" queryParamsHandling="merge" class=" btn-sm pull-right pointer">
+                                    <fa-icon [icon]="'eye'"></fa-icon> Ver orden</a>
+                            </div>
+                            <!--  (click)="detail(order.productsPerOrders)" -->
                         </div>
-                    </td>
-                    <td>
-                        <div *ngIf="orderItem.commerce">
-                            <a [routerLink]="['../commerce', orderItem.commerce?.id, 'view' ]">{{orderItem.commerce?.id}}</a>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btb btn-warning btn-lg pointer" *ngIf="order.state == 0" (click)="changeState(order.id)">Preparar orden</button>
+                                <button class="btb btn-success btn-lg pointer" *ngIf="order.state == 1" (click)="changeState(order.id)">Finalizar orden</button>
+                            </div>
                         </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit" [routerLink]="['/order-item', orderItem.id, 'view' ]" class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                            <button type="submit" [routerLink]="['/order-item', orderItem.id, 'edit']" class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                            <button type="submit" [routerLink]="['/', 'order-item', { outlets: { popup: orderItem.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
+                        <div class="row">
+                            <div class="col">
+                                <small class="form-text text-secondary pull-right"> <fa-icon [icon]="'clock'"></fa-icon>Solicitada: {{order.date | date}},  a las: {{order.date | date:'shorTime'}} </small>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <hr/>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
+
+<button (click)="createOrderDummy()">Crear</button>

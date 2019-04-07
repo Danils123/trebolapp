@@ -74,6 +74,7 @@ public class CacheConfiguration {
             cm.createCache(com.cenfotec.trebol.domain.UserExtra.class.getName() + ".orders", jcacheConfiguration);
             cm.createCache(com.cenfotec.trebol.domain.UserExtra.class.getName() + ".orderBuyers", jcacheConfiguration);
             cm.createCache(com.cenfotec.trebol.domain.UserExtra.class.getName() + ".orderSellers", jcacheConfiguration);
+            cm.createCache(com.cenfotec.trebol.domain.CommerceUser.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

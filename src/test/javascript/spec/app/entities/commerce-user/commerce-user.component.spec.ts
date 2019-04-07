@@ -4,28 +4,28 @@ import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { TrebolTestModule } from '../../../test.module';
-import { OrderItemComponent } from 'app/entities/order-item/order-item.component';
-import { OrderItemService } from 'app/entities/order-item/order-item.service';
-import { OrderItem } from 'app/shared/model/order-item.model';
+import { CommerceUserComponent } from 'app/entities/commerce-user/commerce-user.component';
+import { CommerceUserService } from 'app/entities/commerce-user/commerce-user.service';
+import { CommerceUser } from 'app/shared/model/commerce-user.model';
 
 describe('Component Tests', () => {
-    describe('OrderItem Management Component', () => {
-        let comp: OrderItemComponent;
-        let fixture: ComponentFixture<OrderItemComponent>;
-        let service: OrderItemService;
+    describe('CommerceUser Management Component', () => {
+        let comp: CommerceUserComponent;
+        let fixture: ComponentFixture<CommerceUserComponent>;
+        let service: CommerceUserService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [TrebolTestModule],
-                declarations: [OrderItemComponent],
+                declarations: [CommerceUserComponent],
                 providers: []
             })
-                .overrideTemplate(OrderItemComponent, '')
+                .overrideTemplate(CommerceUserComponent, '')
                 .compileComponents();
 
-            fixture = TestBed.createComponent(OrderItemComponent);
+            fixture = TestBed.createComponent(CommerceUserComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(OrderItemService);
+            service = fixture.debugElement.injector.get(CommerceUserService);
         });
 
         it('Should call load all on init', () => {
@@ -34,7 +34,7 @@ describe('Component Tests', () => {
             spyOn(service, 'query').and.returnValue(
                 of(
                     new HttpResponse({
-                        body: [new OrderItem(123)],
+                        body: [new CommerceUser(123)],
                         headers
                     })
                 )
@@ -45,7 +45,7 @@ describe('Component Tests', () => {
 
             // THEN
             expect(service.query).toHaveBeenCalled();
-            expect(comp.orderItems[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+            expect(comp.commerceUsers[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         });
     });
 });

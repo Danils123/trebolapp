@@ -21,6 +21,7 @@
     <include file="config/liquibase/changelog/20190312191718_added_entity_ScheduleCommerce.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190312191719_added_entity_Offer.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190312191720_added_entity_UserExtra.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190406040723_added_entity_CommerceUser.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190312191705_added_entity_constraints_RankingPerOrder.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190312191706_added_entity_constraints_PointsCommerce.xml" relativeToChangelogFile="false"/>
