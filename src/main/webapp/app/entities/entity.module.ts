@@ -81,6 +81,10 @@ import { RouterModule } from '@angular/router';
                 loadChildren: './authority/authority.module#TrebolAuthorityModule'
             },
             {
+                path: 'order-item',
+                loadChildren: './order-item/order-item.module#TrebolOrderItemModule'
+            },
+            {
                 path: 'commerce-user',
                 loadChildren: './commerce-user/commerce-user.module#TrebolCommerceUserModule'
             }

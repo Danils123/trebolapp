@@ -37,12 +37,13 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        String[] allowedOrigins = Optional.ofNullable(jHipsterProperties.getCors().getAllowedOrigins()).map(origins -> origins.toArray(new String[0])).orElse(new String[0]);
-        registry.addEndpoint("/websocket/tracker")
-            .setHandshakeHandler(defaultHandshakeHandler())
-            .setAllowedOrigins(allowedOrigins)
-            .withSockJS()
-            .setInterceptors(httpSessionHandshakeInterceptor());
+        String[] allowedOrigins = Optional.ofNullable(jHipsterProperties.getCors().getAllowedOrigins())
+                .map(origins -> origins.toArray(new String[0])).orElse(new String[0]);
+        registry.addEndpoint("/websocket/orders").setHandshakeHandler(defaultHandshakeHandler())
+                .setAllowedOrigins(allowedOrigins).withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
+        registry.addEndpoint("/websocket/tracker").setHandshakeHandler(defaultHandshakeHandler())
+                .setAllowedOrigins(allowedOrigins).withSockJS().setInterceptors(httpSessionHandshakeInterceptor());
+
     }
 
     @Bean
@@ -50,7 +51,8 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         return new HandshakeInterceptor() {
 
             @Override
-            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+            public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                    WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
                 if (request instanceof ServletServerHttpRequest) {
                     ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
                     attributes.put(IP_ADDRESS, servletRequest.getRemoteAddress());
@@ -59,7 +61,8 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
             }
 
             @Override
-            public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+            public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                    WebSocketHandler wsHandler, Exception exception) {
 
             }
         };
@@ -68,7 +71,8 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     private DefaultHandshakeHandler defaultHandshakeHandler() {
         return new DefaultHandshakeHandler() {
             @Override
-            protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+            protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
+                    Map<String, Object> attributes) {
                 Principal principal = request.getPrincipal();
                 if (principal == null) {
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
