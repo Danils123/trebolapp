@@ -58,10 +58,6 @@ public class Commerce implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne
-    @JsonIgnoreProperties("commerce")
-    private ProductCommerce productCommerce;
-
     @OneToOne
     @JoinColumn(unique = true)
     private Offer offer;
@@ -76,13 +72,18 @@ public class Commerce implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ScheduleCommerce> scheduleCommerces = new HashSet<>();
     @ManyToOne
-    @JsonIgnoreProperties("commerce")
+    @JsonIgnore
     private UserExtra owner;
 
     @ManyToOne
-    @JsonIgnoreProperties("commerces")
+    @JsonIgnore
     private UserExtra userExtra;
 
+    
+    @OneToMany(mappedBy = "commerce")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<ProductCommerce> productCommerces = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -222,19 +223,6 @@ public class Commerce implements Serializable {
         this.phone = phone;
     }
 
-    public ProductCommerce getProductCommerce() {
-        return productCommerce;
-    }
-
-    public Commerce productCommerce(ProductCommerce productCommerce) {
-        this.productCommerce = productCommerce;
-        return this;
-    }
-
-    public void setProductCommerce(ProductCommerce productCommerce) {
-        this.productCommerce = productCommerce;
-    }
-
     public Offer getOffer() {
         return offer;
     }
@@ -347,6 +335,31 @@ public class Commerce implements Serializable {
 
     public void setUserExtra(UserExtra userExtra) {
         this.userExtra = userExtra;
+    }
+
+    public Set<ProductCommerce> getProductCommerces() {
+        return productCommerces;
+    }
+
+    public Commerce productCommerces(Set<ProductCommerce> productCommerces) {
+        this.productCommerces = productCommerces;
+        return this;
+    }
+
+    public Commerce addProductCommerce(ProductCommerce productCommerce) {
+        this.productCommerces.add(productCommerce);
+         productCommerce.setCommerce(this);
+        return this;
+    }
+
+    public Commerce removeProductCommerce(ProductCommerce productCommerce) {
+        this.productCommerces.remove(productCommerce);
+         productCommerce.setCommerce(null);
+        return this;
+    }
+
+    public void setProductCommerces(Set<ProductCommerce> productCommerces) {
+        this.productCommerces = productCommerces;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
