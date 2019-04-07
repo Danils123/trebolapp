@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginModalService } from 'app/core';
 import { ActivateService } from './activate.service';
 import { MainService } from 'app/layouts/main/main.service';
-
+import Swal from 'sweetalert2';
 @Component({
     selector: 'jhi-activate',
     templateUrl: './activate.component.html'
@@ -16,7 +16,6 @@ export class ActivateComponent implements OnInit, OnDestroy {
 
     constructor(
         private activateService: ActivateService,
-        private loginModalService: LoginModalService,
         private route: ActivatedRoute,
         private mainService: MainService,
         private router: Router
@@ -29,9 +28,19 @@ export class ActivateComponent implements OnInit, OnDestroy {
                 () => {
                     this.error = null;
                     this.success = 'OK';
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 7000
+                    });
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Bienvenido(a) a Trebol'
+                    });
                     setTimeout(() => {
                         this.router.navigate(['/']);
-                    }, 3000);
+                    }, 7000);
                 },
                 () => {
                     this.success = null;
@@ -43,9 +52,5 @@ export class ActivateComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.mainService.hide();
-    }
-
-    login() {
-        this.modalRef = this.loginModalService.open();
     }
 }

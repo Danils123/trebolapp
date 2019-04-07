@@ -29,15 +29,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="total" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="discount" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="points" type="integer">
+            <column name="state" type="integer">
                 <constraints nullable="true" />
             </column>
 
@@ -46,10 +38,6 @@
             </column>
 
             <column name="commerce_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="offer_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

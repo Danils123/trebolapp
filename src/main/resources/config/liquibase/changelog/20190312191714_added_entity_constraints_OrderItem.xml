@@ -20,11 +20,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="commerce"/>
 
-        <addForeignKeyConstraint baseColumnNames="offer_id"
-                                 baseTableName="order_item"
-                                 constraintName="fk_order_item_offer_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="offer"/>
-
     </changeSet>
 </databaseChangeLog>

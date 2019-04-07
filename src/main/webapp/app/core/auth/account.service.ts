@@ -116,7 +116,7 @@ export class AccountService {
                     //     this.userExtra.commerces =  commerces.body;
                     //     console.log(this.userExtra);
                     // });
-                    // console.log([this.user, this.userExtra]);
+                    console.log([this.user, this.userExtra]);
                 });
             }
         });

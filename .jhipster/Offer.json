@@ -1,15 +1,7 @@
 {
     "fluentMethods": true,
     "clientRootFolder": "",
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "orderItem",
-            "otherEntityRelationshipName": "offer",
-            "relationshipName": "orderItem",
-            "otherEntityRelationshipNameUndefined": false
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "discount",
