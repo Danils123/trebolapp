@@ -1,6 +1,11 @@
 package com.cenfotec.trebol.web.rest;
+
+import com.cenfotec.trebol.domain.Commerce;
 import com.cenfotec.trebol.domain.CommerceUser;
+import com.cenfotec.trebol.domain.UserExtra;
+import com.cenfotec.trebol.repository.CommerceRepository;
 import com.cenfotec.trebol.repository.CommerceUserRepository;
+import com.cenfotec.trebol.repository.UserExtraRepository;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
 import com.cenfotec.trebol.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -11,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +32,13 @@ public class CommerceUserResource {
     private static final String ENTITY_NAME = "commerceUser";
 
     private final CommerceUserRepository commerceUserRepository;
+    private final CommerceRepository commerceRepository;
+    private final UserExtraRepository userExtraRepository;
 
-    public CommerceUserResource(CommerceUserRepository commerceUserRepository) {
+    public CommerceUserResource(CommerceUserRepository commerceUserRepository, CommerceRepository commerceRepository, UserExtraRepository userExtraRepository) {
         this.commerceUserRepository = commerceUserRepository;
+        this.commerceRepository = commerceRepository;
+        this.userExtraRepository = userExtraRepository;
     }
 
     /**
@@ -108,4 +117,50 @@ public class CommerceUserResource {
         commerceUserRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+        /**
+     * GET  /commerce-users/:id : get the "id" commerceUser.
+     *
+     * @param id the id of the commerceUser to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the commerceUser, or with status 404 (Not Found)
+     */
+    @GetMapping("/commerce-commercesByUser/{id}")
+    public List<Commerce> getCommercesbyUser(@PathVariable Long id) {
+        log.debug("REST request to get CommercesByUser : {}", id);
+        List<CommerceUser> commerceUsers;
+        commerceUsers = commerceUserRepository.findByIdUser(id);
+        long idCommerce;
+        Commerce commerce;
+        List<Commerce> commerces = null;
+        if(commerceUsers.isEmpty() == false){
+            commerces = new ArrayList<Commerce>();
+            for (CommerceUser var : commerceUsers) {
+                idCommerce = var.getIdCommerce();
+                commerce = this.commerceRepository.findById(idCommerce).get();
+                commerces.add(commerce);
+            }
+        }
+        return commerces; 
+    }
+
+    @GetMapping("/commerce-usersByCommerce/{id}")
+    public List<UserExtra> getUsersByCommerce (@PathVariable Long id) {
+        log.debug("REST request to get usersByCommerce : {}", id);
+        List<CommerceUser> commerceUsers;
+        commerceUsers = commerceUserRepository.findByIdCommerce(id);
+        long idUser;
+        UserExtra userExtra;
+        List<UserExtra> users = null;
+        if(commerceUsers.isEmpty() == false){
+            users = new ArrayList<UserExtra>();
+            for (CommerceUser var : commerceUsers) {
+                idUser = var.getIdUser();
+                userExtra = this.userExtraRepository.findById(idUser).get();
+                users.add(userExtra);
+            }
+        }
+        return users; 
+    }
 }
+
+

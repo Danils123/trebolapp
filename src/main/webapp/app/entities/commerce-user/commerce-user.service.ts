@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { ICommerceUser } from 'app/shared/model/commerce-user.model';
+import { ICommerce } from 'app/shared/model/commerce.model';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 
 type EntityResponseType = HttpResponse<ICommerceUser>;
 type EntityArrayResponseType = HttpResponse<ICommerceUser[]>;
@@ -34,5 +36,15 @@ export class CommerceUserService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    findCommercesByUser(id: number): Observable<EntityArrayResponseType> {
+        const url = SERVER_API_URL + '/api/commerce-commercesByUser';
+        return this.http.get<ICommerce[]>(`${url}/${id}`, { observe: 'response' });
+    }
+
+    findUsersByCommerce(id: number): Observable<EntityArrayResponseType> {
+        const url = SERVER_API_URL + '/api/commerce-usersByCommerce';
+        return this.http.get<IUserExtra[]>(`${url}/${id}`, { observe: 'response' });
     }
 }
