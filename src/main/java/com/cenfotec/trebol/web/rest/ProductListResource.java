@@ -84,7 +84,7 @@ public class ProductListResource {
     }
 
     /**
-     * GET  /product-lists-Purchase/:idPurchaseList: get the "id" productListPurchase.
+     * GET  /product-lists-purchase/:idPurchaseList: get the "id" productListPurchase.
      *
      * @param idlistpurchase the id of the purchaseList to retrieve
      * @return the ResponseEntity with status 200 (OK) and the list of productLists in body

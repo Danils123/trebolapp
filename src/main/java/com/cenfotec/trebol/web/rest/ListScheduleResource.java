@@ -1,4 +1,5 @@
 package com.cenfotec.trebol.web.rest;
+import com.cenfotec.trebol.domain.ListPurchase;
 import com.cenfotec.trebol.domain.ListSchedule;
 import com.cenfotec.trebol.repository.ListScheduleRepository;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
@@ -94,6 +95,19 @@ public class ListScheduleResource {
         log.debug("REST request to get ListSchedule : {}", id);
         Optional<ListSchedule> listSchedule = listScheduleRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(listSchedule);
+    }
+
+    /**
+     * GET  /list-schedules-purchase/:purchaseid: get the "id" listSchedule.
+     *
+     * @param purchaseid the id of the listSchedule to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the listSchedule, or with status 404 (Not Found)
+     */
+    @GetMapping("/list-schedules-purchase/{purchaseid}")
+    public ResponseEntity<ListSchedule> getPurchase(@PathVariable Long purchaseid) {
+        log.debug("REST request to get getPurchase : {}", purchaseid);
+        Optional<ListSchedule> schedule = listScheduleRepository.findBypurchaseid(purchaseid);
+        return ResponseUtil.wrapOrNotFound(schedule);
     }
 
     /**

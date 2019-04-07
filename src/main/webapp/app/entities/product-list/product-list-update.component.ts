@@ -26,10 +26,8 @@ import { IProduct } from 'app/shared/model/product.model';
 export class ProductListUpdateComponent implements OnInit {
     productList: IProductList;
     isSaving: boolean;
-    nameList: string;
     nameProduct: string;
     brandProduct: string;
-    descrList: string;
     quantityProduct: number;
     productArray: IProductList[];
     productcommerces: IProductCommerce[];

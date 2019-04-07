@@ -17,13 +17,26 @@
                 <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
             </a>
 
+            <button  class="btn btn-sm btn-pill btn-danger" >
+                <i class="icon-basket icons font-2xl"></i>
+            </button>
+
 
         </div>
         <tbody>
         <div *ngIf="calendarVisible">
         <tr>
             <td class="form-control-sm">
-                <ng-datepicker [(ngModel)]="listSchedule.day" [options]="options" ></ng-datepicker>
+                <input id="field_time"
+                       type="datetime-local"
+                       class="form-control-sm"
+                       name="time"
+                       [(ngModel)]="listSchedule.time"
+                       placeholder="YYYY-MM-DD HH:mm"
+                       value="{{listSchedule.time}}"
+                       #field_time="ngModel"
+                       [ngClass]="{'is-invalid': field_time.errors?.required && field_time.touched}" required
+                />
             </td>
             <td class="form-control-sm">
                 <a data-toggle="tooltip" title="Calendarizar" (click)="saveCalendar()">
@@ -34,11 +47,6 @@
                 </a>
             </td>
         </tr>
-            <tr>
-                <td class="form-control-sm">
-                    <ngb-timepicker [(ngModel)]="listSchedule.time" [meridian]="ismeridian"></ngb-timepicker>
-                </td>
-            </tr>
         </div>
         </tbody>
 

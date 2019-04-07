@@ -6,13 +6,12 @@ import { Observable, Subscription } from 'rxjs';
 import { Ilistpurchaseall } from '../../../shared/model/listpurchaseall.model';
 import { IListPurchase } from 'app/shared/model/list-purchase.model';
 import { ListPurchaseService } from 'app/entities/list-purchase';
-import { DatepickerOptions } from 'ng2-datepicker';
 import { IListSchedule } from 'app/shared/model/list-schedule.model';
 import { ListScheduleService } from 'app/entities/list-schedule';
 import { DATE_TIME_FORMAT } from 'app/shared';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import moment = require('moment');
-import { IProductList, ProductList } from 'app/shared/model/product-list.model';
+import { IProduct } from 'app/shared/model/product.model';
 
 @Component({
     selector: 'jhi-card',
@@ -25,16 +24,6 @@ export class CardComponent implements OnInit {
     calendarVisible: boolean;
     listSchedule: IListSchedule;
     isSaving: boolean;
-    hstep = 1;
-    mstep = 15;
-    ismeridian = true;
-
-    options: DatepickerOptions = {
-        minDate: new Date(Date.now()),
-        placeholder: 'Seleccione una fecha',
-        displayFormat: 'DD/MM/YYYY',
-        useEmptyBarTitle: false
-    };
 
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -55,13 +44,16 @@ export class CardComponent implements OnInit {
         this.listSchedule = new class implements IListSchedule {
             day: string;
             id: number;
-            productList: IProductList;
+            productList: IProduct;
+            List;
             state: boolean;
             time: moment.Moment;
         }();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.loadPurchase(this.listpurchaseAll.listpurchase);
+    }
 
     deleteItem(listpurchase: IListPurchase) {
         this.swalWithBootstrapButtons
@@ -98,22 +90,20 @@ export class CardComponent implements OnInit {
     cancelCalendar() {
         this.calendarVisible = false;
     }
-
     saveCalendar() {
-        this.calendarVisible = false;
         this.isSaving = true;
         this.listSchedule.state = true;
-        const purchase = this.listpurchaseAll.listpurchase;
-        const productlst = new ProductList(purchase.id);
-        this.listSchedule.productList = productlst;
-        console.log('list compra');
-        console.log(this.listSchedule);
-        /*this.listSchedule.time = this.listSchedule.time != null ? moment(this.listSchedule.time, DATE_TIME_FORMAT) : null;
-        if (this.listSchedule.id !== undefined) {
-            this.subscribeToSaveResponse(this.listScheduleService.update(this.listSchedule));
-        } else {
-            this.subscribeToSaveResponse(this.listScheduleService.create(this.listSchedule));
-        }*/
+        this.listSchedule.recurrent = false;
+        this.listSchedule.purchaseid = this.listpurchaseAll.listpurchase.id;
+        this.listSchedule.time = this.listSchedule.time != null ? moment(this.listSchedule.time, DATE_TIME_FORMAT) : null;
+        if (this.listSchedule.time !== null) {
+            if (this.listSchedule.id !== undefined) {
+                this.subscribeToSaveResponse(this.listScheduleService.update(this.listSchedule));
+            } else {
+                this.subscribeToSaveResponse(this.listScheduleService.create(this.listSchedule));
+            }
+            this.calendarVisible = false;
+        }
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IListSchedule>>) {
@@ -137,5 +127,11 @@ export class CardComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    loadPurchase(purchaseList: IListPurchase) {
+        this.listScheduleService.findByPurchase(purchaseList.id).subscribe(data => {
+            this.listSchedule = data.body;
+        });
     }
 }

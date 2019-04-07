@@ -36,6 +36,12 @@
             <column name="product_list_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="recurrent" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="purchaseid" type="bigint">
+                <constraints nullable="true" />
+            </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
