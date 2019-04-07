@@ -1,65 +1,62 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-
-import { IOrderItem } from 'app/shared/model/order-item.model';
-import { AccountService } from 'app/core';
+import { Component, OnInit, ElementRef, Renderer, OnDestroy } from '@angular/core';
+import { ProductCommerce } from 'app/shared/model/product-commerce.model';
+import { NgbActiveModal, ModalDismissReasons, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OrderItem } from 'app/shared/model/order-item.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderItemService } from './order-item.service';
 
 @Component({
-    selector: 'jhi-order-item',
-    templateUrl: './order-item.component.html'
+    selector: 'jhi-order-item-detail',
+    templateUrl: './order-item-detail.component.html'
 })
-export class OrderItemComponent implements OnInit, OnDestroy {
-    orderItems: IOrderItem[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+export class OrderItemDetailComponent implements OnInit {
+    orderItem: OrderItem[];
+    products: ProductCommerce[];
+    closeResult: string;
+
+    constructor(public activeModal: NgbActiveModal) {}
+
+    ngOnInit() {}
+}
+
+@Component({
+    selector: 'jhi-order-item-delete-popup',
+    template: ''
+})
+export class OrderItemUpdatePopupComponent implements OnInit, OnDestroy {
+    protected ngbModalRef: NgbModalRef;
 
     constructor(
-        protected orderItemService: OrderItemService,
-        protected jhiAlertService: JhiAlertService,
-        protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected activatedRoute: ActivatedRoute,
+        private orderService: OrderItemService,
+        protected router: Router,
+        protected modalService: NgbModal
     ) {}
 
-    loadAll() {
-        this.orderItemService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IOrderItem[]>) => res.ok),
-                map((res: HttpResponse<IOrderItem[]>) => res.body)
-            )
-            .subscribe(
-                (res: IOrderItem[]) => {
-                    this.orderItems = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-    }
-
     ngOnInit() {
-        this.loadAll();
-        this.accountService.identity().then(account => {
-            this.currentAccount = account;
+        this.activatedRoute.data.subscribe(({ orderItem }) => {
+            this.orderService.find(orderItem.id).subscribe(order => {
+                console.log(order);
+                setTimeout(() => {
+                    this.ngbModalRef = this.modalService.open(OrderItemDetailComponent as Component, { size: 'lg', backdrop: 'static' });
+                    this.ngbModalRef.componentInstance.orderItem = order.body;
+                    this.ngbModalRef.componentInstance.products = order.body.productsPerOrders;
+                    this.ngbModalRef.result.then(
+                        result => {
+                            this.router.navigate(['/order-item', { outlets: { popup: null } }]);
+                            this.ngbModalRef = null;
+                        },
+                        reason => {
+                            this.router.navigate(['/order-item', { outlets: { popup: null } }]);
+                            this.ngbModalRef = null;
+                        }
+                    );
+                }, 0);
+            });
         });
-        this.registerChangeInOrderItems();
     }
 
     ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    trackId(index: number, item: IOrderItem) {
-        return item.id;
-    }
-
-    registerChangeInOrderItems() {
-        this.eventSubscriber = this.eventManager.subscribe('orderItemListModification', response => this.loadAll());
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
+        this.ngbModalRef = null;
     }
 }

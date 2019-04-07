@@ -35,14 +35,8 @@ public class OrderItem implements Serializable {
     @Column(name = "jhi_date")
     private Instant date;
 
-    @Column(name = "total")
-    private Float total;
-
-    @Column(name = "discount")
-    private Float discount;
-
-    @Column(name = "points")
-    private Integer points;
+    @Column(name = "state")
+    private Integer state;
 
     @OneToMany(mappedBy = "orderItem")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -54,10 +48,6 @@ public class OrderItem implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("orderItems")
     private Commerce commerce;
-
-    @ManyToOne
-    @JsonIgnoreProperties("orderItems")
-    private Offer offer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -94,43 +84,17 @@ public class OrderItem implements Serializable {
         this.date = date;
     }
 
-    public Float getTotal() {
-        return total;
+    public Integer getState() {
+        return state;
     }
 
-    public OrderItem total(Float total) {
-        this.total = total;
+    public OrderItem state(Integer state) {
+        this.state = state;
         return this;
     }
 
-    public void setTotal(Float total) {
-        this.total = total;
-    }
-
-    public Float getDiscount() {
-        return discount;
-    }
-
-    public OrderItem discount(Float discount) {
-        this.discount = discount;
-        return this;
-    }
-
-    public void setDiscount(Float discount) {
-        this.discount = discount;
-    }
-
-    public Integer getPoints() {
-        return points;
-    }
-
-    public OrderItem points(Integer points) {
-        this.points = points;
-        return this;
-    }
-
-    public void setPoints(Integer points) {
-        this.points = points;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Set<ProductsPerOrder> getProductsPerOrders() {
@@ -183,19 +147,6 @@ public class OrderItem implements Serializable {
     public void setCommerce(Commerce commerce) {
         this.commerce = commerce;
     }
-
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public OrderItem offer(Offer offer) {
-        this.offer = offer;
-        return this;
-    }
-
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -224,9 +175,7 @@ public class OrderItem implements Serializable {
             "id=" + getId() +
             ", description='" + getDescription() + "'" +
             ", date='" + getDate() + "'" +
-            ", total=" + getTotal() +
-            ", discount=" + getDiscount() +
-            ", points=" + getPoints() +
+            ", state=" + getState() +
             "}";
     }
 }

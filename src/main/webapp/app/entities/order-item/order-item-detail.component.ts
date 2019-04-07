@@ -1,24 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { IOrderItem } from 'app/shared/model/order-item.model';
+import { Component, OnInit, ElementRef, Renderer, OnDestroy } from '@angular/core';
+import { ProductCommerce } from 'app/shared/model/product-commerce.model';
+import { NgbActiveModal, ModalDismissReasons, NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OrderItem } from 'app/shared/model/order-item.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrderItemService } from './order-item.service';
 
 @Component({
     selector: 'jhi-order-item-detail',
     templateUrl: './order-item-detail.component.html'
 })
 export class OrderItemDetailComponent implements OnInit {
-    orderItem: IOrderItem;
+    orderItem: OrderItem[];
+    products: ProductCommerce[];
+    closeResult: string;
 
-    constructor(protected activatedRoute: ActivatedRoute) {}
+    constructor(public activeModal: NgbActiveModal) {}
+
+    ngOnInit() {}
+}
+
+@Component({
+    selector: 'jhi-order-item-delete-popup',
+    template: ''
+})
+export class OrderItemUpdatePopupComponent implements OnInit, OnDestroy {
+    protected ngbModalRef: NgbModalRef;
+
+    constructor(
+        protected activatedRoute: ActivatedRoute,
+        private orderService: OrderItemService,
+        protected router: Router,
+        protected modalService: NgbModal
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ orderItem }) => {
-            this.orderItem = orderItem;
+            this.orderService.find(orderItem.id).subscribe(order => {
+                console.log(order);
+                setTimeout(() => {
+                    this.ngbModalRef = this.modalService.open(OrderItemDetailComponent as Component, { size: 'lg', backdrop: 'static' });
+                    this.ngbModalRef.componentInstance.orderItem = order.body;
+                    this.ngbModalRef.componentInstance.products = order.body.productsPerOrders;
+                    this.ngbModalRef.result.then(
+                        result => {
+                            this.router.navigate(['/order-item', { outlets: { popup: null } }]);
+                            this.ngbModalRef = null;
+                        },
+                        reason => {
+                            this.router.navigate(['/order-item', { outlets: { popup: null } }]);
+                            this.ngbModalRef = null;
+                        }
+                    );
+                }, 0);
+            });
         });
     }
 
-    previousState() {
-        window.history.back();
+    ngOnDestroy() {
+        this.ngbModalRef = null;
     }
 }

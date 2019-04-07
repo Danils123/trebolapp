@@ -1,12 +1,11 @@
-import { IOrderItem } from 'app/shared/model/order-item.model';
+import { Moment } from 'moment';
 
 export interface IOffer {
     id?: number;
     discount?: number;
     description?: string;
     type?: number;
-    orderItems?: IOrderItem[];
-    expirationDate?: Date;
+    expirationDate?: Moment;
     disabled?: boolean;
 }
 
@@ -16,8 +15,9 @@ export class Offer implements IOffer {
         public discount?: number,
         public description?: string,
         public type?: number,
-        public orderItems?: IOrderItem[],
-        public expirationDate?: Date,
+        public expirationDate?: Moment,
         public disabled?: boolean
-    ) {}
+    ) {
+        this.disabled = this.disabled || false;
+    }
 }

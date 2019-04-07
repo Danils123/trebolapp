@@ -12,8 +12,6 @@ import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
 import { ICommerce } from 'app/shared/model/commerce.model';
 import { CommerceService } from 'app/entities/commerce';
-import { IOffer } from 'app/shared/model/offer.model';
-import { OfferService } from 'app/entities/offer';
 
 @Component({
     selector: 'jhi-order-item-update',
@@ -26,8 +24,6 @@ export class OrderItemUpdateComponent implements OnInit {
     userextras: IUserExtra[];
 
     commerce: ICommerce[];
-
-    offers: IOffer[];
     date: string;
 
     constructor(
@@ -35,7 +31,6 @@ export class OrderItemUpdateComponent implements OnInit {
         protected orderItemService: OrderItemService,
         protected userExtraService: UserExtraService,
         protected commerceService: CommerceService,
-        protected offerService: OfferService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -59,13 +54,6 @@ export class OrderItemUpdateComponent implements OnInit {
                 map((response: HttpResponse<ICommerce[]>) => response.body)
             )
             .subscribe((res: ICommerce[]) => (this.commerce = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.offerService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IOffer[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IOffer[]>) => response.body)
-            )
-            .subscribe((res: IOffer[]) => (this.offers = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -104,10 +92,6 @@ export class OrderItemUpdateComponent implements OnInit {
     }
 
     trackCommerceById(index: number, item: ICommerce) {
-        return item.id;
-    }
-
-    trackOfferById(index: number, item: IOffer) {
         return item.id;
     }
 }
