@@ -1,5 +1,16 @@
 <div class="container-fluid justify-content-center">
-<div class="col-sm-6 col-md-8">
+    <br>
+    <h2 id="page-heading">
+        <span>Nueva listas de compras</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-list" (click)='previousState()'>
+            <fa-icon [icon]="'times'"></fa-icon>
+            <span >
+            Cancelar
+            </span>
+        </button>
+    </h2>
+    <br>
+<div class="col-md-8">
     <div class="card">
         <div class="card-header">
             <div class="form-group">
@@ -13,7 +24,7 @@
                 <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
             </a>
             <a data-toggle="tooltip" title="Guardar" (click)='save()'>
-                <i class="col-md-1 float-right icon-disc icons font-2xl "></i>
+                <fa-icon [icon]="'save'" class="col-md-1 float-right icons font-2xl "></fa-icon>
             </a>
             <a data-toggle="tooltip" title="Calendarizar">
                 <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
@@ -26,10 +37,10 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th><span>Nombre</span></th>
-                        <th><span>Marca</span></th>
-                        <th><span>Cantidad</span></th>
-                        <th>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Nombre</span></th>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Marca</span></th>
+                        <th style="min-width:2vh; max-width: 2vh"><span>Cantidad</span></th>
+                        <th style="min-width:2vh; max-width: 2vh">
                             <div class="btn-group flex-btn-group-container">
                                 <a data-toggle="tooltip" title="Agregar producto" (click)="addProduct()">
                                     <fa-icon [icon]="'plus'"></fa-icon>
@@ -41,10 +52,32 @@
                     <tbody>
 
                     <tr *ngFor="let product of productArray">
-                        <td><input type="text" class="form-control" name="nameProductUpdate" id="nameProductUpdate" value="{{product.name}}" [(ngModel)]="product.name" #nameProdUpdate="ngModel" [ngClass]="{'is-invalid': nameProdUpdate.errors?.required && nameProdUpdate.touched}" required></td>
-                        <td><input type="text" class="form-control" name="brandUpdate" id="brandUpdate" value="{{product.brand}}" [(ngModel)]="product.brand" #brandProdUpdate="ngModel" [ngClass]="{'is-invalid': brandProdUpdate.errors?.required && brandProdUpdate.touched}" required></td>
-                        <td align="center"><input type="number" class="form-control" name="quantityUpdate" id="quantityUpdate" value="{{product.quantity}}" [(ngModel)]="product.quantity" #quantityProdUpdate="ngModel" [ngClass]="{'is-invalid': quantityProdUpdate.errors?.required && quantityProdUpdate.touched}" required></td>
-                        <td class="text-right">
+                        <td style="min-width:7vh; max-width: 7vh">
+                            <ng-select [items]= 'allProducts'
+                                       [searchable]="true"
+                                       bindLabel="name"
+                                       bindValue="name"
+                                       id="nameProductUpdate"
+                                       [(ngModel)]="product.name"
+                                       #nameProdUpdate="ngModel"
+                                       [ngClass]="{'is-invalid': nameProdUpdate.errors?.required && nameProdUpdate.touched}" required
+                                       notFoundText="Producto no encontrado">
+                            </ng-select>
+                        </td>
+                        <td style="min-width:7vh; max-width: 7vh">
+                            <ng-select [items]= 'allProducts'
+                                       [searchable]="true"
+                                       bindLabel="brand"
+                                       bindValue="brand"
+                                       id="brandUpdate"
+                                       [(ngModel)]="product.brand"
+                                       #brandProdUpdate="ngModel"
+                                       [ngClass]="{'is-invalid': brandProdUpdate.errors?.required && brandProdUpdate.touched}" required
+                                       notFoundText="Marca no encontrada">
+                            </ng-select>
+                        </td>
+                        <td align="center" style="min-width:2vh; max-width: 2vh"><input type="number" class="form-control" name="quantityUpdate" id="quantityUpdate" value="{{product.quantity}}" [(ngModel)]="product.quantity" #quantityProdUpdate="ngModel" [ngClass]="{'is-invalid': quantityProdUpdate.errors?.required && quantityProdUpdate.touched}" required></td>
+                        <td class="text-right" style="min-width:2vh; max-width: 2vh">
                             <div class="btn-group flex-btn-group-container">
                                 <a class="col-md-4" (click)='deleteProduct(product)'
                                    replaceUrl="true"
