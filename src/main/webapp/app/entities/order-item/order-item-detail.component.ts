@@ -4,6 +4,7 @@ import { NgbActiveModal, ModalDismissReasons, NgbModalRef, NgbModal } from '@ng-
 import { OrderItem } from 'app/shared/model/order-item.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderItemService } from './order-item.service';
+import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 
 @Component({
     selector: 'jhi-order-item-detail',
@@ -11,7 +12,7 @@ import { OrderItemService } from './order-item.service';
 })
 export class OrderItemDetailComponent implements OnInit {
     orderItem: OrderItem[];
-    products: ProductCommerce[];
+    products: ProductsPerOrder[];
     closeResult: string;
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -35,12 +36,13 @@ export class OrderItemUpdatePopupComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ orderItem }) => {
+            console.log(orderItem);
             this.orderService.find(orderItem.id).subscribe(order => {
                 console.log(order);
                 setTimeout(() => {
                     this.ngbModalRef = this.modalService.open(OrderItemDetailComponent as Component, { size: 'lg', backdrop: 'static' });
-                    this.ngbModalRef.componentInstance.orderItem = order.body;
-                    this.ngbModalRef.componentInstance.products = order.body.productsPerOrders;
+                    this.ngbModalRef.componentInstance.orderItem = orderItem;
+                    this.ngbModalRef.componentInstance.products = orderItem.productsPerOrders;
                     this.ngbModalRef.result.then(
                         result => {
                             this.router.navigate(['/order-item', { outlets: { popup: null } }]);

@@ -16,6 +16,8 @@ import { ProductCommerce, IProductCommerce } from 'app/shared/model/product-comm
 import { ProductCommerceService } from '../product-commerce';
 import { CommerceService } from '../commerce';
 import moment = require('moment');
+import { Commerce } from 'app/shared/model/commerce.model';
+import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 
 @Component({
     selector: 'jhi-order-item',
@@ -50,10 +52,11 @@ export class OrderItemComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IOrderItem[]) => {
                     this.orderItems = res.filter(item => item.state !== 2);
-                    console.log(this.orderItems);
                     this.orderServiceWS.subscribeSeller();
                     this.orderServiceWS.receive().subscribe(order => {
+                        console.log(order);
                         if (!(this.orderItems.filter(x => x.id === order.id).length > 0)) {
+                            console.log('si paso');
                             this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
                                 if (commerce.body[0].id === order.commerce.id) {
                                     this.orderItems.push(order);
@@ -100,30 +103,17 @@ export class OrderItemComponent implements OnInit, OnDestroy {
     }
 
     createOrderDummy() {
-        this.productService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IProductCommerce[]>) => res.ok),
-                map((res: HttpResponse<IProductCommerce[]>) => res.body)
-            )
-            .subscribe(
-                (res: IProductCommerce[]) => {
-                    console.log(res);
-                    const newOrder = new OrderItem();
-                    const productCommerce = new ProductCommerce();
-                    productCommerce.price = 100;
-                    productCommerce.quantity = 1000;
-                    productCommerce.commerce = this.accountService.userExtra.commerces;
-                    productCommerce.productLists = res;
-                    newOrder.productsPerOrders = [];
-                    newOrder.commerce = this.accountService.userExtra.commerces[0];
-                    newOrder.commerce.id = 1053;
-                    newOrder.state = 0;
-                    newOrder.productsPerOrders.push(productCommerce);
-                    this.orderServiceWS.sendOrder(newOrder);
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        const newOrder = new OrderItem();
+        const productPerOrder = new ProductsPerOrder();
+        productPerOrder.productCommerce = new ProductCommerce();
+        productPerOrder.productCommerce.id = 1351;
+        productPerOrder.quantity = 100;
+        newOrder.productsPerOrders = [];
+        newOrder.commerce = new Commerce();
+        newOrder.commerce.id = 1551;
+        newOrder.state = 0;
+        newOrder.productsPerOrders.push(productPerOrder);
+        this.orderServiceWS.sendOrder(newOrder);
     }
 
     changeState(id: number) {

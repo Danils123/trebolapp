@@ -31,7 +31,6 @@ public class OrderService implements ApplicationListener<SessionDisconnectEvent>
     @MessageMapping("/topic/solicitude")
     @SendTo("/topic/order_queue")
     public OrderItem sendOrder(@Payload OrderItem order, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
-        order.setDate(Instant.now());
         log.debug("Sending order data {}", order);
         OrderCounter(order, stompHeaderAccessor, principal);
         return order;
@@ -46,7 +45,7 @@ public class OrderService implements ApplicationListener<SessionDisconnectEvent>
 
     @SendTo("/topic/order_counter")
     public OrderItem OrderCounter(@Payload OrderItem order, StompHeaderAccessor stompHeaderAccessor,
-                                   Principal principal) {
+            Principal principal) {
         return order;
     }
 
