@@ -40,6 +40,7 @@ export class OrderItemComponent implements OnInit, OnDestroy {
         private commerceService: CommerceService
     ) {
         this.orderServiceWS.connect();
+        this.accountService.refreshUser();
     }
 
     loadAll() {
