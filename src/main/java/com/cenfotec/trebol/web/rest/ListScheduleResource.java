@@ -1,7 +1,12 @@
 package com.cenfotec.trebol.web.rest;
 import com.cenfotec.trebol.domain.ListPurchase;
 import com.cenfotec.trebol.domain.ListSchedule;
+import com.cenfotec.trebol.domain.User;
+import com.cenfotec.trebol.domain.UserExtra;
+import com.cenfotec.trebol.repository.ListPurchaseRepository;
 import com.cenfotec.trebol.repository.ListScheduleRepository;
+import com.cenfotec.trebol.repository.UserRepository;
+import com.cenfotec.trebol.service.MailService;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
 import com.cenfotec.trebol.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,8 +34,17 @@ public class ListScheduleResource {
 
     private final ListScheduleRepository listScheduleRepository;
 
-    public ListScheduleResource(ListScheduleRepository listScheduleRepository) {
+    private final MailService mailService;
+
+    private final UserRepository userRepository;
+
+    private final ListPurchaseRepository listPurchaseRepository;
+
+    public ListScheduleResource(ListScheduleRepository listScheduleRepository, MailService mailService, UserRepository userRepository, ListPurchaseRepository listPurchaseRepository) {
         this.listScheduleRepository = listScheduleRepository;
+        this.mailService = mailService;
+        this.userRepository = userRepository;
+        this.listPurchaseRepository = listPurchaseRepository;
     }
 
     /**
@@ -47,6 +61,15 @@ public class ListScheduleResource {
             throw new BadRequestAlertException("A new listSchedule cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ListSchedule result = listScheduleRepository.save(listSchedule);
+        if(result.getId() != null){
+            Optional<ListPurchase> temp = listPurchaseRepository.findById(result.getPurchaseid());
+            ListPurchase purchase = temp.get();
+            UserExtra userExtra = purchase.getSeller();
+            Long userId = userExtra.getUserId();
+            Optional<User> temp1 = userRepository.findById(userId);
+            User user = temp1.get();
+            mailService.sendEmailFromTemplate(user, "mail/scheduledPurchase", "email.scheduledPurchase.title");
+        }
         return ResponseEntity.created(new URI("/api/list-schedules/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
