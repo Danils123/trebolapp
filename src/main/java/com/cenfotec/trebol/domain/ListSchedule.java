@@ -35,6 +35,12 @@ public class ListSchedule implements Serializable {
     @Column(name = "state")
     private Boolean state;
 
+    @Column (name = "recurrent")
+    private Boolean recurrent;
+
+    @Column (name = "purchaseid")
+    private Long purchaseid;
+
     @ManyToOne
     @JsonIgnoreProperties("listSchedules")
     private ProductList productList;
@@ -99,6 +105,23 @@ public class ListSchedule implements Serializable {
     public void setProductList(ProductList productList) {
         this.productList = productList;
     }
+
+    public Boolean getRecurrent() {
+        return recurrent;
+    }
+
+    public void setRecurrent(Boolean recurrent) {
+        this.recurrent = recurrent;
+    }
+
+    public Long getPurchaseid() {
+        return purchaseid;
+    }
+
+    public void setPurchase_id(Long purchaseid) {
+        this.purchaseid = purchaseid;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

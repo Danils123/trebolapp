@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IListSchedule } from 'app/shared/model/list-schedule.model';
+import { IListPurchase } from 'app/shared/model/list-purchase.model';
 
 type EntityResponseType = HttpResponse<IListSchedule>;
 type EntityArrayResponseType = HttpResponse<IListSchedule[]>;
@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IListSchedule[]>;
 @Injectable({ providedIn: 'root' })
 export class ListScheduleService {
     public resourceUrl = SERVER_API_URL + 'api/list-schedules';
+    public resourceUrl2 = SERVER_API_URL + 'api/list-schedules-purchase';
 
     constructor(protected http: HttpClient) {}
 
@@ -47,6 +48,12 @@ export class ListScheduleService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    findByPurchase(id: number): Observable<EntityResponseType> {
+        return this.http
+            .get<IListSchedule>(`${this.resourceUrl2}/${id}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     protected convertDateFromClient(listSchedule: IListSchedule): IListSchedule {

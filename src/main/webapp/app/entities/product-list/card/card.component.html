@@ -1,7 +1,8 @@
 <script src="../../category/category-delete-dialog.component.ts"></script>
 <div class="col-sm-6 col-md-12">
-    <div class="card">
+    <div class="card" style="min-width:51vh; max-width: 51vh;">
         <div class="card-header">
+
             <div *ngIf="listpurchaseAll.listpurchase != null">
                 <a data-toggle="tooltip" title= "{{listpurchaseAll.listpurchase.description}}"> {{listpurchaseAll.listpurchase.name}}</a>
             </div>
@@ -9,35 +10,63 @@
             <a data-toggle="tooltip" title="Eliminar" (click)='deleteItem(listpurchaseAll.listpurchase)'>
                 <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
             </a>
-           <!-- <a data-toggle="tooltip" title="Editar" [routerLink]="['/product-list', listpurchaseAll.listpurchase.id, 'edit']">
+            <a data-toggle="tooltip" title="Editar" [routerLink]="['/product-list', listpurchaseAll.listpurchase.id, 'edit']">
                 <i class="col-md-1 float-right icon-pencil icons font-2xl "></i>
-            </a>-->
-            <a data-toggle="tooltip" title="Calendarizar">
+            </a>
+            <a data-toggle="tooltip" title="Calendarizar" (click)="programCalendar()" *ngIf="!calendarVisible">
                 <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
             </a>
 
+            <button  class="btn btn-sm btn-pill btn-danger" >
+                <i class="icon-basket icons font-2xl"></i>
+            </button>
+
+
         </div>
+        <tbody>
+        <div *ngIf="calendarVisible">
+        <tr>
+            <td class="form-control-sm">
+                <input id="field_time"
+                       type="datetime-local"
+                       class="form-control-sm"
+                       name="time"
+                       [(ngModel)]="listSchedule.time"
+                       placeholder="YYYY-MM-DD HH:mm"
+                       value="{{listSchedule.time}}"
+                       #field_time="ngModel"
+                       [ngClass]="{'is-invalid': field_time.errors?.required && field_time.touched}" required
+                />
+            </td>
+            <td class="form-control-sm">
+                <a data-toggle="tooltip" title="Calendarizar" (click)="saveCalendar()">
+                    <i class="col-md-1 float-center icon-clock icons font-2xl "></i>
+                </a>
+                <a data-toggle="tooltip" title="Cancelar" (click)="cancelCalendar()">
+                    <i class="col-md-1 float-center icon-close icons font-2xl"></i>
+                </a>
+            </td>
+        </tr>
+        </div>
+        </tbody>
+
         <div class="card-body">
             <div class="table-responsive" >
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th><span><a data-toggle="tooltip" title="Todos"><i class="icon-check icons font-2xl  mt-4"></i></a></span></th>
-                        <th><span>Nombre</span></th>
-                        <th><span>Marca</span></th>
-                        <th><span>Cantidad</span></th>
-                        <th></th>
+                        <th style="min-width:2vh; max-width: 2vh"><span><a data-toggle="tooltip" title="Todos"><i class="icon-check icons font-2xl  mt-4"></i></a></span></th>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Nombre</span></th>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Marca</span></th>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Cantidad</span></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let productMaster of listpurchaseAll.productlist">
-                        <td align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
-                        <td>{{productMaster.name}}</td>
-                        <td>{{productMaster.brand}}</td>
-                        <td align="center">{{productMaster.quantity}}</td>
-                        <td class="text-right">
-
-                        </td>
+                        <td style="min-width:2vh; max-width: 2vh" align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
+                        <td style="min-width:7vh; max-width: 7vh">{{productMaster.name}}</td>
+                        <td style="min-width:7vh; max-width: 7vh">{{productMaster.brand}}</td>
+                        <td style="min-width:7vh; max-width: 7vh" align="center">{{productMaster.quantity}}</td>
                     </tr>
                     </tbody>
                 </table>
