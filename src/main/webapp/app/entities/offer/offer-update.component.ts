@@ -13,6 +13,8 @@ import { UserExtraService } from '../user-extra';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { DatepickerOptions } from 'ng2-datepicker';
 import * as enLocale from 'date-fns/locale/en';
+import { CommerceUserService } from '../commerce-user';
+import { CommerceUser, ICommerceUser } from 'app/shared/model/commerce-user.model';
 @Component({
     selector: 'jhi-offer-update',
     templateUrl: './offer-update.component.html'
@@ -22,6 +24,7 @@ export class OfferUpdateComponent implements OnInit {
     isSaving: boolean;
     minValue = true;
     maxValue = true;
+    commerceUsers: ICommerceUser[];
 
     options: DatepickerOptions = {
         minDate: new Date(Date.now()),
@@ -34,7 +37,8 @@ export class OfferUpdateComponent implements OnInit {
         protected activatedRoute: ActivatedRoute,
         protected accountService: AccountService,
         protected commerceService: CommerceService,
-        protected userExtraService: UserExtraService
+        protected userExtraService: UserExtraService,
+        protected commerceUserService: CommerceUserService
     ) {}
 
     ngOnInit() {
@@ -44,13 +48,27 @@ export class OfferUpdateComponent implements OnInit {
             this.offer.type = 1;
 
             if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
-                this.offer.expirationDate = new Date();
+                // this.offer.expirationDate = new Date();
             }
         });
     }
 
     previousState() {
         window.history.back();
+        /*
+       this.commerceUserService
+       .findUsersByCommerce(77)
+       .pipe(
+           filter((res: HttpResponse<IUserExtra[]>) => res.ok),
+           map((res: HttpResponse<IUserExtra[]>) => res.body)
+       )
+       .subscribe(
+           (res: IUserExtra[]) => {
+               console.log(res);
+           }
+       );
+
+       */
     }
 
     save() {

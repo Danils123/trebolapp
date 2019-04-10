@@ -84,6 +84,18 @@ public class ProductListResource {
     }
 
     /**
+     * GET  /product-lists-purchase/:idPurchaseList: get the "id" productListPurchase.
+     *
+     * @param idlistpurchase the id of the purchaseList to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of productLists in body
+     */
+    @GetMapping("/product-lists-purchase/{idlistpurchase}")
+    public List<ProductList> getProductListPurchase(@PathVariable Integer idlistpurchase) {
+        log.debug("REST request to get ProductListPurchase : {}", idlistpurchase);
+        return  productListRepository.findByidlistpurchase(idlistpurchase);
+    }
+
+    /**
      * GET  /product-lists/:id : get the "id" productList.
      *
      * @param id the id of the productList to retrieve

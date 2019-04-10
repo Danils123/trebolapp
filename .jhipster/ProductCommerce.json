@@ -1,5 +1,25 @@
 {
-    "name": "ProductCommerce",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false,
+            "otherEntityRelationshipName": "productCommerce"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "productList",
+            "otherEntityRelationshipName": "productCommerce",
+            "relationshipName": "productList",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipNameUndefined": false
+        }
+    ],
     "fields": [
         {
             "fieldName": "price",
@@ -10,35 +30,12 @@
             "fieldType": "Integer"
         }
     ],
-    "relationships": [
-        {
-            "relationshipName": "product",
-            "otherEntityName": "product",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "commerce",
-            "otherEntityRelationshipName": "productCommerce",
-            "relationshipName": "commerce"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "productList",
-            "otherEntityRelationshipName": "productCommerce",
-            "relationshipName": "productList",
-            "otherEntityField": "id",
-            "ownerSide": true
-        }
-    ],
     "changelogDate": "20190312191710",
-    "entityTableName": "product_commerce",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "product_commerce",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

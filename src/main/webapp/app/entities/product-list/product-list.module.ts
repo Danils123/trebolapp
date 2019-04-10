@@ -12,11 +12,21 @@ import {
     productListPopupRoute
 } from './';
 import { CardComponent } from './card/card.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 const ENTITY_STATES = [...productListRoute, ...productListPopupRoute];
 
 @NgModule({
-    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [
+        TrebolSharedModule,
+        RouterModule.forChild(ENTITY_STATES),
+        NgSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgDatepickerModule
+    ],
     declarations: [
         ProductListComponent,
         ProductListDetailComponent,

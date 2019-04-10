@@ -11,6 +11,9 @@ import { ProductService } from 'app/entities/product';
 import { IProductList } from 'app/shared/model/product-list.model';
 import { ProductListService } from 'app/entities/product-list';
 import Swal from 'sweetalert2';
+import { AccountService } from 'app/core';
+import { ICommerce, Commerce } from 'app/shared/model/commerce.model';
+import { CommerceService } from '../commerce/commerce.service';
 
 @Component({
     selector: 'jhi-product-commerce-update',
@@ -19,6 +22,7 @@ import Swal from 'sweetalert2';
 export class ProductCommerceUpdateComponent implements OnInit {
     productCommerce: IProductCommerce;
     isSaving: boolean;
+    commerce: ICommerce[];
 
     products: IProduct[];
 
@@ -29,8 +33,12 @@ export class ProductCommerceUpdateComponent implements OnInit {
         protected productCommerceService: ProductCommerceService,
         protected productService: ProductService,
         protected productListService: ProductListService,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+        protected activatedRoute: ActivatedRoute,
+        protected accountService: AccountService,
+        protected commerceService: CommerceService
+    ) {
+        this.getCommerce();
+    }
 
     ngOnInit() {
         this.isSaving = false;
@@ -51,13 +59,42 @@ export class ProductCommerceUpdateComponent implements OnInit {
                 map((response: HttpResponse<IProductList[]>) => response.body)
             )
             .subscribe((res: IProductList[]) => (this.productlists = res), (res: HttpErrorResponse) => this.onError(res.message));
+
+        this.productService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IProduct[]>) => res.ok),
+                map((res: HttpResponse<IProduct[]>) => res.body)
+            )
+            .subscribe(
+                (res: IProduct[]) => {
+                    this.products = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     previousState() {
         window.history.back();
     }
 
+    getCommerce() {
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe(
+                (res: ICommerce[]) => {
+                    this.commerce = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    }
+
     save() {
+        this.getCommerce();
         this.isSaving = true;
         if (this.productCommerce.id !== undefined) {
             this.subscribeToSaveResponse(this.productCommerceService.update(this.productCommerce));

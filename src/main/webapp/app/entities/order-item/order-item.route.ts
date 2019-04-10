@@ -7,7 +7,7 @@ import { filter, map } from 'rxjs/operators';
 import { OrderItem } from 'app/shared/model/order-item.model';
 import { OrderItemService } from './order-item.service';
 import { OrderItemComponent } from './order-item.component';
-import { OrderItemDetailComponent } from './order-item-detail.component';
+import { OrderItemDetailComponent, OrderItemUpdatePopupComponent } from './order-item-detail.component';
 import { OrderItemUpdateComponent } from './order-item-update.component';
 import { OrderItemDeletePopupComponent } from './order-item-delete-dialog.component';
 import { IOrderItem } from 'app/shared/model/order-item.model';
@@ -33,7 +33,7 @@ export const orderItemRoute: Routes = [
         path: '',
         component: OrderItemComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'OrderItems'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const orderItemRoute: Routes = [
             orderItem: OrderItemResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'OrderItems'
         },
         canActivate: [UserRouteAccessService]
@@ -57,19 +57,7 @@ export const orderItemRoute: Routes = [
             orderItem: OrderItemResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'OrderItems'
-        },
-        canActivate: [UserRouteAccessService]
-    },
-    {
-        path: ':id/edit',
-        component: OrderItemUpdateComponent,
-        resolve: {
-            orderItem: OrderItemResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'OrderItems'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +72,20 @@ export const orderItemPopupRoute: Routes = [
             orderItem: OrderItemResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_VENDEDOR'],
+            pageTitle: 'OrderItems'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: ':id/update',
+        component: OrderItemUpdatePopupComponent,
+        resolve: {
+            orderItem: OrderItemResolve
+        },
+        data: {
+            authorities: ['ROLE_VENDEDOR'],
             pageTitle: 'OrderItems'
         },
         canActivate: [UserRouteAccessService],

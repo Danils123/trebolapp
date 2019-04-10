@@ -33,8 +33,12 @@ export class CommerceComponent implements OnInit, OnDestroy {
         protected accountService: AccountService
     ) {}
 
+    isVendedor() {
+        return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_VENDEDOR']));
+    }
+
     loadAll() {
-        if (this.accountService.user.authorities.filter(item => item === 'ROLE_VENDEDOR').length > 0) {
+        if (this.isVendedor) {
             this.commerceService
                 .queryByCommerce(this.accountService.userExtra.id)
                 .pipe(

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Offer.
+    -->
+    <changeSet id="20190312191719-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="offer_id"
+                                 baseTableName="offer_commerce"
+                                 constraintName="fk_offer_commerce_offer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="commerce_id"
+                                 baseTableName="offer_commerce"
+                                 constraintName="fk_offer_commerce_commerce_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="commerce"/>
+        
+    </changeSet>
+</databaseChangeLog>

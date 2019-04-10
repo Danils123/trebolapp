@@ -45,6 +45,12 @@ export class OrderItemService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    findByCommerce(idCommerce: number): Observable<EntityArrayResponseType> {
+        return this.http
+            .get<IOrderItem[]>(`${this.resourceUrl}-by-commerce/${idCommerce}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

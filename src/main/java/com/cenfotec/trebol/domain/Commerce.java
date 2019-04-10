@@ -58,10 +58,6 @@ public class Commerce implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne
-    @JsonIgnoreProperties("commerce")
-    private ProductCommerce productCommerce;
-
     @OneToOne
     @JoinColumn(unique = true)
     private Offer offer;
@@ -76,11 +72,11 @@ public class Commerce implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ScheduleCommerce> scheduleCommerces = new HashSet<>();
     @ManyToOne
-    @JsonIgnoreProperties("commerce")
+    @JsonIgnore
     private UserExtra owner;
 
     @ManyToOne
-    @JsonIgnoreProperties("commerces")
+    @JsonIgnore
     private UserExtra userExtra;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -220,19 +216,6 @@ public class Commerce implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public ProductCommerce getProductCommerce() {
-        return productCommerce;
-    }
-
-    public Commerce productCommerce(ProductCommerce productCommerce) {
-        this.productCommerce = productCommerce;
-        return this;
-    }
-
-    public void setProductCommerce(ProductCommerce productCommerce) {
-        this.productCommerce = productCommerce;
     }
 
     public Offer getOffer() {

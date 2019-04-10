@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 export class CommerceUpdateComponent implements OnInit {
     commerce: ICommerce;
     isSaving: boolean;
+    owner: IUserExtra;
 
     productcommerces: IProductCommerce[];
 
@@ -77,6 +78,7 @@ export class CommerceUpdateComponent implements OnInit {
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+
         this.userExtraService
             .query()
             .pipe(
@@ -84,15 +86,21 @@ export class CommerceUpdateComponent implements OnInit {
                 map((response: HttpResponse<IUserExtra[]>) => response.body)
             )
             .subscribe((res: IUserExtra[]) => (this.userextras = res), (res: HttpErrorResponse) => this.onError(res.message));
+
+        this.accountService.getUserExtraAndUser();
     }
 
     previousState() {
         window.history.back();
     }
 
+    isVendedor() {
+        return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_VENDEDOR']));
+    }
+
     save() {
         this.isSaving = true;
-        this.commerce.userExtra = this.accountService.userExtra;
+
         if (this.commerce.id !== undefined) {
             this.subscribeToSaveResponse(this.commerceService.update(this.commerce));
         } else {
