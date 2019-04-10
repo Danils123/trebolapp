@@ -44,10 +44,6 @@ public class ProductCommerce implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "product_list_id", referencedColumnName = "id"))
     private Set<ProductList> productLists = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("productCommerces")
-    private Commerce commerce;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -119,19 +115,6 @@ public class ProductCommerce implements Serializable {
 
     public void setProductLists(Set<ProductList> productLists) {
         this.productLists = productLists;
-    }
-
-    public Commerce getCommerce() {
-        return commerce;
-    }
-
-    public ProductCommerce commerce(Commerce commerce) {
-        this.commerce = commerce;
-        return this;
-    }
-
-    public void setCommerce(Commerce commerce) {
-        this.commerce = commerce;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -88,6 +88,7 @@ public class AccountResource {
         userExtra = userExtraRepository.save(userExtra);
 
         commerce.setUserExtra(userExtra);
+        commerce.owner(userExtra);
         commerce = commerceRepository.save(commerce);
         userExtra.addCommerces(commerce);
 

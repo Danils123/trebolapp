@@ -2,7 +2,7 @@
     <div class="card">
             <div class="card-header">
                     <h2 id="page-heading">
-                            <span>Producto por comercio</span>
+                            <span>Inventario</span>
                             <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-commerce" [routerLink]="['/product-commerce/new']">
                                 <fa-icon [icon]="'plus'"></fa-icon>
                                 <span >
@@ -33,7 +33,7 @@
                     <td>{{productCommerce.quantity}}</td>
                     <td>
                         <div *ngIf="productCommerce.product">
-                            <a [routerLink]="['../product', productCommerce.product?.id, 'view' ]" >{{productCommerce.product?.id}}</a>
+                            <p [routerLink]="['../product', productCommerce.product?.id, 'view' ] "  *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.name}}</p>
                         </div>
                     </td>
                     <!-- <td>

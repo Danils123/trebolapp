@@ -19,7 +19,7 @@
                                             <dt><span>Producto</span></dt>
                                             <dd>
                                                 <div *ngIf="productCommerce.product">
-                                                    <a [routerLink]="['/product', productCommerce.product?.id, 'view']">{{productCommerce.product?.id}}</a>
+                                                    <p [routerLink]="['../product', productCommerce.product?.id, 'view' ] "  *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.name}}</p>
                                                 </div>
                                             </dd>
                                             <!-- <dt><span>Product List</span></dt>
