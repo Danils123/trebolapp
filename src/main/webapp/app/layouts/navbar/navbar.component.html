@@ -43,56 +43,70 @@
             <!-- User profile and search -->
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
+
                 <!-- ============================================================== -->
-                <!-- Search -->
+                <!-- Ordenes -->
                 <!-- ============================================================== -->
-                <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Buscar & entrar"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                <li *jhiHasAnyAuthority="['ROLE_VENDEDOR']" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-clock"></i>
+                        <div class="notify" *ngIf="totalOrders > 0"> <span class="heartbit"></span> <span class="point"></span> </div>
+
+                    </a>
+                    <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
+                        <ul *ngIf="totalOrders > 0">
+                            <li>
+                                <div class="drop-title">Tienes {{totalOrders}} ordenes pendientes</div>
+                            </li>
+
+                            <li>
+                                <a class="nav-link text-center" routerLink="order-item"> <strong>Abrir ordenes</strong></a>
+                            </li>
+                        </ul>
+
+                        <ul *ngIf="totalOrders <= 0">
+                            <li>
+                                <div class="drop-title">No hay ordenes pendientes</div>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+
+                <!-- ============================================================== -->
+                <!-- end Ordenes -->
+                <!-- ============================================================== -->
+
 
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown" *ngIf="isAuthenticated()">
+                <li class="nav-item dropdown" *jhiHasAnyAuthority="['ROLE_COMPRADOR']">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
                         <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                     </a>
                     <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
                         <ul>
                             <li>
-                                <div class="drop-title">Tienes 4 nuevos mensajes</div>
+                                <div class="drop-title">Tiene {{informationArray.length}} ofertas disponibles</div>
                             </li>
                             <li>
                                 <div class="message-center">
                                     <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="#">
-                                        <div class="user-img"> <img src="../../../content/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                    </a>
+                                    <div *ngFor="let information of informationArray">
+                                        <a>
+                                            <!--<div class="user-img"> <img src="../../../content/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>-->
+                                            <div class="mail-contnet">
+                                                <h5>{{information.commerceName}}</h5> <span class="mail-desc">{{information.offerDescription}}</span>
+                                                <span class="mail-desc">Fecha de expiración</span>
+                                                <span class="mail-desc">{{information.expirationDate|date: "dd MM yyyy"}}</span> </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                             <li>
-                                <a class="nav-link text-center" href="javascript:void(0);"> <strong>Ver todos los correos</strong> <i class="fa fa-angle-right"></i> </a>
+                                <!-- PARA LA OPCION DE VER MAS
+                                    <a class="nav-link text-center" href="javascript:void(0);"> <strong>Ver todos los correos</strong> <i class="fa fa-angle-right"></i> </a>
+                                 -->
+
                             </li>
                         </ul>
                     </div>

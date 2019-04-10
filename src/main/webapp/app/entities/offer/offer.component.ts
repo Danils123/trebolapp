@@ -13,11 +13,11 @@ import Swal from 'sweetalert2';
     templateUrl: './offer.component.html'
 })
 export class OfferComponent implements OnInit, OnDestroy {
-    offers: IOffer[] = null;
+    offers: IOffer[] = [];
     currentAccount: any;
     eventSubscriber: Subscription;
     _filterQuery = '';
-    filteredOffers: IOffer[] = null;
+    filteredOffers: IOffer[] = [];
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success ml-3',
@@ -33,28 +33,12 @@ export class OfferComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAll() {
-        this.offerService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IOffer[]>) => res.ok),
-                map((res: HttpResponse<IOffer[]>) => res.body)
-            )
-            .subscribe(
-                (res: IOffer[]) => {
-                    this.offers = res;
-                    this.filteredOffers = res;
-                    if (
-                        this.accountService.userExtra.commerces[0].offer != null &&
-                        this.accountService.userExtra.commerces[0].offer != undefined
-                    ) {
-                        this.filteredOffers = [];
-                        this.offers = [];
-                        this.offers.push(this.accountService.userExtra.commerces[0].offer);
-                        this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
-                    }
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        if (this.accountService.userExtra.commerces[0].offer != null && this.accountService.userExtra.commerces[0].offer !== undefined) {
+            this.filteredOffers = [];
+            this.offers = [];
+            this.offers.push(this.accountService.userExtra.commerces[0].offer);
+            this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
+        }
     }
 
     ngOnInit() {

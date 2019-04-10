@@ -1,7 +1,6 @@
 package com.cenfotec.trebol.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,8 +8,6 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -43,9 +40,6 @@ public class Offer implements Serializable {
     @Column(name = "disabled")
     private Boolean disabled;
 
-    @OneToMany(mappedBy = "offer")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<OrderItem> orderItems = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -118,31 +112,6 @@ public class Offer implements Serializable {
 
     public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
-    }
-
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public Offer orderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-        return this;
-    }
-
-    public Offer addOrderItem(OrderItem orderItem) {
-        this.orderItems.add(orderItem);
-        orderItem.setOffer(this);
-        return this;
-    }
-
-    public Offer removeOrderItem(OrderItem orderItem) {
-        this.orderItems.remove(orderItem);
-        orderItem.setOffer(null);
-        return this;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

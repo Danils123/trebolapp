@@ -35,16 +35,7 @@
 
                 <li *jhiHasAnyAuthority="'ROLE_COMPRADOR'"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Compras</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <!-- <li><a routerLink="ranking-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Clasificación por orden</a></li> -->
-
-
-                        <!-- <li><a routerLink="products-per-order" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Productos por orden</a></li> -->
-                        <!-- <li><a routerLink="order-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Orden de artículo</a></li> -->
                         <li><a routerLink="list-schedule" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Compras programadas</a></li>
-
-
-                        <!-- <li><a routerLink="user-extra" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Usuario Extra</a></li> -->
-                        <!--<li><a routerLink="list-purchase" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de compras</a> </li>-->
                         <li><a routerLink="product-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lista de compras</a></li>
                         <li><a routerLink="points-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Puntos por comercio</a></li>
                     </ul>
@@ -57,9 +48,9 @@
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="sub-category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sub Categoría</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="product" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="schedule-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Horario de comercio</a></li>
-                        <!-- <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="parameters-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Configuración de comerce</a></li> -->
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Mi comercio</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="offer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ofertas</a></li>
+                        <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="order-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ordenes</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_VENDEDOR'"><a routerLink="product-commerce" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Producto por comercio</a></li>
 
                     </ul>

@@ -3,37 +3,68 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { Moment } from 'moment';
 
-import { IOrderItem } from 'app/shared/model/order-item.model';
+import { IOrderItem, OrderItem } from 'app/shared/model/order-item.model';
 import { AccountService } from 'app/core';
 import { OrderItemService } from './order-item.service';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { OrderModalService } from './order.service';
+
+import { OrdersService } from 'app/core/orders/orders.service';
+import { ProductCommerce, IProductCommerce } from 'app/shared/model/product-commerce.model';
+import { ProductCommerceService } from '../product-commerce';
+import { CommerceService } from '../commerce';
+import moment = require('moment');
+import { Commerce } from 'app/shared/model/commerce.model';
+import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 
 @Component({
     selector: 'jhi-order-item',
-    templateUrl: './order-item.component.html'
+    templateUrl: './order-item.component.html',
+    styleUrls: ['./order.scss']
 })
 export class OrderItemComponent implements OnInit, OnDestroy {
+    modalRef: NgbModalRef;
     orderItems: IOrderItem[];
     currentAccount: any;
     eventSubscriber: Subscription;
-
     constructor(
         protected orderItemService: OrderItemService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
-    ) {}
+        protected accountService: AccountService,
+        protected orderModalService: OrderModalService,
+        private orderServiceWS: OrdersService,
+        private productService: ProductCommerceService,
+        private commerceService: CommerceService
+    ) {
+        this.orderServiceWS.connect();
+        this.accountService.refreshUser();
+    }
 
     loadAll() {
         this.orderItemService
-            .query()
+            .findByCommerce(this.accountService.userExtra.commerces[0].id)
             .pipe(
                 filter((res: HttpResponse<IOrderItem[]>) => res.ok),
                 map((res: HttpResponse<IOrderItem[]>) => res.body)
             )
             .subscribe(
                 (res: IOrderItem[]) => {
-                    this.orderItems = res;
+                    this.orderItems = res.filter(item => item.state !== 2);
+                    this.orderServiceWS.subscribeSeller();
+                    this.orderServiceWS.receive().subscribe(order => {
+                        console.log(order);
+                        if (!(this.orderItems.filter(x => x.id === order.id).length > 0)) {
+                            console.log('si paso');
+                            this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
+                                if (commerce.body[0].id === order.commerce.id) {
+                                    this.orderItems.push(order);
+                                }
+                            });
+                        }
+                    });
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -61,5 +92,44 @@ export class OrderItemComponent implements OnInit, OnDestroy {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    detail(products: ProductCommerce) {
+        console.log(products);
+        this.modalRef = this.orderModalService.open();
+    }
+
+    completeOrder(order: OrderItem) {
+        this.orderServiceWS.completeOrder(order);
+    }
+
+    createOrderDummy() {
+        const newOrder = new OrderItem();
+        const productPerOrder = new ProductsPerOrder();
+        productPerOrder.productCommerce = new ProductCommerce();
+        productPerOrder.productCommerce.id = 1351;
+        productPerOrder.quantity = 100;
+        newOrder.productsPerOrders = [];
+        newOrder.commerce = new Commerce();
+        newOrder.commerce.id = 1551;
+        newOrder.state = 0;
+        newOrder.productsPerOrders.push(productPerOrder);
+        this.orderServiceWS.sendOrder(newOrder);
+    }
+
+    changeState(id: number) {
+        this.orderItems.map((order, index, array) => {
+            if (order.id === id) {
+                order.state += 1;
+                console.log(order);
+                this.orderItemService.update(order).subscribe(response => {
+                    console.log(response);
+                    if (order.state === 2) {
+                        this.completeOrder(order);
+                        this.orderItems.splice(index, 1);
+                    }
+                });
+            }
+        });
     }
 }

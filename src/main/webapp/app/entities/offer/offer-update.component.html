@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="field_description">Fecha de caducidad (MM DD YYYY)</label>
 
-                                <ng-datepicker [(ngModel)]="offer.expirationDate" [options]="options" class="form-control" name="expiration_date" #expiration_date="ngModel"></ng-datepicker>
+                                <ng-datepicker [(ngModel)]="offer.expirationDate" [options]="options" name="expiration_date" #expiration_date="ngModel" style="z-index: 999;"></ng-datepicker>
                             </div>
 
                         </div>
@@ -45,7 +45,7 @@
                             <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
                                 <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
                             </button>
-                            <button type="submit" id="save-entity" [disabled]="(editForm.form.invalid || minValue ===false || maxValue === false) || isSaving" class="btn btn-success">
+                            <button type="submit" id="save-entity" [disabled]="(editForm.form.invalid || minValue ===false || maxValue === false) || isSaving" class="btn btn-success" style="z-index: -1 !important;">
                                 <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
                             </button>
                         </div>

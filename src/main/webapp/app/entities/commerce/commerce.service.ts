@@ -20,7 +20,6 @@ export class CommerceService {
     }
 
     update(commerce: ICommerce): Observable<EntityResponseType> {
-        //console.log(commerce);
         return this.http.put<ICommerce>(this.resourceUrl, commerce, { observe: 'response' });
     }
 
