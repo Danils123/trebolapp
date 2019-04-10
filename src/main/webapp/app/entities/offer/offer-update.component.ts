@@ -48,7 +48,7 @@ export class OfferUpdateComponent implements OnInit {
             this.offer.type = 1;
 
             if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
-                this.offer.expirationDate = new Date();
+                // this.offer.expirationDate = new Date();
             }
         });
     }
