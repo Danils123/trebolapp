@@ -64,9 +64,8 @@
                                             <label class="form-control-label" for="field_phone">Teléfono</label>
                                             <input type="text" class="form-control" name="phone" id="field_phone"
                                                 [(ngModel)]="commerce.phone" />
-                                        </div>
-                        <!-- 
-                                        <div class="form-group">
+                                        </div>                       
+                                     <!--     <div class="form-group">
                                             <label class="form-control-label" for="field_productCommerce">Product Commerce</label>
                                             <select class="form-control" id="field_productCommerce" name="productCommerce" [(ngModel)]="commerce.productCommerce" >
                                                 <option [ngValue]="null"></option>
@@ -85,13 +84,6 @@
                                             <select class="form-control" id="field_owner" name="owner" [(ngModel)]="commerce.owner" >
                                                 <option [ngValue]="null"></option>
                                                 <option [ngValue]="userExtraOption.id === commerce.owner?.id ? commerce.owner : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
-                                            </select>
-                                        </div> -->
-                                        <!-- <div class="form-group">
-                                            <label class="form-control-label" for="field_userExtra">User Extra</label>
-                                            <select class="form-control" id="field_userExtra" name="userExtra" [(ngModel)]="commerce.userExtra" >
-                                                <option [ngValue]="null"></option>
-                                                <option [ngValue]="userExtraOption.id === commerce.userExtra?.id ? commerce.userExtra : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
                                             </select>
                                         </div> -->
                                     </div>

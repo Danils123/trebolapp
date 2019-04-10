@@ -1,7 +1,7 @@
 <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                    <h2 id="jhi-product-commerce-heading">Create or edit a Product Commerce</h2>
+                    <h2 id="jhi-product-commerce-heading">Inventario</h2>
             </div>
             <div class="card-body">
                     <div class="row justify-content-center">
@@ -28,9 +28,10 @@
                                             <label class="form-control-label" for="field_product">Producto</label>
                                             <select class="form-control" id="field_product" name="product" [(ngModel)]="productCommerce.product" >
                                                 <option [ngValue]="null"></option>
-                                                <option [ngValue]="productOption.id === productCommerce.product?.id ? productCommerce.product : productOption" *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.id}}</option>
+                                                <option [ngValue]="productOption.id === productCommerce.product?.id ? productCommerce.product : productOption" *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.name}}</option>
                                             </select>
                                         </div>
+                                      
                                         <!-- <div class="form-group">
                                             <label for="field_productList">Product List</label>
                                             <select class="form-control" id="field_productList" multiple name="productList" [(ngModel)]="productCommerce.productLists">

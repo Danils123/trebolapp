@@ -18,14 +18,6 @@
             "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipNameUndefined": false
-        },
-        {
-            "relationshipName": "commerce",
-            "otherEntityName": "commerce",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "productCommerce",
-            "otherEntityRelationshipNameUndefined": true
         }
     ],
     "fields": [

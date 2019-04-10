@@ -79,11 +79,6 @@ public class Commerce implements Serializable {
     @JsonIgnore
     private UserExtra userExtra;
 
-    
-    @OneToMany(mappedBy = "commerce")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ProductCommerce> productCommerces = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -335,31 +330,6 @@ public class Commerce implements Serializable {
 
     public void setUserExtra(UserExtra userExtra) {
         this.userExtra = userExtra;
-    }
-
-    public Set<ProductCommerce> getProductCommerces() {
-        return productCommerces;
-    }
-
-    public Commerce productCommerces(Set<ProductCommerce> productCommerces) {
-        this.productCommerces = productCommerces;
-        return this;
-    }
-
-    public Commerce addProductCommerce(ProductCommerce productCommerce) {
-        this.productCommerces.add(productCommerce);
-         productCommerce.setCommerce(this);
-        return this;
-    }
-
-    public Commerce removeProductCommerce(ProductCommerce productCommerce) {
-        this.productCommerces.remove(productCommerce);
-         productCommerce.setCommerce(null);
-        return this;
-    }
-
-    public void setProductCommerces(Set<ProductCommerce> productCommerces) {
-        this.productCommerces = productCommerces;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

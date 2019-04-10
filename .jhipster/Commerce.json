@@ -47,13 +47,6 @@
             "otherEntityField": "id",
             "otherEntityRelationshipNameUndefined": false,
             "otherEntityRelationshipName": "commerce"
-        },
-        {
-            "relationshipName": "productCommerce",
-            "otherEntityName": "productCommerce",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "commerce",
-            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [

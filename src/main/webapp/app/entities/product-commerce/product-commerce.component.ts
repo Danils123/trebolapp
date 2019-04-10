@@ -4,10 +4,12 @@ import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import Swal from 'sweetalert2';
+import { ProductService } from 'app/entities/product';
 
 import { IProductCommerce } from 'app/shared/model/product-commerce.model';
 import { AccountService } from 'app/core';
 import { ProductCommerceService } from './product-commerce.service';
+import { IProduct } from 'app/shared/model/product.model';
 
 @Component({
     selector: 'jhi-product-commerce',
@@ -17,6 +19,8 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
     productCommerces: IProductCommerce[];
     currentAccount: any;
     eventSubscriber: Subscription;
+
+    products: IProduct[];
 
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -30,6 +34,7 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
         protected productCommerceService: ProductCommerceService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
+        protected productService: ProductService,
         protected accountService: AccountService
     ) {}
 
@@ -43,6 +48,19 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IProductCommerce[]) => {
                     this.productCommerces = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+
+        this.productService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IProduct[]>) => res.ok),
+                map((res: HttpResponse<IProduct[]>) => res.body)
+            )
+            .subscribe(
+                (res: IProduct[]) => {
+                    this.products = res;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
