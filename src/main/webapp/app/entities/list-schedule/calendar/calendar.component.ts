@@ -18,6 +18,14 @@ import {
 import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IUser, UserService } from 'app/core';
+import { IListPurchase } from 'app/shared/model/list-purchase.model';
+import { IListSchedule } from 'app/shared/model/list-schedule.model';
+import { filter, map } from 'rxjs/operators';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ListScheduleService } from 'app/entities/list-schedule';
+import { ListPurchaseService } from 'app/entities/list-purchase';
+import { JhiAlertService } from 'ng-jhipster';
 
 const colors: any = {
     red: {
@@ -42,6 +50,7 @@ const colors: any = {
     styleUrls: ['../../../../../../../node_modules/angular-calendar/scss/angular-calendar.scss']
 })
 export class CalendarComponent implements OnInit {
+    listSchedules: IListSchedule[];
     @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
     CalendarView = CalendarView;
@@ -57,10 +66,6 @@ export class CalendarComponent implements OnInit {
 
     actions: CalendarEventAction[] = [
         {
-            label: '<i class="fa fa-fw fa-pencil"></i>',
-            onClick: ({ event }: { event: CalendarEvent }): void => {}
-        },
-        {
             label: '<i class="fa fa-fw fa-times"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
                 this.events = this.events.filter(iEvent => iEvent !== event);
@@ -69,52 +74,21 @@ export class CalendarComponent implements OnInit {
     ];
     refresh: Subject<any> = new Subject();
 
-    events: CalendarEvent[] = [
-        {
-            start: subDays(startOfDay(new Date()), 1),
-            end: addDays(new Date(), 1),
-            title: 'A 3 day event',
-            color: colors.red,
-            actions: this.actions,
-            allDay: true,
-            resizable: {
-                beforeStart: true,
-                afterEnd: true
-            },
-            draggable: true
-        },
-        {
-            start: startOfDay(new Date()),
-            title: 'An event with no end date',
-            color: colors.yellow,
-            actions: this.actions
-        },
-        {
-            start: subDays(endOfMonth(new Date()), 3),
-            end: addDays(endOfMonth(new Date()), 3),
-            title: 'A long event that spans 2 months',
-            color: colors.blue,
-            allDay: true
-        },
-        {
-            start: addHours(startOfDay(new Date()), 2),
-            end: setHours(setMinutes(new Date(), 0), 5),
-            title: 'A draggable and resizable event',
-            color: colors.yellow,
-            actions: this.actions,
-            resizable: {
-                beforeStart: true,
-                afterEnd: true
-            },
-            draggable: true
-        }
-    ];
+    events: CalendarEvent[] = [];
 
     activeDayIsOpen = true;
 
-    constructor(private modal: NgbModal) {}
+    constructor(
+        private modal: NgbModal,
+        protected listScheduleService: ListScheduleService,
+        protected listPurchaseService: ListPurchaseService,
+        protected userService: UserService,
+        protected jhiAlertService: JhiAlertService
+    ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.loadAll();
+    }
 
     handleEvent(action: string, event: CalendarEvent): void {
         this.modalData = { event, action };
@@ -187,5 +161,57 @@ export class CalendarComponent implements OnInit {
             }
         });
         this.refresh.next();
+    }
+
+    loadAll() {
+        this.listScheduleService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IListSchedule[]>) => res.ok),
+                map((res: HttpResponse<IListSchedule[]>) => res.body)
+            )
+            .subscribe(
+                (res: IListSchedule[]) => {
+                    this.listSchedules = res;
+                    for (const schedule of this.listSchedules) {
+                        this.listPurchaseService
+                            .find(schedule.purchaseid)
+                            .pipe(
+                                filter((res1: HttpResponse<IListPurchase>) => res1.ok),
+                                map((res1: HttpResponse<IListPurchase>) => res1.body)
+                            )
+                            .subscribe((res1: IListPurchase) => {
+                                const purchase = res1;
+                                const userExtra = purchase.seller;
+
+                                this.userService
+                                    .query()
+                                    .pipe(
+                                        filter((res2: HttpResponse<IUser[]>) => res2.ok),
+                                        map((res2: HttpResponse<IUser[]>) => res2.body)
+                                    )
+                                    .subscribe((res2: IUser[]) => {
+                                        const users = res2;
+                                        for (const user of users) {
+                                            if (purchase.state && user.id === userExtra.userId) {
+                                                this.events.push({
+                                                    title: purchase.name,
+                                                    start: startOfDay(schedule.time.toDate()),
+                                                    color: colors.red,
+                                                    actions: this.actions
+                                                });
+                                                this.refresh.next();
+                                            }
+                                        }
+                                    });
+                            });
+                    }
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 }

@@ -60,7 +60,7 @@ public class ScheduledTask {
         logger.info("Fixed Rate Task with Initial Delay :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
     } */
 
-    @Scheduled(cron = "1 */24 * * * ?") // cada minuto cron = "0 * * * * ?"
+    @Scheduled(cron = "1 0 * * * ?") // cada minuto cron = "0 * * * * ?"
     public void scheduleTaskWithCronExpression() {
         List<ListSchedule> schedules = listScheduleRepository.findAll();
         for (ListSchedule schedule: schedules) {
@@ -74,6 +74,6 @@ public class ScheduledTask {
                 mailService.sendEmailFromTemplate(user, "mail/recordatoryScheduleList", "email.recordatoryScheduleList.title");
             }
         }
-        //logger.info("Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+        logger.info("Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
     }
 }
