@@ -48,42 +48,13 @@ export class OfferUpdateComponent implements OnInit {
             this.offer.type = 1;
 
             if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
-                // this.offer.expirationDate = new Date();
+                this.offer.expirationDate = new Date();
             }
         });
     }
 
     previousState() {
-        //window.history.back();
-
-        this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
-            console.log(res.body);
-
-            this.offerService
-                .findByCommerce(res.body.commerces[0].id)
-                .pipe(
-                    filter((res: HttpResponse<IOffer[]>) => res.ok),
-                    map((res: HttpResponse<IOffer[]>) => res.body)
-                )
-                .subscribe((res: IOffer[]) => {
-                    console.log(res);
-                });
-        });
-
-        /*
-       this.commerceUserService
-       .findUsersByCommerce(77)
-       .pipe(
-           filter((res: HttpResponse<IUserExtra[]>) => res.ok),
-           map((res: HttpResponse<IUserExtra[]>) => res.body)
-       )
-       .subscribe(
-           (res: IUserExtra[]) => {
-               console.log(res);
-           }
-       );
-
-       */
+        window.history.back();
     }
 
     save() {
@@ -104,6 +75,7 @@ export class OfferUpdateComponent implements OnInit {
 
     protected onSaveSuccess(response: HttpResponse<IOffer>) {
         /*
+        POR AHORA SE QUEDA COMENTADO PARA ASEGURARSE QUE TODO FUNCIONE SIN PROBLEMAS SIN MODIFICAR EL USUARIO EXTRA COMO TAL
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
             
             const commercesSave = res.body.commerces[0];
@@ -136,6 +108,17 @@ export class OfferUpdateComponent implements OnInit {
             });
         });
         */
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Oferta agregada satisfactoriamente'
+        });
         this.previousState();
     }
 

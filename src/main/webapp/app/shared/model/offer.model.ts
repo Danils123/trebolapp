@@ -6,7 +6,7 @@ export interface IOffer {
     discount?: number;
     description?: string;
     type?: number;
-    expirationDate?: Moment;
+    expirationDate?: Date;
     disabled?: boolean;
     commerces?: ICommerce[];
 }
@@ -17,7 +17,7 @@ export class Offer implements IOffer {
         public discount?: number,
         public description?: string,
         public type?: number,
-        public expirationDate?: Moment,
+        public expirationDate?: Date,
         public disabled?: boolean,
         public commerces?: ICommerce[]
     ) {

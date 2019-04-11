@@ -116,9 +116,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     loadInfo() {
         this.informationArray = [];
         let userExtra: IUserExtra;
+        this.offers = [];
 
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
             userExtra = res.body;
+            let offers: IOffer[];
             this.commerceUserService
                 .findCommercesByUser(userExtra.id)
                 .pipe(
@@ -128,15 +130,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 .subscribe((res2: ICommerce[]) => {
                     let informationObject: Information = new Information();
                     res2.forEach(commerce => {
-                        //if (commerce.offer != null && commerce.offer !== undefined) {
-                        //    this.offers.push(commerce.offer);
-                        //   informationObject = new Information();
-                        //   informationObject.commerceName = commerce.name;
-                        //  informationObject.offerDescription = commerce.offer.description;
-                        //  informationObject.commerceId = commerce.id;
-                        //  informationObject.expirationDate = commerce.offer.expirationDate.toDate();
-                        // this.informationArray.push(informationObject);
-                        // }
+                        this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
+                            offers = response.body;
+                            offers.forEach(offer => {
+                                this.offers.push(offer);
+                                informationObject = new Information();
+                                informationObject.commerceName = commerce.name;
+                                informationObject.offerDescription = offer.description;
+                                informationObject.commerceId = commerce.id;
+                                informationObject.expirationDate = offer.expirationDate;
+                                this.informationArray.push(informationObject);
+                            });
+                        });
                     });
                 });
         });
