@@ -96,12 +96,6 @@ public class CommerceResource {
         return ResponseUtil.wrapOrNotFound(commerce);
     }
 
-    @GetMapping("/commerce-byUserId/{id}")
-    public List<Commerce> getByUserId(@PathVariable Long id) {
-        log.debug("REST request to get all Commerce");
-        return commerceRepository.findByOwnerId(id);
-    }
-
     /**
      * DELETE  /commerce/:id : delete the "id" commerce.
      *

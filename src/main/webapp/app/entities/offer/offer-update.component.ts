@@ -73,6 +73,12 @@ export class OfferUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        if (this.offer.commerces == null) {
+            this.offer.commerces = [];
+            this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
+        } else {
+            this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
+        }
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
@@ -87,7 +93,13 @@ export class OfferUpdateComponent implements OnInit {
     protected onSaveSuccess(res: HttpResponse<IOffer>) {
         const commercesSave = this.accountService.userExtra.commerces[0];
         const userExtraSave = this.accountService.userExtra;
-        commercesSave.offer = res.body;
+        if (commercesSave.offers == null) {
+            commercesSave.offers = [];
+            commercesSave.offers.push(res.body);
+        } else {
+            commercesSave.offers.push(res.body);
+        }
+
         this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
             userExtraSave.commerces[0] = res.body;
             this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {

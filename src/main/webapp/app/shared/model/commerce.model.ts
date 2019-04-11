@@ -18,7 +18,7 @@ export interface ICommerce {
     state?: boolean;
     phone?: string;
     productCommerce?: IProductCommerce;
-    offer?: IOffer;
+    offers?: IOffer[];
     orderItems?: IOrderItem[];
     parametersCommerces?: IParametersCommerce[];
     scheduleCommerces?: IScheduleCommerce[];
@@ -40,7 +40,7 @@ export class Commerce implements ICommerce {
         public state?: boolean,
         public phone?: string,
         public productCommerce?: IProductCommerce,
-        public offer?: IOffer,
+        public offers?: IOffer[],
         public orderItems?: IOrderItem[],
         public parametersCommerces?: IParametersCommerce[],
         public scheduleCommerces?: IScheduleCommerce[],

@@ -8,6 +8,8 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -39,6 +41,13 @@ public class Offer implements Serializable {
 
     @Column(name = "disabled")
     private Boolean disabled;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "offer_commerces",
+               joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "commerces_id", referencedColumnName = "id"))
+    private Set<Commerce> commerces = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -112,6 +121,31 @@ public class Offer implements Serializable {
 
     public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public Set<Commerce> getCommerces() {
+        return commerces;
+    }
+
+    public Offer commerces(Set<Commerce> commerce) {
+        this.commerces = commerce;
+        return this;
+    }
+
+    public Offer addCommerces(Commerce commerce) {
+        this.commerces.add(commerce);
+        commerce.getOffers().add(this);
+        return this;
+    }
+
+    public Offer removeCommerces(Commerce commerce) {
+        this.commerces.remove(commerce);
+        commerce.getOffers().remove(this);
+        return this;
+    }
+
+    public void setCommerces(Set<Commerce> commerce) {
+        this.commerces = commerce;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

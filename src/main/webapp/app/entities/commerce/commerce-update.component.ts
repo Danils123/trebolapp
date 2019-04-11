@@ -61,11 +61,11 @@ export class CommerceUpdateComponent implements OnInit {
             )
             .subscribe(
                 (res: IOffer[]) => {
-                    if (!this.commerce.offer || !this.commerce.offer.id) {
+                    if (!this.commerce.offers || !this.commerce.offers[0].id) {
                         this.offers = res;
                     } else {
                         this.offerService
-                            .find(this.commerce.offer.id)
+                            .find(this.commerce.offers[0].id)
                             .pipe(
                                 filter((subResMayBeOk: HttpResponse<IOffer>) => subResMayBeOk.ok),
                                 map((subResponse: HttpResponse<IOffer>) => subResponse.body)

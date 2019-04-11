@@ -128,15 +128,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 .subscribe((res2: ICommerce[]) => {
                     let informationObject: Information = new Information();
                     res2.forEach(commerce => {
-                        if (commerce.offer != null && commerce.offer !== undefined) {
-                            this.offers.push(commerce.offer);
-                            informationObject = new Information();
-                            informationObject.commerceName = commerce.name;
-                            informationObject.offerDescription = commerce.offer.description;
-                            informationObject.commerceId = commerce.id;
-                            informationObject.expirationDate = commerce.offer.expirationDate.toDate();
-                            this.informationArray.push(informationObject);
-                        }
+                        //if (commerce.offer != null && commerce.offer !== undefined) {
+                        //    this.offers.push(commerce.offer);
+                        //   informationObject = new Information();
+                        //   informationObject.commerceName = commerce.name;
+                        //  informationObject.offerDescription = commerce.offer.description;
+                        //  informationObject.commerceId = commerce.id;
+                        //  informationObject.expirationDate = commerce.offer.expirationDate.toDate();
+                        // this.informationArray.push(informationObject);
+                        // }
                     });
                 });
         });

@@ -60,9 +60,7 @@
             <column name="phone" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="offer_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_commerce_offer_id" />
-            </column>
+
             <column name="owner_id" type="bigint">
                 <constraints nullable="true" />
             </column>

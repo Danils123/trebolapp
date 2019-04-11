@@ -58,10 +58,6 @@ public class Commerce implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Offer offer;
-
     @OneToMany(mappedBy = "commerce")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<OrderItem> orderItems = new HashSet<>();
@@ -78,6 +74,10 @@ public class Commerce implements Serializable {
     @ManyToOne
     @JsonIgnore
     private UserExtra userExtra;
+
+    @ManyToMany(mappedBy = "commerces")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Offer> offers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -218,19 +218,6 @@ public class Commerce implements Serializable {
         this.phone = phone;
     }
 
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public Commerce offer(Offer offer) {
-        this.offer = offer;
-        return this;
-    }
-
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
-
     public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -330,6 +317,31 @@ public class Commerce implements Serializable {
 
     public void setUserExtra(UserExtra userExtra) {
         this.userExtra = userExtra;
+    }
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public Commerce offers(Set<Offer> offers) {
+        this.offers = offers;
+        return this;
+    }
+
+    public Commerce addOffers(Offer offer) {
+        this.offers.add(offer);
+        offer.getCommerces().add(this);
+        return this;
+    }
+
+    public Commerce removeOffers(Offer offer) {
+        this.offers.remove(offer);
+        offer.getCommerces().remove(this);
+        return this;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

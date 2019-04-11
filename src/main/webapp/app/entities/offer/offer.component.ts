@@ -8,6 +8,7 @@ import { IOffer } from 'app/shared/model/offer.model';
 import { AccountService } from 'app/core';
 import { OfferService } from './offer.service';
 import Swal from 'sweetalert2';
+import { ICommerce } from '../../shared/model/commerce.model';
 @Component({
     selector: 'jhi-offer',
     templateUrl: './offer.component.html'
@@ -33,12 +34,13 @@ export class OfferComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAll() {
-        if (this.accountService.userExtra.commerces[0].offer != null && this.accountService.userExtra.commerces[0].offer !== undefined) {
-            this.filteredOffers = [];
-            this.offers = [];
-            this.offers.push(this.accountService.userExtra.commerces[0].offer);
-            this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
-        }
+        //const commerce: ICommerce;
+        //if (this.accountService.userExtra.commerces[0].offer != null && this.accountService.userExtra.commerces[0].offer !== undefined) {
+        //   this.filteredOffers = [];
+        //   this.offers = [];
+        //  this.offers.push(this.accountService.userExtra.commerces[0].offer);
+        //  this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
+        //  }
     }
 
     ngOnInit() {
