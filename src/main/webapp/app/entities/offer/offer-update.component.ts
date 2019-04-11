@@ -88,12 +88,9 @@ export class OfferUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.offer.commerces == null) {
-            this.offer.commerces = [];
-            this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
-        } else {
-            this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
-        }
+        this.offer.commerces = [];
+        this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
+
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
@@ -106,7 +103,9 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     protected onSaveSuccess(response: HttpResponse<IOffer>) {
+        /*
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
+            
             const commercesSave = res.body.commerces[0];
 
             const userExtraSave = res.body;
@@ -136,6 +135,8 @@ export class OfferUpdateComponent implements OnInit {
                 });
             });
         });
+        */
+        this.previousState();
     }
 
     protected onSaveError() {

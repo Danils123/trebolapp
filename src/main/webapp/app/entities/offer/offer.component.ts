@@ -9,6 +9,8 @@ import { AccountService } from 'app/core';
 import { OfferService } from './offer.service';
 import Swal from 'sweetalert2';
 import { ICommerce } from '../../shared/model/commerce.model';
+import { CommerceService } from '../commerce/commerce.service';
+import { commercePopupRoute } from '../commerce/commerce.route';
 @Component({
     selector: 'jhi-offer',
     templateUrl: './offer.component.html'
@@ -30,7 +32,8 @@ export class OfferComponent implements OnInit, OnDestroy {
         protected offerService: OfferService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected commerceService: CommerceService
     ) {}
 
     loadAll() {
@@ -106,6 +109,8 @@ export class OfferComponent implements OnInit, OnDestroy {
     }
     confirmDelete(offer: IOffer) {
         offer.disabled = true;
+        offer.commerces = [];
+        offer.commerces.push(this.accountService.userExtra.commerces[0]);
         this.offerService.update(offer).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'offerListModification',
@@ -133,6 +138,8 @@ export class OfferComponent implements OnInit, OnDestroy {
     }
     confirmEnable(offer: IOffer) {
         offer.disabled = false;
+        offer.commerces = [];
+        offer.commerces.push(this.accountService.userExtra.commerces[0]);
         this.offerService.update(offer).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'offerListModification',
