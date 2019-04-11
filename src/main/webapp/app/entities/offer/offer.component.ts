@@ -34,13 +34,20 @@ export class OfferComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAll() {
-        //const commerce: ICommerce;
-        //if (this.accountService.userExtra.commerces[0].offer != null && this.accountService.userExtra.commerces[0].offer !== undefined) {
-        //   this.filteredOffers = [];
-        //   this.offers = [];
-        //  this.offers.push(this.accountService.userExtra.commerces[0].offer);
-        //  this.filteredOffers.push(this.accountService.userExtra.commerces[0].offer);
-        //  }
+        let commerces: ICommerce[];
+        let offers: IOffer[];
+        this.filteredOffers = [];
+        this.offers = [];
+        commerces = this.accountService.userExtra.commerces;
+        commerces.forEach(commerce => {
+            this.offerService.findByCommerce(commerce.id).subscribe((res: HttpResponse<IOffer[]>) => {
+                offers = res.body;
+                offers.forEach(offer => {
+                    this.filteredOffers.push(offer);
+                    this.offers.push(offer);
+                });
+            });
+        });
     }
 
     ngOnInit() {

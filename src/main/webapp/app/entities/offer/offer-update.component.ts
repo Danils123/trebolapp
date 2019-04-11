@@ -54,7 +54,22 @@ export class OfferUpdateComponent implements OnInit {
     }
 
     previousState() {
-        window.history.back();
+        //window.history.back();
+
+        this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
+            console.log(res.body);
+
+            this.offerService
+                .findByCommerce(res.body.commerces[0].id)
+                .pipe(
+                    filter((res: HttpResponse<IOffer[]>) => res.ok),
+                    map((res: HttpResponse<IOffer[]>) => res.body)
+                )
+                .subscribe((res: IOffer[]) => {
+                    console.log(res);
+                });
+        });
+
         /*
        this.commerceUserService
        .findUsersByCommerce(77)
@@ -90,32 +105,35 @@ export class OfferUpdateComponent implements OnInit {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
     }
 
-    protected onSaveSuccess(res: HttpResponse<IOffer>) {
-        const commercesSave = this.accountService.userExtra.commerces[0];
-        const userExtraSave = this.accountService.userExtra;
-        if (commercesSave.offers == null) {
-            commercesSave.offers = [];
-            commercesSave.offers.push(res.body);
-        } else {
-            commercesSave.offers.push(res.body);
-        }
+    protected onSaveSuccess(response: HttpResponse<IOffer>) {
+        this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
+            const commercesSave = res.body.commerces[0];
 
-        this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
-            userExtraSave.commerces[0] = res.body;
-            this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
-                this.userExtraService.refreshUser();
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
+            const userExtraSave = res.body;
+            if (commercesSave.offers == null) {
+                commercesSave.offers = [];
+                commercesSave.offers.push(response.body);
+            } else {
+                commercesSave.offers.push(response.body);
+            }
+            commercesSave.userExtra = res.body;
+            this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
+                userExtraSave.commerces[0] = res.body;
+                this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
+                    this.userExtraService.refreshUser();
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
 
-                Toast.fire({
-                    type: 'success',
-                    title: 'Oferta agregada satisfactoriamente'
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Oferta agregada satisfactoriamente'
+                    });
+                    this.previousState();
                 });
-                this.previousState();
             });
         });
     }

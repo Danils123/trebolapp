@@ -1,8 +1,9 @@
 package com.cenfotec.trebol.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -72,7 +73,7 @@ public class Commerce implements Serializable {
     private UserExtra owner;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserExtra userExtra;
 
     @ManyToMany(mappedBy = "commerces")

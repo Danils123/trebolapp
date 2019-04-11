@@ -1,5 +1,7 @@
 package com.cenfotec.trebol.web.rest;
 import com.cenfotec.trebol.domain.Offer;
+import com.cenfotec.trebol.domain.Commerce;
+import com.cenfotec.trebol.repository.CommerceRepository;
 import com.cenfotec.trebol.repository.OfferRepository;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
 import com.cenfotec.trebol.web.rest.util.HeaderUtil;
@@ -14,6 +16,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * REST controller for managing Offer.
@@ -28,8 +32,11 @@ public class OfferResource {
 
     private final OfferRepository offerRepository;
 
-    public OfferResource(OfferRepository offerRepository) {
+    private final CommerceRepository commerceRepository;
+
+    public OfferResource(OfferRepository offerRepository, CommerceRepository commerceRepository) {
         this.offerRepository = offerRepository;
+        this.commerceRepository = commerceRepository;
     }
 
     /**
@@ -108,5 +115,14 @@ public class OfferResource {
         log.debug("REST request to delete Offer : {}", id);
         offerRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/offersByCommerce/{id}")   
+    public List<Offer> getOffersByCommerce(@PathVariable Long id) {
+        Commerce commerce = this.commerceRepository.findById(id).get();
+        Set<Commerce> commerces = new HashSet<>();
+        commerces.add(commerce);
+        return offerRepository.findByCommerces(commerces);
+        
     }
 }

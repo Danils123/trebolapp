@@ -35,4 +35,9 @@ export class OfferService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    findByCommerce(id: number): Observable<EntityArrayResponseType> {
+        const url = SERVER_API_URL + 'api/offersByCommerce';
+        return this.http.get<IOffer[]>(`${url}/${id}`, { observe: 'response' });
+    }
 }

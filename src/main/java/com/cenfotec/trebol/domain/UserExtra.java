@@ -54,6 +54,7 @@ public class UserExtra implements Serializable {
     @OneToMany(mappedBy = "userExtra", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Commerce> commerces = new HashSet<>();
+    
     @ManyToMany(mappedBy = "buyers")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
