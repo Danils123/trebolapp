@@ -5,14 +5,10 @@
     <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../../../content/images/background/login-register.jpg);">
         <div class="login-box card">
             <div class="card-body">
-                <form class="form-horizontal form-material" name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
+                <form class="form-horizontal form-material" name="form" role="form" (ngSubmit)="register(registerForm); " #registerForm="ngForm">
                     <a href="javascript:void(0)" class="text-center db" routerLink=""><img src="../../../content/images/logo-trebol.png" alt="Home" /><br/>TREBOL</a>
                     <!-- <img src="../../../content/images/logo-text.png" alt="Home" /> -->
                     <!-- Inicio de las alertas -->
-                    <div class="alert alert-success" *ngIf="success">
-                        <strong>Registrado con exito!</strong> Por favor revice su correo.
-                    </div>
-
                     <div class="alert alert-danger" *ngIf="error">
                         <strong>El registro fallo!</strong> Por favor, intente de nuevo.
                     </div>
@@ -42,17 +38,17 @@
                         <input type="text" class="form-control" [(ngModel)]="registerAccount.login" id="login" name="login" #login="ngModel" placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_.@A-Za-z0-9-]*$">
                         <div *ngIf="login.dirty && login.invalid">
                             <small class="form-text text-danger" *ngIf="login.errors.required">
-                                Su nombre de usuario es requerido.
-                            </small>
+                        Su nombre de usuario es requerido.
+                    </small>
                             <small class="form-text text-danger" *ngIf="login.errors.minlength">
-                                Su nombre de usuario tiene que tener al menos 1 carácter.
-                            </small>
+                        Su nombre de usuario tiene que tener al menos 1 carácter.
+                    </small>
                             <small class="form-text text-danger" *ngIf="login.errors.maxlength">
-                                Su nombre de usuario no puede contener mas de 50 caracteres.
-                            </small>
+                        Su nombre de usuario no puede contener mas de 50 caracteres.
+                    </small>
                             <small class="form-text text-danger" *ngIf="login.errors.pattern">
-                                Su nombre de usuario solo puede contener números y letras.
-                            </small>
+                        Su nombre de usuario solo puede contener números y letras.
+                    </small>
                         </div>
                     </div>
                     <div class="form-group">
@@ -60,17 +56,17 @@
                         <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Correo electrónico" [(ngModel)]="registerAccount.email" minlength=5 maxlength=254 email required>
                         <div *ngIf="email.dirty && email.invalid">
                             <small class="form-text text-danger" *ngIf="email.errors.required">
-                                Your email is required.
-                            </small>
+                        Su correo eléctronico es requerido.
+                    </small>
                             <small class="form-text text-danger" *ngIf="email.errors.invalid">
-                                Your email is invalid.
-                            </small>
+                        Su correo no es válido.
+                    </small>
                             <small class="form-text text-danger" *ngIf="email.errors.minlength">
-                                Your email is required to be at least 5 characters.
-                            </small>
+                        Su correo eléctronico es requerido y necesita al menos 5 caracteres.
+                    </small>
                             <small class="form-text text-danger" *ngIf="email.errors.maxlength">
-                                Your email cannot be longer than 100 characters.
-                            </small>
+                            Su correo eléctronico debe tener máximo 100 caractes.
+                    </small>
                         </div>
                     </div>
                     <div class="form-group">
@@ -78,14 +74,14 @@
                         <input type="password" class="form-control" id="password" name="password" #password="ngModel" placeholder="Nueva contraseña" [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
                         <div *ngIf="password.dirty && password.invalid">
                             <small class="form-text text-danger" *ngIf="password.errors.required">
-                                Su contraseña es requerida.
-                            </small>
+                        Su contraseña es requerida.
+                    </small>
                             <small class="form-text text-danger" *ngIf="password.errors.minlength">
-                                Su contraseña requiere almenos 4 caracteres.
-                            </small>
+                        Su contraseña requiere almenos 4 caracteres.
+                    </small>
                             <small class="form-text text-danger" *ngIf="password.errors.maxlength">
-                                Su contraseña requiere máximo 50 caracteres.
-                            </small>
+                        Su contraseña requiere máximo 50 caracteres.
+                    </small>
                         </div>
                         <jhi-password-strength-bar [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
                     </div>
@@ -94,14 +90,14 @@
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Confirme su nueva contraseña " [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
                         <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
                             <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required">
-                                Su contraseña es requerida.
-                            </small>
+                        Su contraseña es requerida.
+                    </small>
                             <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength">
-                                Su contraseña requiere almenos 4 caracteres.
-                            </small>
+                        Su contraseña requiere almenos 4 caracteres.
+                    </small>
                             <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength">
-                                Su contraseña requiere máximo 50 caracteres.
-                            </small>
+                        Su contraseña requiere máximo 50 caracteres.
+                    </small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -129,9 +125,9 @@
                                 <a href="javascript:void(0)" (click)="cambiarRol(0)" class="text-info m-l-5"><b>Ingresa aquí</b></a></p>
                         </div>
                         <!-- <div class="col-sm-12 text-center">
-                            <p>¿Quieres ser mensajero? <br>
-                                <a href="" class="text-info m-l-5"><b>Ingresa aquí</b></a></p>
-                        </div> -->
+                    <p>¿Quieres ser mensajero? <br>
+                        <a href="" class="text-info m-l-5"><b>Ingresa aquí</b></a></p>
+                </div> -->
                     </div>
                 </form>
             </div>

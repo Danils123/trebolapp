@@ -1,5 +1,8 @@
 package com.cenfotec.trebol.web.rest;
+
+import com.cenfotec.trebol.domain.Commerce;
 import com.cenfotec.trebol.domain.UserExtra;
+import com.cenfotec.trebol.repository.CommerceRepository;
 import com.cenfotec.trebol.repository.UserExtraRepository;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
 import com.cenfotec.trebol.web.rest.util.HeaderUtil;
@@ -33,10 +36,12 @@ public class UserExtraResource {
     }
 
     /**
-     * POST  /user-extras : Create a new userExtra.
+     * POST /user-extras : Create a new userExtra.
      *
      * @param userExtra the userExtra to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new userExtra, or with status 400 (Bad Request) if the userExtra has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new
+     *         userExtra, or with status 400 (Bad Request) if the userExtra has
+     *         already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/user-extras")
@@ -47,19 +52,21 @@ public class UserExtraResource {
         }
         UserExtra result = userExtraRepository.save(userExtra);
         return ResponseEntity.created(new URI("/api/user-extras/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
-     * POST  /user-extras : Create a new userExtra.
+     * POST /user-extras : Create a new userExtra.
      *
      * @param userExtra the userExtra to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new userExtra, or with status 400 (Bad Request) if the userExtra has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new
+     *         userExtra, or with status 400 (Bad Request) if the userExtra has
+     *         already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/user-extras-WithoutId")
-    public ResponseEntity<UserExtra> updateUserExtraWithoutId(@RequestBody UserExtra userExtra) throws URISyntaxException {
+    public ResponseEntity<UserExtra> updateUserExtraWithoutId(@RequestBody UserExtra userExtra)
+            throws URISyntaxException {
         log.debug("REST request to update UserExtra : {}", userExtra);
         if (userExtra.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -69,17 +76,17 @@ public class UserExtraResource {
 
         UserExtra result = userExtraRepository.save(userExtra1.get());
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExtra.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExtra.getId().toString())).body(result);
     }
 
     /**
-     * PUT  /user-extras : Updates an existing userExtra.
+     * PUT /user-extras : Updates an existing userExtra.
      *
      * @param userExtra the userExtra to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated userExtra,
-     * or with status 400 (Bad Request) if the userExtra is not valid,
-     * or with status 500 (Internal Server Error) if the userExtra couldn't be updated
+     * @return the ResponseEntity with status 200 (OK) and with body the updated
+     *         userExtra, or with status 400 (Bad Request) if the userExtra is not
+     *         valid, or with status 500 (Internal Server Error) if the userExtra
+     *         couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/user-extras")
@@ -90,14 +97,14 @@ public class UserExtraResource {
         }
         UserExtra result = userExtraRepository.save(userExtra);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExtra.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExtra.getId().toString())).body(result);
     }
 
     /**
-     * GET  /user-extras : get all the userExtras.
+     * GET /user-extras : get all the userExtras.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of userExtras in body
+     * @return the ResponseEntity with status 200 (OK) and the list of userExtras in
+     *         body
      */
     @GetMapping("/user-extras")
     public List<UserExtra> getAllUserExtras() {
@@ -106,22 +113,24 @@ public class UserExtraResource {
     }
 
     /**
-     * GET  /user-extras : get all the userExtras.
+     * GET /user-extras : get all the userExtras.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of userExtras in body
+     * @return the ResponseEntity with status 200 (OK) and the list of userExtras in
+     *         body
      */
     @GetMapping("/user-extras-byUserId/{userId}")
-    public ResponseEntity<UserExtra>  getUserByUserId(@PathVariable Long userId) {
+    public ResponseEntity<UserExtra> getUserByUserId(@PathVariable Long userId) {
         log.debug("REST request to get all UserExtras");
         Optional<UserExtra> userExtra = userExtraRepository.findByUserId(userId);
         return ResponseUtil.wrapOrNotFound(userExtra);
     }
 
     /**
-     * GET  /user-extras/:id : get the "id" userExtra.
+     * GET /user-extras/:id : get the "id" userExtra.
      *
      * @param id the id of the userExtra to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the userExtra, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the userExtra,
+     *         or with status 404 (Not Found)
      */
     @GetMapping("/user-extras/{id}")
     public ResponseEntity<UserExtra> getUserExtra(@PathVariable Long id) {
@@ -138,7 +147,7 @@ public class UserExtraResource {
     }
 
     /**
-     * DELETE  /user-extras/:id : delete the "id" userExtra.
+     * DELETE /user-extras/:id : delete the "id" userExtra.
      *
      * @param id the id of the userExtra to delete
      * @return the ResponseEntity with status 200 (OK)

@@ -11,6 +11,7 @@ import { ProductListDetailComponent } from './product-list-detail.component';
 import { ProductListUpdateComponent } from './product-list-update.component';
 import { ProductListDeletePopupComponent } from './product-list-delete-dialog.component';
 import { IProductList } from 'app/shared/model/product-list.model';
+import { ListPurchaseResolve } from 'app/entities/list-purchase';
 
 @Injectable({ providedIn: 'root' })
 export class ProductListResolve implements Resolve<IProductList> {
@@ -66,11 +67,11 @@ export const productListRoute: Routes = [
         path: ':id/edit',
         component: ProductListUpdateComponent,
         resolve: {
-            productList: ProductListResolve
+            listPurchase: ListPurchaseResolve
         },
         data: {
             authorities: ['ROLE_COMPRADOR'],
-            pageTitle: 'Lista de productos'
+            pageTitle: 'Lista de compras'
         },
         canActivate: [UserRouteAccessService]
     }

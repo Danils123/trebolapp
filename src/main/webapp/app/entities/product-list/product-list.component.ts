@@ -10,6 +10,8 @@ import { ProductListService } from './product-list.service';
 import { Ilistpurchaseall, ListPurchaseAll } from 'app/shared/model/listpurchaseall.model';
 import { ListPurchaseService } from 'app/entities/list-purchase';
 import { IListPurchase, ListPurchase } from 'app/shared/model/list-purchase.model';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { UserExtraService } from 'app/entities/user-extra';
 
 @Component({
     selector: 'jhi-product-list',
@@ -25,18 +27,24 @@ export class ProductListComponent implements OnInit, OnDestroy {
     productListarray: ProductList[];
     listpurchaseall: Ilistpurchaseall;
     listpurchaseallArray: Ilistpurchaseall[];
+    listpurchaseArray: Ilistpurchaseall[];
+    userExtra: IUserExtra;
 
     constructor(
         protected productListService: ProductListService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected accountService: AccountService,
-        protected listPurchaseService: ListPurchaseService
-    ) {}
+        protected listPurchaseService: ListPurchaseService,
+        protected userExtraService: UserExtraService
+    ) {
+        this.userExtra = this.userExtraService.userExtra;
+    }
 
     loadAllPurchase() {
         this.listpurchaseallArray = [];
         this.productListarray = [];
+        this.listpurchaseArray = [];
 
         this.listPurchaseService
             .query()
@@ -56,8 +64,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
                         this.listpurchaseall.listpurchase = purchase;
                         this.listpurchaseallArray.push(this.listpurchaseall);
                     }
-                    console.log('lista de compras');
-                    console.log(this.listpurchaseallArray);
+
+                    for (const item of this.listpurchaseallArray) {
+                        if (item.listpurchase.state === true && item.listpurchase.seller.id === this.userExtra.id) {
+                            this.listpurchaseArray.push(item);
+                        }
+                    }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );

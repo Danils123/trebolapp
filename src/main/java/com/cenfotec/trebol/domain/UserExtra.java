@@ -1,6 +1,5 @@
 package com.cenfotec.trebol.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
@@ -22,7 +21,7 @@ import java.util.Objects;
 public class UserExtra implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -52,8 +51,7 @@ public class UserExtra implements Serializable {
     @Column(name = "userId")
     private Long userId;
 
-
-    @OneToMany(mappedBy = "userExtra")
+    @OneToMany(mappedBy = "userExtra", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Commerce> commerces = new HashSet<>();
     @ManyToMany(mappedBy = "buyers")
@@ -66,7 +64,8 @@ public class UserExtra implements Serializable {
     @JsonIgnore
     private Set<RankingPerOrder> orderSellers = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
+    // remove
     public Long getId() {
         return id;
     }
@@ -248,7 +247,8 @@ public class UserExtra implements Serializable {
     public void setOrderSellers(Set<RankingPerOrder> rankingPerOrders) {
         this.orderSellers = rankingPerOrders;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -272,15 +272,9 @@ public class UserExtra implements Serializable {
 
     @Override
     public String toString() {
-        return "UserExtra{" +
-            "id=" + getId() +
-            ", secondLastName='" + getSecondLastName() + "'" +
-            ", phone='" + getPhone() + "'" +
-            ", cellPhone='" + getCellPhone() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", ranking='" + getRanking() + "'" +
-            ", photograph='" + getPhotograph() + "'" +
-            ", notification='" + getNotification() + "'" +
-            "}";
+        return "UserExtra{" + "id=" + getId() + ", secondLastName='" + getSecondLastName() + "'" + ", phone='"
+                + getPhone() + "'" + ", cellPhone='" + getCellPhone() + "'" + ", address='" + getAddress() + "'"
+                + ", ranking='" + getRanking() + "'" + ", photograph='" + getPhotograph() + "'" + ", notification='"
+                + getNotification() + "'" + "}";
     }
 }

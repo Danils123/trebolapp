@@ -1,43 +1,52 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="productCommerce">
-            <h2><span>Product Commerce</span> {{productCommerce.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Price</span></dt>
-                <dd>
-                    <span>{{productCommerce.price}}</span>
-                </dd>
-                <dt><span>Quantity</span></dt>
-                <dd>
-                    <span>{{productCommerce.quantity}}</span>
-                </dd>
-                <dt><span>Product</span></dt>
-                <dd>
-                    <div *ngIf="productCommerce.product">
-                        <a [routerLink]="['/product', productCommerce.product?.id, 'view']">{{productCommerce.product?.id}}</a>
-                    </div>
-                </dd>
-                <dt><span>Product List</span></dt>
-                <dd>
-                    <span *ngFor="let productList of productCommerce.productLists; let last = last">
-                        <a [routerLink]="['/product-list', productList?.id, 'view' ]">{{productList.id}}</a>{{last ? '' : ', '}}
-                    </span>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/product-commerce', productCommerce.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
-            </button>
+<div class="container-fluid">
+        <div class="card">
+                <div class="card-header">
+                        <h2><span>Inventario</span></h2>
+                </div>
+                <div class="card-body">
+                        <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <div *ngIf="productCommerce">
+                                        <dl class="row-md jh-entity-details">
+                                            <dt><span>Precio</span></dt>
+                                            <dd>
+                                                <span>{{productCommerce.price}}</span>
+                                            </dd>
+                                            <dt><span>Cantidad</span></dt>
+                                            <dd>
+                                                <span>{{productCommerce.quantity}}</span>
+                                            </dd>
+                                            <dt><span>Producto</span></dt>
+                                            <dd>
+                                                <div *ngIf="productCommerce.product">
+                                                    <p [routerLink]="['../product', productCommerce.product?.id, 'view' ] "  *ngFor="let productOption of products; trackBy: trackProductById">{{productOption.name}}</p>
+                                                </div>
+                                            </dd>
+                                            <!-- <dt><span>Product List</span></dt>
+                                            <dd>
+                                                <span *ngFor="let productList of productCommerce.productLists; let last = last">
+                                                    <a [routerLink]="['/product-list', productList?.id, 'view' ]">{{productList.id}}</a>{{last ? '' : ', '}}
+                                                </span>
+                                            </dd> -->
+                                        </dl>
+                            
+                                        <button type="submit"
+                                                (click)="previousState()"
+                                                class="btn btn-info">
+                                            <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                                        </button>
+                            
+                                        <button type="button"
+                                                [routerLink]="['/product-commerce', productCommerce.id, 'edit']"
+                                                class="btn btn-primary">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
         </div>
-    </div>
 </div>
+
+
+

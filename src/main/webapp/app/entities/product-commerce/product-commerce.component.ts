@@ -3,10 +3,13 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import Swal from 'sweetalert2';
+import { ProductService } from 'app/entities/product';
 
 import { IProductCommerce } from 'app/shared/model/product-commerce.model';
 import { AccountService } from 'app/core';
 import { ProductCommerceService } from './product-commerce.service';
+import { IProduct } from 'app/shared/model/product.model';
 
 @Component({
     selector: 'jhi-product-commerce',
@@ -17,10 +20,21 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
     currentAccount: any;
     eventSubscriber: Subscription;
 
+    products: IProduct[];
+
+    private swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success ml-3',
+            cancelButton: 'btn btn-danger ml-3'
+        },
+        buttonsStyling: false
+    });
+
     constructor(
         protected productCommerceService: ProductCommerceService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
+        protected productService: ProductService,
         protected accountService: AccountService
     ) {}
 
@@ -34,6 +48,19 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
             .subscribe(
                 (res: IProductCommerce[]) => {
                     this.productCommerces = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+
+        this.productService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IProduct[]>) => res.ok),
+                map((res: HttpResponse<IProduct[]>) => res.body)
+            )
+            .subscribe(
+                (res: IProduct[]) => {
+                    this.products = res;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -61,5 +88,32 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
 
     protected onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+    deleteItem(id: number) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea eliminar el inventario?',
+                text: 'Si continúa, no podrá revertir el cambio',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, eliminar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmDelete(id);
+                }
+            });
+    }
+
+    confirmDelete(id: number) {
+        this.productCommerceService.delete(id).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'productCommerceListModification',
+                content: 'Deleted a Prdoduct Commerce'
+            });
+            this.swalWithBootstrapButtons.fire('Eliminado!', 'El inventario se ha sido eliminado.', 'success');
+        });
     }
 }

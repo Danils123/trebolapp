@@ -43,6 +43,9 @@ public class Product implements Serializable {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "disabled")
+    private Boolean disabled;
+
     @ManyToOne
     @JsonIgnoreProperties("products")
     private Category category;
@@ -128,6 +131,19 @@ public class Product implements Serializable {
         this.image = image;
     }
 
+    public Boolean isDisabled() {
+        return disabled;
+    }
+
+    public Product disabled(Boolean disabled) {
+        this.disabled = disabled;
+        return this;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -209,6 +225,7 @@ public class Product implements Serializable {
             ", brand='" + getBrand() + "'" +
             ", description='" + getDescription() + "'" +
             ", image='" + getImage() + "'" +
+            ", disabled='" + isDisabled() + "'" +
             "}";
     }
 }

@@ -1,26 +1,40 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="category">
-            <h2><span>Categoría</span> {{category.id}}</h2>
-            <hr>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Nombre</span></dt>
-                <dd>
-                    <span>{{category.name}}</span>
-                </dd>
-                <dt><span>Descripción</span></dt>
-                <dd>
-                    <span>{{category.description}}</span>
-                </dd>
-            </dl>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h2><span>Categoría</span></h2>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div *ngIf="category">
+                        <h2><span>Categoría</span></h2>
+                        <hr>
+                        <dl class="row-md jh-entity-details">
+                            <dt><span>Nombre</span></dt>
+                            <dd>
+                                <span>{{category.name}}</span>
+                            </dd>
+                            <dt><span>Descripción</span></dt>
+                            <dd>
+                                <span>{{category.description}}</span>
+                            </dd>
+                            <dt><span>Estado</span></dt>
+                            <dd>
+                                <span *ngIf="category.disabled === true">Deshabilitada</span>
+                                <span *ngIf="category.disabled === false">Habilitada</span>
+                            </dd>
+                        </dl>
 
-            <button type="submit" (click)="previousState()" class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
-            </button>
+                        <button type="submit" (click)="previousState()" class="btn btn-info">
+                            <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                        </button>
 
-            <button type="button" [routerLink]="['/category', category.id, 'edit']" class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
-            </button>
+                        <button type="button" [routerLink]="['/category', category.id, 'edit']" class="btn btn-primary">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -11,17 +11,38 @@ import {
     listScheduleRoute,
     listSchedulePopupRoute
 } from './';
+import { CalendarModule, CalendarWeekModule, DateAdapter } from 'angular-calendar';
+import { CalendarComponent } from './calendar/calendar.component';
+import { CommonModule } from '@angular/common';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 const ENTITY_STATES = [...listScheduleRoute, ...listSchedulePopupRoute];
 
 @NgModule({
-    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [
+        TrebolSharedModule,
+        RouterModule.forChild(ENTITY_STATES),
+        CalendarWeekModule,
+        CommonModule,
+        FormsModule,
+        NgbModalModule,
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory
+        })
+    ],
+
     declarations: [
         ListScheduleComponent,
         ListScheduleDetailComponent,
         ListScheduleUpdateComponent,
         ListScheduleDeleteDialogComponent,
-        ListScheduleDeletePopupComponent
+        ListScheduleDeletePopupComponent,
+        CalendarComponent
     ],
     entryComponents: [
         ListScheduleComponent,

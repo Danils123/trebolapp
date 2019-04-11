@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h2><span>Product</span> {{product.id}}</h2>
+            <h2><span>Product</span></h2>
         </div>
         <div class="card-body">
 
@@ -43,6 +43,11 @@
                                 <div *ngIf="product.subCategory">
                                     <a [routerLink]="['/sub-category', product.subCategory?.id, 'view']">{{product.subCategory?.name}}</a>
                                 </div>
+                            </dd>
+                            <dt><span>Estado</span></dt>
+                            <dd>
+                                <span *ngIf="product.disabled === true">Deshabilitado</span>
+                                <span *ngIf="product.disabled === false">Habilitado</span>
                             </dd>
                         </dl>
 

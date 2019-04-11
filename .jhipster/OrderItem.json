@@ -1,5 +1,31 @@
 {
-    "name": "OrderItem",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "productsPerOrder",
+            "otherEntityRelationshipName": "orderItem",
+            "relationshipName": "productsPerOrder",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "userExtra",
+            "otherEntityRelationshipName": "orderItem",
+            "relationshipName": "seller",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "commerce",
+            "otherEntityName": "commerce",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id",
+            "otherEntityRelationshipNameUndefined": false,
+            "otherEntityRelationshipName": "orderItem"
+        }
+    ],
     "fields": [
         {
             "fieldName": "description",
@@ -10,52 +36,16 @@
             "fieldType": "Instant"
         },
         {
-            "fieldName": "total",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "discount",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "points",
+            "fieldName": "state",
             "fieldType": "Integer"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "productsPerOrder",
-            "otherEntityRelationshipName": "orderItem",
-            "relationshipName": "productsPerOrder"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "userExtra",
-            "otherEntityRelationshipName": "orderItem",
-            "relationshipName": "seller",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "commerce",
-            "otherEntityName": "commerce",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "offer",
-            "otherEntityName": "offer",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        }
-    ],
     "changelogDate": "20190312191714",
-    "entityTableName": "order_item",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "no",
+    "entityTableName": "order_item",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

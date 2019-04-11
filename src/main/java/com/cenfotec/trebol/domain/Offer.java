@@ -1,15 +1,13 @@
 package com.cenfotec.trebol.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -36,9 +34,12 @@ public class Offer implements Serializable {
     @Column(name = "jhi_type")
     private Integer type;
 
-    @OneToMany(mappedBy = "offer")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<OrderItem> orderItems = new HashSet<>();
+    @Column(name = "expiration_date")
+    private ZonedDateTime expirationDate;
+
+    @Column(name = "disabled")
+    private Boolean disabled;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -87,29 +88,30 @@ public class Offer implements Serializable {
         this.type = type;
     }
 
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
+    public ZonedDateTime getExpirationDate() {
+        return expirationDate;
     }
 
-    public Offer orderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public Offer expirationDate(ZonedDateTime expirationDate) {
+        this.expirationDate = expirationDate;
         return this;
     }
 
-    public Offer addOrderItem(OrderItem orderItem) {
-        this.orderItems.add(orderItem);
-        orderItem.setOffer(this);
+    public void setExpirationDate(ZonedDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Boolean isDisabled() {
+        return disabled;
+    }
+
+    public Offer disabled(Boolean disabled) {
+        this.disabled = disabled;
         return this;
     }
 
-    public Offer removeOrderItem(OrderItem orderItem) {
-        this.orderItems.remove(orderItem);
-        orderItem.setOffer(null);
-        return this;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -140,6 +142,8 @@ public class Offer implements Serializable {
             ", discount=" + getDiscount() +
             ", description='" + getDescription() + "'" +
             ", type=" + getType() +
+            ", expirationDate='" + getExpirationDate() + "'" +
+            ", disabled='" + isDisabled() + "'" +
             "}";
     }
 }

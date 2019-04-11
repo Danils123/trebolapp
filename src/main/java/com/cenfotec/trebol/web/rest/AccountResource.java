@@ -1,6 +1,7 @@
 package com.cenfotec.trebol.web.rest;
 
 import com.cenfotec.trebol.domain.PersistentToken;
+import com.cenfotec.trebol.repository.CommerceRepository;
 import com.cenfotec.trebol.repository.PersistentTokenRepository;
 import com.cenfotec.trebol.domain.User;
 import com.cenfotec.trebol.domain.UserExtra;
@@ -14,6 +15,7 @@ import com.cenfotec.trebol.service.dto.UserDTO;
 import com.cenfotec.trebol.web.rest.errors.*;
 import com.cenfotec.trebol.web.rest.vm.KeyAndPasswordVM;
 import com.cenfotec.trebol.web.rest.vm.ManagedUserVM;
+import com.cenfotec.trebol.domain.Commerce;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -46,14 +48,19 @@ public class AccountResource {
 
     private final PersistentTokenRepository persistentTokenRepository;
 
+    private final CommerceRepository commerceRepository;
+
     public AccountResource(UserRepository userRepository, UserService userService, MailService mailService,
-            UserExtraRepository userExtraRepository, PersistentTokenRepository persistentTokenRepository) {
+            UserExtraRepository userExtraRepository, PersistentTokenRepository persistentTokenRepository,
+            CommerceRepository commerceRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.userExtraRepository = userExtraRepository;
         this.persistentTokenRepository = persistentTokenRepository;
+        // this.commerceRepository = commerceRepository;
+        this.commerceRepository = commerceRepository;
     }
 
     /**
@@ -75,9 +82,19 @@ public class AccountResource {
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword(), managedUserVM.getRolNumber());
         UserExtra userExtra = new UserExtra();
+        Commerce commerce = new Commerce();
+
         userExtra.setUserId(user.getId());
-        userExtraRepository.save(userExtra);
+        userExtra = userExtraRepository.save(userExtra);
+
+        commerce.setUserExtra(userExtra);
+        commerce.owner(userExtra);
+        commerce = commerceRepository.save(commerce);
+        userExtra.addCommerces(commerce);
+
         mailService.sendActivationEmail(user);
+
+        userExtra = userExtraRepository.save(userExtra);
     }
 
     /**

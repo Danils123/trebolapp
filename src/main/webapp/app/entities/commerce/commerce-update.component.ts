@@ -12,6 +12,8 @@ import { IOffer } from 'app/shared/model/offer.model';
 import { OfferService } from 'app/entities/offer';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
+import { AccountService } from 'app/core';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-commerce-update',
@@ -20,6 +22,7 @@ import { UserExtraService } from 'app/entities/user-extra';
 export class CommerceUpdateComponent implements OnInit {
     commerce: ICommerce;
     isSaving: boolean;
+    owner: IUserExtra;
 
     productcommerces: IProductCommerce[];
 
@@ -33,13 +36,15 @@ export class CommerceUpdateComponent implements OnInit {
         protected productCommerceService: ProductCommerceService,
         protected offerService: OfferService,
         protected userExtraService: UserExtraService,
-        protected activatedRoute: ActivatedRoute
+        protected activatedRoute: ActivatedRoute,
+        private accountService: AccountService
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ commerce }) => {
             this.commerce = commerce;
+            this.commerce.email = this.accountService.user.email;
         });
         this.productCommerceService
             .query()
@@ -73,6 +78,7 @@ export class CommerceUpdateComponent implements OnInit {
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+
         this.userExtraService
             .query()
             .pipe(
@@ -80,14 +86,21 @@ export class CommerceUpdateComponent implements OnInit {
                 map((response: HttpResponse<IUserExtra[]>) => response.body)
             )
             .subscribe((res: IUserExtra[]) => (this.userextras = res), (res: HttpErrorResponse) => this.onError(res.message));
+
+        this.accountService.getUserExtraAndUser();
     }
 
     previousState() {
         window.history.back();
     }
 
+    isVendedor() {
+        return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_VENDEDOR']));
+    }
+
     save() {
         this.isSaving = true;
+
         if (this.commerce.id !== undefined) {
             this.subscribeToSaveResponse(this.commerceService.update(this.commerce));
         } else {
@@ -101,6 +114,17 @@ export class CommerceUpdateComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Commercio guardado satisfactoriamente'
+        });
         this.previousState();
     }
 

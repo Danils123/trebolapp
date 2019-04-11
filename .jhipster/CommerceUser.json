@@ -1,0 +1,23 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "idCommerce",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "idUser",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20190406040723",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "commerce_user",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

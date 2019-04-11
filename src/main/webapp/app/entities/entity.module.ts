@@ -79,6 +79,14 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'authority',
                 loadChildren: './authority/authority.module#TrebolAuthorityModule'
+            },
+            {
+                path: 'order-item',
+                loadChildren: './order-item/order-item.module#TrebolOrderItemModule'
+            },
+            {
+                path: 'commerce-user',
+                loadChildren: './commerce-user/commerce-user.module#TrebolCommerceUserModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

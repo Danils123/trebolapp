@@ -11,7 +11,8 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="firstName">Primer nombre</label>
-                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
+                                    <input type="text" class="form-control" pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" id="firstName" name="firstName" placeholder="Primer Nombre" [(ngModel)]="settingsAccount.firstName"
+                                        minlength=1 maxlength=50 #firstNameInput="ngModel" required>
                                     <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.required">
                                                                         El primer nombre es requerido.
@@ -31,7 +32,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="lastName">Primer apellido</label>
-                                    <input type="text" class="form-control" pattern="^[A-Za-z]+$" id="lastName" name="lastName" placeholder="Primer Apellido" [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
+                                    <input type="text" class="form-control" pattern="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$" id="lastName" name="lastName" placeholder="Primer Apellido" [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
                                     <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
                                         <small class="form-text text-danger" *ngIf="lastNameInput.errors?.required">
                                                                     El primer apellido es requerido.
@@ -54,7 +55,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_secondLastName">Segundo Apellido</label>
-                                    <input type="text" class="form-control" name="secondLastName" pattern="^[A-Za-z]+$" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
+                                    <input type="text" class="form-control" name="secondLastName" pattern="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s+$" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
                                     <small class="text-muted">Solo se admiten caracteres</small>
                                     <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.minlength">
                                                                 El segundo apellido requiere al menos 1 cáracter.
@@ -149,8 +150,8 @@
                             <label class="form-control-label" for="email">Ranking</label>
                             <div class="row">
                                 <div class="col">
-                                    <fa-icon [icon]="'user'" *ngFor="let item of this.ranking"></fa-icon>
-
+                                    <fa-icon [icon]="'user'" class="m-r-5" *ngFor="let item of this.ranking"></fa-icon>
+                                    <fa-icon [icon]="'minus'" class="m-r-5" *ngFor="let item of this.withoutRanking"></fa-icon>
                                 </div>
                             </div>
                         </div>

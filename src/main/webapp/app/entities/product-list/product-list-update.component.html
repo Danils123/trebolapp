@@ -1,29 +1,93 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-product-list-heading">Create or edit a Product List</h2>
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!productList.id">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="productList.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_state">State</label>
-                    <input type="checkbox" class="form-control" name="state" id="field_state"
-                        [(ngModel)]="productList.state" />
-                </div>
+<div class="container-fluid justify-content-center">
+    <br>
+    <h2 id="page-heading">
+        <span>Nueva listas de compras</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product-list" (click)='previousState()'>
+            <fa-icon [icon]="'times'"></fa-icon>
+            <span >
+            Cancelar
+            </span>
+        </button>
+    </h2>
+    <br>
+<div class="col-md-8">
+    <div class="card">
+        <div class="card-header">
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Nombre de la lista" [(ngModel)]="listPurchase.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="Descr" id="Descr" placeholder="Descripción (Opcional)" [(ngModel)]="listPurchase.description">
+            </div>
 
+            <a data-toggle="tooltip" title="Eliminar" (click)='previousState()'>
+                <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
+            </a>
+            <a data-toggle="tooltip" title="Guardar" (click)='save()'>
+                <fa-icon [icon]="'save'" class="col-md-1 float-right icons font-2xl "></fa-icon>
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" >
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Nombre</span></th>
+                        <th style="min-width:7vh; max-width: 7vh"><span>Marca</span></th>
+                        <th style="min-width:2vh; max-width: 2vh"><span>Cantidad</span></th>
+                        <th style="min-width:2vh; max-width: 2vh">
+                            <div class="btn-group flex-btn-group-container">
+                                <a data-toggle="tooltip" title="Agregar producto" (click)="addProduct()">
+                                    <fa-icon [icon]="'plus'"></fa-icon>
+                                </a>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr *ngFor="let product of productArray">
+                        <td style="min-width:7vh; max-width: 7vh">
+                            <ng-select [items]= 'allProducts'
+                                       [searchable]="true"
+                                       bindLabel="name"
+                                       bindValue="name"
+                                       id="nameProductUpdate"
+                                       [(ngModel)]="product.name"
+                                       #nameProdUpdate="ngModel"
+                                       [ngClass]="{'is-invalid': nameProdUpdate.errors?.required && nameProdUpdate.touched}" required
+                                       notFoundText="Producto no encontrado">
+                            </ng-select>
+                        </td>
+                        <td style="min-width:7vh; max-width: 7vh">
+                            <ng-select [items]= 'allProducts'
+                                       [searchable]="true"
+                                       bindLabel="brand"
+                                       bindValue="brand"
+                                       id="brandUpdate"
+                                       [(ngModel)]="product.brand"
+                                       #brandProdUpdate="ngModel"
+                                       [ngClass]="{'is-invalid': brandProdUpdate.errors?.required && brandProdUpdate.touched}" required
+                                       notFoundText="Marca no encontrada">
+                            </ng-select>
+                        </td>
+                        <td align="center" style="min-width:2vh; max-width: 2vh"><input type="number" class="form-control" name="quantityUpdate" id="quantityUpdate" value="{{product.quantity}}" [(ngModel)]="product.quantity" #quantityProdUpdate="ngModel" [ngClass]="{'is-invalid': quantityProdUpdate.errors?.required && quantityProdUpdate.touched}" required></td>
+                        <td class="text-right" style="min-width:2vh; max-width: 2vh">
+                            <div class="btn-group flex-btn-group-container">
+                                <a class="col-md-4" (click)='deleteProduct(product)'
+                                   replaceUrl="true"
+                                   queryParamsHandling="merge">
+                                    <fa-icon [icon]="'times'"></fa-icon>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
+
+</div>
+
 </div>

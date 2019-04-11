@@ -1,7 +1,6 @@
 package com.cenfotec.trebol.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -38,9 +37,6 @@ public class ProductCommerce implements Serializable {
     @JsonIgnoreProperties("productCommerces")
     private Product product;
 
-    @OneToMany(mappedBy = "productCommerce")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Commerce> commerce = new HashSet<>();
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "product_commerce_product_list",
@@ -94,31 +90,6 @@ public class ProductCommerce implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Set<Commerce> getCommerce() {
-        return commerce;
-    }
-
-    public ProductCommerce commerce(Set<Commerce> commerce) {
-        this.commerce = commerce;
-        return this;
-    }
-
-    public ProductCommerce addCommerce(Commerce commerce) {
-        this.commerce.add(commerce);
-        commerce.setProductCommerce(this);
-        return this;
-    }
-
-    public ProductCommerce removeCommerce(Commerce commerce) {
-        this.commerce.remove(commerce);
-        commerce.setProductCommerce(null);
-        return this;
-    }
-
-    public void setCommerce(Set<Commerce> commerce) {
-        this.commerce = commerce;
     }
 
     public Set<ProductList> getProductLists() {

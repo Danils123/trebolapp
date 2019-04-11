@@ -73,30 +73,57 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    deleteItem(id: number) {
+    deleteItem(category: ICategory) {
         this.swalWithBootstrapButtons
             .fire({
-                title: 'Está seguro que desea eliminar la categoría?',
-                text: 'Si continúa, no podrá revertir el cambio',
+                title: 'Está seguro que desea deshabilitar la categoría?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Si, eliminar!',
+                confirmButtonText: 'Si, deshabilitar!',
                 cancelButtonText: 'No, cancelar!',
                 reverseButtons: true
             })
             .then(result => {
                 if (result.value) {
-                    this.confirmDelete(id);
+                    this.confirmDelete(category);
                 }
             });
     }
-    confirmDelete(id: number) {
-        this.categoryService.delete(id).subscribe(response => {
+    confirmDelete(category: ICategory) {
+        category.disabled = true;
+        this.categoryService.update(category).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'categoryListModification',
                 content: 'Deleted an category'
             });
-            this.swalWithBootstrapButtons.fire('Eliminada!', 'La categoría ha sido eliminada.', 'success');
+            this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La categoría ha sido deshabilitada.', 'success');
+        });
+    }
+
+    enableItem(category: ICategory) {
+        this.swalWithBootstrapButtons
+            .fire({
+                title: 'Está seguro que desea habilitar la categoría?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, habilitar!',
+                cancelButtonText: 'No, cancelar!',
+                reverseButtons: true
+            })
+            .then(result => {
+                if (result.value) {
+                    this.confirmEnable(category);
+                }
+            });
+    }
+    confirmEnable(category: ICategory) {
+        category.disabled = false;
+        this.categoryService.update(category).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'categoryListModification',
+                content: 'Deleted an offer'
+            });
+            this.swalWithBootstrapButtons.fire('Habilitada!', 'La categoría ha sido habilitada.', 'success');
         });
     }
 
