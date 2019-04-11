@@ -7,6 +7,7 @@ import { Account } from 'app/core/user/account.model';
 import { JhiTrackerService } from '../tracker/tracker.service';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { CommerceService } from 'app/entities/commerce';
+import { JhiEventManager } from 'ng-jhipster';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -16,7 +17,7 @@ export class AccountService {
     public userExtra: IUserExtra;
     public user: Account;
 
-    constructor(private http: HttpClient, private trackerService: JhiTrackerService) {}
+    constructor(private http: HttpClient, private trackerService: JhiTrackerService, protected eventManager: JhiEventManager) {}
 
     fetch(): Observable<HttpResponse<any>> {
         return this.http.get<any>(SERVER_API_URL + 'api/account', { observe: 'response' });
@@ -116,6 +117,10 @@ export class AccountService {
                     //     this.userExtra.commerces =  commerces.body;
                     //     console.log(this.userExtra);
                     // });
+                    this.eventManager.broadcast({
+                        name: 'newOffer',
+                        content: 'Sending New Offer Broadcast'
+                    });
                     console.log([this.user, this.userExtra]);
                 });
             }
