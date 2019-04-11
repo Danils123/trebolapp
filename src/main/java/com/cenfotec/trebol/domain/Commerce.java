@@ -1,8 +1,9 @@
 package com.cenfotec.trebol.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,7 +23,7 @@ import java.util.Objects;
 public class Commerce implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -72,14 +73,15 @@ public class Commerce implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ScheduleCommerce> scheduleCommerces = new HashSet<>();
     @ManyToOne
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserExtra owner;
 
     @ManyToOne
     @JsonIgnore
     private UserExtra userExtra;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
+    // remove
     public Long getId() {
         return id;
     }
@@ -331,7 +333,8 @@ public class Commerce implements Serializable {
     public void setUserExtra(UserExtra userExtra) {
         this.userExtra = userExtra;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -355,18 +358,9 @@ public class Commerce implements Serializable {
 
     @Override
     public String toString() {
-        return "Commerce{" +
-            "id=" + getId() +
-            ", identification=" + getIdentification() +
-            ", name='" + getName() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitud=" + getLongitud() +
-            ", email='" + getEmail() + "'" +
-            ", ranking=" + getRanking() +
-            ", photograph='" + getPhotograph() + "'" +
-            ", state='" + isState() + "'" +
-            ", phone='" + getPhone() + "'" +
-            "}";
+        return "Commerce{" + "id=" + getId() + ", identification=" + getIdentification() + ", name='" + getName() + "'"
+                + ", address='" + getAddress() + "'" + ", latitude=" + getLatitude() + ", longitud=" + getLongitud()
+                + ", email='" + getEmail() + "'" + ", ranking=" + getRanking() + ", photograph='" + getPhotograph()
+                + "'" + ", state='" + isState() + "'" + ", phone='" + getPhone() + "'" + "}";
     }
 }

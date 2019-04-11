@@ -57,9 +57,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
-
-        this.registerChangeInOffers();
-        this.loadOrders();
+        if (this.accountService.user !== null && this.accountService.user.authorities.filter(item => item === 'COMPRADOR').length > 0) {
+            this.registerChangeInOffers();
+        }
+        if (this.accountService.user !== null && this.accountService.user.authorities.filter(item => item === 'VENDEDOR').length > 0) {
+            this.loadOrders();
+        }
     }
 
     loadOrders() {
