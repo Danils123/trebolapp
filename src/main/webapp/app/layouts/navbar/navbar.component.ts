@@ -59,36 +59,43 @@ export class NavbarComponent implements OnInit, OnDestroy {
         });
 
         this.registerChangeInOffers();
+        this.loadOrders();
     }
 
     loadOrders() {
-        this.orderItemService
-            .findByCommerce(this.accountService.userExtra.commerces[0].id)
-            .pipe(
-                filter((res: HttpResponse<IOrderItem[]>) => res.ok),
-                map((res: HttpResponse<IOrderItem[]>) => res.body)
-            )
-            .subscribe((res: IOrderItem[]) => {
-                this.totalOrders = res.filter(item => item.state !== 2).length;
-                this.orderCounter.subscribe();
-                this.orderCounter.receive().subscribe(order => {
-                    this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
-                        if (commerce.body[0].id === order.commerce.id) {
-                            this.totalOrders++;
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000
+        this.accountService.fetch().subscribe(data => {
+            this.userExtraService.findByUserId(data.body.id).subscribe(userExtra => {
+                this.commerceService.queryByCommerce(userExtra.body.id).subscribe(comerces => {
+                    this.orderItemService
+                        .findByCommerce(comerces.body[0].id)
+                        .pipe(
+                            filter((res: HttpResponse<IOrderItem[]>) => res.ok),
+                            map((res: HttpResponse<IOrderItem[]>) => res.body)
+                        )
+                        .subscribe((res: IOrderItem[]) => {
+                            this.totalOrders = res.filter(item => item.state !== 2).length;
+                            this.orderCounter.subscribe();
+                            this.orderCounter.receive().subscribe(order => {
+                                this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
+                                    if (commerce.body[0].id === order.commerce.id) {
+                                        this.totalOrders++;
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        });
+                                        Toast.fire({
+                                            type: 'warning',
+                                            title: `La order #${order.id} acaba de llegar`
+                                        });
+                                    }
+                                });
                             });
-                            Toast.fire({
-                                type: 'warning',
-                                title: `La order #${order.id} acaba de llegar`
-                            });
-                        }
-                    });
+                        });
                 });
             });
+        });
     }
 
     isAuthenticated() {
