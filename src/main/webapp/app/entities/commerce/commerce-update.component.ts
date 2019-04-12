@@ -9,7 +9,7 @@ import { CommerceService } from './commerce.service';
 import { IProductCommerce } from 'app/shared/model/product-commerce.model';
 import { ProductCommerceService } from 'app/entities/product-commerce';
 import { IOffer } from 'app/shared/model/offer.model';
-import { OfferService } from 'app/entities/offer';
+import { OfferService } from 'app/entities/offer/offer.service';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
 import { AccountService } from 'app/core';
@@ -53,31 +53,6 @@ export class CommerceUpdateComponent implements OnInit {
                 map((response: HttpResponse<IProductCommerce[]>) => response.body)
             )
             .subscribe((res: IProductCommerce[]) => (this.productcommerces = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.offerService
-            .query({ filter: 'commerce-is-null' })
-            .pipe(
-                filter((mayBeOk: HttpResponse<IOffer[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IOffer[]>) => response.body)
-            )
-            .subscribe(
-                (res: IOffer[]) => {
-                    if (!this.commerce.offers || !this.commerce.offers[0].id) {
-                        this.offers = res;
-                    } else {
-                        this.offerService
-                            .find(this.commerce.offers[0].id)
-                            .pipe(
-                                filter((subResMayBeOk: HttpResponse<IOffer>) => subResMayBeOk.ok),
-                                map((subResponse: HttpResponse<IOffer>) => subResponse.body)
-                            )
-                            .subscribe(
-                                (subRes: IOffer) => (this.offers = [subRes].concat(res)),
-                                (subRes: HttpErrorResponse) => this.onError(subRes.message)
-                            );
-                    }
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
 
         this.userExtraService
             .query()
@@ -86,7 +61,7 @@ export class CommerceUpdateComponent implements OnInit {
                 map((response: HttpResponse<IUserExtra[]>) => response.body)
             )
             .subscribe((res: IUserExtra[]) => (this.userextras = res), (res: HttpErrorResponse) => this.onError(res.message));
-
+        this.owner = this.accountService.userExtra;
         this.accountService.getUserExtraAndUser();
     }
 
@@ -100,7 +75,9 @@ export class CommerceUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-
+        this.commerce.owner = this.owner;
+        this.commerce.userExtra = this.owner;
+        console.log(this.commerce.userExtra);
         if (this.commerce.id !== undefined) {
             this.subscribeToSaveResponse(this.commerceService.update(this.commerce));
         } else {

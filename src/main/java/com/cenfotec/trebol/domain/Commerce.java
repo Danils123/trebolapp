@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Commerce implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -78,6 +78,7 @@ public class Commerce implements Serializable {
 
     @ManyToMany(mappedBy = "commerces")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<Offer> offers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -319,7 +320,6 @@ public class Commerce implements Serializable {
     public void setUserExtra(UserExtra userExtra) {
         this.userExtra = userExtra;
     }
-<<<<<<< HEAD
 
     public Set<Offer> getOffers() {
         return offers;
@@ -346,10 +346,6 @@ public class Commerce implements Serializable {
         this.offers = offers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
-=======
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
-    // setters here, do not remove
->>>>>>> b7389b9b66cecc5d94a88b17ef881dbdd1e0d370
 
     @Override
     public boolean equals(Object o) {
@@ -373,9 +369,18 @@ public class Commerce implements Serializable {
 
     @Override
     public String toString() {
-        return "Commerce{" + "id=" + getId() + ", identification=" + getIdentification() + ", name='" + getName() + "'"
-                + ", address='" + getAddress() + "'" + ", latitude=" + getLatitude() + ", longitud=" + getLongitud()
-                + ", email='" + getEmail() + "'" + ", ranking=" + getRanking() + ", photograph='" + getPhotograph()
-                + "'" + ", state='" + isState() + "'" + ", phone='" + getPhone() + "'" + "}";
+        return "Commerce{" +
+            "id=" + getId() +
+            ", identification=" + getIdentification() +
+            ", name='" + getName() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", latitude=" + getLatitude() +
+            ", longitud=" + getLongitud() +
+            ", email='" + getEmail() + "'" +
+            ", ranking=" + getRanking() +
+            ", photograph='" + getPhotograph() + "'" +
+            ", state='" + isState() + "'" +
+            ", phone='" + getPhone() + "'" +
+            "}";
     }
 }
