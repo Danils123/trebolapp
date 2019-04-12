@@ -76,16 +76,11 @@ public class Commerce implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserExtra userExtra;
 
-<<<<<<< HEAD
     @ManyToMany(mappedBy = "commerces")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Offer> offers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-=======
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
-    // remove
->>>>>>> b7389b9b66cecc5d94a88b17ef881dbdd1e0d370
     public Long getId() {
         return id;
     }
