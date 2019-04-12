@@ -48,31 +48,20 @@ export class OfferUpdateComponent implements OnInit {
             this.offer.type = 1;
 
             if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
-                // this.offer.expirationDate = new Date();
+                this.offer.expirationDate = new Date();
             }
         });
     }
 
     previousState() {
         window.history.back();
-        /*
-       this.commerceUserService
-       .findUsersByCommerce(77)
-       .pipe(
-           filter((res: HttpResponse<IUserExtra[]>) => res.ok),
-           map((res: HttpResponse<IUserExtra[]>) => res.body)
-       )
-       .subscribe(
-           (res: IUserExtra[]) => {
-               console.log(res);
-           }
-       );
-
-       */
     }
 
     save() {
         this.isSaving = true;
+        this.offer.commerces = [];
+        this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
+
         if (this.offer.id !== undefined) {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
@@ -84,28 +73,53 @@ export class OfferUpdateComponent implements OnInit {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
     }
 
-    protected onSaveSuccess(res: HttpResponse<IOffer>) {
-        const commercesSave = this.accountService.userExtra.commerces[0];
-        const userExtraSave = this.accountService.userExtra;
-        commercesSave.offer = res.body;
-        this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
-            userExtraSave.commerces[0] = res.body;
-            this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
-                this.userExtraService.refreshUser();
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
+    protected onSaveSuccess(response: HttpResponse<IOffer>) {
+        /*
+        POR AHORA SE QUEDA COMENTADO PARA ASEGURARSE QUE TODO FUNCIONE SIN PROBLEMAS SIN MODIFICAR EL USUARIO EXTRA COMO TAL
+        this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
+            
+            const commercesSave = res.body.commerces[0];
 
-                Toast.fire({
-                    type: 'success',
-                    title: 'Oferta agregada satisfactoriamente'
+            const userExtraSave = res.body;
+            if (commercesSave.offers == null) {
+                commercesSave.offers = [];
+                commercesSave.offers.push(response.body);
+            } else {
+                commercesSave.offers.push(response.body);
+            }
+            commercesSave.userExtra = res.body;
+            this.commerceService.update(commercesSave).subscribe((res: HttpResponse<ICommerce>) => {
+                userExtraSave.commerces[0] = res.body;
+                this.userExtraService.update(userExtraSave).subscribe((res: HttpResponse<IUserExtra>) => {
+                    this.userExtraService.refreshUser();
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Oferta agregada satisfactoriamente'
+                    });
+                    this.previousState();
                 });
-                this.previousState();
             });
         });
+        */
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        Toast.fire({
+            type: 'success',
+            title: 'Oferta agregada satisfactoriamente'
+        });
+        this.previousState();
     }
 
     protected onSaveError() {

@@ -1,10 +1,10 @@
 package com.cenfotec.trebol.repository;
 
+import java.util.List;
+
 import com.cenfotec.trebol.domain.Commerce;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 /**
@@ -13,7 +13,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface CommerceRepository extends JpaRepository<Commerce, Long> {
-    List<Commerce> findByUserExtraId(Long userId);
 
+    List<Commerce> findByUserExtraId(Long userId);
     List<Commerce> findByOwnerId(Long userId);
 }

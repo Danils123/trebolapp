@@ -45,6 +45,17 @@
         </createTable>
         <dropDefaultValue tableName="offer" columnName="expiration_date" columnDataType="datetime"/>
         
+        <createTable tableName="offer_commerces">
+            <column name="commerces_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="offer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="offer_id, commerces_id" tableName="offer_commerces"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

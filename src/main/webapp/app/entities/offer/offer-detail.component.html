@@ -23,6 +23,12 @@
                             <dd>
                                 <span>{{offer.expirationDate|date: "dd MM yyyy"}}</span>
                             </dd>
+
+                            <dt><span>Estado</span></dt>
+                            <dd>
+                                <span *ngIf="offer.disabled === true"> Deshabilitada</span>
+                                <span *ngIf="offer.disabled === false"> Habilitada</span>
+                            </dd>
                         </dl>
 
                         <button type="submit" (click)="previousState()" class="btn btn-info">

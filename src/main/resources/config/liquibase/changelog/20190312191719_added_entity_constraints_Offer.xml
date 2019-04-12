@@ -9,13 +9,13 @@
     <changeSet id="20190312191719-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="offer_id"
-                                 baseTableName="offer_commerce"
-                                 constraintName="fk_offer_commerce_offer_id"
+                                 baseTableName="offer_commerces"
+                                 constraintName="fk_offer_commerces_offer_id"
                                  referencedColumnNames="id"
                                  referencedTableName="offer"/>
-        <addForeignKeyConstraint baseColumnNames="commerce_id"
-                                 baseTableName="offer_commerce"
-                                 constraintName="fk_offer_commerce_commerce_id"
+        <addForeignKeyConstraint baseColumnNames="commerces_id"
+                                 baseTableName="offer_commerces"
+                                 constraintName="fk_offer_commerces_commerces_id"
                                  referencedColumnNames="id"
                                  referencedTableName="commerce"/>
         
