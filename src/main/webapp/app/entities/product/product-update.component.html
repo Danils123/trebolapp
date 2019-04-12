@@ -100,7 +100,7 @@
                             <label class="form-control-label" for="field_subCategory">Subcategoría</label>
                             <select class="form-control" id="field_subCategory" name="subCategory" [(ngModel)]="product.subCategory" #subCategory="ngModel" [ngClass]="{'is-invalid': subCategory.errors?.required && subCategory.touched}" required>
                                             <option [ngValue]="null"></option>
-                                            <option [ngValue]="subCategoryOption.id === product.subCategory?.id ? product.subCategory : subCategoryOption" *ngFor="let subCategoryOption of subcategories; trackBy: trackSubCategoryById">{{productOption.name}}</option>
+                                            <option [ngValue]="subCategoryOption.id === product.subCategory?.id ? product.subCategory : subCategoryOption" *ngFor="let subCategoryOption of subcategories; trackBy: trackSubCategoryById">{{subCategoryOption.name}}</option>
                                         </select>
                             <div *ngIf="subCategory.errors?.required && subCategory.touched" class="text-danger">
                                 Este campo es requerido

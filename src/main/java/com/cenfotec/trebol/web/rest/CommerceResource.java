@@ -108,4 +108,10 @@ public class CommerceResource {
         commerceRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/commerce-byUserId/{id}")
+   public List<Commerce> getByUserId(@PathVariable Long id) {
+       log.debug("REST request to get all Commerce");
+       return commerceRepository.findByOwnerId(id);
+   }
 }

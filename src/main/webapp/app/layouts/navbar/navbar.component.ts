@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     modalRef: NgbModalRef;
     version: string;
     offers: IOffer[] = [];
+    offersClicked = false;
     informationArray: Information[] = [];
     eventSubscriber: Subscription;
 
@@ -128,21 +129,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
                     map((res2: HttpResponse<ICommerce[]>) => res2.body)
                 )
                 .subscribe((res2: ICommerce[]) => {
+                    console.log(res2);
                     let informationObject: Information = new Information();
-                    res2.forEach(commerce => {
-                        this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
-                            offers = response.body;
-                            offers.forEach(offer => {
-                                this.offers.push(offer);
-                                informationObject = new Information();
-                                informationObject.commerceName = commerce.name;
-                                informationObject.offerDescription = offer.description;
-                                informationObject.commerceId = commerce.id;
-                                informationObject.expirationDate = offer.expirationDate;
-                                this.informationArray.push(informationObject);
+                    if (res2 != null) {
+                        res2.forEach(commerce => {
+                            this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
+                                offers = response.body;
+                                offers.forEach(offer => {
+                                    this.offers.push(offer);
+                                    informationObject = new Information();
+                                    informationObject.commerceName = commerce.name;
+                                    informationObject.offerDescription = offer.description;
+                                    informationObject.commerceId = commerce.id;
+                                    informationObject.expirationDate = offer.expirationDate;
+                                    this.informationArray.push(informationObject);
+                                });
                             });
                         });
-                    });
+                    }
                 });
         });
     }
@@ -153,6 +157,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
+    }
+
+    offersClickedMethod() {
+        this.offersClicked = true;
     }
 }
 
