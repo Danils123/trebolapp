@@ -97,7 +97,9 @@
                                             <div class="mail-contnet">
                                                 <h5>{{information.commerceName}}</h5> <span class="mail-desc">{{information.offerDescription}}</span>
                                                 <span class="mail-desc">Fecha de expiración</span>
-                                                <span class="mail-desc">{{information.expirationDate|date: "dd MM yyyy"}}</span> </div>
+                                                <span *ngIf="information.expirationDate != null" class="mail-desc">{{information.expirationDate|date: "dd MM yyyy"}}</span>
+                                                <span *ngIf="information.expirationDate === null" class="mail-desc"> Hasta agotar existencia</span>
+                                            </div>
                                         </a>
                                     </div>
                                 </div>

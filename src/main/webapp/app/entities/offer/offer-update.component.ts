@@ -15,6 +15,9 @@ import { DatepickerOptions } from 'ng2-datepicker';
 import * as enLocale from 'date-fns/locale/en';
 import { CommerceUserService } from '../commerce-user';
 import { CommerceUser, ICommerceUser } from 'app/shared/model/commerce-user.model';
+import { DATE_FORMAT } from '../../shared/constants/input.constants';
+import { DatePipe } from '@angular/common';
+import moment = require('moment');
 @Component({
     selector: 'jhi-offer-update',
     templateUrl: './offer-update.component.html'
@@ -46,10 +49,6 @@ export class OfferUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ offer }) => {
             this.offer = offer;
             this.offer.type = 1;
-
-            if (this.offer.expirationDate === null || this.offer.expirationDate === undefined) {
-                this.offer.expirationDate = new Date();
-            }
         });
     }
 
@@ -66,6 +65,7 @@ export class OfferUpdateComponent implements OnInit {
             this.subscribeToSaveResponse(this.offerService.update(this.offer));
         } else {
             this.offer.disabled = false;
+
             this.subscribeToSaveResponse(this.offerService.create(this.offer));
         }
     }
@@ -108,6 +108,7 @@ export class OfferUpdateComponent implements OnInit {
             });
         });
         */
+        console.log(response.body.expirationDate);
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
