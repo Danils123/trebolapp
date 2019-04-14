@@ -136,7 +136,11 @@ export class CommerceUpdateComponent implements OnInit {
     }
 
     loadMap() {
-        const latLng = new google.maps.LatLng(9.9333296, -84.0833282);
+        let latLng = new google.maps.LatLng(9.9333296, -84.0833282);
+
+        if (this.commerce.latitude !== null) {
+            latLng = new google.maps.LatLng(this.commerce.latitude, this.commerce.longitud);
+        }
 
         const mapOptions: google.maps.MapOptions = {
             center: latLng,
