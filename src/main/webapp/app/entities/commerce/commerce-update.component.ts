@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,12 +14,21 @@ import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
 import { AccountService } from 'app/core';
 import Swal from 'sweetalert2';
+import { Markerplace } from 'app/shared/model/markerplace.model';
 
 @Component({
     selector: 'jhi-commerce-update',
-    templateUrl: './commerce-update.component.html'
+    templateUrl: './commerce-update.component.html',
+    styleUrls: ['./commerce.scss']
 })
 export class CommerceUpdateComponent implements OnInit {
+    @ViewChild('map') mapElement: ElementRef;
+    map: google.maps.Map;
+    marks: google.maps.Marker[] = [];
+    infoWindows: google.maps.InfoWindow[] = [];
+
+    markerPlaces: Markerplace[] = [];
+
     commerce: ICommerce;
     isSaving: boolean;
     owner: IUserExtra;
@@ -45,6 +54,7 @@ export class CommerceUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ commerce }) => {
             this.commerce = commerce;
             this.commerce.email = this.accountService.user.email;
+            this.loadMap();
         });
         this.productCommerceService
             .query()
@@ -123,5 +133,82 @@ export class CommerceUpdateComponent implements OnInit {
 
     trackUserExtraById(index: number, item: IUserExtra) {
         return item.id;
+    }
+
+    loadMap() {
+        const latLng = new google.maps.LatLng(9.9333296, -84.0833282);
+
+        const mapOptions: google.maps.MapOptions = {
+            center: latLng,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        if (this.commerce.longitud === null) {
+            this.map.addListener('click', coors => {
+                const markCommerce: Markerplace = {
+                    name: this.commerce.name,
+                    lat: coors.latLng.lat(),
+                    lng: coors.latLng.lng(),
+                    id: new Date().toISOString()
+                };
+
+                this.commerce.latitude = coors.latLng.lat();
+                this.commerce.longitud = coors.latLng.lng();
+                this.addMark(markCommerce);
+            });
+        } else {
+            const markCommerce: Markerplace = {
+                name: this.commerce.name,
+                lat: this.commerce.latitude,
+                lng: this.commerce.longitud,
+                id: new Date().toISOString()
+            };
+
+            this.addMark(markCommerce);
+        }
+    }
+
+    addMark(markCommerce: Markerplace) {
+        const latLng = new google.maps.LatLng(markCommerce.lat, markCommerce.lng);
+
+        const marker = new google.maps.Marker({
+            map: this.map,
+            animation: google.maps.Animation.DROP,
+            position: latLng,
+            draggable: true,
+            title: markCommerce.id
+        });
+
+        const contentPlace = `<b>${markCommerce.name}</b>`;
+        const infoWindow = new google.maps.InfoWindow({
+            content: contentPlace
+        });
+
+        this.infoWindows.push(infoWindow);
+
+        google.maps.event.addDomListener(marker, 'click', () => {
+            this.infoWindows.forEach(infoW => infoW.close());
+            infoWindow.open(this.map, marker);
+        });
+
+        google.maps.event.addDomListener(marker, 'dblclick', coors => {
+            this.commerce.latitude = undefined;
+            this.commerce.longitud = undefined;
+            marker.setMap(null);
+        });
+
+        google.maps.event.addDomListener(marker, 'drag', coors => {
+            const newMark = {
+                lat: coors.latLng.lat(),
+                lng: coors.latLng.lng(),
+                name: markCommerce.name,
+                id: markCommerce.id
+            };
+
+            this.commerce.latitude = coors.latLng.lat();
+            this.commerce.longitud = coors.latLng.lng();
+        });
     }
 }
