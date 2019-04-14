@@ -25,7 +25,7 @@ export class MapshopComponent implements OnInit {
 
     ngOnInit() {
         this.commerceService
-            .query()
+            .queryByState(false)
             .pipe(
                 filter((res: HttpResponse<ICommerce[]>) => res.ok),
                 map((res: HttpResponse<ICommerce[]>) => res.body)

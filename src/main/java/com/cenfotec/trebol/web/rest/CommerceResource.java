@@ -114,4 +114,10 @@ public class CommerceResource {
        log.debug("REST request to get all Commerce");
        return commerceRepository.findByOwnerId(id);
    }
+
+    @GetMapping("/commerce-byState/{state}")
+    public List<Commerce> getByState(@PathVariable Boolean state) {
+        log.debug("REST request to get all Commerce");
+        return commerceRepository.findByState(state);
+    }
 }

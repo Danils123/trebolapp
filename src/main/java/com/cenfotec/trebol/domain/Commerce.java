@@ -304,6 +304,10 @@ public class Commerce implements Serializable {
         return this;
     }
 
+    public Boolean getState() {
+        return state;
+    }
+
     public void setOwner(UserExtra userExtra) {
         this.owner = userExtra;
     }

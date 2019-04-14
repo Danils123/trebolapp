@@ -36,6 +36,10 @@ export class CommerceService {
         return this.http.get<ICommerce[]>(`${this.resourceUrl}-byUserId/${userId}`, { observe: 'response' });
     }
 
+    queryByState(state: boolean): Observable<EntityArrayResponseType> {
+        return this.http.get<ICommerce[]>(`${this.resourceUrl}-byState/${state}`, { observe: 'response' });
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

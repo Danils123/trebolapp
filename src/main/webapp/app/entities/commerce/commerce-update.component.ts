@@ -38,6 +38,7 @@ export class CommerceUpdateComponent implements OnInit {
     offers: IOffer[];
 
     userextras: IUserExtra[];
+    chkState: boolean;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -54,6 +55,13 @@ export class CommerceUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ commerce }) => {
             this.commerce = commerce;
             this.commerce.email = this.accountService.user.email;
+
+            if (this.commerce.state !== null) {
+                this.chkState = this.commerce.state;
+            } else {
+                this.chkState = false;
+            }
+
             this.loadMap();
         });
         this.productCommerceService
@@ -87,10 +95,11 @@ export class CommerceUpdateComponent implements OnInit {
         this.isSaving = true;
         this.commerce.owner = this.owner;
         this.commerce.userExtra = this.owner;
-        console.log(this.commerce.userExtra);
         if (this.commerce.id !== undefined) {
+            this.commerce.state = this.chkState;
             this.subscribeToSaveResponse(this.commerceService.update(this.commerce));
         } else {
+            this.commerce.state = false;
             this.subscribeToSaveResponse(this.commerceService.create(this.commerce));
         }
     }
@@ -214,5 +223,13 @@ export class CommerceUpdateComponent implements OnInit {
             this.commerce.latitude = coors.latLng.lat();
             this.commerce.longitud = coors.latLng.lng();
         });
+    }
+
+    changeState() {
+        if (this.chkState === true) {
+            this.chkState = false;
+        } else {
+            this.chkState = true;
+        }
     }
 }
