@@ -10,12 +10,18 @@
 
                         <div class="form-group">
                             <label class="form-control-label" for="field_barCode">Código de barras</label>
-                            <input type="text" class="form-control" name="barCode" id="field_barCode" [(ngModel)]="product.barCode" #barCode="ngModel" [ngClass]="{'is-invalid': barCode.errors?.required && barCode.touched}" required/>
+                            <input type="number" class="form-control" name="barCode" id="field_barCode" [(ngModel)]="product.barCode" #barCode="ngModel" [ngClass]="{'is-invalid': barCode.errors?.required && barCode.touched}" minlength="9" maxlength="13" required/>
                             <div *ngIf="barCode.errors?.required && barCode.touched" class="text-danger">
                                 Este campo es requerido
                             </div>
                             <div *ngIf="!validBarCode" class="text-danger">
                                 Ya existe ese código de barras
+                            </div>
+                            <div *ngIf="barCode.errors?.minlength && barCode.touched" class="text-danger">
+                                Mínimo 9 caractéres
+                            </div>
+                            <div *ngIf="barCode.errors?.maxlength && barCode.touched" class="text-danger">
+                                Máximo 13 caractéres
                             </div>
                         </div>
                         <div class="form-group">

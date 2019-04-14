@@ -18,6 +18,9 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { CommerceUserService } from 'app/entities/commerce-user';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { Moment } from 'moment';
+import { ICategory } from '../../shared/model/category.model';
+import moment = require('moment');
 
 @Component({
     selector: 'jhi-navbar',
@@ -35,6 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     offersClicked = false;
     informationArray: Information[] = [];
     eventSubscriber: Subscription;
+    momentDate: Moment = moment('12-25-1993', 'MM-DD-YYYY');
 
     totalOrders: number;
 
@@ -58,8 +62,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+        this.registerChangeInOffers();
         if (this.accountService.user !== null && this.accountService.user.authorities.filter(item => item === 'COMPRADOR').length > 0) {
-            this.registerChangeInOffers();
         }
         if (this.accountService.user !== null && this.accountService.user.authorities.filter(item => item === 'VENDEDOR').length > 0) {
             this.loadOrders();
@@ -139,20 +143,36 @@ export class NavbarComponent implements OnInit, OnDestroy {
                     map((res2: HttpResponse<ICommerce[]>) => res2.body)
                 )
                 .subscribe((res2: ICommerce[]) => {
-                    console.log(res2);
                     let informationObject: Information = new Information();
+                    const actualDate: Date = new Date();
+                    let expirationDate: Date;
                     if (res2 != null) {
                         res2.forEach(commerce => {
                             this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
                                 offers = response.body;
                                 offers.forEach(offer => {
-                                    this.offers.push(offer);
-                                    informationObject = new Information();
-                                    informationObject.commerceName = commerce.name;
-                                    informationObject.offerDescription = offer.description;
-                                    informationObject.commerceId = commerce.id;
-                                    informationObject.expirationDate = offer.expirationDate;
-                                    this.informationArray.push(informationObject);
+                                    expirationDate = new Date(offer.expirationDate);
+                                    if (offer.disabled === false) {
+                                        if (offer.expirationDate != null) {
+                                            if (expirationDate > actualDate) {
+                                                this.offers.push(offer);
+                                                informationObject = new Information();
+                                                informationObject.commerceName = commerce.name;
+                                                informationObject.offerDescription = offer.description;
+                                                informationObject.commerceId = commerce.id;
+                                                informationObject.expirationDate = offer.expirationDate;
+                                                this.informationArray.push(informationObject);
+                                            }
+                                        } else {
+                                            this.offers.push(offer);
+                                            informationObject = new Information();
+                                            informationObject.commerceName = commerce.name;
+                                            informationObject.offerDescription = offer.description;
+                                            informationObject.commerceId = commerce.id;
+                                            informationObject.expirationDate = offer.expirationDate;
+                                            this.informationArray.push(informationObject);
+                                        }
+                                    }
                                 });
                             });
                         });
