@@ -7,6 +7,7 @@ import { LANDING_ROUTE } from './landing/landing.route';
 import { registerRoute } from './account/register';
 import { passwordRoute, passwordResetFinishRoute } from './account';
 import { passwordResetInitRoute } from './account/password-reset/init/password-reset-init.route';
+import { MAPSHOP_ROUTE } from 'app/mapshop';
 const LAYOUT_ROUTES = [
     navbarRoute,
     HOME_ROUTE,
@@ -15,6 +16,7 @@ const LAYOUT_ROUTES = [
     passwordResetFinishRoute,
     passwordResetInitRoute,
     LANDING_ROUTE,
+    MAPSHOP_ROUTE,
     ...errorRoute
 ];
 

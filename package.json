@@ -8,6 +8,7 @@
         "node_modules"
     ],
     "dependencies": {
+        "@agm/core": "^1.0.0-beta.5",
         "@angular/animations": "^7.2.9",
         "@angular/common": "7.2.4",
         "@angular/compiler": "7.2.4",
@@ -25,6 +26,7 @@
         "@ng-select/ng-select": "^2.16.4",
         "@ngx-translate/core": "11.0.1",
         "@ngx-translate/http-loader": "4.0.0",
+        "@types/googlemaps": "^3.30.19",
         "acorn": "^6.1.1",
         "ajv": "^6.10.0",
         "angular-calendar": "^0.27.2",
