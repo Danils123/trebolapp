@@ -43,7 +43,7 @@ export class MapshopComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    static isInArea(center: Markerplace, radio: number, point: Markerplace) {
+    isInArea(center: Markerplace, radio: number, point: Markerplace) {
         const distance = Math.sqrt(Math.pow(point.lng - center.lng, 2) + Math.pow(point.lat - center.lat, 2));
 
         if (distance <= radio) {
