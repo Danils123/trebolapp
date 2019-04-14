@@ -32,7 +32,6 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     rolActive = 0;
     fadeIn: any;
     @ViewChild('registerForm') form: NgForm;
-
     constructor(
         private loginModalService: LoginModalService,
         private registerService: Register,
@@ -108,6 +107,9 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.modalRef = this.loginModalService.open();
     }
 
+    lowerCase() {
+        this.registerAccount.login = this.registerAccount.login.toLowerCase();
+    }
     cambiarRol(rol: number) {
         this.rolActive = rol;
     }
