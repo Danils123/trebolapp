@@ -7,6 +7,7 @@ import { MapshopComponent } from 'app/mapshop/mapshop.component';
 @NgModule({
     imports: [TrebolSharedModule, RouterModule.forChild([MAPSHOP_ROUTE])],
     declarations: [MapshopComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    bootstrap: [MapshopComponent]
 })
 export class TrebolMapshopModule {}
