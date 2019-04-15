@@ -6,6 +6,7 @@ import { AccountService } from 'app/core';
 import { Register } from 'app/account/register/register.service';
 import { LoadingService } from 'app/loading/loading.service';
 import { MainService } from './main.service';
+import { DeliveryMapService } from '../../entities/delivery-map/delivery-map.service';
 
 @Component({
     selector: 'jhi-main',
@@ -18,7 +19,8 @@ export class JhiMainComponent implements OnInit {
         public accountService: AccountService,
         public registerService: Register,
         public loadingService: LoadingService,
-        public mainService: MainService
+        public mainService: MainService,
+        public deliveryMapService: DeliveryMapService
     ) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
@@ -27,6 +29,13 @@ export class JhiMainComponent implements OnInit {
             title = this.getPageTitle(routeSnapshot.firstChild) || title;
         }
         return title;
+    }
+
+    cargarLocacion() {
+        this.deliveryMapService.enterCoordinates([
+            new google.maps.LatLng(9.9323215, -84.0332226),
+            new google.maps.LatLng(9.930858, -84.033738)
+        ]);
     }
 
     ngOnInit() {
