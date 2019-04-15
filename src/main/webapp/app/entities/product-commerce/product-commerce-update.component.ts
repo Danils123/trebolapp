@@ -45,6 +45,7 @@ export class ProductCommerceUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ productCommerce }) => {
             this.productCommerce = productCommerce;
         });
+
         this.productService
             .query()
             .pipe(
@@ -95,10 +96,13 @@ export class ProductCommerceUpdateComponent implements OnInit {
 
     save() {
         this.getCommerce();
+        let commerces: ICommerce[];
+        commerces = this.accountService.userExtra.commerces;
         this.isSaving = true;
         if (this.productCommerce.id !== undefined) {
             this.subscribeToSaveResponse(this.productCommerceService.update(this.productCommerce));
         } else {
+            this.productCommerce.commerce_id = commerces[0].id;
             this.subscribeToSaveResponse(this.productCommerceService.create(this.productCommerce));
         }
     }

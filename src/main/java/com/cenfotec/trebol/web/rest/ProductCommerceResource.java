@@ -90,6 +90,19 @@ public class ProductCommerceResource {
      * @param id the id of the productCommerce to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the productCommerce, or with status 404 (Not Found)
      */
+    @GetMapping("/product-commerces-bycommerce/{id}")
+    public List<ProductCommerce> getProductByCommerceId(@PathVariable Long id) {
+        log.debug("REST request to get ProductCommerce : {}", id);
+        return  productCommerceRepository.findByCommerceId(id);
+
+    }
+
+    /**
+     * GET  /product-commerces/:id : get the "id" productCommerce.
+     *
+     * @param id the id of the productCommerce to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the productCommerce, or with status 404 (Not Found)
+     */
     @GetMapping("/product-commerces/{id}")
     public ResponseEntity<ProductCommerce> getProductCommerce(@PathVariable Long id) {
         log.debug("REST request to get ProductCommerce : {}", id);

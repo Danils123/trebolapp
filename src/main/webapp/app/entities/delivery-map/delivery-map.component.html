@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-header">
+        <h1>Entrega de la compra</h1>
+    </div>
+    <div class="card-body container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="text-center" #map id="map"></div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Información general de su entrega </strong></h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p><i class="icon-directions"></i><strong> Estado: </strong></p>
+                            </div>
+                            <div class="col">
+                                <div *ngIf="!deliveryMapService.state">En camino</div>
+                                <div *ngIf="deliveryMapService.state">Entregada</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p><i class="icon-direction"></i><strong> Origen: </strong></p>
+                            </div>
+                            <div class="col">
+                                <div>{{origin}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p><i class="icon-direction"></i><strong> Destino: </strong></p>
+                            </div>
+                            <div class="col">
+                                <div>{{destination}}</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p><i class="icon-clock"></i><strong> Tiempo restante: </strong></p>
+                            </div>
+                            <div class="col">
+                                <div>{{timeRemaining}} mins</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

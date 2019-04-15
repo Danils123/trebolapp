@@ -51,6 +51,9 @@ public class ProductCommerceResourceIntTest {
     private static final Integer DEFAULT_QUANTITY = 1;
     private static final Integer UPDATED_QUANTITY = 2;
 
+    private static final Long DEFAULT_COMMERCE_ID = 1L;
+    private static final Long UPDATED_COMMERCE_ID = 2L;
+
     @Autowired
     private ProductCommerceRepository productCommerceRepository;
 
@@ -97,7 +100,8 @@ public class ProductCommerceResourceIntTest {
     public static ProductCommerce createEntity(EntityManager em) {
         ProductCommerce productCommerce = new ProductCommerce()
             .price(DEFAULT_PRICE)
-            .quantity(DEFAULT_QUANTITY);
+            .quantity(DEFAULT_QUANTITY)
+            .commerce_id(DEFAULT_COMMERCE_ID);
         return productCommerce;
     }
 
@@ -123,6 +127,7 @@ public class ProductCommerceResourceIntTest {
         ProductCommerce testProductCommerce = productCommerceList.get(productCommerceList.size() - 1);
         assertThat(testProductCommerce.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testProductCommerce.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
+        assertThat(testProductCommerce.getCommerce_id()).isEqualTo(DEFAULT_COMMERCE_ID);
     }
 
     @Test
@@ -156,7 +161,8 @@ public class ProductCommerceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(productCommerce.getId().intValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)));
+            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
+            .andExpect(jsonPath("$.[*].commerce_id").value(hasItem(DEFAULT_COMMERCE_ID.intValue())));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -204,7 +210,8 @@ public class ProductCommerceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(productCommerce.getId().intValue()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY));
+            .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
+            .andExpect(jsonPath("$.commerce_id").value(DEFAULT_COMMERCE_ID.intValue()));
     }
 
     @Test
@@ -229,7 +236,8 @@ public class ProductCommerceResourceIntTest {
         em.detach(updatedProductCommerce);
         updatedProductCommerce
             .price(UPDATED_PRICE)
-            .quantity(UPDATED_QUANTITY);
+            .quantity(UPDATED_QUANTITY)
+            .commerce_id(UPDATED_COMMERCE_ID);
 
         restProductCommerceMockMvc.perform(put("/api/product-commerces")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -242,6 +250,7 @@ public class ProductCommerceResourceIntTest {
         ProductCommerce testProductCommerce = productCommerceList.get(productCommerceList.size() - 1);
         assertThat(testProductCommerce.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testProductCommerce.getQuantity()).isEqualTo(UPDATED_QUANTITY);
+        assertThat(testProductCommerce.getCommerce_id()).isEqualTo(UPDATED_COMMERCE_ID);
     }
 
     @Test

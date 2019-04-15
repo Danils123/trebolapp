@@ -28,6 +28,10 @@
         {
             "fieldName": "quantity",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "commerce_id",
+            "fieldType": "Long"
         }
     ],
     "changelogDate": "20190312191710",

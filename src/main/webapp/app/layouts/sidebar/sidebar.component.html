@@ -43,7 +43,7 @@
                 </li>
 
 
-                <li *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_ADMIN']"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Comercio</span></a>
+                <li *jhiHasAnyAuthority="['ROLE_VENDEDOR', 'ROLE_ADMIN']"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-university"></i><span class="hide-menu"> Comercio</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Categoría</a></li>
                         <li *jhiHasAnyAuthority="'ROLE_ADMIN'"><a routerLink="sub-category" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Sub Categoría</a></li>
@@ -58,7 +58,9 @@
                 </li>
 
 
-                <li *jhiHasAnyAuthority="'ROLE_ADMIN'"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Administración</span></a>
+                <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="fa fa-cogs"></i><span class="hide-menu"> Administración</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLink="admin/user-management" routerLinkActive="active">Mantenimiento de usuario</a></li>
                         <li><a routerLink="admin/jhi-tracker" routerLinkActive="active">Rastreador de usuario</a></li>
@@ -73,7 +75,7 @@
                     </ul>
                 </li>
 
-                <li *ngSwitchCase="false"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Inicio </span></a>
+                <!-- <li *ngSwitchCase="false"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Inicio </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li routerLinkActive="active">
                             <a (click)="login()" id="login">
@@ -84,7 +86,7 @@
                                 <fa-icon icon="user-plus" fixedWidth="true"></fa-icon><span>  Registrar</span></a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

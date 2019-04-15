@@ -33,6 +33,9 @@ public class ProductCommerce implements Serializable {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Column(name = "commerce_id")
+    private Long commerce_id;
+
     @ManyToOne
     @JsonIgnoreProperties("productCommerces")
     private Product product;
@@ -77,6 +80,19 @@ public class ProductCommerce implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Long getCommerce_id() {
+        return commerce_id;
+    }
+
+    public ProductCommerce commerce_id(Long commerce_id) {
+        this.commerce_id = commerce_id;
+        return this;
+    }
+
+    public void setCommerce_id(Long commerce_id) {
+        this.commerce_id = commerce_id;
     }
 
     public Product getProduct() {
@@ -144,6 +160,7 @@ public class ProductCommerce implements Serializable {
             "id=" + getId() +
             ", price=" + getPrice() +
             ", quantity=" + getQuantity() +
+            ", commerce_id=" + getCommerce_id() +
             "}";
     }
 }
