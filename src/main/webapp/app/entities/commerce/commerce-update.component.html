@@ -11,17 +11,46 @@
 
                             <div class="form-group">
                                 <label class="form-control-label" for="field_identification">Identificación</label>
-                                <input type="text" class="form-control" [textMask]="{mask: IDMask}" name="identification" id="field_identification" [(ngModel)]="commerce.identification" required />
+                                <input type="text" class="form-control" [textMask]="{mask: IDMask}" name="identification" id="field_identification" #identificacion [(ngModel)]="commerce.identification" required />
+
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_name">Nombre del comercio</label>
-                                <input type="text" class="form-control" name="name" pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" id="field_name" minlength="5" maxlength="255" [(ngModel)]="commerce.name" required
-                                />
+                                <input type="text" class="form-control" name="name" #nombre pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" id="field_name" minlength="5" maxlength="255" [(ngModel)]="commerce.name"
+                                    required />
+                                <div *ngIf="nombre.dirty && nombre.invalid">
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.required">
+                                                                    El nombre del comercio es requerido.
+                                                                    </small>
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.pattern">
+                                                                        Solo puede ingresar caractes alfanuméricos.
+                                        </small>
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.minlength">
+                                                                        El nombre del comercio requiere al menos 1 cáracter.
+                                                                    </small>
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.maxlength">
+                                                                        El nombre del comercio requere al menos 255 caracteres.
+                                                                    </small>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_address">Dirección</label>
-                                <textarea rows="3" type="text-area" pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" class="form-control" name="address" minlength="10" maxlength="255" id="field_address" [(ngModel)]="commerce.address"
-                                    required></textarea>
+                                <textarea rows="3" type="text-area" #direccion pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" class="form-control" name="address" minlength="10" maxlength="255" id="field_address"
+                                    [(ngModel)]="commerce.address" required></textarea>
+                                <div *ngIf="direccion.dirty && direccion.invalid">
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.required">
+                                                                            La dirección es requerido.
+                                                                            </small>
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.pattern">
+                                                                                Solo puede ingresar caractes alfanuméricos.
+                                                </small>
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.minlength">
+                                                                                La dirección requiere al menos 1 cáracter.
+                                                                            </small>
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.maxlength">
+                                                    La dirección requere al menos 255 caracteres.
+                                                                            </small>
+                                </div>
                             </div>
                             <div class="card">
                                 <div class="card-header">
