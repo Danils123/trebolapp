@@ -10,6 +10,9 @@ import { IProductCommerce } from 'app/shared/model/product-commerce.model';
 import { AccountService } from 'app/core';
 import { ProductCommerceService } from './product-commerce.service';
 import { IProduct } from 'app/shared/model/product.model';
+import { ICommerce, Commerce } from 'app/shared/model/commerce.model';
+import { CommerceService } from '../commerce/commerce.service';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-product-commerce',
@@ -19,6 +22,8 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
     productCommerces: IProductCommerce[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    commerce: ICommerce[];
+    userExtra: IUserExtra;
 
     products: IProduct[];
 
@@ -35,22 +40,40 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected productService: ProductService,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected commerceService: CommerceService
     ) {}
 
     loadAll() {
-        this.productCommerceService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IProductCommerce[]>) => res.ok),
-                map((res: HttpResponse<IProductCommerce[]>) => res.body)
-            )
-            .subscribe(
-                (res: IProductCommerce[]) => {
-                    this.productCommerces = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        let commerces: ICommerce[];
+        commerces = this.accountService.userExtra.commerces;
+        if (this.isVendedor) {
+            this.productCommerceService
+                .queryByCommerceId(commerces[0].id)
+                .pipe(
+                    filter((res: HttpResponse<IProductCommerce[]>) => res.ok),
+                    map((res: HttpResponse<IProductCommerce[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IProductCommerce[]) => {
+                        this.productCommerces = res;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else {
+            this.productCommerceService
+                .query()
+                .pipe(
+                    filter((res: HttpResponse<IProductCommerce[]>) => res.ok),
+                    map((res: HttpResponse<IProductCommerce[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IProductCommerce[]) => {
+                        this.productCommerces = res;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
 
         this.productService
             .query()
@@ -72,6 +95,25 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
             this.currentAccount = account;
         });
         this.registerChangeInProductCommerces();
+    }
+
+    isVendedor() {
+        return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_VENDEDOR']));
+    }
+
+    getCommerce() {
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe(
+                (res: ICommerce[]) => {
+                    this.commerce = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     ngOnDestroy() {
