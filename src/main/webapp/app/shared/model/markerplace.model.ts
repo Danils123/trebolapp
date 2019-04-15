@@ -1,6 +1,6 @@
 export interface IMarkerplace {
     id?: string;
-    nombre?: string;
+    name?: string;
     lat?: number;
     lng?: number;
 }
