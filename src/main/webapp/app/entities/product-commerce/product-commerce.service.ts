@@ -35,4 +35,8 @@ export class ProductCommerceService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    queryByCommerceId(id: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IProductCommerce[]>(`${this.resourceUrl}-bycommerce/${id}`, { observe: 'response' });
+    }
 }

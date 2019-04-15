@@ -1,93 +1,91 @@
 <div class="container-fluid">
-        <div class="card">
-                <div class="card-header">
-                        <h2><span>Comercio</span></h2>
-                        <jhi-alert-error></jhi-alert-error>
-                </div>
-                <div  class="card-body">
-                        <div class="row justify-content-center">
-                                <div class="col-8">
-                                    <div *ngIf="commerce">                                        
-                                        <dl class="row-md jh-entity-details">
-                                            <dt><span>Identificación</span></dt>
-                                            <dd>
-                                                <span>{{commerce.identification}}</span>
-                                            </dd>
-                                            <dt><span>Nombre del comercio</span></dt>
-                                            <dd>
-                                                <span>{{commerce.name}}</span>
-                                            </dd>
-                                            <dt><span>Dirección</span></dt>
-                                            <dd>
-                                                <span>{{commerce.address}}</span>
-                                            </dd>
-                                            <dt><span>Latitud</span></dt>
-                                            <dd>
-                                                <span>{{commerce.latitude}}</span>
-                                            </dd>
-                                            <dt><span>Longitud</span></dt>
-                                            <dd>
-                                                <span>{{commerce.longitud}}</span>
-                                            </dd>
-                                            <dt><span>Email</span></dt>
-                                            <dd>
-                                                <span>{{commerce.email}}</span>
-                                            </dd>
-                                            <!-- <dt><span>Ranking</span></dt>
-                                            <dd>
-                                                <span>{{commerce.ranking}}</span>
-                                            </dd> -->
-                                            <!-- <dt><span>Imagen</span></dt>
-                                            <dd>
-                                                <span>{{commerce.photograph}}</span>
-                                            </dd> -->
-                                            <!-- <dt><span>State</span></dt>
-                                            <dd>
-                                                <span>{{commerce.state}}</span>
-                                            </dd> -->
-                                            <dt><span>Teléfono</span></dt>
-                                            <dd>
-                                                <span>{{commerce.phone}}</span>
-                                            </dd>
-                                            <!-- <dt><span>Product Commerce</span></dt>
-                                            <dd>
-                                                <div *ngIf="commerce.productCommerce">
-                                                    <a [routerLink]="['/product-commerce', commerce.productCommerce?.id, 'view']">{{commerce.productCommerce?.id}}</a>
-                                                </div>
-                                            </dd> -->
-                                            <!-- <dt><span>Offer</span></dt>
-                                            <dd>
-                                                <div *ngIf="commerce.offer">
-                                                    <a [routerLink]="['/offer', commerce.offer?.id, 'view']">{{commerce.offer?.id}}</a>
-                                                </div>
-                                            </dd> -->
-                                            <!-- <dt><span>Owner</span></dt>
-                                            <dd>
-                                                <div *ngIf="commerce.owner">
-                                                    <a [routerLink]="['/user-extra', commerce.owner?.id, 'view']">{{commerce.owner?.id}}</a>
-                                                </div>
-                                            </dd> -->
-                                            <!-- <dt><span>User Extra</span></dt>
-                                            <dd>
-                                                <div *ngIf="commerce.userExtra">
-                                                    <a [routerLink]="['/user-extra', commerce.userExtra?.id, 'view']">{{commerce.userExtra?.id}}</a>
-                                                </div>
-                                            </dd> -->
-                                        </dl>
-                            
-                                        <button type="submit"  (click)="previousState()" class="btn btn-info">
-                                            <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
-                                        </button>
-                            
-                                        <button type="button" [routerLink]="['/commerce', commerce.id, 'edit']" class="btn btn-primary">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <h2><span>Comercio</span></h2>
+            <jhi-alert-error></jhi-alert-error>
         </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div *ngIf="commerce">
+                        <dl class="row-md jh-entity-details">
+                            <dt><span>Identificación</span></dt>
+                            <dd>
+                                <span>{{commerce.identification}}</span>
+                            </dd>
+                            <dt><span>Nombre del comercio</span></dt>
+                            <dd>
+                                <span>{{commerce.name}}</span>
+                            </dd>
+                            <dt><span>Dirección</span></dt>
+                            <dd>
+                                <span>{{commerce.address}}</span>
+                            </dd>
+                            <dt><span>Latitud</span></dt>
+                            <dd>
+                                <span>{{commerce.latitude}}</span>
+                            </dd>
+                            <dt><span>Longitud</span></dt>
+                            <dd>
+                                <span>{{commerce.longitud}}</span>
+                            </dd>
+                            <dt><span>Email</span></dt>
+                            <dd>
+                                <span>{{commerce.email}}</span>
+                            </dd>
+                            <!-- <dt><span>Ranking</span></dt>
+                                        <dd>
+                                            <span>{{commerce.ranking}}</span>
+                                        </dd> -->
+                            <!-- <dt><span>Imagen</span></dt>
+                                        <dd>
+                                            <span>{{commerce.photograph}}</span>
+                                        </dd> -->
+                            <!-- <dt><span>State</span></dt>
+                                        <dd>
+                                            <span>{{commerce.state}}</span>
+                                        </dd> -->
+                            <dt><span>Teléfono</span></dt>
+                            <dd>
+                                <span>{{commerce.phone}}</span>
+                            </dd>
+                            <!-- <dt><span>Product Commerce</span></dt>
+                                        <dd>
+                                            <div *ngIf="commerce.productCommerce">
+                                                <a [routerLink]="['/product-commerce', commerce.productCommerce?.id, 'view']">{{commerce.productCommerce?.id}}</a>
+                                            </div>
+                                        </dd> -->
+                            <!-- <dt><span>Offer</span></dt>
+                                        <dd>
+                                            <div *ngIf="commerce.offer">
+                                                <a [routerLink]="['/offer', commerce.offer?.id, 'view']">{{commerce.offer?.id}}</a>
+                                            </div>
+                                        </dd> -->
+                            <!-- <dt><span>Owner</span></dt>
+                                        <dd>
+                                            <div *ngIf="commerce.owner">
+                                                <a [routerLink]="['/user-extra', commerce.owner?.id, 'view']">{{commerce.owner?.id}}</a>
+                                            </div>
+                                        </dd> -->
+                            <!-- <dt><span>User Extra</span></dt>
+                                        <dd>
+                                            <div *ngIf="commerce.userExtra">
+                                                <a [routerLink]="['/user-extra', commerce.userExtra?.id, 'view']">{{commerce.userExtra?.id}}</a>
+                                            </div>
+                                        </dd> -->
+                        </dl>
+
+                        <button type="submit" (click)="previousState()" class="btn btn-info">
+                                        <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                                    </button>
+
+                        <button type="button" [routerLink]="['/commerce', commerce.id, 'edit']" class="btn btn-primary">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+                                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
-
-

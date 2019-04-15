@@ -9,12 +9,7 @@
                             <div class="col-8">
                                 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
                                     <div>
-                                    
-                                        <!-- <div class="form-group" [hidden]="!commerce.id">
-                                            <label for="id">ID</label>
-                                            <input type="text" class="form-control" id="id" name="id"
-                                                [(ngModel)]="commerce.id" readonly />
-                                        </div> -->
+
                                         <div class="form-group">
                                             <label class="form-control-label" for="field_identification">Identificación</label>
                                             <input type="number" class="form-control" name="identification" id="field_identification"
@@ -30,62 +25,32 @@
                                             <textarea rows="3"  type="text-area" class="form-control" name="address" id="field_address"
                                                 [(ngModel)]="commerce.address"></textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_latitude">Latitud</label>
-                                            <input type="number" class="form-control" name="latitude" id="field_latitude"
-                                                [(ngModel)]="commerce.latitude" />
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <i class="icon-map"></i> Marque la ubicación de su comercio
+                                            </div>
+                                            <div class="card-body">
+                                                <div #map id="map"></div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_longitud">Longitud</label>
-                                            <input type="number" class="form-control" name="longitud" id="field_longitud"
-                                                [(ngModel)]="commerce.longitud" />
-                                        </div>
+
                                         <div class="form-group">
                                             <label class="form-control-label" for="field_email">Email</label>
                                             <input type="text" class="form-control" name="email" id="field_email"
                                                 [(ngModel)]="commerce.email" />
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <label class="form-control-label" for="field_ranking">Ranking</label>
-                                            <input type="number" class="form-control" name="ranking" id="field_ranking"
-                                                [(ngModel)]="commerce.ranking" />
-                                        </div> -->
-                                        <!-- <div class="form-group">
-                                            <label class="form-control-label" for="field_photograph">Imagen</label>
-                                            <input type="text" class="form-control" name="photograph" id="field_photograph"
-                                                [(ngModel)]="commerce.photograph" />
-                                        </div> -->
-                                        <!-- <div class="form-group">
-                                            <label class="form-control-label" for="field_state">State</label>
-                                            <input type="checkbox" class="form-control" name="state" id="field_state"
-                                                [(ngModel)]="commerce.state" />
-                                        </div> -->
+
                                         <div class="form-group">
                                             <label class="form-control-label" for="field_phone">Teléfono</label>
                                             <input type="text" class="form-control" name="phone" id="field_phone"
                                                 [(ngModel)]="commerce.phone" />
-                                        </div>                       
-                                     <!--     <div class="form-group">
-                                            <label class="form-control-label" for="field_productCommerce">Product Commerce</label>
-                                            <select class="form-control" id="field_productCommerce" name="productCommerce" [(ngModel)]="commerce.productCommerce" >
-                                                <option [ngValue]="null"></option>
-                                                <option [ngValue]="productCommerceOption.id === commerce.productCommerce?.id ? commerce.productCommerce : productCommerceOption" *ngFor="let productCommerceOption of productcommerces; trackBy: trackProductCommerceById">{{productCommerceOption.id}}</option>
-                                            </select>
-                                        </div> -->
-                                        <!-- <div class="form-group">
-                                            <label class="form-control-label" for="field_offer">Offer</label>
-                                            <select class="form-control" id="field_offer" name="offer" [(ngModel)]="commerce.offer">
-                                                <option [ngValue]="null"></option>
-                                                <option [ngValue]="offerOption.id === commerce.offer?.id ? commerce.offer : offerOption" *ngFor="let offerOption of offers; trackBy: trackOfferById">{{offerOption.id}}</option>
-                                            </select>
-                                        </div> -->
-                                        <!-- <div class="form-group">
-                                            <label class="form-control-label" for="field_owner">Owner</label>
-                                            <select class="form-control" id="field_owner" name="owner" [(ngModel)]="commerce.owner" >
-                                                <option [ngValue]="null"></option>
-                                                <option [ngValue]="userExtraOption.id === commerce.owner?.id ? commerce.owner : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
-                                            </select>
-                                        </div> -->
+                                        </div>
+
+                                        <div class="checkbox checkbox-primary p-t-0">
+                                            <input id="checkbox-state" type="checkbox" (click)="changeState()" [checked]="!chkState">
+                                            <label for="checkbox-state"> Active su comercio y sea visible a sus clientes!</label>
+                                        </div>
+
                                     </div>
                                     <div>
                                         <button type="button" id="cancel-save" class="btn btn-danger"  (click)="previousState()">

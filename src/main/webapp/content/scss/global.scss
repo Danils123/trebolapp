@@ -243,6 +243,12 @@ ui bootstrap tweaks
     width: 100px !important;
 }
 
+.ngx-datepicker-calendar-container,
+.ngx-datepicker-position-bottom-right,
+.ng-star-inserted {
+    z-index: 100;
+}
+
 /*
 Template Name: Admin Pro Admin
 Author: Wrappixel

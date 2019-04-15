@@ -3,15 +3,6 @@
     "clientRootFolder": "",
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "offer",
-            "otherEntityRelationshipName": "commerce",
-            "relationshipName": "offer",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipNameUndefined": false
-        },
-        {
             "relationshipType": "one-to-many",
             "otherEntityName": "orderItem",
             "otherEntityRelationshipName": "commerce",
@@ -47,6 +38,14 @@
             "otherEntityField": "id",
             "otherEntityRelationshipNameUndefined": false,
             "otherEntityRelationshipName": "commerce"
+        },
+        {
+            "relationshipName": "offers",
+            "otherEntityName": "offer",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "commerces",
+            "otherEntityRelationshipNameUndefined": false
         }
     ],
     "fields": [

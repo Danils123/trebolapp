@@ -18,6 +18,9 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { CommerceUserService } from 'app/entities/commerce-user';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { Moment } from 'moment';
+import { ICategory } from '../../shared/model/category.model';
+import moment = require('moment');
 
 @Component({
     selector: 'jhi-navbar',
@@ -32,8 +35,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     modalRef: NgbModalRef;
     version: string;
     offers: IOffer[] = [];
+    offersClicked = false;
     informationArray: Information[] = [];
     eventSubscriber: Subscription;
+    momentDate: Moment = moment('12-25-1993', 'MM-DD-YYYY');
 
     totalOrders: number;
 
@@ -129,9 +134,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     loadInfo() {
         this.informationArray = [];
         let userExtra: IUserExtra;
+        this.offers = [];
 
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
             userExtra = res.body;
+            let offers: IOffer[];
             this.commerceUserService
                 .findCommercesByUser(userExtra.id)
                 .pipe(
@@ -140,17 +147,39 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 )
                 .subscribe((res2: ICommerce[]) => {
                     let informationObject: Information = new Information();
-                    res2.forEach(commerce => {
-                        if (commerce.offer != null && commerce.offer !== undefined) {
-                            this.offers.push(commerce.offer);
-                            informationObject = new Information();
-                            informationObject.commerceName = commerce.name;
-                            informationObject.offerDescription = commerce.offer.description;
-                            informationObject.commerceId = commerce.id;
-                            informationObject.expirationDate = commerce.offer.expirationDate.toDate();
-                            this.informationArray.push(informationObject);
-                        }
-                    });
+                    const actualDate: Date = new Date();
+                    let expirationDate: Date;
+                    if (res2 != null) {
+                        res2.forEach(commerce => {
+                            this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
+                                offers = response.body;
+                                offers.forEach(offer => {
+                                    expirationDate = new Date(offer.expirationDate);
+                                    if (offer.disabled === false) {
+                                        if (offer.expirationDate != null) {
+                                            if (expirationDate > actualDate) {
+                                                this.offers.push(offer);
+                                                informationObject = new Information();
+                                                informationObject.commerceName = commerce.name;
+                                                informationObject.offerDescription = offer.description;
+                                                informationObject.commerceId = commerce.id;
+                                                informationObject.expirationDate = offer.expirationDate;
+                                                this.informationArray.push(informationObject);
+                                            }
+                                        } else {
+                                            this.offers.push(offer);
+                                            informationObject = new Information();
+                                            informationObject.commerceName = commerce.name;
+                                            informationObject.offerDescription = offer.description;
+                                            informationObject.commerceId = commerce.id;
+                                            informationObject.expirationDate = offer.expirationDate;
+                                            this.informationArray.push(informationObject);
+                                        }
+                                    }
+                                });
+                            });
+                        });
+                    }
                 });
         });
     }
@@ -161,6 +190,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
+    }
+
+    offersClickedMethod() {
+        this.offersClicked = true;
     }
 }
 

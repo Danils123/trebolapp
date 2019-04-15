@@ -26,6 +26,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ListScheduleService } from 'app/entities/list-schedule';
 import { ListPurchaseService } from 'app/entities/list-purchase';
 import { JhiAlertService } from 'ng-jhipster';
+import { Router } from '@angular/router';
 
 const colors: any = {
     red: {
@@ -51,6 +52,8 @@ const colors: any = {
 })
 export class CalendarComponent implements OnInit {
     listSchedules: IListSchedule[];
+    listPurchase: IListPurchase[];
+    purchaseEvent: IListPurchase;
     @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
     CalendarView = CalendarView;
@@ -66,8 +69,31 @@ export class CalendarComponent implements OnInit {
 
     actions: CalendarEventAction[] = [
         {
+            label: '<i class="fa fa-fw fa-pencil"></i>',
+            onClick: ({ event }: { event: CalendarEvent }): void => {
+                console.log('event');
+                for (const purchase of this.listPurchase) {
+                    if (event.title === purchase.name) {
+                        this.router.navigate(['/product-list/' + purchase.id + '/edit']);
+                    }
+                }
+            }
+        },
+        {
             label: '<i class="fa fa-fw fa-times"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
+                for (const purchase of this.listPurchase) {
+                    if (event.title === purchase.name) {
+                        this.purchaseEvent = purchase;
+                    }
+                }
+                if (this.purchaseEvent !== undefined) {
+                    for (const schedule of this.listSchedules) {
+                        if (schedule.purchaseid === this.purchaseEvent.id) {
+                            this.listScheduleService.delete(schedule.id).subscribe(response => {});
+                        }
+                    }
+                }
                 this.events = this.events.filter(iEvent => iEvent !== event);
             }
         }
@@ -83,11 +109,21 @@ export class CalendarComponent implements OnInit {
         protected listScheduleService: ListScheduleService,
         protected listPurchaseService: ListPurchaseService,
         protected userService: UserService,
-        protected jhiAlertService: JhiAlertService
+        protected jhiAlertService: JhiAlertService,
+        private router: Router
     ) {}
 
     ngOnInit() {
         this.loadAll();
+        this.listPurchaseService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IListPurchase[]>) => res.ok),
+                map((res: HttpResponse<IListPurchase[]>) => res.body)
+            )
+            .subscribe((res: IListPurchase[]) => {
+                this.listPurchase = res;
+            });
     }
 
     handleEvent(action: string, event: CalendarEvent): void {
@@ -148,17 +184,12 @@ export class CalendarComponent implements OnInit {
         this.refresh.next();
     }
 
-    addEvent(): void {
+    addEvent(title, date): void {
         this.events.push({
-            title: 'New event',
-            start: startOfDay(new Date()),
-            end: endOfDay(new Date()),
+            title: title,
+            start: startOfDay(date),
             color: colors.red,
-            draggable: true,
-            resizable: {
-                beforeStart: true,
-                afterEnd: true
-            }
+            actions: this.actions
         });
         this.refresh.next();
     }
@@ -194,13 +225,7 @@ export class CalendarComponent implements OnInit {
                                         const users = res2;
                                         for (const user of users) {
                                             if (purchase.state && user.id === userExtra.userId) {
-                                                this.events.push({
-                                                    title: purchase.name,
-                                                    start: startOfDay(schedule.time.toDate()),
-                                                    color: colors.red,
-                                                    actions: this.actions
-                                                });
-                                                this.refresh.next();
+                                                this.addEvent(purchase.name, schedule.time.toDate());
                                             }
                                         }
                                     });

@@ -37,6 +37,7 @@ import { PasswordStrengthBarComponent, PasswordComponent } from './account';
 import { PasswordResetInitComponent } from 'app/account/password-reset/init/password-reset-init.component';
 import { PasswordResetFinishComponent } from 'app/account/password-reset/finish/password-reset-finish.component';
 import { LoadingComponent } from './loading/loading.component';
+import { TrebolMapshopModule } from 'app/mapshop/mapshop.module';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { LoadingComponent } from './loading/loading.component';
         ReactiveFormsModule,
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
         AngularFireStorageModule, // imports firebase/storage only needed for storage features,
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        TrebolMapshopModule
     ],
 
     declarations: [

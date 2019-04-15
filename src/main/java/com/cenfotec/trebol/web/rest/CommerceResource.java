@@ -96,12 +96,6 @@ public class CommerceResource {
         return ResponseUtil.wrapOrNotFound(commerce);
     }
 
-    @GetMapping("/commerce-byUserId/{id}")
-    public List<Commerce> getByUserId(@PathVariable Long id) {
-        log.debug("REST request to get all Commerce");
-        return commerceRepository.findByOwnerId(id);
-    }
-
     /**
      * DELETE  /commerce/:id : delete the "id" commerce.
      *
@@ -113,5 +107,17 @@ public class CommerceResource {
         log.debug("REST request to delete Commerce : {}", id);
         commerceRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/commerce-byUserId/{id}")
+   public List<Commerce> getByUserId(@PathVariable Long id) {
+       log.debug("REST request to get all Commerce");
+       return commerceRepository.findByOwnerId(id);
+   }
+
+    @GetMapping("/commerce-byState/{state}")
+    public List<Commerce> getByState(@PathVariable Boolean state) {
+        log.debug("REST request to get all Commerce");
+        return commerceRepository.findByState(state);
     }
 }

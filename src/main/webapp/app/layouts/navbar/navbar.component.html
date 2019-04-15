@@ -77,11 +77,11 @@
 
 
                 <!-- ============================================================== -->
-                <!-- Messages -->
+                <!-- Offers -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown" *jhiHasAnyAuthority="['ROLE_COMPRADOR']">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="offersClickedMethod()"> <i class="mdi mdi-email"></i>
+                        <div *ngIf="informationArray.length > 0 && offersClicked === false" class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                     </a>
                     <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
                         <ul>
@@ -97,7 +97,9 @@
                                             <div class="mail-contnet">
                                                 <h5>{{information.commerceName}}</h5> <span class="mail-desc">{{information.offerDescription}}</span>
                                                 <span class="mail-desc">Fecha de expiración</span>
-                                                <span class="mail-desc">{{information.expirationDate|date: "dd MM yyyy"}}</span> </div>
+                                                <span *ngIf="information.expirationDate != null" class="mail-desc">{{information.expirationDate|date: "dd MM yyyy"}}</span>
+                                                <span *ngIf="information.expirationDate === null" class="mail-desc"> Hasta agotar existencia</span>
+                                            </div>
                                         </a>
                                     </div>
                                 </div>
@@ -112,7 +114,7 @@
                     </div>
                 </li>
                 <!-- ============================================================== -->
-                <!-- End Messages -->
+                <!-- End Offers -->
                 <!-- ============================================================== -->
 
                 <!-- ============================================================== -->

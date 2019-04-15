@@ -27,4 +27,7 @@ public interface ProductCommerceRepository extends JpaRepository<ProductCommerce
     @Query("select product_commerce from ProductCommerce product_commerce left join fetch product_commerce.productLists where product_commerce.id =:id")
     Optional<ProductCommerce> findOneWithEagerRelationships(@Param("id") Long id);
 
+    @Query(value = "select product_commerce from ProductCommerce product_commerce where product_commerce.commerce_id=:id")
+    List<ProductCommerce> findByCommerceId(@Param("id") Long id);
+
 }

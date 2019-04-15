@@ -35,7 +35,7 @@
                     <br>
                     <div class="form-group m-t-10">
                         <label class="d-lg-none form-control-label" for="login">Nombre de usuario</label>
-                        <input type="text" class="form-control" [(ngModel)]="registerAccount.login" id="login" name="login" #login="ngModel" placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_.@A-Za-z0-9-]*$">
+                        <input type="text" class="form-control" [(ngModel)]="registerAccount.login" id="login" name="login" (input)="lowerCase($event)" #login="ngModel" placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_.@A-Za-z0-9-]*$">
                         <div *ngIf="login.dirty && login.invalid">
                             <small class="form-text text-danger" *ngIf="login.errors.required">
                         Su nombre de usuario es requerido.

@@ -89,6 +89,10 @@ export class JhiLoginModalComponent implements AfterViewInit {
         this.router.navigate(['/register']);
     }
 
+    lowerCase() {
+        this.username = this.username.toLowerCase();
+    }
+
     requestResetPassword() {
         this.activeModal.dismiss('to state requestReset');
         this.router.navigate(['/reset', 'request']);

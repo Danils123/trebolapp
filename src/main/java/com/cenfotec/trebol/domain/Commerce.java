@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Commerce implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -59,10 +59,6 @@ public class Commerce implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Offer offer;
-
     @OneToMany(mappedBy = "commerce")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<OrderItem> orderItems = new HashSet<>();
@@ -77,11 +73,15 @@ public class Commerce implements Serializable {
     private UserExtra owner;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserExtra userExtra;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
-    // remove
+    @ManyToMany(mappedBy = "commerces")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
+    private Set<Offer> offers = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -220,19 +220,6 @@ public class Commerce implements Serializable {
         this.phone = phone;
     }
 
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public Commerce offer(Offer offer) {
-        this.offer = offer;
-        return this;
-    }
-
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
-
     public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -317,6 +304,10 @@ public class Commerce implements Serializable {
         return this;
     }
 
+    public Boolean getState() {
+        return state;
+    }
+
     public void setOwner(UserExtra userExtra) {
         this.owner = userExtra;
     }
@@ -333,8 +324,32 @@ public class Commerce implements Serializable {
     public void setUserExtra(UserExtra userExtra) {
         this.userExtra = userExtra;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
-    // setters here, do not remove
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public Commerce offers(Set<Offer> offers) {
+        this.offers = offers;
+        return this;
+    }
+
+    public Commerce addOffers(Offer offer) {
+        this.offers.add(offer);
+        offer.getCommerces().add(this);
+        return this;
+    }
+
+    public Commerce removeOffers(Offer offer) {
+        this.offers.remove(offer);
+        offer.getCommerces().remove(this);
+        return this;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -358,9 +373,18 @@ public class Commerce implements Serializable {
 
     @Override
     public String toString() {
-        return "Commerce{" + "id=" + getId() + ", identification=" + getIdentification() + ", name='" + getName() + "'"
-                + ", address='" + getAddress() + "'" + ", latitude=" + getLatitude() + ", longitud=" + getLongitud()
-                + ", email='" + getEmail() + "'" + ", ranking=" + getRanking() + ", photograph='" + getPhotograph()
-                + "'" + ", state='" + isState() + "'" + ", phone='" + getPhone() + "'" + "}";
+        return "Commerce{" +
+            "id=" + getId() +
+            ", identification=" + getIdentification() +
+            ", name='" + getName() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", latitude=" + getLatitude() +
+            ", longitud=" + getLongitud() +
+            ", email='" + getEmail() + "'" +
+            ", ranking=" + getRanking() +
+            ", photograph='" + getPhotograph() + "'" +
+            ", state='" + isState() + "'" +
+            ", phone='" + getPhone() + "'" +
+            "}";
     }
 }
