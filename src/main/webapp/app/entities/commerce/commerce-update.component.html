@@ -1,77 +1,110 @@
-
 <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                        <h2 id="jhi-commerce-heading">Comercio</h2>
-            </div>
-            <div class="card-body">
-                    <div class="row justify-content-center">
-                            <div class="col-8">
-                                <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-                                    <div>
+    <div class="card">
+        <div class="card-header">
+            <h2 id="jhi-commerce-heading">Comercio</h2>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                        <div>
 
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_identification">Identificación</label>
-                                            <input type="number" class="form-control" name="identification" id="field_identification"
-                                                [(ngModel)]="commerce.identification" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_name">Nombre del comercio</label>
-                                            <input type="text" class="form-control" name="name" id="field_name"
-                                                [(ngModel)]="commerce.name" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_address">Dirección</label>
-                                            <textarea rows="3"  type="text-area" class="form-control" name="address" id="field_address"
-                                                [(ngModel)]="commerce.address"></textarea>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <i class="icon-map"></i> Marque la ubicación de su comercio
-                                            </div>
-                                            <div class="card-body">
-                                                <div #map id="map"></div>
-                                            </div>
-                                        </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_identification">Identificación</label>
+                                <input type="text" class="form-control" [textMask]="{mask: IDMask}" name="identification" id="field_identification" #identificacion [(ngModel)]="commerce.identification" required />
 
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_email">Email</label>
-                                            <input type="text" class="form-control" name="email" id="field_email"
-                                                [(ngModel)]="commerce.email" />
-                                        </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_name">Nombre del comercio</label>
+                                <input type="text" class="form-control" name="name" #nombre pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" id="field_name" minlength="5" maxlength="255" [(ngModel)]="commerce.name"
+                                    required />
+                                <div *ngIf="nombre.dirty && nombre.invalid">
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.required">
+                                                                    El ` del comercio es requerido.
+                                                                    </small>
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.pattern">
+                                                                        Solo puede ingresar caractes alfanuméricos.
+                                        </small>
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.minlength">
+                                                                        El nombre del comercio requiere al menos 1 cáracter.
+                                                                    </small>
+                                    <small class="form-text text-danger" *ngIf="nombre.errors?.maxlength">
+                                                                        El nombre del comercio requere al menos 255 caracteres.
+                                                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_address">Dirección</label>
+                                <textarea rows="3" type="text-area" #direccion  class="form-control" name="address" minlength="10" maxlength="255" id="field_address"
+                                    [(ngModel)]="commerce.address" required></textarea>
+                                <div *ngIf="direccion.dirty && direccion.invalid">
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.required">
+                                                                            La dirección es requerido.
+                                                                            </small>
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.pattern">
+                                                                                Solo puede ingresar caractes alfanuméricos.
+                                                </small>
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.minlength">
+                                                                                La dirección requiere al menos 1 cáracter.
+                                                                            </small>
+                                    <small class="form-text text-danger" *ngIf="direccion.errors?.maxlength">
+                                                    La dirección requere al menos 255 caracteres.
+                                                                            </small>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="icon-map"></i> Marque la ubicación de su comercio
+                                </div>
+                                <div class="card-body">
+                                    <div #map id="map"></div>
+                                </div>
+                            </div>
 
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="field_phone">Teléfono</label>
-                                            <input type="text" class="form-control" name="phone" id="field_phone"
-                                                [(ngModel)]="commerce.phone" />
-                                        </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_email">Correo electrónico</label>
+                                <input type="text" class="form-control" name="email" [textMask]="{mask: emailMask}" id="field_email" #emailInput="ngModel" [(ngModel)]="commerce.email" required email />
+                                <div *ngIf="emailInput.dirty && emailInput.invalid">
+                                    <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
+                                                                        Su correo electrónico es requerido.
+                                                                    </small>
+                                    <small class="form-text text-danger" *ngIf="emailInput.errors?.email">
+                                                                        Su correo electrónico no es válido.
+                                                                    </small>
 
-                                        <div class="checkbox checkbox-primary p-t-0">
-                                            <input id="checkbox-state" type="checkbox" (click)="changeState()" [checked]="!chkState">
-                                            <label for="checkbox-state"> Active su comercio y sea visible a sus clientes!</label>
-                                        </div>
+                                </div>
 
-                                    </div>
-                                    <div>
-                                        <button type="button" id="cancel-save" class="btn btn-danger"  (click)="previousState()">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="field_phone">Teléfono</label>
+                                    <input type="text" class="form-control" [textMask]="{mask: phoneMask}" name="phone" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
+                                    <small class="text-muted">ejemplo: 9999-9999</small>
+                                </div>
+
+                                <div class="checkbox checkbox-primary p-t-0">
+                                    <input id="checkbox-state" type="checkbox" (click)="changeState()" [checked]="!chkState">
+                                    <label for="checkbox-state"> Active su comercio y sea visible a sus clientes!</label>
+                                </div>
+                                <br>
+                            </div>
+                            <div>
+                                <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
                                             <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
                                         </button>
-                                        <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+                                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
                                             <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
                                         </button>
-                                    </div>
-                                </form>
                             </div>
+                    </form>
                     </div>
+                </div>
             </div>
 
         </div>
 
 
 
-        
 
 
 
-</div>
 
+    </div>

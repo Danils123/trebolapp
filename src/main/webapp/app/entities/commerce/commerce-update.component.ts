@@ -15,7 +15,8 @@ import { UserExtraService } from 'app/entities/user-extra';
 import { AccountService } from 'app/core';
 import Swal from 'sweetalert2';
 import { Markerplace } from 'app/shared/model/markerplace.model';
-
+import { TextMaskModule } from 'angular2-text-mask';
+import emailMask from 'text-mask-addons/dist/emailMask';
 @Component({
     selector: 'jhi-commerce-update',
     templateUrl: './commerce-update.component.html',
@@ -40,6 +41,10 @@ export class CommerceUpdateComponent implements OnInit {
     userextras: IUserExtra[];
     chkState: boolean;
 
+    public IDMask: Array<string | RegExp>;
+    public phoneMask: Array<string | RegExp>;
+    public emailMask = emailMask;
+
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected commerceService: CommerceService,
@@ -47,8 +52,12 @@ export class CommerceUpdateComponent implements OnInit {
         protected offerService: OfferService,
         protected userExtraService: UserExtraService,
         protected activatedRoute: ActivatedRoute,
+        public textMask: TextMaskModule,
         private accountService: AccountService
-    ) {}
+    ) {
+        this.IDMask = [/\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
+        this.phoneMask = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    }
 
     ngOnInit() {
         this.isSaving = false;
