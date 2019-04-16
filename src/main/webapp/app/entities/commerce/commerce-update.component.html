@@ -20,7 +20,7 @@
                                     required />
                                 <div *ngIf="nombre.dirty && nombre.invalid">
                                     <small class="form-text text-danger" *ngIf="nombre.errors?.required">
-                                                                    El nombre del comercio es requerido.
+                                                                    El ` del comercio es requerido.
                                                                     </small>
                                     <small class="form-text text-danger" *ngIf="nombre.errors?.pattern">
                                                                         Solo puede ingresar caractes alfanuméricos.
@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_address">Dirección</label>
-                                <textarea rows="3" type="text-area" #direccion pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$" class="form-control" name="address" minlength="10" maxlength="255" id="field_address"
+                                <textarea rows="3" type="text-area" #direccion  class="form-control" name="address" minlength="10" maxlength="255" id="field_address"
                                     [(ngModel)]="commerce.address" required></textarea>
                                 <div *ngIf="direccion.dirty && direccion.invalid">
                                     <small class="form-text text-danger" *ngIf="direccion.errors?.required">
