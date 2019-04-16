@@ -31,6 +31,8 @@ export class ProductUpdateComponent implements OnInit {
     categories: ICategory[];
     validBarCode = true;
     allProducts: IProduct[];
+    minValue = true;
+    maxValue = true;
 
     subcategories: ISubCategory[];
 
@@ -251,6 +253,25 @@ export class ProductUpdateComponent implements OnInit {
             this.validBarCode = valid;
         } else {
             this.validBarCode = valid;
+        }
+    }
+
+    validateMinMax() {
+        this.minValue = true;
+        this.maxValue = true;
+
+        if (this.product.barCode != null) {
+            if (this.product.barCode.toString().length <= 9) {
+                this.minValue = false;
+            } else {
+                this.minValue = true;
+            }
+
+            if (this.product.barCode.toString().length > 13) {
+                this.maxValue = false;
+            } else {
+                this.maxValue = true;
+            }
         }
     }
 }
