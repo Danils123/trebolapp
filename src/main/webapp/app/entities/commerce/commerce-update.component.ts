@@ -57,7 +57,7 @@ export class CommerceUpdateComponent implements OnInit {
         public textMask: TextMaskModule,
         private accountService: AccountService
     ) {
-        this.IDMask = [/\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
+        this.IDMask = [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
         this.phoneMask = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     }
 
@@ -244,11 +244,21 @@ export class CommerceUpdateComponent implements OnInit {
         }
     }
 
-    validateMinMax(form: NgForm) {
+    validateIdentification(form: NgForm) {
         const text = form.form.controls.identification.value;
         const underscore = '_';
         if (text.includes(underscore)) {
             form.form.controls.identification.setErrors({ incorrect: true });
+        }
+        console.log(this.commerce.identification);
+        return form;
+    }
+
+    validatePhone(form: NgForm) {
+        const text = form.form.controls.phone.value;
+        const underscore = '_';
+        if (text.includes(underscore)) {
+            form.form.controls.phone.setErrors({ incorrect: true });
         }
         return form;
     }

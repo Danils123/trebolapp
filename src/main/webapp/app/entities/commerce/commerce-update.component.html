@@ -10,12 +10,12 @@
                         <div>
 
                             <div class="form-group">
-                                <label class="form-control-label" for="field_identification">Identificación</label>
-                                <input type="text" class="form-control" [textMask]="{mask: IDMask}" (keyup)="validateMinMax(editForm)" (change)="validateMinMax(editForm)" name="identification" id="field_identification" #identification="ngModel" [(ngModel)]="commerce.identification"
+                                <label class="form-control-label" for="field_identification">Cédula jurídica</label>
+                                <input type="text" class="form-control" [textMask]="{mask: IDMask}" (keyup)="validateIdentification(editForm)" (change)="validateIdentification(editForm)" name="identification" id="field_identification" #identification="ngModel" [(ngModel)]="commerce.identification"
                                     required />
                                 <div>
                                     <small class="form-text text-danger" *ngIf="identification.errors?.incorrect">
-                                        La identifación requiere 10 números
+                                        La cédula requiere 10 números
                                     </small>
                                 </div>
                             </div>
@@ -73,8 +73,13 @@
 
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_phone">Teléfono</label>
-                                    <input type="text" class="form-control" [textMask]="{mask: phoneMask}" name="phone" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
+                                    <input type="text" class="form-control" [textMask]="{mask: phoneMask}" name="phone" #phone="ngModel" (keyup)="validatePhone(editForm)" (change)="validatePhone(editForm)" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
                                     <small class="text-muted">ejemplo: 9999-9999</small>
+                                    <div>
+                                        <small class="form-text text-danger" *ngIf="phone.errors?.incorrect">
+                                            El teléfono requiere 10 números
+                                        </small>
+                                    </div>
                                 </div>
 
                                 <div class="checkbox checkbox-primary p-t-0">

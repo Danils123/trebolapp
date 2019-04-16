@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseService } from 'app/services/firebase.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'jhi-settings',
@@ -124,5 +125,23 @@ export class SettingsComponent implements OnInit {
             login: account.login,
             imageUrl: account.imageUrl
         };
+    }
+
+    validatePhone(form: NgForm) {
+        const text = form.form.controls.phoneInput.value;
+        const underscore = '_';
+        if (text.includes(underscore)) {
+            form.form.controls.phoneInput.setErrors({ incorrect: true });
+        }
+        return form;
+    }
+
+    validateSecondaryPhone(form: NgForm) {
+        const text = form.form.controls.cellPhoneInput.value;
+        const underscore = '_';
+        if (text.includes(underscore)) {
+            form.form.controls.cellPhoneInput.setErrors({ incorrect: true });
+        }
+        return form;
     }
 }
