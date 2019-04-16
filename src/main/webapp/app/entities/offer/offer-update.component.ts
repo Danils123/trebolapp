@@ -143,5 +143,6 @@ export class OfferUpdateComponent implements OnInit {
                 this.maxValue = true;
             }
         }
+        //pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$"
     }
 }

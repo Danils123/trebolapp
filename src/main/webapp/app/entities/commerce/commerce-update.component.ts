@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 import { Markerplace } from 'app/shared/model/markerplace.model';
 import { TextMaskModule } from 'angular2-text-mask';
 import emailMask from 'text-mask-addons/dist/emailMask';
+import { NgForm } from '@angular/forms';
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 @Component({
     selector: 'jhi-commerce-update',
     templateUrl: './commerce-update.component.html',
@@ -240,5 +242,14 @@ export class CommerceUpdateComponent implements OnInit {
         } else {
             this.chkState = true;
         }
+    }
+
+    validateMinMax(form: NgForm) {
+        const text = form.form.controls.identification.value;
+        const underscore = '_';
+        if (text.includes(underscore)) {
+            form.form.controls.identification.setErrors({ incorrect: true });
+        }
+        return form;
     }
 }
