@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="card">
+      <div class="card-header">
+          <h1> Realizar pago </h1>
+      </div>
+      <div class="card-body">
+        <div>
+          Información de la transacción:
+          <p> Monto de la transacción: <b>{{amount}}</b></p>
+          <p> Mondeda: <b>{{currency}}</b> </p>
+
+        </div>
+      <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest" class="checkout">
+        <input type="text" formControlName="name" placeholder="Titular de la tarjeta">
+        <div id="card-element" class="field"></div>
+        <button type="submit">
+          Comprar {{amount}} {{currencySymbol}}
+        </button>
+      </form>
+
+      </div>
+  </div>
+</div>
+
+
+

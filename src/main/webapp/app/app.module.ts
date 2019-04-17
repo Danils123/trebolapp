@@ -8,6 +8,7 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -38,6 +39,8 @@ import { PasswordResetInitComponent } from 'app/account/password-reset/init/pass
 import { PasswordResetFinishComponent } from 'app/account/password-reset/finish/password-reset-finish.component';
 import { LoadingComponent } from './loading/loading.component';
 import { TrebolMapshopModule } from 'app/mapshop/mapshop.module';
+import { StripePaymentsModule } from 'app/payments/payments.module';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
     imports: [
@@ -61,7 +64,9 @@ import { TrebolMapshopModule } from 'app/mapshop/mapshop.module';
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
         AngularFireStorageModule, // imports firebase/storage only needed for storage features,
         AngularFirestoreModule,
-        TrebolMapshopModule
+        TrebolMapshopModule,
+        StripePaymentsModule,
+        NgxStripeModule.forRoot('pk_test_oR2YNX8ibcqRhWkV964yPRvI001hbD1d3h')
     ],
 
     declarations: [
@@ -102,7 +107,8 @@ import { TrebolMapshopModule } from 'app/mapshop/mapshop.module';
             useClass: NotificationInterceptor,
             multi: true
         },
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        StripePaymentsModule
     ],
     bootstrap: [JhiMainComponent]
 })
