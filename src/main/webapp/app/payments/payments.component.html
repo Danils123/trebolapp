@@ -5,9 +5,7 @@
       </div>
       <div class="card-body">
         <div>
-          Información de la transacción:
-          <p> Monto de la transacción: <b>{{amount}}</b></p>
-          <p> Mondeda: <b>{{currency}}</b> </p>
+          <h3 style="text-align: center;"> Monto de la transacción: <b style="color:rgb(0, 182, 9)">{{currencySymbol}} {{amount}}</b></h3>
 
         </div>
       <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest" class="checkout">
