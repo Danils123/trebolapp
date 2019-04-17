@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,6 +13,8 @@ import { PaymentService } from '../entities/payment/payment.service';
 import * as moment from 'moment';
 import { LoginModalService, AccountService, Account } from 'app/core';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
+
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-payments',
@@ -29,7 +32,7 @@ export class PaymentsComponent implements OnInit {
 
     currency = 'usd';
 
-    payment: IPayment = new Payment(0, moment(), '', '', 0, 'Description test', false);
+    payment: IPayment = new Payment(0, moment(), '', '', 0, 'Orden Trebol', false);
     moment: moment.Moment;
     isSaving: boolean;
 
@@ -43,7 +46,8 @@ export class PaymentsComponent implements OnInit {
         private eventManager: JhiEventManager,
         private fb: FormBuilder,
         private stripeService: StripeService,
-        protected paymentService: PaymentService
+        protected paymentService: PaymentService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -115,19 +119,41 @@ export class PaymentsComponent implements OnInit {
 
     protected onSaveSuccess() {
         this.isSaving = false;
-        alert('Payment succeed!');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center',
+            showConfirmButton: true
+        });
+        Toast.fire({
+            type: 'success',
+            title: 'Pago realizado correctamente'
+        });
+        this.homeRedirect();
     }
 
     previousState() {
         window.history.back();
     }
 
+    homeRedirect() {
+        this.router.navigate(['/']);
+    }
+
     protected onSaveError() {
         this.isSaving = false;
-        alert('Payment failed!');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: true
+        });
+        Toast.fire({
+            type: 'error',
+            title: 'Lo sentimos el pago no se pudo realizar'
+        });
     }
 
     buy() {
+        this.loading();
         const name = this.stripeTest.get('name').value;
         this.stripeService.createToken(this.card, { name }).subscribe(result => {
             if (result.token) {
@@ -143,6 +169,24 @@ export class PaymentsComponent implements OnInit {
                 // Error creating the token
                 console.log('Error creating the token!');
                 console.log(result.error.message);
+            }
+        });
+    }
+
+    loading() {
+        Swal.fire({
+            title: 'Procesando..',
+            html: 'Por favor espere',
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+                Swal.showLoading();
+            }
+        }).then(result => {
+            if (
+                // Read more about handling dismissals
+                result.dismiss === Swal.DismissReason.timer
+            ) {
+                console.log('I was closed by the timer');
             }
         });
     }

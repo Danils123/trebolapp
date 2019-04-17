@@ -13,8 +13,8 @@
       <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest" class="checkout">
         <input type="text" formControlName="name" placeholder="Titular de la tarjeta">
         <div id="card-element" class="field"></div>
-        <button type="submit">
-          Comprar {{amount}} {{currencySymbol}}
+        <button type="submit" class="btn btn-success btn-lg" id="btn-buy">
+          Comprar {{currencySymbol}} {{amount}} 
         </button>
       </form>
 
