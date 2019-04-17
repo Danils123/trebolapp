@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { TrebolSharedModule } from 'app/shared';
+import { TextMaskModule } from 'angular2-text-mask';
 import {
     CommerceComponent,
     CommerceDetailComponent,
@@ -15,7 +16,7 @@ import {
 const ENTITY_STATES = [...commerceRoute, ...commercePopupRoute];
 
 @NgModule({
-    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES), TextMaskModule],
     declarations: [
         CommerceComponent,
         CommerceDetailComponent,
