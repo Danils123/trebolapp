@@ -88,7 +88,7 @@ export class SettingsComponent implements OnInit {
                     this.userExtra.notification = this.settingsAccount.notification;
                     this.userExtra.commerces = this.settingsAccount.commerces;
                     const userExtra2 = this.userExtra;
-
+                    console.log(this.userExtra);
                     this.userExtraService.update(this.userExtra).subscribe(user => {
                         this.userExtra = user.body;
                         this.success = 'OK';

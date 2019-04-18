@@ -60,15 +60,21 @@ export class OfferUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.offer.commerces = [];
-        this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
-
-        if (this.offer.id !== undefined) {
-            this.subscribeToSaveResponse(this.offerService.update(this.offer));
-        } else {
-            this.offer.disabled = false;
-
-            this.subscribeToSaveResponse(this.offerService.create(this.offer));
-        }
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe((res2: ICommerce[]) => {
+                this.offer.commerces = res2;
+                if (this.offer.id !== undefined) {
+                    this.subscribeToSaveResponse(this.offerService.update(this.offer));
+                } else {
+                    this.offer.disabled = false;
+                    this.subscribeToSaveResponse(this.offerService.create(this.offer));
+                }
+            });
     }
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IOffer>>) {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
@@ -78,7 +84,7 @@ export class OfferUpdateComponent implements OnInit {
         /*
         POR AHORA SE QUEDA COMENTADO PARA ASEGURARSE QUE TODO FUNCIONE SIN PROBLEMAS SIN MODIFICAR EL USUARIO EXTRA COMO TAL
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
-            
+
             const commercesSave = res.body.commerces[0];
 
             const userExtraSave = res.body;
@@ -147,6 +153,6 @@ export class OfferUpdateComponent implements OnInit {
             }
         }
         return form;
-        //pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$"
+        // pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$"
     }
 }
