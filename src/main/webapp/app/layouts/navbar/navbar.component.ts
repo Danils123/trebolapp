@@ -135,7 +135,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.informationArray = [];
         let userExtra: IUserExtra;
         this.offers = [];
-
+        console.log('aaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+        console.log(this.accountService.userExtra);
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
             userExtra = res.body;
             let offers: IOffer[];
