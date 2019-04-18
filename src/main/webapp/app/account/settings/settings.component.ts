@@ -69,6 +69,7 @@ export class SettingsComponent implements OnInit {
         this.userTemp.firstName = this.settingsAccount.firstName;
         this.userTemp.lastName = this.settingsAccount.lastName;
         this.userTemp.email = this.settingsAccount.email;
+        this.userTemp.langKey = 'en';
         this.accountService.save(this.userTemp).subscribe(
             () => {
                 this.error = null;
