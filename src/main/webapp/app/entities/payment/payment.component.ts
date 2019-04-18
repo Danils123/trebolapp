@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IPayment } from 'app/shared/model/payment.model';
 import { AccountService } from 'app/core';
 import { PaymentService } from './payment.service';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-payment',
@@ -26,18 +27,39 @@ export class PaymentComponent implements OnInit, OnDestroy {
     ) {}
 
     loadAll() {
-        this.paymentService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IPayment[]>) => res.ok),
-                map((res: HttpResponse<IPayment[]>) => res.body)
-            )
-            .subscribe(
-                (res: IPayment[]) => {
-                    this.payments = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        let user: IUserExtra;
+        user = this.accountService.userExtra;
+        if (this.isComprador) {
+            this.paymentService
+                .queryByUser(user.userId)
+                .pipe(
+                    filter((res: HttpResponse<IPayment[]>) => res.ok),
+                    map((res: HttpResponse<IPayment[]>) => res.body)
+                )
+                .subscribe(
+                    (res: IPayment[]) => {
+                        this.payments = res;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else {
+            if (this.isVendedor) {
+                //Aqui codigo para ventas
+            } else {
+                this.paymentService
+                    .query()
+                    .pipe(
+                        filter((res: HttpResponse<IPayment[]>) => res.ok),
+                        map((res: HttpResponse<IPayment[]>) => res.body)
+                    )
+                    .subscribe(
+                        (res: IPayment[]) => {
+                            this.payments = res;
+                        },
+                        (res: HttpErrorResponse) => this.onError(res.message)
+                    );
+            }
+        }
     }
 
     ngOnInit() {
@@ -46,6 +68,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
             this.currentAccount = account;
         });
         this.registerChangeInPayments();
+    }
+
+    isComprador() {
+        return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_COMPRADOR']));
+    }
+
+    isVendedor() {
+        return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_VENDEDOR']));
     }
 
     ngOnDestroy() {

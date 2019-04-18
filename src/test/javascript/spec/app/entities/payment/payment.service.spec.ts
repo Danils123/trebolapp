@@ -115,7 +115,7 @@ describe('Service Tests', () => {
                     returnedFromService
                 );
                 service
-                    .query(expected)
+                    .query()
                     .pipe(
                         take(1),
                         map(resp => resp.body)

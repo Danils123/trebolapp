@@ -3,58 +3,61 @@
             <div class="container-fluid">
                     <div class="card">
                         <div class="card-header">
-                                <h2><span>Pago</span></h2>
+                                <h2><span>Detalles del pago</span></h2>
+                        </div>
+                        <div class="card-body">
+                                <div *ngIf="payment">
+            
+                                        <dl class="row-md jh-entity-details">
+                                            <dt><span>Fecha</span></dt>
+                                            <dd>
+                                                <span>{{payment.date}}</span>
+                                            </dd>
+                                            <dt><span>Token</span></dt>
+                                            <dd>
+                                                <span>{{payment.token}}</span>
+                                            </dd>
+                                            <dt><span>Moneda</span></dt>
+                                            <dd>
+                                                <span>{{payment.currency}}</span>
+                                            </dd>
+                                            <dt><span>Monto</span></dt>
+                                            <dd>
+                                                <span>{{payment.amount}}</span>
+                                            </dd>
+                                            <dt><span>Descripción</span></dt>
+                                            <dd>
+                                                <span>{{payment.description}}</span>
+                                            </dd>
+                                            <dt><span>Captura</span></dt>
+                                            <dd>
+                                                <span>{{payment.capture}}</span>
+                                            </dd>
+                                            <dt><span>Recibo</span></dt>
+                                            <dd>
+                                                <span>{{payment.receipt}}</span>
+                                            </dd>
+                                            <dt><span>Usuario</span></dt>
+                                            <dd>
+                                                {{payment.user?.id}}
+                                            </dd>
+                                        </dl>
+                            
+                                        <button type="submit"
+                                                (click)="previousState()"
+                                                class="btn btn-info">
+                                            <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Volver</span>
+                                        </button>
                         </div>
                     </div>
             </div>
-        <div *ngIf="payment">
-            
-            <dl class="row-md jh-entity-details">
-                <dt><span>Fecha</span></dt>
-                <dd>
-                    <span>{{payment.date}}</span>
-                </dd>
-                <dt><span>Token</span></dt>
-                <dd>
-                    <span>{{payment.token}}</span>
-                </dd>
-                <dt><span>Moneda</span></dt>
-                <dd>
-                    <span>{{payment.currency}}</span>
-                </dd>
-                <dt><span>Monto</span></dt>
-                <dd>
-                    <span>{{payment.amount}}</span>
-                </dd>
-                <dt><span>Descripción</span></dt>
-                <dd>
-                    <span>{{payment.description}}</span>
-                </dd>
-                <dt><span>Captura</span></dt>
-                <dd>
-                    <span>{{payment.capture}}</span>
-                </dd>
-                <dt><span>Recibo</span></dt>
-                <dd>
-                    <span>{{payment.receipt}}</span>
-                </dd>
-                <dt><span>Usuario</span></dt>
-                <dd>
-                    {{payment.user?.id}}
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Atrás</span>
-            </button>
-
+        
+<!-- 
             <button type="button"
                     [routerLink]="['/payment', payment.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Guardar</span>
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
