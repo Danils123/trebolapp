@@ -7,116 +7,97 @@
             <div class="row justify-content-center">
                 <div class="col-8">
                     <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-                        <div>
-
-                            <div class="form-group">
-<<<<<<< HEAD
-                                <label class="form-control-label" for="field_identification">Cédula jurídica</label>
-                                <input type="text" class="form-control" [textMask]="{mask: IDMask}" (keyup)="validateIdentification(editForm)" (change)="validateIdentification(editForm)" name="identification" id="field_identification" #identification="ngModel" [(ngModel)]="commerce.identification"
-                                    required />
-                                <div>
-                                    <small class="form-text text-danger" *ngIf="identification.errors?.incorrect">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_identification">Cédula jurídica</label>
+                            <input type="text" class="form-control" [textMask]="{mask: IDMask}" (keyup)="validateIdentification(editForm)" (change)="validateIdentification(editForm)" name="identification" id="field_identification" #identification="ngModel" [(ngModel)]="commerce.identification"
+                                required />
+                            <div>
+                                <small class="form-text text-danger" *ngIf="identification.errors?.incorrect">
                                         La cédula requiere 10 números
                                     </small>
-                                </div>
-=======
-                                <label class="form-control-label" for="field_identification">Identificación</label>
-                                <input type="text" class="form-control"  name="identification" id="field_identification" #identificacion [(ngModel)]="commerce.identification" required />
-
->>>>>>> ddc2943fa9d5f6347531707107ed5ded2196a3b9
                             </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="field_name">Nombre del comercio</label>
-                                <input type="text" class="form-control" name="name" #nombre="ngModel" id="field_name" minlength="5" maxlength="255" [(ngModel)]="commerce.name" required />
-                                <div *ngIf="nombre.dirty && nombre.invalid">
-                                    <small class="form-text text-danger" *ngIf="nombre.errors?.required">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_name">Nombre del comercio</label>
+                            <input type="text" class="form-control" name="name" #nombre="ngModel" id="field_name" minlength="5" maxlength="255" [(ngModel)]="commerce.name" required />
+                            <div *ngIf="nombre.dirty && nombre.invalid">
+                                <small class="form-text text-danger" *ngIf="nombre.errors?.required">
                                                                     El nombre del comercio es requerido.
                                                                     </small>
-                                    <small class="form-text text-danger" *ngIf="nombre.errors?.maxlength">
+                                <small class="form-text text-danger" *ngIf="nombre.errors?.maxlength">
                                                                         El nombre del comercio no puede exceder 255 caracteres.
                                                                     </small>
-                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="field_address">Dirección</label>
-                                <textarea rows="3" type="text-area" class="form-control" name="address" minlength="10" maxlength="255" id="field_address" [(ngModel)]="commerce.address" #direccion="ngModel" required></textarea>
-                                <div *ngIf="direccion.dirty && direccion.invalid">
-                                    <small class="form-text text-danger" *ngIf="direccion.errors?.required">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_address">Dirección</label>
+                            <textarea rows="3" type="text-area" class="form-control" name="address" minlength="10" maxlength="255" id="field_address" [(ngModel)]="commerce.address" #direccion="ngModel" required></textarea>
+                            <div *ngIf="direccion.dirty && direccion.invalid">
+                                <small class="form-text text-danger" *ngIf="direccion.errors?.required">
                                                                             La dirección es requerida.
                                                                             </small>
-                                    <small class="form-text text-danger" *ngIf="direccion.errors?.pattern">
+                                <small class="form-text text-danger" *ngIf="direccion.errors?.pattern">
                                                                                 Solo puede ingresar caracteres alfanuméricos.
                                                 </small>
-                                    <small class="form-text text-danger" *ngIf="direccion.errors?.minlength">
+                                <small class="form-text text-danger" *ngIf="direccion.errors?.minlength">
                                                                                 La dirección requiere al menos 10 caracteres.
                                                                             </small>
-                                    <small class="form-text text-danger" *ngIf="direccion.errors?.maxlength">
+                                <small class="form-text text-danger" *ngIf="direccion.errors?.maxlength">
                                                     La dirección no puede exceder 255 caracteres.
                                                                             </small>
-                                </div>
                             </div>
-                            <div class="card">
-                                <div class="card-header">
-                                    <i class="icon-map"></i> Marque la ubicación de su comercio
-                                </div>
-                                <div class="card-body">
-                                    <div #map id="map"></div>
-                                </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="icon-map"></i> Marque la ubicación de su comercio
                             </div>
+                            <div class="card-body">
+                                <div #map id="map"></div>
+                            </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="form-control-label" for="field_email">Correo electrónico</label>
-                                <input type="text" class="form-control" name="email"  id="field_email" #emailInput="ngModel" [(ngModel)]="commerce.email" required email />
-                                <div *ngIf="emailInput.dirty && emailInput.invalid">
-                                    <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
+                        <div class="form-group">
+                            <label class="form-control-label" for="field_email">Correo electrónico</label>
+                            <input type="text" class="form-control" name="email" [textMask]="{mask: emailMask}" id="field_email" #emailInput="ngModel" [(ngModel)]="commerce.email" required email />
+                            <div *ngIf="emailInput.dirty && emailInput.invalid">
+                                <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
                                                                         Su correo electrónico es requerido.
                                                                     </small>
-                                    <small class="form-text text-danger" *ngIf="emailInput.errors?.email">
+                                <small class="form-text text-danger" *ngIf="emailInput.errors?.email">
                                                                         Su correo electrónico no es válido.
                                                                     </small>
 
-                                </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="form-control-label" for="field_phone">Teléfono</label>
-<<<<<<< HEAD
-                                    <input type="text" class="form-control" [textMask]="{mask: phoneMask}" name="phone" #phone="ngModel" (keyup)="validatePhone(editForm)" (change)="validatePhone(editForm)" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
-=======
-                                    <input type="text" class="form-control" name="phone" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
->>>>>>> ddc2943fa9d5f6347531707107ed5ded2196a3b9
-                                    <small class="text-muted">ejemplo: 9999-9999</small>
-                                    <div>
-                                        <small class="form-text text-danger" *ngIf="phone.errors?.incorrect">
+                            <div class="form-group">
+                                <label class="form-control-label" for="field_phone">Teléfono</label>
+                                <input type="text" class="form-control" [textMask]="{mask: phoneMask}" name="phone" #phone="ngModel" (keyup)="validatePhone(editForm)" (change)="validatePhone(editForm)" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
+                                <small class="text-muted">ejemplo: 9999-9999</small>
+                                <div>
+                                    <small class="form-text text-danger" *ngIf="phone.errors?.incorrect">
                                             El teléfono requiere 8 números.
                                         </small>
-                                    </div>
                                 </div>
-
-                                <div class="checkbox checkbox-primary p-t-0">
-                                    <input id="checkbox-state" type="checkbox" (click)="changeState()" [checked]="!chkState">
-                                    <label for="checkbox-state"> Active su comercio y sea visible a sus clientes!</label>
-                                </div>
-                                <br>
                             </div>
-                            <div>
-                                <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
+
+                            <div class="checkbox checkbox-primary p-t-0">
+                                <input id="checkbox-state" type="checkbox" (click)="changeState()" [checked]="!chkState">
+                                <label for="checkbox-state"> Active su comercio y sea visible a sus clientes!</label>
+                            </div>
+                            <br>
+                        </div>
+                        <div>
+                            <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">
                                             <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancelar</span>
                                         </button>
-                                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
+                            <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-success">
                                             <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Guardar</span>
                                         </button>
-                            </div>
+                        </div>
                     </form>
-                    </div>
                 </div>
             </div>
-
         </div>
 
-
-
-
-
-
-
     </div>
+</div>
