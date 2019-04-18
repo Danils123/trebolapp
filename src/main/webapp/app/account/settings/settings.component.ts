@@ -74,6 +74,7 @@ export class SettingsComponent implements OnInit {
                 this.error = null;
                 this.accountService.identity(true).then(account => {
                     // this.settingsAccount = this.copyAccount(account);
+
                     this.userExtra = {};
                     this.userExtra.id = this.settingsAccount.userExtraId;
                     this.userExtra.userId = this.settingsAccount.userId;
@@ -85,7 +86,8 @@ export class SettingsComponent implements OnInit {
                     this.userExtra.photograph = this.settingsAccount.photograph;
                     this.userExtra.notification = this.settingsAccount.notification;
                     this.userExtra.commerces = this.settingsAccount.commerces;
-                    console.log(this.userExtra);
+                    const userExtra2 = this.userExtra;
+
                     this.userExtraService.update(this.userExtra).subscribe(user => {
                         this.userExtra = user.body;
                         this.success = 'OK';

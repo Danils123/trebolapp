@@ -31,8 +31,11 @@ public class UserExtraResource {
 
     private final UserExtraRepository userExtraRepository;
 
-    public UserExtraResource(UserExtraRepository userExtraRepository) {
+    private final CommerceRepository commerceRepository;
+
+    public UserExtraResource(UserExtraRepository userExtraRepository, CommerceRepository commerceRepository) {
         this.userExtraRepository = userExtraRepository;
+        this.commerceRepository = commerceRepository;
     }
 
     /**
@@ -96,6 +99,11 @@ public class UserExtraResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         UserExtra result = userExtraRepository.save(userExtra);
+        for (Commerce commerce : result.getCommerces()) {
+            commerce.setUserExtra(userExtra);
+            commerce.setOwner(userExtra);
+            this.commerceRepository.save(commerce);
+        }
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExtra.getId().toString())).body(result);
     }
