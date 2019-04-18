@@ -57,7 +57,7 @@ export class MapshopComponent implements OnInit {
     }
 
     loadMarks() {
-        for (let item of this.marks) {
+        for (const item of this.marks) {
             item.setMap(null);
         }
         this.marks.length = 0;
@@ -82,12 +82,13 @@ export class MapshopComponent implements OnInit {
                                 id: item.id.toString()
                             };
 
-                            let validation = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, markCommerce);
+                            const validation = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, markCommerce);
 
                             if (validation) {
                                 this.addMark(markCommerce);
                             }
                         }
+                        this.map.setZoom(12);
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)

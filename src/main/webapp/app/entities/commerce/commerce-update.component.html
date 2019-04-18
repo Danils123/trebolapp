@@ -10,6 +10,7 @@
                         <div>
 
                             <div class="form-group">
+<<<<<<< HEAD
                                 <label class="form-control-label" for="field_identification">Cédula jurídica</label>
                                 <input type="text" class="form-control" [textMask]="{mask: IDMask}" (keyup)="validateIdentification(editForm)" (change)="validateIdentification(editForm)" name="identification" id="field_identification" #identification="ngModel" [(ngModel)]="commerce.identification"
                                     required />
@@ -18,6 +19,11 @@
                                         La cédula requiere 10 números
                                     </small>
                                 </div>
+=======
+                                <label class="form-control-label" for="field_identification">Identificación</label>
+                                <input type="text" class="form-control"  name="identification" id="field_identification" #identificacion [(ngModel)]="commerce.identification" required />
+
+>>>>>>> ddc2943fa9d5f6347531707107ed5ded2196a3b9
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_name">Nombre del comercio</label>
@@ -60,7 +66,7 @@
 
                             <div class="form-group">
                                 <label class="form-control-label" for="field_email">Correo electrónico</label>
-                                <input type="text" class="form-control" name="email" [textMask]="{mask: emailMask}" id="field_email" #emailInput="ngModel" [(ngModel)]="commerce.email" required email />
+                                <input type="text" class="form-control" name="email"  id="field_email" #emailInput="ngModel" [(ngModel)]="commerce.email" required email />
                                 <div *ngIf="emailInput.dirty && emailInput.invalid">
                                     <small class="form-text text-danger" *ngIf="emailInput.errors?.required">
                                                                         Su correo electrónico es requerido.
@@ -73,7 +79,11 @@
 
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_phone">Teléfono</label>
+<<<<<<< HEAD
                                     <input type="text" class="form-control" [textMask]="{mask: phoneMask}" name="phone" #phone="ngModel" (keyup)="validatePhone(editForm)" (change)="validatePhone(editForm)" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
+=======
+                                    <input type="text" class="form-control" name="phone" minlength="9" id="field_phone" [(ngModel)]="commerce.phone" />
+>>>>>>> ddc2943fa9d5f6347531707107ed5ded2196a3b9
                                     <small class="text-muted">ejemplo: 9999-9999</small>
                                     <div>
                                         <small class="form-text text-danger" *ngIf="phone.errors?.incorrect">

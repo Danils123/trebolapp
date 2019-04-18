@@ -54,6 +54,7 @@
         "ngx-cookie": "2.0.1",
         "ngx-infinite-scroll": "7.0.1",
         "ngx-socket-io": "^2.1.1",
+        "ngx-stripe": "^7.2.0",
         "ngx-toastr": "^10.0.2",
         "ngx-ui-switch": "^8.0.0",
         "ngx-webstorage": "2.0.1",
