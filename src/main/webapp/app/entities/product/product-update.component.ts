@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 
 import { FileItem } from './file-item';
 import { HostListener } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'jhi-product-update',
@@ -256,22 +257,25 @@ export class ProductUpdateComponent implements OnInit {
         }
     }
 
-    validateMinMax() {
+    validateMinMax(form: NgForm) {
         this.minValue = true;
         this.maxValue = true;
 
         if (this.product.barCode != null) {
             if (this.product.barCode.toString().length <= 9) {
                 this.minValue = false;
+                form.form.controls.barCode.setErrors({ incorrect: true });
             } else {
                 this.minValue = true;
             }
 
             if (this.product.barCode.toString().length > 13) {
                 this.maxValue = false;
+                form.form.controls.barCode.setErrors({ incorrect: true });
             } else {
                 this.maxValue = true;
             }
         }
+        return form;
     }
 }

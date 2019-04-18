@@ -33,19 +33,19 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_address">Dirección</label>
-                                <textarea rows="3" type="text-area" #direccion class="form-control" name="address" minlength="10" maxlength="255" id="field_address" [(ngModel)]="commerce.address" required></textarea>
+                                <textarea rows="3" type="text-area" class="form-control" name="address" minlength="10" maxlength="255" id="field_address" [(ngModel)]="commerce.address" #direccion="ngModel" required></textarea>
                                 <div *ngIf="direccion.dirty && direccion.invalid">
                                     <small class="form-text text-danger" *ngIf="direccion.errors?.required">
-                                                                            La dirección es requerido.
+                                                                            La dirección es requerida.
                                                                             </small>
                                     <small class="form-text text-danger" *ngIf="direccion.errors?.pattern">
-                                                                                Solo puede ingresar caractes alfanuméricos.
+                                                                                Solo puede ingresar caracteres alfanuméricos.
                                                 </small>
                                     <small class="form-text text-danger" *ngIf="direccion.errors?.minlength">
-                                                                                La dirección requiere al menos 1 cáracter.
+                                                                                La dirección requiere al menos 10 caracteres.
                                                                             </small>
                                     <small class="form-text text-danger" *ngIf="direccion.errors?.maxlength">
-                                                    La dirección requere al menos 255 caracteres.
+                                                    La dirección no puede exceder 255 caracteres.
                                                                             </small>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                     <small class="text-muted">ejemplo: 9999-9999</small>
                                     <div>
                                         <small class="form-text text-danger" *ngIf="phone.errors?.incorrect">
-                                            El teléfono requiere 8 números
+                                            El teléfono requiere 8 números.
                                         </small>
                                     </div>
                                 </div>

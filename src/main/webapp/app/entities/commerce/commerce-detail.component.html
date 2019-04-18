@@ -49,6 +49,12 @@
                             <dd>
                                 <span>{{commerce.phone}}</span>
                             </dd>
+
+                            <dt><span>Estado</span></dt>
+                            <dd>
+                                <span *ngIf="commerce.state === false"> Habilitado</span>
+                                <span *ngIf="commerce.state === true"> Deshabilitado</span>
+                            </dd>
                             <!-- <dt><span>Product Commerce</span></dt>
                                         <dd>
                                             <div *ngIf="commerce.productCommerce">

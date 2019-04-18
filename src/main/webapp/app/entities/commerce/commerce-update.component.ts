@@ -130,7 +130,7 @@ export class CommerceUpdateComponent implements OnInit {
 
         Toast.fire({
             type: 'success',
-            title: 'Commercio guardado satisfactoriamente'
+            title: 'Comercio guardado satisfactoriamente'
         });
         this.previousState();
     }
