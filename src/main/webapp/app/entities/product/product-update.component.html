@@ -10,41 +10,41 @@
 
                         <div class="form-group">
                             <label class="form-control-label" for="field_barCode">Código de barras</label>
-                            <input type="number" (keyup)="validateMinMax()" (change)="validateMinMax()" class="form-control" name="barCode" id="field_barCode" [(ngModel)]="product.barCode" #barCode="ngModel" [ngClass]="{'is-invalid': barCode.errors?.required && barCode.touched || minValue === false || maxValue === false}"
+                            <input type="number" (keyup)="validateMinMax(editForm)" (change)="validateMinMax(editForm)" class="form-control" name="barCode" id="field_barCode" [(ngModel)]="product.barCode" #barCode="ngModel" [ngClass]="{'is-invalid': barCode.errors?.required && barCode.touched || minValue === false || maxValue === false}"
                                 minlength="9" maxlength="13" required/>
-                            <div *ngIf="barCode.errors?.required && barCode.touched" class="text-danger">
-                                Este campo es requerido
-                            </div>
-                            <div *ngIf="!validBarCode" class="text-danger">
-                                Ya existe ese código de barras
-                            </div>
-                            <div *ngIf="!minValue" class="text-danger">
-                                Mínimo 9 caractéres
-                            </div>
-                            <div *ngIf="!maxValue" class="text-danger">
-                                Máximo 13 caractéres
-                            </div>
+                            <small class="form-text text-danger" *ngIf="barCode.errors?.required && barCode.touched">
+                                Este campo es requerido.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="!validBarCode">
+                                Ya existe ese código de barras.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="!minValue">
+                                Mínimo 9 caracteres.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="!maxValue">
+                                Máximo 13 caracteres.
+                            </small>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="field_name">Nombre</label>
                             <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="product.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required/>
-                            <div *ngIf="name.errors?.required && name.touched" class="text-danger">
-                                Este campo es requerido
-                            </div>
+                            <small class="form-text text-danger" *ngIf="name.errors?.required && name.touched">
+                                Este campo es requerido.
+                            </small>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="field_brand">Marca</label>
                             <input type="text" class="form-control" name="brand" id="field_brand" [(ngModel)]="product.brand" #brand="ngModel" [ngClass]="{'is-invalid': brand.errors?.required && brand.touched}" required/>
-                            <div *ngIf="brand.errors?.required && brand.touched" class="text-danger">
-                                Este campo es requerido
-                            </div>
+                            <small class="form-text text-danger" *ngIf="brand.errors?.required && brand.touched">
+                                Este campo es requerido.
+                            </small>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="field_description">Descripción</label>
                             <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="product.description" #description="ngModel" [ngClass]="{'is-invalid': description.errors?.required && description.touched}" required/>
-                            <div *ngIf="description.errors?.required && description.touched" class="text-danger">
-                                Este campo es requerido
-                            </div>
+                            <small class="form-text text-danger" *ngIf="description.errors?.required && description.touched">
+                                Este campo es requerido.
+                            </small>
                         </div>
 
 
@@ -99,9 +99,9 @@
                                             <option [ngValue]="null"></option>
                                             <option [ngValue]="categoryOption.id === product.category?.id ? product.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
                                         </select>
-                            <div *ngIf="category.errors?.required && category.touched" class="text-danger">
-                                Este campo es requerido
-                            </div>
+                            <small class="form-text text-danger" *ngIf="category.errors?.required && category.touched">
+                                Este campo es requerido.
+                            </small>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="field_subCategory">Subcategoría</label>
@@ -109,9 +109,9 @@
                                             <option [ngValue]="null"></option>
                                             <option [ngValue]="subCategoryOption.id === product.subCategory?.id ? product.subCategory : subCategoryOption" *ngFor="let subCategoryOption of subcategories; trackBy: trackSubCategoryById">{{subCategoryOption.name}}</option>
                                         </select>
-                            <div *ngIf="subCategory.errors?.required && subCategory.touched" class="text-danger">
-                                Este campo es requerido
-                            </div>
+                            <small class="form-text text-danger" *ngIf="subCategory.errors?.required && subCategory.touched">
+                                Este campo es requerido.
+                            </small>
                         </div>
                         <div>
                             <button type="button" id="cancel-save" class="btn btn-danger" (click)="previousState()">

@@ -38,7 +38,8 @@
                             <tr *ngFor="let offer of filteredOffers ;trackBy: trackId">
                                 <td>{{offer.discount}} %</td>
                                 <td>{{offer.description}}</td>
-                                <td>{{offer.expirationDate|date: "dd MM yyyy"}}</td>
+                                <td *ngIf="offer.expirationDate != null">{{offer.expirationDate|date: "dd MM yyyy"}}</td>
+                                <td *ngIf="offer.expirationDate === null">No aplica</td>
                                 <td *ngIf="offer.disabled === true"> Deshabilitada</td>
                                 <td *ngIf="offer.disabled === false"> Habilitada</td>
                                 <td class="text-right">
