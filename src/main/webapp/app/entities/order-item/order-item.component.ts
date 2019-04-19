@@ -18,6 +18,7 @@ import { CommerceService } from '../commerce';
 import moment = require('moment');
 import { Commerce } from 'app/shared/model/commerce.model';
 import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
+import { UserExtraService } from '../user-extra/user-extra.service';
 
 @Component({
     selector: 'jhi-order-item',
@@ -29,6 +30,7 @@ export class OrderItemComponent implements OnInit, OnDestroy {
     orderItems: IOrderItem[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    currentCommerce: Commerce;
     constructor(
         protected orderItemService: OrderItemService,
         protected jhiAlertService: JhiAlertService,
@@ -37,37 +39,42 @@ export class OrderItemComponent implements OnInit, OnDestroy {
         protected orderModalService: OrderModalService,
         private orderServiceWS: OrdersService,
         private productService: ProductCommerceService,
-        private commerceService: CommerceService
+        private commerceService: CommerceService,
+        private userExtraService: UserExtraService
     ) {
         this.orderServiceWS.connect();
         this.accountService.refreshUser();
     }
 
     loadAll() {
-        this.orderItemService
-            .findByCommerce(this.accountService.userExtra.commerces[0].id)
-            .pipe(
-                filter((res: HttpResponse<IOrderItem[]>) => res.ok),
-                map((res: HttpResponse<IOrderItem[]>) => res.body)
-            )
-            .subscribe(
-                (res: IOrderItem[]) => {
-                    this.orderItems = res.filter(item => item.state !== 2);
-                    this.orderServiceWS.subscribeSeller();
-                    this.orderServiceWS.receive().subscribe(order => {
-                        console.log(order);
-                        if (!(this.orderItems.filter(x => x.id === order.id).length > 0)) {
-                            console.log('si paso');
-                            this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
-                                if (commerce.body[0].id === order.commerce.id) {
-                                    this.orderItems.push(order);
-                                }
-                            });
-                        }
-                    });
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        this.accountService.fetch().subscribe(user => {
+            this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
+                this.commerceService.queryByCommerce(userExtra.body.id).subscribe(commerce => {
+                    this.currentCommerce = commerce.body[0];
+                    this.orderItemService
+                        .findByCommerce(this.currentCommerce.id)
+                        .pipe(
+                            filter((res: HttpResponse<IOrderItem[]>) => res.ok),
+                            map((res: HttpResponse<IOrderItem[]>) => res.body)
+                        )
+                        .subscribe(
+                            (res: IOrderItem[]) => {
+                                this.orderItems = res.filter(item => item.state !== 2);
+                                this.orderServiceWS.subscribeSeller();
+                                this.orderServiceWS.receive().subscribe(order => {
+                                    console.log(order);
+                                    if (!(this.orderItems.filter(x => x.id === order.id).length > 0)) {
+                                        if (this.currentCommerce.id === order.commerce.id) {
+                                            this.orderItems.push(order);
+                                        }
+                                    }
+                                });
+                            },
+                            (res: HttpErrorResponse) => this.onError(res.message)
+                        );
+                });
+            });
+        });
     }
 
     ngOnInit() {
@@ -121,9 +128,7 @@ export class OrderItemComponent implements OnInit, OnDestroy {
         this.orderItems.map((order, index, array) => {
             if (order.id === id) {
                 order.state += 1;
-                console.log(order);
                 this.orderItemService.update(order).subscribe(response => {
-                    console.log(response);
                     if (order.state === 2) {
                         this.completeOrder(order);
                         this.orderItems.splice(index, 1);

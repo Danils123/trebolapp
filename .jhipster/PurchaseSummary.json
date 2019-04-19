@@ -1,0 +1,19 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "total",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20190418190612",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "purchase_summary",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

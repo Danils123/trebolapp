@@ -29,6 +29,7 @@
         "@types/googlemaps": "^3.30.19",
         "acorn": "^6.1.1",
         "ajv": "^6.10.0",
+        "angular-archwizard": "^4.0.0",
         "angular-calendar": "^0.27.2",
         "angular-flatpickr": "^3.6.6",
         "angular2-text-mask": "^9.0.0",

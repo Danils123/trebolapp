@@ -95,6 +95,14 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'payment',
                 loadChildren: './payment/payment.module#StripePaymentModule'
+            },
+            {
+                path: 'purchase',
+                loadChildren: './purchase/purchase.module#TrebolPurchaseModule'
+            },
+            {
+                path: 'purchase-summary',
+                loadChildren: './purchase-summary/purchase-summary.module#TrebolPurchaseSummaryModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

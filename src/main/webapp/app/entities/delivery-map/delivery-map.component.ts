@@ -44,6 +44,9 @@ export class DeliveryMapComponent implements OnInit {
     ) {
         this.directionsDisplay = new google.maps.DirectionsRenderer();
         this.directionsServices = new google.maps.DirectionsService();
+        this.origin = null;
+        this.destination = null;
+        this.timeRemaining = null;
     }
 
     ngOnInit() {
@@ -152,18 +155,17 @@ export class DeliveryMapComponent implements OnInit {
         this.timeRemaining = this.timeDuration - this.timeDuration * (percentage.split('%')[0] / 100);
         this.timeRemaining = this.timeRemaining.toFixed(2);
         if (percentage === '99.5%') {
-            const Toast = Swal.mixin({
-                toast: false,
-                position: 'center',
-                showConfirmButton: false,
-                timer: 5000
-            });
-            Toast.fire({
-                type: 'success',
-                title: 'Felicidades!',
-                text: 'La entrega se realizó con éxito, el mensajero ya esta en la puerta de su casa.'
-            });
-
+            // const Toast = Swal.mixin({
+            //     toast: false,
+            //     position: 'center',
+            //     showConfirmButton: false,
+            //     timer: 5000
+            // });
+            // Toast.fire({
+            //     type: 'success',
+            //     title: 'Felicidades!',
+            //     text: 'La entrega se realizó con éxito, el mensajero ya esta en la puerta de su casa.'
+            // });
             this.deliveryMapService.changeState();
         }
     }
