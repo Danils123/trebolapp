@@ -25,7 +25,7 @@ import { IListShop, ListShop } from 'app/shared/model/listShop.model';
 })
 export class MapshopComponent implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
-    @Output() information: EventEmitter<IListShop[]> = new EventEmitter();
+    @Output() information: EventEmitter<ProductShop> = new EventEmitter();
     map: google.maps.Map;
     commerces: ICommerce[];
     radio = 3;
@@ -121,7 +121,7 @@ export class MapshopComponent implements OnInit {
 
                             if (validation) {
                                 this.commercesInArea.push(item);
-                                this.loadScheduleCommerce();
+                                this.loadScheduleCommerce(item);
                                 this.loadListShopCommerce(item);
                                 this.addMark(item);
                             }
@@ -161,7 +161,8 @@ export class MapshopComponent implements OnInit {
         google.maps.event.addDomListener(marker, 'dblclick', () => {
             this.productShop.commerce = markCommerce;
             this.productShop.user = this.markUser;
-            this.productShop.listShop = this.addPriceToList();
+            this.loadListShopCommerce(markCommerce);
+            this.productShop.listShop = this.listsShop;
             console.log('productshop en addmark');
             console.log(this.productShop);
         });
@@ -253,28 +254,27 @@ export class MapshopComponent implements OnInit {
                     this.productCommerceInArea = res;
                     console.log('productCommerceInArea en loadlistshopcommerce');
                     console.log(this.productCommerceInArea);
+                    this.addPriceToList(this.productCommerceInArea);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
     }
 
-    loadScheduleCommerce() {
-        for (const item of this.commercesInArea) {
-            this.scheduleCommerceService
-                .findByCommerce(item.id)
-                .pipe(
-                    filter((response: HttpResponse<IScheduleCommerce[]>) => response.ok),
-                    map((response: HttpResponse<IScheduleCommerce[]>) => response.body)
-                )
-                .subscribe(
-                    (response: IScheduleCommerce[]) => {
-                        this.scheduleCommerce.push(response);
-                        console.log('schedule in loadschedulecommerce');
-                        console.log(response);
-                    },
-                    (response: HttpErrorResponse) => this.onError(response.message)
-                );
-        }
+    loadScheduleCommerce(commerce: ICommerce) {
+        this.scheduleCommerceService
+            .findByCommerce(commerce.id)
+            .pipe(
+                filter((response: HttpResponse<IScheduleCommerce[]>) => response.ok),
+                map((response: HttpResponse<IScheduleCommerce[]>) => response.body)
+            )
+            .subscribe(
+                (response: IScheduleCommerce[]) => {
+                    this.scheduleCommerce.push(response);
+                    console.log('schedule in loadschedulecommerce');
+                    console.log(response);
+                },
+                (response: HttpErrorResponse) => this.onError(response.message)
+            );
     }
 
     loadProductListPerBuy() {
@@ -309,7 +309,7 @@ export class MapshopComponent implements OnInit {
             );
     }
 
-    addPriceToList() {
+    addPriceToList(productCommerce: IProductCommerce[]) {
         this.listsShop = [];
         this.costPurchase = 0;
         for (const item of this.productListforShop) {
@@ -317,7 +317,7 @@ export class MapshopComponent implements OnInit {
                 this.listShop = new ListShop();
                 if (item.name === product.name && item.brand === product.brand) {
                     this.listShop.product = product;
-                    for (const productcommer of this.productCommerceInArea) {
+                    for (const productcommer of productCommerce) {
                         if (product.id === productcommer.product.id) {
                             this.listShop.price = productcommer.price;
                             this.listShop.inventoryQty = productcommer.quantity;
@@ -329,12 +329,13 @@ export class MapshopComponent implements OnInit {
                 }
             }
         }
+        console.log('lista con precios');
+        console.log(this.listsShop);
         console.log('costPurchase in addpricetolist');
         console.log(this.costPurchase);
-        return this.listsShop;
     }
 
     sentData() {
-        this.information.emit(this.listsShop);
+        this.information.emit(this.productShop);
     }
 }
