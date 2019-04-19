@@ -44,7 +44,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
                 );
         } else {
             if (this.isVendedor) {
-                //Aqui codigo para ventas
+                // Aqui codigo para ventas
             } else {
                 this.paymentService
                     .query()
