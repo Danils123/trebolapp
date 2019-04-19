@@ -33,7 +33,7 @@ export const scheduleCommerceRoute: Routes = [
         path: '',
         component: ScheduleCommerceComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'ScheduleCommerces'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const scheduleCommerceRoute: Routes = [
             scheduleCommerce: ScheduleCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'ScheduleCommerces'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const scheduleCommerceRoute: Routes = [
             scheduleCommerce: ScheduleCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'ScheduleCommerces'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const scheduleCommerceRoute: Routes = [
             scheduleCommerce: ScheduleCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'ScheduleCommerces'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const scheduleCommercePopupRoute: Routes = [
             scheduleCommerce: ScheduleCommerceResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_VENDEDOR'],
             pageTitle: 'ScheduleCommerces'
         },
         canActivate: [UserRouteAccessService],

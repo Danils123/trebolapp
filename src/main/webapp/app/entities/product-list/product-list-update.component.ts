@@ -82,7 +82,14 @@ export class ProductListUpdateComponent implements OnInit {
                 filter((mayBeOk: HttpResponse<ISubCategory[]>) => mayBeOk.ok),
                 map((response: HttpResponse<ISubCategory[]>) => response.body)
             )
-            .subscribe((res: ISubCategory[]) => (this.allProducts = res), (res: HttpErrorResponse) => this.onError(res.message));
+            .subscribe(
+                (res: ISubCategory[]) => {
+                    console.log('allproducts');
+                    console.log(res);
+                    this.allProducts = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     previousState() {

@@ -1,5 +1,6 @@
 package com.cenfotec.trebol.web.rest;
 import com.cenfotec.trebol.domain.ProductList;
+import com.cenfotec.trebol.domain.ScheduleCommerce;
 import com.cenfotec.trebol.repository.ProductListRepository;
 import com.cenfotec.trebol.web.rest.errors.BadRequestAlertException;
 import com.cenfotec.trebol.web.rest.util.HeaderUtil;
