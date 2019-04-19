@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import emailMask from 'text-mask-addons/dist/emailMask';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseService } from 'app/services/firebase.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'jhi-settings',
@@ -68,11 +69,13 @@ export class SettingsComponent implements OnInit {
         this.userTemp.firstName = this.settingsAccount.firstName;
         this.userTemp.lastName = this.settingsAccount.lastName;
         this.userTemp.email = this.settingsAccount.email;
+        this.userTemp.langKey = 'en';
         this.accountService.save(this.userTemp).subscribe(
             () => {
                 this.error = null;
                 this.accountService.identity(true).then(account => {
                     // this.settingsAccount = this.copyAccount(account);
+
                     this.userExtra = {};
                     this.userExtra.id = this.settingsAccount.userExtraId;
                     this.userExtra.userId = this.settingsAccount.userId;
@@ -84,6 +87,7 @@ export class SettingsComponent implements OnInit {
                     this.userExtra.photograph = this.settingsAccount.photograph;
                     this.userExtra.notification = this.settingsAccount.notification;
                     this.userExtra.commerces = this.settingsAccount.commerces;
+                    const userExtra2 = this.userExtra;
                     console.log(this.userExtra);
                     this.userExtraService.update(this.userExtra).subscribe(user => {
                         this.userExtra = user.body;
@@ -124,5 +128,23 @@ export class SettingsComponent implements OnInit {
             login: account.login,
             imageUrl: account.imageUrl
         };
+    }
+
+    validatePhone(form: NgForm) {
+        const text = form.form.controls.phoneInput.value;
+        const underscore = '_';
+        if (text.includes(underscore)) {
+            form.form.controls.phoneInput.setErrors({ incorrect: true });
+        }
+        return form;
+    }
+
+    validateSecondaryPhone(form: NgForm) {
+        const text = form.form.controls.cellPhoneInput.value;
+        const underscore = '_';
+        if (text.includes(underscore)) {
+            form.form.controls.cellPhoneInput.setErrors({ incorrect: true });
+        }
+        return form;
     }
 }

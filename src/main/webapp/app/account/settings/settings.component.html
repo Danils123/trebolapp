@@ -18,7 +18,7 @@
                                                                         El primer nombre es requerido.
                                                                     </small>
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.minlength">
-                                                                    El primer nombre requiere al menos 1 cáracter.
+                                                                    El primer nombre requiere al menos 1 caractér.
                                                                     </small>
                                         <small class="form-text text-danger" *ngIf="firstNameInput.errors?.pattern">
                                                                         Solo puede ingresar letras.
@@ -55,7 +55,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-control-label" for="field_secondLastName">Segundo Apellido</label>
-                                    <input type="text" class="form-control" name="secondLastName" pattern="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s+$" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
+                                    <input type="text" class="form-control" name="secondLastName" pattern="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$" id="field_secondLastName" [(ngModel)]="settingsAccount.secondLastName" #secondLastNameInput minlength=1 maxlength=50 />
                                     <small class="text-muted">Solo se admiten caracteres</small>
                                     <small class="form-text text-danger" *ngIf="secondLastNameInput.errors?.minlength">
                                                                 El segundo apellido requiere al menos 1 cáracter.
@@ -92,33 +92,35 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="phone">Número teléfonico principal</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" [textMask]="{mask: phoneMask}" placeholder="Teléfono principal" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" required>
+                                    <label class="form-control-label" for="phoneInput">Número teléfonico principal</label>
+                                    <input type="text" class="form-control" id="phoneInput" name="phoneInput" [textMask]="{mask: phoneMask}" placeholder="Teléfono principal" [(ngModel)]="settingsAccount.phone" minlength="9" #phoneInput="ngModel" (keyup)="validatePhone(settingsForm)" (change)="validatePhone(settingsForm)"
+                                        required>
                                     <small class="text-muted">ex. 9999-9999</small>
                                     <div *ngIf="phoneInput.dirty && phoneInput.invalid">
                                         <small class="form-text text-danger" *ngIf="phoneInput.errors?.required">
                                                                         Su télefono es requerido.
                                                                     </small>
-                                        <small class="form-text text-danger" *ngIf="phoneInput.errors?.minlength">
-                                                                    Su télefono requiere al menos 8 caracteres.
+                                        <small class="form-text text-danger" *ngIf="phoneInput.errors?.incorrect">
+                                                                    Su télefono requiere al menos 8 números.
                                                                     </small>
                                         <small class="form-text text-danger" *ngIf="phoneInput.errors?.maxlength">
-                                                                    Su télefono requiere al menos 8 characters.
+                                                                    Su télefono no puede llevar más de 8 números.
                                                                     </small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="cellPhone">Número teléfonico secundario</label>
-                                    <input type="text" class="form-control" id="cellPhone" name="cellPhone" [textMask]="{mask: phoneMask}" placeholder="Teléfono secundario" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel">
+                                    <label class="form-control-label" for="cellPhoneInput">Número teléfonico secundario</label>
+                                    <input type="text" class="form-control" id="cellPhoneInput" name="cellPhoneInput" [textMask]="{mask: phoneMask}" placeholder="Teléfono secundario" [(ngModel)]="settingsAccount.cellPhone" minlength="9" #cellPhoneInput="ngModel" (keyup)="validateSecondaryPhone(settingsForm)"
+                                        (change)="validateSecondaryPhone(settingsForm)">
                                     <small class="text-muted">ex. 9999-9999</small>
                                     <div *ngIf="cellPhoneInput.dirty && cellPhoneInput.invalid">
                                         <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.required">
                                                                     Su télefono es requerido
                                                                     </small>
-                                        <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.minlength">
-                                                                    Su télefono requiere al menos 8 caracteres.
+                                        <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.incorrect">
+                                                                        Su télefono requiere al menos 8 números.
                                                                     </small>
                                         <small class="form-text text-danger" *ngIf="cellPhoneInput.errors?.maxlength">
                                                                     Su télefono requiere al menos 8 caracteres.

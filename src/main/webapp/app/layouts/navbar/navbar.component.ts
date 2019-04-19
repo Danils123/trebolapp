@@ -66,11 +66,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.accountService.user !== null &&
             this.accountService.user.authorities.filter(item => item === 'ROLE_COMPRADOR').length > 0
         ) {
-            this.registerChangeInOffers();
         }
         if (this.accountService.user !== null && this.accountService.user.authorities.filter(item => item === 'ROLE_VENDEDOR').length > 0) {
             this.loadOrders();
         }
+        this.registerChangeInOffers();
     }
 
     loadOrders() {
@@ -135,7 +135,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.informationArray = [];
         let userExtra: IUserExtra;
         this.offers = [];
-
+        console.log('aaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+        console.log(this.accountService.userExtra);
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
             userExtra = res.body;
             let offers: IOffer[];
@@ -151,13 +152,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
                     let expirationDate: Date;
                     if (res2 != null) {
                         res2.forEach(commerce => {
-                            this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
-                                offers = response.body;
-                                offers.forEach(offer => {
-                                    expirationDate = new Date(offer.expirationDate);
-                                    if (offer.disabled === false) {
-                                        if (offer.expirationDate != null) {
-                                            if (expirationDate > actualDate) {
+                            if (commerce.state === false) {
+                                this.offerService.findByCommerce(commerce.id).subscribe((response: HttpResponse<IOffer[]>) => {
+                                    offers = response.body;
+                                    offers.forEach(offer => {
+                                        expirationDate = new Date(offer.expirationDate);
+                                        if (offer.disabled === false) {
+                                            if (offer.expirationDate != null) {
+                                                if (expirationDate > actualDate) {
+                                                    this.offers.push(offer);
+                                                    informationObject = new Information();
+                                                    informationObject.commerceName = commerce.name;
+                                                    informationObject.offerDescription = offer.description;
+                                                    informationObject.commerceId = commerce.id;
+                                                    informationObject.expirationDate = offer.expirationDate;
+                                                    this.informationArray.push(informationObject);
+                                                }
+                                            } else {
                                                 this.offers.push(offer);
                                                 informationObject = new Information();
                                                 informationObject.commerceName = commerce.name;
@@ -166,18 +177,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
                                                 informationObject.expirationDate = offer.expirationDate;
                                                 this.informationArray.push(informationObject);
                                             }
-                                        } else {
-                                            this.offers.push(offer);
-                                            informationObject = new Information();
-                                            informationObject.commerceName = commerce.name;
-                                            informationObject.offerDescription = offer.description;
-                                            informationObject.commerceId = commerce.id;
-                                            informationObject.expirationDate = offer.expirationDate;
-                                            this.informationArray.push(informationObject);
                                         }
-                                    }
+                                    });
                                 });
-                            });
+                            }
                         });
                     }
                 });

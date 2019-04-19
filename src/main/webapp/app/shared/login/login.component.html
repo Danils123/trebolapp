@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="alert alert-danger" *ngIf="authenticationError">
-                <strong>No se pudo iniciar sesión!</strong> Por favor, compruebe sus credenciales y vuelva a intentarlo.
+                <strong>¡No se pudo iniciar sesión!</strong> Por favor, compruebe sus credenciales y vuelva a intentarlo.
             </div>
         </div>
         <div class="col-md-8">
@@ -24,10 +24,10 @@
             </form>
             <p></p>
             <div class="alert alert-warning">
-                <a class="alert-link" (click)="requestResetPassword()">Olvidó su contraseña?</a>
+                <a class="alert-link" (click)="requestResetPassword()">¿Olvidó su contraseña?</a>
             </div>
             <div class="alert alert-warning">
-                <span> ¿Aún no tienes una cuenta?</span>
+                <span> ¿Aún no tiene una cuenta?</span>
                 <a class="alert-link" (click)="register()">Registrese!</a>
             </div>
         </div>

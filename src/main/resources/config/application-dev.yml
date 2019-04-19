@@ -62,10 +62,12 @@ spring:
         password: dvtxlxnukgjkizpu
         protocol: smtp
         tls: true
+        from: Trebol
         properties.mail.smtp:
             auth: true
             starttls.enable: true
-            from: Trebol
+            ssl.trust: smtp.gmail.com
+
     messages:
         cache-duration: PT1S # 1 second, see the ISO 8601 standard
     thymeleaf:

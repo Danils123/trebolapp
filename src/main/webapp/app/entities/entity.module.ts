@@ -91,6 +91,14 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'delivery-map',
                 loadChildren: './delivery-map/delivery-map.module#TrebolDeliveryMapModule'
+            },
+            {
+                path: 'payment',
+                loadChildren: './payment/payment.module#StripePaymentModule'
+            },
+            {
+                path: 'payment-view',
+                loadChildren: './payment/payment.module#TrebolPaymentModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

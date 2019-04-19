@@ -8,6 +8,8 @@ import { registerRoute } from './account/register';
 import { passwordRoute, passwordResetFinishRoute } from './account';
 import { passwordResetInitRoute } from './account/password-reset/init/password-reset-init.route';
 import { MAPSHOP_ROUTE } from 'app/mapshop';
+import { PAYMENTS_ROUTE } from 'app/payments';
+
 const LAYOUT_ROUTES = [
     navbarRoute,
     HOME_ROUTE,
@@ -17,6 +19,7 @@ const LAYOUT_ROUTES = [
     passwordResetInitRoute,
     LANDING_ROUTE,
     MAPSHOP_ROUTE,
+    PAYMENTS_ROUTE,
     ...errorRoute
 ];
 

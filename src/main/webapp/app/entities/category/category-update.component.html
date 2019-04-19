@@ -12,16 +12,16 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="field_name">Nombre</label>
                                 <input type="text" class="form-control" name="name" id="field_name" [(ngModel)]="category.name" #name="ngModel" [ngClass]="{'is-invalid': name.errors?.required && name.touched}" required/>
-                                <div *ngIf="name.errors?.required && name.touched" class="text-danger">
-                                    Este campo es requerido
-                                </div>
+                                <small class="form-text text-danger" *ngIf="name.errors?.required && name.touched">
+                                    Este campo es requerido.
+                                </small>
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="field_description">Descripción</label>
                                 <input type="text" class="form-control" name="description" id="field_description" [(ngModel)]="category.description" #desc="ngModel" [ngClass]="{'is-invalid': desc.errors?.required && desc.touched}" required/>
-                                <div *ngIf="desc.errors?.required && desc.touched" class="text-danger">
-                                    Este campo es requerido
-                                </div>
+                                <small class="form-text text-danger" *ngIf="desc.errors?.required && desc.touched">
+                                    Este campo es requerido.
+                                </small>
                             </div>
 
                         </div>
