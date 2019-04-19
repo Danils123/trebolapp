@@ -3,6 +3,7 @@ package com.cenfotec.trebol.web.rest;
 import com.cenfotec.trebol.TrebolApp;
 
 import com.cenfotec.trebol.domain.UserExtra;
+import com.cenfotec.trebol.repository.CommerceRepository;
 import com.cenfotec.trebol.repository.UserExtraRepository;
 import com.cenfotec.trebol.web.rest.errors.ExceptionTranslator;
 
@@ -65,6 +66,9 @@ public class UserExtraResourceIntTest {
     private UserExtraRepository userExtraRepository;
 
     @Autowired
+    private CommerceRepository commerceRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -86,7 +90,7 @@ public class UserExtraResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final UserExtraResource userExtraResource = new UserExtraResource(userExtraRepository);
+        final UserExtraResource userExtraResource = new UserExtraResource(userExtraRepository, commerceRepository);
         this.restUserExtraMockMvc = MockMvcBuilders.standaloneSetup(userExtraResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

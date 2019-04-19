@@ -1,20 +1,21 @@
 <div class="container-fluid">
+    <div class="card">
 
-    <div class="table-responsive" *ngIf="products">
         <div class="animated fadeIn">
-            <div class="card">
-                <div class="card-header">
-                    <h2 id="page-heading">
-                        <span>Productos</span>
-                        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
+
+            <div class="card-header">
+                <h2 id="page-heading">
+                    <span>Productos</span>
+                    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
                                     <fa-icon [icon]="'plus'"></fa-icon>
                                     <span >
                                     Crear nuevo producto
                                     </span>
                         </button>
-                    </h2>
-                </div>
-                <div class="card-body">
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive" *ngIf="products">
                     <div class="row mb-3">
                         <div class="col-md-4 offset-md-8">
                             <div class="input-group">
@@ -25,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th><span>Código de barras</span></th>

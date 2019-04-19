@@ -18,6 +18,7 @@ import { CommerceUser, ICommerceUser } from 'app/shared/model/commerce-user.mode
 import { DATE_FORMAT } from '../../shared/constants/input.constants';
 import { DatePipe } from '@angular/common';
 import moment = require('moment');
+import { NgForm } from '@angular/forms';
 @Component({
     selector: 'jhi-offer-update',
     templateUrl: './offer-update.component.html'
@@ -59,15 +60,21 @@ export class OfferUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.offer.commerces = [];
-        this.offer.commerces.push(this.accountService.userExtra.commerces[0]);
-
-        if (this.offer.id !== undefined) {
-            this.subscribeToSaveResponse(this.offerService.update(this.offer));
-        } else {
-            this.offer.disabled = false;
-
-            this.subscribeToSaveResponse(this.offerService.create(this.offer));
-        }
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe((res2: ICommerce[]) => {
+                this.offer.commerces = res2;
+                if (this.offer.id !== undefined) {
+                    this.subscribeToSaveResponse(this.offerService.update(this.offer));
+                } else {
+                    this.offer.disabled = false;
+                    this.subscribeToSaveResponse(this.offerService.create(this.offer));
+                }
+            });
     }
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IOffer>>) {
         result.subscribe((res: HttpResponse<IOffer>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
@@ -77,7 +84,7 @@ export class OfferUpdateComponent implements OnInit {
         /*
         POR AHORA SE QUEDA COMENTADO PARA ASEGURARSE QUE TODO FUNCIONE SIN PROBLEMAS SIN MODIFICAR EL USUARIO EXTRA COMO TAL
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
-            
+
             const commercesSave = res.body.commerces[0];
 
             const userExtraSave = res.body;
@@ -127,21 +134,25 @@ export class OfferUpdateComponent implements OnInit {
         this.isSaving = false;
     }
 
-    validateMinMax() {
+    validateMinMax(form: NgForm) {
         this.minValue = true;
         this.maxValue = true;
         if (this.offer.discount != null) {
             if (this.offer.discount < 1) {
                 this.minValue = false;
+                form.form.controls.discount.setErrors({ incorrect: true });
             } else {
                 this.minValue = true;
             }
 
-            if (this.offer.discount > 100) {
+            if (this.offer.discount > 99) {
                 this.maxValue = false;
+                form.form.controls.discount.setErrors({ incorrect: true });
             } else {
                 this.maxValue = true;
             }
         }
+        return form;
+        // pattern="^([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-Z-0-9ñÑáéíóúÁÉÍÓÚ\s]+)*)(\s([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+(_[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+)*))*$"
     }
 }

@@ -38,6 +38,12 @@ export class ScheduleCommerceService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findByCommerce(id: number): Observable<EntityArrayResponseType> {
+        return this.http
+            .get<IScheduleCommerce[]>(`${this.resourceUrl}-bycommerceid/${id}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http

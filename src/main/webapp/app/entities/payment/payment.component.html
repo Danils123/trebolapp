@@ -1,7 +1,7 @@
 <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                    <h2 id="page-heading">
+                    <!-- <h2 id="page-heading">
                             <span>Payments</span>
                             <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-payment" [routerLink]="['/payment/new']">
                                 <fa-icon [icon]="'plus'"></fa-icon>
@@ -9,7 +9,7 @@
                                 Agregar pago
                                 </span>
                             </button>
-                     </h2>
+                     </h2> -->
             </div>
             <div class="card-body">
                     <div class="table-responsive" *ngIf="payments">
@@ -18,11 +18,11 @@
                                 <tr>
                                 <!-- <th><span>ID</span></th> -->
                                 <th><span>Fecha</span></th>
-                                <th><span>Token</span></th>
-                                <th><span>Moneda</span></th>
+                                <!-- <th><span>Token</span></th> -->
+                                <!-- <th><span>Moneda</span></th> -->
                                 <th><span>Monto</span></th>
-                                <th><span>Descripción</span></th>
-                                <th><span>Autorizado</span></th>
+                                <!-- <th><span>Descripción</span></th> -->
+                                <!-- <th><span>Autorizado</span></th> -->
                                 <!-- <th><span>Recibo</span></th> -->
                                 <th><span>Usuario</span></th>
                                 <th></th>
@@ -32,14 +32,14 @@
                                 <tr *ngFor="let payment of payments ;trackBy: trackId">
                                     <!-- <td><a [routerLink]="['/payment', payment.id, 'view' ]">{{payment.id}}</a></td> -->
                                     <td>{{payment.date | date:'medium'}}</td>
-                                    <td>{{payment.token}}</td>
-                                    <td>{{payment.currency}}</td>
+                                    <!-- <td>{{payment.token}}</td> -->
+                                    <!-- <td>{{payment.currency}}</td> -->
                                     <td>{{payment.amount}}</td>
-                                    <td>{{payment.description}}</td>
-                                    <td>{{payment.capture}}</td>
+                                    <!-- <td>{{payment.description}}</td> -->
+                                    <!-- <td>{{payment.capture}}</td> -->
                                     <!-- <td>{{payment.receipt}}</td> -->
                                     <td>
-                                        {{payment.user?.id}}
+                                        {{payment.user?.name}}
                                     </td>
                                     <td class="text-right">
                                         <div class="btn-group flex-btn-group-container">
@@ -49,20 +49,20 @@
                                                 <fa-icon [icon]="'eye'"></fa-icon>
                                                 <span class="d-none d-md-inline">Ver</span>
                                             </button>
-                                            <button type="submit"
+                                            <!-- <button type="submit"
                                                     [routerLink]="['/payment', payment.id, 'edit']"
                                                     class="btn btn-primary btn-sm">
                                                 <fa-icon [icon]="'pencil-alt'"></fa-icon>
                                                 <span class="d-none d-md-inline">Editar</span>
-                                            </button>
-                                            <button type="submit"
+                                            </button> -->
+                                            <!-- <button type="submit"
                                                     [routerLink]="['/', 'payment', { outlets: { popup: payment.id + '/delete'} }]"
                                                     replaceUrl="true"
                                                     queryParamsHandling="merge"
                                                     class="btn btn-danger btn-sm">
                                                 <fa-icon [icon]="'times'"></fa-icon>
                                                 <span class="d-none d-md-inline">Eliminar</span>
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </td>
                                 </tr>

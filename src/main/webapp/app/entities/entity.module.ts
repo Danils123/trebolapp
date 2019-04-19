@@ -103,6 +103,10 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'purchase-summary',
                 loadChildren: './purchase-summary/purchase-summary.module#TrebolPurchaseSummaryModule'
+            },
+            {
+                path: 'payment-view',
+                loadChildren: './payment/payment.module#TrebolPaymentModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

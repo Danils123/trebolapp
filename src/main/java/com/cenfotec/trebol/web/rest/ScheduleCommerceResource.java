@@ -96,6 +96,12 @@ public class ScheduleCommerceResource {
         return ResponseUtil.wrapOrNotFound(scheduleCommerce);
     }
 
+    @GetMapping("/schedule-commerces-bycommerceid/{commerceid}")
+    public List<ScheduleCommerce> getScheduleCommerceByCommerceId(@PathVariable Long commerceid) {
+        log.debug("REST request to get ScheduleCommerce : {}", commerceid);
+        return scheduleCommerceRepository.findByCommerce_id(commerceid);
+    }
+
     /**
      * DELETE  /schedule-commerces/:id : delete the "id" scheduleCommerce.
      *

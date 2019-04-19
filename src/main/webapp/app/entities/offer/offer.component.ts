@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 import { ICommerce } from '../../shared/model/commerce.model';
 import { CommerceService } from '../commerce/commerce.service';
 import { commercePopupRoute } from '../commerce/commerce.route';
+import { UserExtraService } from '../user-extra/user-extra.service';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 @Component({
     selector: 'jhi-offer',
     templateUrl: './offer.component.html'
@@ -33,24 +35,32 @@ export class OfferComponent implements OnInit, OnDestroy {
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected accountService: AccountService,
-        protected commerceService: CommerceService
+        protected commerceService: CommerceService,
+        protected userExtraService: UserExtraService
     ) {}
 
     loadAll() {
-        let commerces: ICommerce[];
         let offers: IOffer[];
         this.filteredOffers = [];
         this.offers = [];
-        commerces = this.accountService.userExtra.commerces;
-        commerces.forEach(commerce => {
-            this.offerService.findByCommerce(commerce.id).subscribe((res: HttpResponse<IOffer[]>) => {
-                offers = res.body;
-                offers.forEach(offer => {
-                    this.filteredOffers.push(offer);
-                    this.offers.push(offer);
+
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe((res2: ICommerce[]) => {
+                res2.forEach(commerce => {
+                    this.offerService.findByCommerce(commerce.id).subscribe((res: HttpResponse<IOffer[]>) => {
+                        offers = res.body;
+                        offers.forEach(offer => {
+                            this.filteredOffers.push(offer);
+                            this.offers.push(offer);
+                        });
+                    });
                 });
             });
-        });
     }
 
     ngOnInit() {
@@ -110,14 +120,22 @@ export class OfferComponent implements OnInit, OnDestroy {
     confirmDelete(offer: IOffer) {
         offer.disabled = true;
         offer.commerces = [];
-        offer.commerces.push(this.accountService.userExtra.commerces[0]);
-        this.offerService.update(offer).subscribe(response => {
-            this.eventManager.broadcast({
-                name: 'offerListModification',
-                content: 'Deleted an offer'
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe((res2: ICommerce[]) => {
+                offer.commerces = res2;
+                this.offerService.update(offer).subscribe(response => {
+                    this.eventManager.broadcast({
+                        name: 'offerListModification',
+                        content: 'Deleted an offer'
+                    });
+                    this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La oferta ha sido deshabilitada.', 'success');
+                });
             });
-            this.swalWithBootstrapButtons.fire('Deshabilitada!', 'La oferta ha sido deshabilitada.', 'success');
-        });
     }
 
     enableItem(offer: IOffer) {
@@ -139,13 +157,21 @@ export class OfferComponent implements OnInit, OnDestroy {
     confirmEnable(offer: IOffer) {
         offer.disabled = false;
         offer.commerces = [];
-        offer.commerces.push(this.accountService.userExtra.commerces[0]);
-        this.offerService.update(offer).subscribe(response => {
-            this.eventManager.broadcast({
-                name: 'offerListModification',
-                content: 'Deleted an offer'
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe((res2: ICommerce[]) => {
+                offer.commerces = res2;
+                this.offerService.update(offer).subscribe(response => {
+                    this.eventManager.broadcast({
+                        name: 'offerListModification',
+                        content: 'Deleted an offer'
+                    });
+                    this.swalWithBootstrapButtons.fire('Habilitada!', 'La oferta ha sido habilitada.', 'success');
+                });
             });
-            this.swalWithBootstrapButtons.fire('Habilitada!', 'La oferta ha sido habilitada.', 'success');
-        });
     }
 }

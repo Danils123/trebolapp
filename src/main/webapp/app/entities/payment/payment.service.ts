@@ -25,6 +25,7 @@ export class PaymentService {
             .put<IPayment>(this.resourceUrlCreatePaymentCurrentUser, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
+
     create(payment: IPayment): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(payment);
         return this.http
@@ -45,10 +46,15 @@ export class PaymentService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    query(req?: any): Observable<EntityArrayResponseType> {
-        const options = createRequestOption(req);
+    query(id?: number): Observable<EntityArrayResponseType> {
         return this.http
-            .get<IPayment[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<IPayment[]>(`${this.resourceUrl}${id}`, { observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
+    queryByUser(id: number): Observable<EntityArrayResponseType> {
+        return this.http
+            .get<IPayment[]>(`${this.resourceUrl}-byuser/${id}`, { observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 

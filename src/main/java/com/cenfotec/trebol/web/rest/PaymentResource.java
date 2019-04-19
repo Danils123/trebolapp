@@ -35,85 +35,85 @@ public class PaymentResource {
     private static final String ENTITY_NAME = "payment";
 
 
-  	/**
-  	 * PUT /payments/currentuser : Updates an existing payment.
-  	 *
-  	 * @param payment the payment to create with the current connected user
-  	 * @return the ResponseEntity with status 200 (OK) and with body the updated
-  	 *         payment, or with status 400 (Bad Request) if the payment is not
-  	 *         valid, or with status 500 (Internal Server Error) if the payment
-  	 *         couldn't be updated
-  	 * @throws URISyntaxException if the Location URI syntax is incorrect
-  	 */
-  	@PutMapping("/payments/currentuser")
-  	public ResponseEntity<Payment> createPaymentCurrentUser(@Valid @RequestBody Payment payment)
-  			throws URISyntaxException {
-  		log.debug("REST request to update Payment : {}", payment);
-  		ResponseEntity<Payment> p;
-  		if (payment.getId() == null) {
-  			throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-  		}
-  		System.out.println("TEST");
-  		Optional<String> userstr = SecurityUtils.getCurrentUserLogin();
-  		if (userstr.isPresent()) {
-  			Optional<User> user = userRepository.findOneByLogin(userstr.get());
-  			payment.setUser(user.get());
-  		}
+    /**
+     * PUT /payments/currentuser : Updates an existing payment.
+     *
+     * @param payment the payment to create with the current connected user
+     * @return the ResponseEntity with status 200 (OK) and with body the updated
+     *         payment, or with status 400 (Bad Request) if the payment is not
+     *         valid, or with status 500 (Internal Server Error) if the payment
+     *         couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/payments/currentuser")
+    public ResponseEntity<Payment> createPaymentCurrentUser(@Valid @RequestBody Payment payment)
+        throws URISyntaxException {
+        log.debug("REST request to update Payment : {}", payment);
+        ResponseEntity<Payment> p;
+        if (payment.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        System.out.println("TEST");
+        Optional<String> userstr = SecurityUtils.getCurrentUserLogin();
+        if (userstr.isPresent()) {
+            Optional<User> user = userRepository.findOneByLogin(userstr.get());
+            payment.setUser(user.get());
+        }
 
-  		// Set your secret key: remember to change this to your live secret key in
-  		// production
-  		// See your keys here: https://dashboard.stripe.com/account/apikeys
-  		Stripe.apiKey = "sk_test_AE84NHDAxna67jM1FsjJIqyp00sbdsJ9If";
+        // Set your secret key: remember to change this to your live secret key in
+        // production
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        Stripe.apiKey = "sk_test_AE84NHDAxna67jM1FsjJIqyp00sbdsJ9If";
 
-  		// Token is created using Checkout or Elements!
-  		// Get the payment token ID submitted by the form:
-  		// String token = request.getParameter("stripeToken");
+        // Token is created using Checkout or Elements!
+        // Get the payment token ID submitted by the form:
+        // String token = request.getParameter("stripeToken");
 
-  		Map<String, Object> params = new HashMap<>();
-  		params.put("amount", payment.getAmount());
-  		params.put("currency", payment.getCurrency());
-  		params.put("description", payment.getDescription());
-  		params.put("source", payment.getToken());
-  		params.put("capture", payment.isCapture());
+        Map<String, Object> params = new HashMap<>();
+        params.put("amount", payment.getAmount());
+        params.put("currency", payment.getCurrency());
+        params.put("description", payment.getDescription());
+        params.put("source", payment.getToken());
+        params.put("capture", payment.isCapture());
 
-  		try {
-  			Charge charge = Charge.create(params);
-  			// System.out.println(charge);
-        Payment result = paymentRepository.save(payment);
+        try {
+            Charge charge = Charge.create(params);
+            // System.out.println(charge);
+            Payment result = paymentRepository.save(payment);
 
-  			p = ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, payment.getId().toString()))
-  					.body(result);
-        result.setReceipt(charge.toJson());
-        this.updatePayment(result);
-  		} catch (CardException e) {
-  			// Since it's a decline, CardException will be caught
-  			System.out.println("Status is: " + e.getCode());
-  			System.out.println("Message is: " + e.getMessage());
-  			throw new BadRequestAlertException("CardException", ENTITY_NAME, "");
+            p = ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, payment.getId().toString()))
+                .body(result);
+            result.setReceipt(charge.toJson());
+            this.updatePayment(result);
+        } catch (CardException e) {
+            // Since it's a decline, CardException will be caught
+            System.out.println("Status is: " + e.getCode());
+            System.out.println("Message is: " + e.getMessage());
+            throw new BadRequestAlertException("CardException", ENTITY_NAME, "");
 
-  		} catch (RateLimitException e) {
-  			// Too many requests made to the API too quickly
-  			throw new BadRequestAlertException("RateLimitException", ENTITY_NAME,
-  					"Too many requests made to the API too quickly");
-  		} catch (InvalidRequestException e) {
-  			// Invalid parameters were supplied to Stripe's API
-  			throw new BadRequestAlertException("InvalidRequestException", ENTITY_NAME,
-  					"Invalid parameters were supplied to Stripe's API");
-  		} catch (AuthenticationException e) {
-  			// Authentication with Stripe's API failed
-  			// (maybe you changed API keys recently)
-  			throw new BadRequestAlertException("AuthenticationException", ENTITY_NAME,
-  					"Authentication with Stripe's API failed, maybe you changed API keys recently");
-  		} catch (StripeException e) {
-  			// Display a very generic error to the user, and maybe send
-  			// yourself an email
-  			throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
-  		} catch (Exception e) {
-  			// Something else happened, completely unrelated to Stripe
-  			throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
-  		}
-  		return p;
-  	}
+        } catch (RateLimitException e) {
+            // Too many requests made to the API too quickly
+            throw new BadRequestAlertException("RateLimitException", ENTITY_NAME,
+                "Too many requests made to the API too quickly");
+        } catch (InvalidRequestException e) {
+            // Invalid parameters were supplied to Stripe's API
+            throw new BadRequestAlertException("InvalidRequestException", ENTITY_NAME,
+                "Invalid parameters were supplied to Stripe's API");
+        } catch (AuthenticationException e) {
+            // Authentication with Stripe's API failed
+            // (maybe you changed API keys recently)
+            throw new BadRequestAlertException("AuthenticationException", ENTITY_NAME,
+                "Authentication with Stripe's API failed, maybe you changed API keys recently");
+        } catch (StripeException e) {
+            // Display a very generic error to the user, and maybe send
+            // yourself an email
+            throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
+        } catch (Exception e) {
+            // Something else happened, completely unrelated to Stripe
+            throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
+        }
+        return p;
+    }
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
 
@@ -184,6 +184,18 @@ public class PaymentResource {
         log.debug("REST request to get Payment : {}", id);
         Optional<Payment> payment = paymentRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(payment);
+    }
+
+    /**
+     * GET  /payments/:id : get the "id" payment.
+     *
+     * @param id the id of the user to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the payment, or with status 404 (Not Found)
+     */
+    @GetMapping("/payments-byuser/{id}")
+    public List<Payment> getPaymentByUser(@PathVariable Long id) {
+        log.debug("REST request to get Payment : {}", id);
+        return paymentRepository.findByUserIsCurrentUser();
     }
 
     /**
