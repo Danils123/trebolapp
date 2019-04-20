@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -12,8 +12,15 @@ type EntityArrayResponseType = HttpResponse<IPurchaseSummary[]>;
 @Injectable({ providedIn: 'root' })
 export class PurchaseSummaryService {
     public resourceUrl = SERVER_API_URL + 'api/purchase-summaries';
+    isHomeDelivery = false;
+    @Output() isHomeDeliveryEmitter: EventEmitter<boolean> = new EventEmitter();
 
     constructor(protected http: HttpClient) {}
+
+    initHomeDelivery(state: boolean) {
+        this.isHomeDelivery = state;
+        this.isHomeDeliveryEmitter.emit(this.isHomeDelivery);
+    }
 
     create(purchaseSummary: IPurchaseSummary): Observable<EntityResponseType> {
         return this.http.post<IPurchaseSummary>(this.resourceUrl, purchaseSummary, { observe: 'response' });

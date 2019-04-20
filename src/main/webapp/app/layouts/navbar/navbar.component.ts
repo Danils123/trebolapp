@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     momentDate: Moment = moment('12-25-1993', 'MM-DD-YYYY');
 
-    totalOrders: number;
+    totalOrders = 0;
 
     constructor(
         private loginService: LoginService,
@@ -55,7 +55,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         public offerService: OfferService,
         protected eventManager: JhiEventManager,
         public commerceUserService: CommerceUserService
-    ) {}
+    ) {
+        this.orderCounter.connect();
+    }
 
     ngOnInit() {
         this.profileService.getProfileInfo().then(profileInfo => {
@@ -67,45 +69,74 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.accountService.user.authorities.filter(item => item === 'ROLE_COMPRADOR').length > 0
         ) {
         }
-        if (this.accountService.user !== null && this.accountService.user.authorities.filter(item => item === 'ROLE_VENDEDOR').length > 0) {
-            this.loadOrders();
-        }
+        this.loadOrders();
         this.registerChangeInOffers();
+        this.reduceOrderItems();
     }
 
     loadOrders() {
         this.accountService.fetch().subscribe(data => {
-            this.userExtraService.findByUserId(data.body.id).subscribe(userExtra => {
-                this.commerceService.queryByCommerce(userExtra.body.id).subscribe(comerces => {
-                    this.orderItemService
-                        .findByCommerce(comerces.body[0].id)
-                        .pipe(
-                            filter((res: HttpResponse<IOrderItem[]>) => res.ok),
-                            map((res: HttpResponse<IOrderItem[]>) => res.body)
-                        )
-                        .subscribe((res: IOrderItem[]) => {
-                            this.totalOrders = res.filter(item => item.state !== 2).length;
-                            this.orderCounter.subscribe();
-                            this.orderCounter.receive().subscribe(order => {
-                                this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
-                                    if (commerce.body[0].id === order.commerce.id) {
-                                        this.totalOrders++;
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000
-                                        });
-                                        Toast.fire({
-                                            type: 'warning',
-                                            title: `La order #${order.id} acaba de llegar`
-                                        });
-                                    }
+            if (data.body.authorities.filter(item => item === 'ROLE_VENDEDOR').length > 0) {
+                this.userExtraService.findByUserId(data.body.id).subscribe(userExtra => {
+                    this.commerceService.queryByCommerce(userExtra.body.id).subscribe(comerces => {
+                        this.orderItemService
+                            .findByCommerce(comerces.body[0].id)
+                            .pipe(
+                                filter((res: HttpResponse<IOrderItem[]>) => res.ok),
+                                map((res: HttpResponse<IOrderItem[]>) => res.body)
+                            )
+                            .subscribe((res: IOrderItem[]) => {
+                                this.totalOrders = res.filter(item => item.state !== 2).length;
+                                this.orderCounter.subscribe();
+                                this.orderCounter.receive().subscribe(order => {
+                                    this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
+                                        if (commerce.body[0].id === order.commerce.id) {
+                                            this.totalOrders++;
+                                            const Toast = Swal.mixin({
+                                                toast: true,
+                                                position: 'top-end',
+                                                showConfirmButton: false,
+                                                timer: 3000
+                                            });
+                                            Toast.fire({
+                                                type: 'warning',
+                                                title: `La order #${order.id} acaba de llegar`
+                                            });
+                                        }
+                                    });
                                 });
                             });
-                        });
+                    });
                 });
-            });
+            }
+        });
+    }
+
+    reduceOrderItems() {
+        this.accountService.fetch().subscribe(data => {
+            if (data.body.authorities.filter(item => item === 'ROLE_VENDEDOR').length > 0) {
+                this.userExtraService.findByUserId(data.body.id).subscribe(userExtra => {
+                    this.commerceService.queryByCommerce(userExtra.body.id).subscribe(comerces => {
+                        this.orderItemService
+                            .findByCommerce(comerces.body[0].id)
+                            .pipe(
+                                filter((res: HttpResponse<IOrderItem[]>) => res.ok),
+                                map((res: HttpResponse<IOrderItem[]>) => res.body)
+                            )
+                            .subscribe((res: IOrderItem[]) => {
+                                this.totalOrders = res.filter(item => item.state !== 2).length;
+                                this.orderCounter.subscribeReduceCounter();
+                                this.orderCounter.receiveReduce().subscribe(order => {
+                                    this.commerceService.queryByCommerce(this.accountService.userExtra.id).subscribe(commerce => {
+                                        if (commerce.body[0].id === order.commerce.id) {
+                                            this.totalOrders--;
+                                        }
+                                    });
+                                });
+                            });
+                    });
+                });
+            }
         });
     }
 
@@ -135,8 +166,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.informationArray = [];
         let userExtra: IUserExtra;
         this.offers = [];
-        console.log('aaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-        console.log(this.accountService.userExtra);
         this.userExtraService.find(this.accountService.userExtra.id).subscribe((res: HttpResponse<IUserExtra>) => {
             userExtra = res.body;
             let offers: IOffer[];

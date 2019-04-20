@@ -4,6 +4,11 @@
             <h1>Ordenes</h1>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col" *ngIf="orderItems === undefined || orderItems.length === 0">
+                    <strong>No hay ordenes pendientes</strong>
+                </div>
+            </div>
             <div *ngFor="let order of orderItems">
                 <div class="row animated fadeIn" [ngClass]="{'animated slow fadeOut': order.state === 2}">
                     <div class="col-lg-2 border-right">
@@ -38,5 +43,3 @@
         </div>
     </div>
 </div>
-
-<button (click)="createOrderDummy()">Crear</button>

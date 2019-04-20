@@ -16,7 +16,7 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
     purchaseSummaries: IPurchaseSummary[];
     currentAccount: any;
     eventSubscriber: Subscription;
-
+    isHomeDelivery: boolean;
     constructor(
         protected purchaseSummaryService: PurchaseSummaryService,
         protected jhiAlertService: JhiAlertService,
@@ -24,27 +24,10 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         protected accountService: AccountService
     ) {}
 
-    loadAll() {
-        this.purchaseSummaryService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<IPurchaseSummary[]>) => res.ok),
-                map((res: HttpResponse<IPurchaseSummary[]>) => res.body)
-            )
-            .subscribe(
-                (res: IPurchaseSummary[]) => {
-                    this.purchaseSummaries = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-    }
-
     ngOnInit() {
-        this.loadAll();
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
-        this.registerChangeInPurchaseSummaries();
     }
 
     ngOnDestroy() {
@@ -55,8 +38,9 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
-    registerChangeInPurchaseSummaries() {
-        this.eventSubscriber = this.eventManager.subscribe('purchaseSummaryListModification', response => this.loadAll());
+    changeHomeDelivery() {
+        this.isHomeDelivery = !this.isHomeDelivery;
+        this.purchaseSummaryService.initHomeDelivery(this.isHomeDelivery);
     }
 
     protected onError(errorMessage: string) {

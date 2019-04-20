@@ -14,8 +14,10 @@ export class DeliveryMapService {
     // Este estado permitira saber al componente padre si la entrega ya finalizo o esta en proceso
     state = 0;
     LantLng: google.maps.LatLng[];
+    isInitDelivery = false;
     @Output() stateEmitter: EventEmitter<number> = new EventEmitter();
     @Output() changeCoordinates: EventEmitter<google.maps.LatLng[]> = new EventEmitter();
+    @Output() initDeliveryEmitter: EventEmitter<boolean> = new EventEmitter();
     public resourceUrl = SERVER_API_URL + 'api/delivery-maps';
 
     constructor(protected http: HttpClient) {}
@@ -27,11 +29,16 @@ export class DeliveryMapService {
         this.changeCoordinates.emit(this.LantLng);
     }
 
+    initDelivery() {
+        this.isInitDelivery = true;
+        this.state = this.state + 1;
+        this.initDeliveryEmitter.emit(this.isInitDelivery);
+    }
+
     changeState() {
         if (this.state === 2) {
             this.state = 0;
         }
-        this.state = this.state + 1;
         this.stateEmitter.emit(this.state);
     }
 

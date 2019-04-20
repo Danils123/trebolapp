@@ -16,6 +16,7 @@ import { OrderItem } from 'app/shared/model/order-item.model';
 import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 import { ProductCommerce } from 'app/shared/model/product-commerce.model';
 import { Commerce } from 'app/shared/model/commerce.model';
+import { PurchaseSummaryService } from '../purchase-summary/purchase-summary.service';
 
 @Component({
     selector: 'jhi-purchase',
@@ -28,6 +29,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     routeData: any;
     totalItems: any;
     purchase: any;
+    isHomeDelivery: boolean;
 
     // Los estados de los diferentes componentes de la compra
     statePayment = false;
@@ -44,8 +46,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         protected router: Router,
         protected eventManager: JhiEventManager,
         private orderServiceWS: OrdersService,
-        private deliveryService: DeliveryMapService
-    ) {}
+        private deliveryService: DeliveryMapService,
+        private summaryService: PurchaseSummaryService
+    ) {
+        this.orderServiceWS.connect();
+    }
 
     ngOnInit() {
         this.accountService.identity().then(account => {
@@ -59,16 +64,19 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         // Segmento para subscribir los diferentes estado de los componentes de compras
         this.deliveryService.stateEmitter.subscribe(state => {
             this.stateDelivery = state;
+            console.log(this.stateDelivery);
         });
     }
 
     toDelivery() {
+        this.statePayment = true;
+        this.deliveryService.enterCoordinates([
+            new google.maps.LatLng(9.9323215, -84.0332226),
+            new google.maps.LatLng(9.930858, -84.033738)
+        ]);
         this.orderServiceWS.subscribeBuyer();
         this.orderServiceWS.receive().subscribe(order => {
-            this.deliveryService.enterCoordinates([
-                new google.maps.LatLng(9.9323215, -84.0332226),
-                new google.maps.LatLng(9.930858, -84.033738)
-            ]);
+            this.deliveryService.initDelivery();
         });
         this.createOrderDummy();
     }
@@ -81,11 +89,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         const newOrder = new OrderItem();
         const productPerOrder = new ProductsPerOrder();
         productPerOrder.productCommerce = new ProductCommerce();
-        productPerOrder.productCommerce.id = 1252;
+        productPerOrder.productCommerce.id = 1300;
         productPerOrder.quantity = 100;
         newOrder.productsPerOrders = [];
         newOrder.commerce = new Commerce();
-        newOrder.commerce.id = 1101;
+        newOrder.commerce.id = 1051;
         newOrder.state = 0;
         newOrder.productsPerOrders.push(productPerOrder);
         this.orderServiceWS.sendOrder(newOrder);
@@ -93,7 +101,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
 
     toPayment() {}
 
-    toSummary() {}
+    toSummary() {
+        this.summaryService.isHomeDeliveryEmitter.subscribe(state => {
+            this.isHomeDelivery = state;
+        });
+    }
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);

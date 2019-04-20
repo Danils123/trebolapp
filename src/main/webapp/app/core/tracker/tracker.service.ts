@@ -30,30 +30,30 @@ export class JhiTrackerService {
     }
 
     connect() {
-        if (this.connectedPromise === null) {
-            this.connection = this.createConnection();
-        }
-        // building absolute path so that websocket doesn't fail when deploying with a context path
-        const loc = this.$window.nativeWindow.location;
-        let url;
-        url = '//' + loc.host + loc.pathname + 'websocket/tracker';
-        const socket = new SockJS(url);
-        this.stompClient = Stomp.over(socket);
-        const headers = {};
-        headers['X-XSRF-TOKEN'] = this.csrfService.getCSRF('XSRF-TOKEN');
-        this.stompClient.connect(headers, () => {
-            this.connectedPromise('success');
-            this.connectedPromise = null;
-            this.sendActivity();
-            if (!this.alreadyConnectedOnce) {
-                this.subscription = this.router.events.subscribe(event => {
-                    if (event instanceof NavigationEnd) {
-                        this.sendActivity();
-                    }
-                });
-                this.alreadyConnectedOnce = true;
-            }
-        });
+        // if (this.connectedPromise === null) {
+        //     this.connection = this.createConnection();
+        // }
+        // // building absolute path so that websocket doesn't fail when deploying with a context path
+        // const loc = this.$window.nativeWindow.location;
+        // let url;
+        // url = '//' + loc.host + loc.pathname + 'websocket/tracker';
+        // const socket = new SockJS(url);
+        // this.stompClient = Stomp.over(socket);
+        // const headers = {};
+        // headers['X-XSRF-TOKEN'] = this.csrfService.getCSRF('XSRF-TOKEN');
+        // this.stompClient.connect(headers, () => {
+        //     this.connectedPromise('success');
+        //     this.connectedPromise = null;
+        //     this.sendActivity();
+        //     if (!this.alreadyConnectedOnce) {
+        //         this.subscription = this.router.events.subscribe(event => {
+        //             if (event instanceof NavigationEnd) {
+        //                 this.sendActivity();
+        //             }
+        //         });
+        //         this.alreadyConnectedOnce = true;
+        //     }
+        // });
     }
 
     disconnect() {

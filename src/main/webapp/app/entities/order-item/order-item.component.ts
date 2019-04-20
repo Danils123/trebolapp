@@ -47,6 +47,7 @@ export class OrderItemComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        console.log(this.orderItems);
         this.accountService.fetch().subscribe(user => {
             this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
                 this.commerceService.queryByCommerce(userExtra.body.id).subscribe(commerce => {
@@ -65,6 +66,7 @@ export class OrderItemComponent implements OnInit, OnDestroy {
                                     console.log(order);
                                     if (!(this.orderItems.filter(x => x.id === order.id).length > 0)) {
                                         if (this.currentCommerce.id === order.commerce.id) {
+                                            order.date = moment(order.date);
                                             this.orderItems.push(order);
                                         }
                                     }
