@@ -52,6 +52,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         private mapShopService: MapshopService
     ) {
         this.orderServiceWS.connect();
+        this.productShop = null;
     }
 
     ngOnInit() {
@@ -61,6 +62,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         this.routeData = this.activatedRoute.params.subscribe(params => {
             this.idList = params['id'];
             this.mapShopService.enterIdList(this.idList);
+            console.log('id lista', this.idList);
         });
 
         // Segmento para subscribir los diferentes estado de los componentes de compras

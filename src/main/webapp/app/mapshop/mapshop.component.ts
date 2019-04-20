@@ -56,9 +56,7 @@ export class MapshopComponent implements OnInit {
         private productService: ProductService,
         private _scrollToService: ScrollToService,
         private mapShopService: MapshopService
-    ) {}
-
-    ngOnInit() {
+    ) {
         this.mapShopService.idListEmitter.subscribe(id => {
             this.listPurchase = new class implements IListPurchase {
                 description: string;
@@ -72,6 +70,9 @@ export class MapshopComponent implements OnInit {
             this.loadProductListPerBuy();
             this.loadAllProducts();
         });
+    }
+
+    ngOnInit() {
         this.loadMap();
         this.geoLocation();
     }

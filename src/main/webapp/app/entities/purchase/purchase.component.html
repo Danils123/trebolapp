@@ -5,7 +5,7 @@
                 <aw-wizard-step [stepTitle]="'Comercios cercanos'" [canExit]="true" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF041;', fontFamily: 'FontAwesome' }">
                     <br>
                     <jhi-mapshop></jhi-mapshop>
-                    <button href="javascript:void(0)" class="pull-right btn btn-warning" (click)="toSummary()" awNextStep>Continuar</button>
+                    <button href="javascript:void(0)" class="pull-right btn btn-warning" (click)="toSummary()" (finalize)="productShop === null" [disabled]="productShop === null" awNextStep>Continuar</button>
                     <!-- (finalize)="stateMap" [disabled]="!stateMap" -->
                 </aw-wizard-step>
                 <aw-wizard-step [stepTitle]="'Detalle'" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF040;', fontFamily: 'FontAwesome' }">

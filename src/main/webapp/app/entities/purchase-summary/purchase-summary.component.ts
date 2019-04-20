@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IPurchaseSummary } from 'app/shared/model/purchase-summary.model';
 import { AccountService } from 'app/core';
 import { PurchaseSummaryService } from './purchase-summary.service';
+import { ProductShop } from 'app/shared/model/ProductShop.model';
 
 @Component({
     selector: 'jhi-purchase-summary',
@@ -17,6 +18,8 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
     currentAccount: any;
     eventSubscriber: Subscription;
     isHomeDelivery: boolean;
+    productShop: ProductShop;
+    totalCount: number;
     constructor(
         protected purchaseSummaryService: PurchaseSummaryService,
         protected jhiAlertService: JhiAlertService,
@@ -27,6 +30,10 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.accountService.identity().then(account => {
             this.currentAccount = account;
+        });
+
+        this.purchaseSummaryService.productShopEmitter.subscribe(product => {
+            this.productShop = product;
         });
     }
 
