@@ -110,7 +110,7 @@ export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
     lowerCase() {
         this.registerAccount.login = this.registerAccount.login.toLowerCase();
     }
-    cambiarRol(rol: number) {
+    changeRol(rol: number) {
         this.rolActive = rol;
     }
 

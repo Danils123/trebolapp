@@ -16,9 +16,12 @@ import { OrderItemService } from 'app/entities/order-item';
 export class OrdersCounterService {
     stompClient = null;
     subscriber = null;
+    subscriberReduce = null;
     connection: Promise<any>;
     connectedPromise: any;
     listener: Observable<any>;
+    listenerReduce: Observable<any>;
+    listenerObserverReduce: Observer<any>;
     listenerObserver: Observer<any>;
     alreadyConnectedOnce = false;
     private subscription: Subscription;
@@ -26,11 +29,11 @@ export class OrdersCounterService {
         private router: Router,
         private $window: WindowRef,
         // tslint:disable-next-line: no-unused-variable
-        private csrfService: CSRFService,
-        private orderItemService: OrderItemService
+        private csrfService: CSRFService
     ) {
         this.connection = this.createConnection();
         this.listener = this.createListener();
+        this.listenerReduce = this.createListenerReduce();
     }
 
     connect() {
@@ -71,28 +74,51 @@ export class OrdersCounterService {
         return this.listener;
     }
 
+    receiveReduce() {
+        return this.listenerReduce;
+    }
+
     subscribe() {
         this.connection.then(() => {
             this.subscriber = this.stompClient.subscribe(
                 '/topic/order_counter', // Este es para escuchar cualquier cambio
                 data => {
-                    console.log(data);
                     this.listenerObserver.next(JSON.parse(data.body));
                 }
             );
         });
     }
 
+    subscribeReduceCounter() {
+        this.connection.then(() => {
+            this.subscriberReduce = this.stompClient.subscribe(
+                '/topic/order_counter_reduce', // Este es para escuchar cualquier cambio
+                data => {
+                    this.listenerObserverReduce.next(JSON.parse(data.body));
+                }
+            );
+        });
+    }
     unsubscribe() {
         if (this.subscriber !== null) {
             this.subscriber.unsubscribe();
         }
         this.listener = this.createListener();
+
+        if (this.subscriberReduce !== null) {
+            this.subscriberReduce.unsubscribe();
+        }
+        this.listenerReduce = this.createListener();
     }
 
     private createListener(): Observable<any> {
         return new Observable(observer => {
             this.listenerObserver = observer;
+        });
+    }
+    private createListenerReduce(): Observable<any> {
+        return new Observable(observer => {
+            this.listenerObserverReduce = observer;
         });
     }
 

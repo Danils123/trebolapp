@@ -34,7 +34,7 @@ export class DeliveryMapComponent implements OnInit {
 
     marcadores: google.maps.Marker[] = [];
     infoWindows: google.maps.InfoWindow[] = [];
-
+    directionResult: google.maps.DirectionsResult;
     constructor(
         protected deliveryMapService: DeliveryMapService,
         protected jhiAlertService: JhiAlertService,
@@ -44,20 +44,26 @@ export class DeliveryMapComponent implements OnInit {
     ) {
         this.directionsDisplay = new google.maps.DirectionsRenderer();
         this.directionsServices = new google.maps.DirectionsService();
+        this.origin = null;
+        this.destination = null;
+        this.timeRemaining = null;
     }
 
     ngOnInit() {
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
-        this.cargarMapa();
+        this.loadMap();
         this.deliveryMapService.changeCoordinates.subscribe((coordinates: google.maps.LatLng[]) => {
             this.originLatLng = coordinates[0];
             this.destinationLatLng = coordinates[1];
             this.drawRoad();
         });
+        this.deliveryMapService.initDeliveryEmitter.subscribe(init => {
+            this.createPolyline();
+        });
     }
-    cargarMapa() {
+    loadMap() {
         const mapaOpciones: google.maps.MapOptions = {
             center: this.destinationLatLng === undefined ? new google.maps.LatLng(9.9323215, -84.0332226) : this.destinationLatLng,
             zoom: 7,
@@ -66,15 +72,6 @@ export class DeliveryMapComponent implements OnInit {
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapaOpciones);
         this.map.setZoom(15);
         this.directionsDisplay.setMap(this.map);
-        this.map.addListener('click', coors => {
-            const nuevoMarcador: any = {
-                nombre: 'Nuevo Lugar',
-                lat: coors.latLng.lat(),
-                lng: coors.latLng.lng(),
-                id: new Date().toISOString()
-            };
-            // Emitir evento de socket, agregar marcador
-        });
     }
     drawRoad() {
         this.directionsServices.route(
@@ -85,14 +82,13 @@ export class DeliveryMapComponent implements OnInit {
             },
             (result, status) => {
                 if (status === google.maps.DirectionsStatus.OK) {
-                    console.log(result);
                     this.origin = result.routes[0].legs[0].start_address;
                     this.destination = result.routes[0].legs[0].end_address;
                     this.timeDuration = result.routes[0].legs[0].duration.value;
 
                     this.map.setZoom(7);
                     this.directionsDisplay.setDirections(result);
-                    this.createPolyline(result);
+                    this.directionResult = result;
                 } else {
                     const Toast = Swal.mixin({
                         toast: true,
@@ -110,7 +106,7 @@ export class DeliveryMapComponent implements OnInit {
         );
     }
 
-    createPolyline(directionResult: google.maps.DirectionsResult) {
+    createPolyline() {
         if (this.line !== undefined) {
             this.line.setMap(null);
             clearInterval(this.int);
@@ -131,7 +127,7 @@ export class DeliveryMapComponent implements OnInit {
                 }
             ]
         });
-        const legs = directionResult.routes[0].legs;
+        const legs = this.directionResult.routes[0].legs;
         for (const leg of legs) {
             for (const step of leg.steps) {
                 for (const nextSegment of step.path) {
@@ -141,7 +137,6 @@ export class DeliveryMapComponent implements OnInit {
         }
         this.line.setMap(this.map);
         this.listenSocket();
-        // this.animate(this.line);
     }
 
     updateMarker(percentage, line) {
@@ -152,18 +147,6 @@ export class DeliveryMapComponent implements OnInit {
         this.timeRemaining = this.timeDuration - this.timeDuration * (percentage.split('%')[0] / 100);
         this.timeRemaining = this.timeRemaining.toFixed(2);
         if (percentage === '99.5%') {
-            const Toast = Swal.mixin({
-                toast: false,
-                position: 'center',
-                showConfirmButton: false,
-                timer: 5000
-            });
-            Toast.fire({
-                type: 'success',
-                title: 'Felicidades!',
-                text: 'La entrega se realizó con éxito, el mensajero ya esta en la puerta de su casa.'
-            });
-
             this.deliveryMapService.changeState();
         }
     }
@@ -172,17 +155,6 @@ export class DeliveryMapComponent implements OnInit {
         this.wsService.emit('position-courier');
         this.wsService.listen('actual-position').subscribe(percentage => {
             this.updateMarker(percentage, this.line);
-        });
-    }
-
-    agregarMarcador(marcador) {
-        const latLng = new google.maps.LatLng(marcador.lat, marcador.lng);
-
-        const marker = new google.maps.Marker({
-            map: this.map,
-            animation: google.maps.Animation.DROP,
-            position: latLng,
-            draggable: false
         });
     }
 }
