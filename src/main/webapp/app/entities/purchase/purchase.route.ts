@@ -30,11 +30,8 @@ export const purchaseRoute: Routes = [
     {
         path: ':id',
         component: PurchaseComponent,
-        resolve: {
-            pagingParams: JhiResolvePagingParams
-        },
         data: {
-            authorities: ['ROLE_USER', 'ROLE_COMPRADOR]'],
+            authorities: ['ROLE_USER', 'ROLE_COMPRADOR'],
             pageTitle: 'Compras'
         },
         canActivate: [UserRouteAccessService]
