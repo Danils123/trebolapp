@@ -1,5 +1,5 @@
 <div class="animated fadeIn">
-<div class="card" id="start">
+<div class="card" id="top">
     <div class="card-header">
         <i class="icon-map"></i> Comercios cercanos
     </div>
@@ -18,13 +18,82 @@
     </div>
 </div>
     <br>
-    <div class="card" id="bottom">
-        <div class="card-header">
-            Detalles del comercio
-       <div>
-        <div class="card-body" style="height: 400px; width: 100%">
-        <div>
-    <div>
-</div>
+    <div id="bottom">
+    <div class="card"  *ngIf="visibleCard">
+           <div class="card-header" >
+               <button class="btn btn-sm btn-pill btn-danger" [ngx-scroll-to]="'top'" (click)="disableCard()">
+                   <span class="d-none d-md-inline">Cerrar</span>
+               </button>
+               <button type="submit"  class="btn-primary tableButtons ml-2" (click)="sentData()">
+                   <span class="d-none d-md-inline">Comprar</span>
+               </button>
+               Detalles del comercio: {{productShop.commerce.name}}
+           </div>
+           <div class="card-body" style="width: 100%">
+                <div class="row">
 
+                    <div class="table-responsive" style="width: 25%;">
+                        <p>Horario</p>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <div>
+                                    <th ><span>Día</span></th>
+                                    <th ><span>Abre</span></th>
+                                    <th ><span>Cierra</span></th>
+                                </div>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div *ngFor="let item of scheduleCommerce">
+                                <tr *ngFor="let schedule of item">
+                                    <td >{{schedule.day}}</td>
+                                    <td >{{schedule.openTime.format("HH:mm")}}</td>
+                                    <td >{{schedule.closingtime.format("HH:mm")}}</td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive" style="width: 30%;">
+                        <p>Detalle de la lista de compra</p>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+
+                                    <th ><span>Producto</span></th>
+                                    <th ><span>Cantidad</span></th>
+                                    <th ><span>Precio</span></th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let item of listsShop">
+                                    <td >{{item.product.name}}</td>
+                                    <td style="align-content: center">{{item.QtyBuy}}</td>
+                                    <td >{{item.price}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div>total de la compra: {{costPurchase}} Colones</div>
+                    </div>
+
+                    <div style="width: 10%"></div>
+
+                    <div class="table-responsive" style="width: 30%;">
+                        <p>{{productShop.commerce.name}}</p>
+                        <p>{{productShop.commerce.address}}</p>
+                        <p>{{productShop.commerce.email}}</p>
+                        <p>{{productShop.commerce.phone}}</p>
+                    </div>
+
+                </div>
+
+           </div>
+    </div>
+    </div>
+</div>
 

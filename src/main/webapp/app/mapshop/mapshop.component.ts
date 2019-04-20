@@ -17,6 +17,7 @@ import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
 import { IListShop, ListShop } from 'app/shared/model/listShop.model';
+import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
     selector: 'jhi-mapshop',
@@ -43,6 +44,7 @@ export class MapshopComponent implements OnInit {
     allProducts: IProduct[];
     listsShop: IListShop[];
     listShop: IListShop;
+    visibleCard = false;
 
     constructor(
         private http: HttpClient,
@@ -51,7 +53,8 @@ export class MapshopComponent implements OnInit {
         private scheduleCommerceService: ScheduleCommerceService,
         private productCommerceService: ProductCommerceService,
         private productListService: ProductListService,
-        private productService: ProductService
+        private productService: ProductService,
+        private _scrollToService: ScrollToService
     ) {}
 
     ngOnInit() {
@@ -100,7 +103,6 @@ export class MapshopComponent implements OnInit {
         for (const item of this.marks) {
             item.setMap(null);
         }
-        this.scheduleCommerce = [];
         this.commercesInArea = [];
         this.marks.length = 0;
 
@@ -120,9 +122,9 @@ export class MapshopComponent implements OnInit {
                             const validation = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, item);
 
                             if (validation) {
-                                this.commercesInArea.push(item);
-                                this.loadScheduleCommerce(item);
                                 this.loadListShopCommerce(item);
+                                this.loadScheduleCommerce(item);
+                                this.commercesInArea.push(item);
                                 this.addMark(item);
                             }
                         }
@@ -146,7 +148,7 @@ export class MapshopComponent implements OnInit {
 
         this.marks.push(marker);
 
-        const contentPlace = `<b>${markCommerce.name}</b>`;
+        const contentPlace = `<b>${markCommerce.name}</b><br><b>${this.costPurchase} Colones</b><br><b> es el costo de la lista</b>`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });
@@ -159,12 +161,15 @@ export class MapshopComponent implements OnInit {
         });
 
         google.maps.event.addDomListener(marker, 'dblclick', () => {
+            this.visibleCardDetail();
             this.productShop.commerce = markCommerce;
             this.productShop.user = this.markUser;
             this.loadListShopCommerce(markCommerce);
+            this.loadScheduleCommerce(markCommerce);
             this.productShop.listShop = this.listsShop;
             console.log('productshop en addmark');
             console.log(this.productShop);
+            this.goToDetail();
         });
     }
 
@@ -261,6 +266,7 @@ export class MapshopComponent implements OnInit {
     }
 
     loadScheduleCommerce(commerce: ICommerce) {
+        this.scheduleCommerce = [];
         this.scheduleCommerceService
             .findByCommerce(commerce.id)
             .pipe(
@@ -337,5 +343,18 @@ export class MapshopComponent implements OnInit {
 
     sentData() {
         this.information.emit(this.productShop);
+    }
+
+    visibleCardDetail() {
+        this.visibleCard = true;
+    }
+
+    disableCard() {
+        this.visibleCard = false;
+    }
+
+    goToDetail() {
+        const config: ScrollToConfigOptions = { target: 'bottom' };
+        this._scrollToService.scrollTo(config);
     }
 }
