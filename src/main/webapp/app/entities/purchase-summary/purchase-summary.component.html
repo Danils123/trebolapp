@@ -46,13 +46,18 @@
                         <th class="right">Total</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="productShop !== null">
                     <tr *ngFor="let item of productShop.listShop; let i = index">
                         <td class="center">{{i}}</td>
                         <td class="left">{{item.product.name}}</td>
                         <td class="center"> {{item.inventoryQty}}</td>
-                        <td class="right">{{item.QtyBuy}}</td>
+                        <td class="right">{{item.price}}</td>
                         <td class="right">${{item.price * item.inventoryQty}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="productShop == null">
+                    <tr>
+                        <td class="center">Sin datos</td>
                     </tr>
                 </tbody>
             </table>

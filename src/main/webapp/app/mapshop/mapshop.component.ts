@@ -152,7 +152,12 @@ export class MapshopComponent implements OnInit {
 
         this.marks.push(marker);
 
-        const contentPlace = `<b>${markCommerce.name}</b><br><b>${this.costPurchase} Colones</b><br><b> es el costo de la lista</b>`;
+        const contentPlace = `<b class="tex"><strong>${markCommerce.name}</strong></b> <hr/>
+                              <b>${this.costPurchase} colones</b>
+                              <br><b> es el costo total de la lista</b>
+                              <hr/>
+                              <a href="javascript:void(0)">Compra aquí      </a>|
+                              <a href="javascript:void(0)">          Ver más</a>`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });
@@ -241,6 +246,7 @@ export class MapshopComponent implements OnInit {
             // Browser doesn't support Geolocation
             this.handleLocationError(false, infoWindow, this.map.getCenter());
         }
+        this.map.setZoom(8);
     }
 
     handleLocationError(browserHasGeolocation, infoWindow, pos) {

@@ -25,7 +25,9 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected accountService: AccountService
-    ) {}
+    ) {
+        this.productShop = null;
+    }
 
     ngOnInit() {
         this.accountService.identity().then(account => {
