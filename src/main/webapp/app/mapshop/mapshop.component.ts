@@ -157,7 +157,7 @@ export class MapshopComponent implements OnInit {
                               <br><b> es el costo total de la lista</b>
                               <hr/>
                               <a href="javascript:void(0)">Compra aquí      </a>|
-                              <a href="javascript:void(0)">          Ver más</a>`;
+                              <a href="javascript:void(0)" >          Ver más</a>`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });

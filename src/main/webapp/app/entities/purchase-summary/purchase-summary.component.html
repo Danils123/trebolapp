@@ -4,11 +4,10 @@
 
             <div class="col-sm-4">
                 <h6 class="mb-3"><strong>Origen:</strong></h6>
-                <div><strong>BootstrapMaster.com</strong></div>
-                <div>Konopnickiej 42</div>
-                <div>43-190 Mikolow, Poland</div>
-                <div>Email: lukasz@bootstrapmaster.com</div>
-                <div>Phone: +48 123 456 789</div>
+                <div>Dirreción:<small>{{origin}}</small> </div>
+                <div>Usuario: <small>{{currentAccount.login}}</small> </div>
+                <div>Correo electrónico: <small>{{currentAccount.email}}</small> </div>
+
             </div>
             <!--/.col-->
 
@@ -48,11 +47,11 @@
                 </thead>
                 <tbody *ngIf="productShop !== null">
                     <tr *ngFor="let item of productShop.listShop; let i = index">
-                        <td class="center">{{i}}</td>
+                        <td class="center">{{i + 1}}</td>
                         <td class="left">{{item.product.name}}</td>
-                        <td class="center"> {{item.inventoryQty}}</td>
+                        <td class="center"> {{item.QtyBuy}}</td>
                         <td class="right">{{item.price}}</td>
-                        <td class="right">${{item.price * item.inventoryQty}}</td>
+                        <td class="right">{{item.price * item.QtyBuy}} colones</td>
                     </tr>
                 </tbody>
                 <tbody *ngIf="productShop == null">
@@ -73,17 +72,23 @@
             <div class="col-lg-4 offset-lg-4 col-sm-5 offset-sm-2">
                 <table class="table table-clear">
                     <tbody>
-                        <tr>
-                            <td class="left"><strong>Subtotal</strong></td>
-                            <td class="right">$8.497,00</td>
+                        <tr *ngIf="isHomeDelivery">
+                            <td class="left"><strong>Costo por envió</strong></td>
+                            <td class="right">{{costDevelery}}</td>
                         </tr>
                         <tr>
-                            <td class="left"><strong>Descuento por oferta (20%)</strong></td>
-                            <td class="right">$1,699,40</td>
+                            <td class="left"><strong>Subtotal</strong></td>
+                            <td class="right">{{totalCount}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="left"><strong>Descuento por oferta   <a href="javascript:void(0)" ></a> <i class="fa fa-info" placement="top" [ngbTooltip]="offer.description"></i></strong>
+                            </td>
+                            <td class="right" *ngIf="offer !== null">{{totalCount * (offer.discount / 100)}}</td>
                         </tr>
                         <tr>
                             <td class="left"><strong>Total</strong></td>
-                            <td class="right"><strong>$7.477,36</strong></td>
+                            <td class="right"><strong>{{totalCount - totalCount * (offer.discount / 100)}} colones</strong></td>
                         </tr>
                     </tbody>
                 </table>

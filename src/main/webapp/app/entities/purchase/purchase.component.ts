@@ -73,6 +73,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
 
         this.mapShopService.informationEmitter.subscribe(productShop => {
             this.productShop = productShop;
+            this.summaryService.initProductShop(this.productShop);
         });
     }
 
