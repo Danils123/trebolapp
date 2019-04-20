@@ -23,7 +23,6 @@ export class DeliveryMapService {
     constructor(protected http: HttpClient) {}
 
     enterCoordinates(pLantLng: google.maps.LatLng[]) {
-        console.log('Entro por servicio');
         this.changeState();
         this.LantLng = pLantLng;
         this.changeCoordinates.emit(this.LantLng);

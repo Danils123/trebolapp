@@ -18,6 +18,7 @@ import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
 import { IListShop, ListShop } from 'app/shared/model/listShop.model';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { MapshopService } from './mapshop.service';
 
 @Component({
     selector: 'jhi-mapshop',
@@ -26,7 +27,6 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 })
 export class MapshopComponent implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
-    @Output() information: EventEmitter<ProductShop> = new EventEmitter();
     map: google.maps.Map;
     commerces: ICommerce[];
     radio = 3;
@@ -54,23 +54,26 @@ export class MapshopComponent implements OnInit {
         private productCommerceService: ProductCommerceService,
         private productListService: ProductListService,
         private productService: ProductService,
-        private _scrollToService: ScrollToService
+        private _scrollToService: ScrollToService,
+        private mapShopService: MapshopService
     ) {}
 
     ngOnInit() {
-        this.listPurchase = new class implements IListPurchase {
-            description: string;
-            id = 1501;
-            name: string;
-            productList: IProductList;
-            seller: IUserExtra;
-            state: boolean;
-        }();
-        this.productShop = new ProductShop();
+        this.mapShopService.idListEmitter.subscribe(id => {
+            this.listPurchase = new class implements IListPurchase {
+                description: string;
+                id = id;
+                name: string;
+                productList: IProductList;
+                seller: IUserExtra;
+                state: boolean;
+            }();
+            this.productShop = new ProductShop();
+            this.loadProductListPerBuy();
+            this.loadAllProducts();
+        });
         this.loadMap();
         this.geoLocation();
-        this.loadProductListPerBuy();
-        this.loadAllProducts();
     }
 
     protected onError(errorMessage: string) {
@@ -342,7 +345,7 @@ export class MapshopComponent implements OnInit {
     }
 
     sentData() {
-        this.information.emit(this.productShop);
+        this.mapShopService.sendInformation(this.productShop);
     }
 
     visibleCardDetail() {
