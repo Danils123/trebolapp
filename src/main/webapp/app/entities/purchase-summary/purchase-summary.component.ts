@@ -10,6 +10,7 @@ import { PurchaseSummaryService } from './purchase-summary.service';
 import { ProductShop } from 'app/shared/model/ProductShop.model';
 import { OfferService } from '../offer/offer.service';
 import { IOffer, Offer } from '../../shared/model/offer.model';
+import { Commerce } from '../../shared/model/commerce.model';
 
 @Component({
     selector: 'jhi-purchase-summary',
@@ -36,6 +37,10 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         this.productShop = null;
         this.totalCount = 0;
         this.offer = new Offer();
+        this.currentAccount = {};
+        this.currentAccount.login = 'Cargando';
+        this.currentAccount.email = 'Cargando';
+        this.currentAccount.commerce = new Commerce();
     }
 
     ngOnInit() {
@@ -67,7 +72,7 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
             }
         );
         geocoder.geocode({ location: new google.maps.LatLng(this.productShop.user.lat, this.productShop.user.lng) }, (results, status) => {
-            this.origin = results[0].formatted_address;
+            this.destionation = results[0].formatted_address;
         });
     }
 
