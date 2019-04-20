@@ -7,12 +7,14 @@ import { PurchaseComponent, purchaseRoute } from './';
 
 import { PurchaseSummaryComponent, purchaseSummaryRoute } from '../purchase-summary';
 import { deliveryMapRoute, DeliveryMapComponent } from '../delivery-map';
+import { MAPSHOP_ROUTE, MapshopComponent } from 'app/mapshop';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
-const ENTITY_STATES = [...purchaseRoute, purchaseSummaryRoute, ...deliveryMapRoute];
+const ENTITY_STATES = [...purchaseRoute, purchaseSummaryRoute, ...deliveryMapRoute, MAPSHOP_ROUTE];
 
 @NgModule({
-    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES), ArchwizardModule],
-    declarations: [PurchaseComponent, PurchaseSummaryComponent, DeliveryMapComponent],
+    imports: [TrebolSharedModule, RouterModule.forChild(ENTITY_STATES), ArchwizardModule, ScrollToModule.forRoot()],
+    declarations: [PurchaseComponent, PurchaseSummaryComponent, DeliveryMapComponent, MapshopComponent],
     entryComponents: [PurchaseComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
