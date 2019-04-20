@@ -40,7 +40,8 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         this.currentAccount = {};
         this.currentAccount.login = 'Cargando';
         this.currentAccount.email = 'Cargando';
-        this.currentAccount.commerce = new Commerce();
+        this.productShop = new ProductShop();
+        this.productShop.commerce = new Commerce();
     }
 
     ngOnInit() {
