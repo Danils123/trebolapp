@@ -12,23 +12,33 @@ type EntityArrayResponseType = HttpResponse<IDeliveryMap[]>;
 @Injectable({ providedIn: 'root' })
 export class DeliveryMapService {
     // Este estado permitira saber al componente padre si la entrega ya finalizo o esta en proceso
-    state = false;
+    state = 0;
     LantLng: google.maps.LatLng[];
-    @Output() process: EventEmitter<boolean> = new EventEmitter();
+    isInitDelivery = false;
+    @Output() stateEmitter: EventEmitter<number> = new EventEmitter();
     @Output() changeCoordinates: EventEmitter<google.maps.LatLng[]> = new EventEmitter();
+    @Output() initDeliveryEmitter: EventEmitter<boolean> = new EventEmitter();
     public resourceUrl = SERVER_API_URL + 'api/delivery-maps';
 
     constructor(protected http: HttpClient) {}
 
     enterCoordinates(pLantLng: google.maps.LatLng[]) {
-        console.log('Entro por servicio');
+        this.changeState();
         this.LantLng = pLantLng;
         this.changeCoordinates.emit(this.LantLng);
     }
 
+    initDelivery() {
+        this.isInitDelivery = true;
+        this.state = this.state + 1;
+        this.initDeliveryEmitter.emit(this.isInitDelivery);
+    }
+
     changeState() {
-        this.state = !this.state;
-        this.process.emit(this.state);
+        if (this.state === 2) {
+            this.state = 0;
+        }
+        this.stateEmitter.emit(this.state);
     }
 
     create(deliveryMap: IDeliveryMap): Observable<EntityResponseType> {

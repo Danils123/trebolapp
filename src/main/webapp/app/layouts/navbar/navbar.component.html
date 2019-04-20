@@ -55,7 +55,7 @@
                     <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
                         <ul *ngIf="totalOrders > 0">
                             <li>
-                                <div class="drop-title">Tienes {{totalOrders}} ordenes pendientes</div>
+                                <div class="drop-title"> Ordernes pendientes: {{totalOrders}}</div>
                             </li>
 
                             <li>
@@ -63,7 +63,7 @@
                             </li>
                         </ul>
 
-                        <ul *ngIf="totalOrders <= 0">
+                        <ul *ngIf="totalOrders === 0">
                             <li>
                                 <div class="drop-title">No hay ordenes pendientes</div>
                             </li>

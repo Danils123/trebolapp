@@ -101,7 +101,7 @@ export class SettingsComponent implements OnInit {
                         });
                         Toast.fire({
                             type: 'success',
-                            title: 'Se guardo exitosamente su información'
+                            title: 'Se guardó exitosamente su información'
                         });
                         this.usuarioExtraService.refreshUser();
                     });

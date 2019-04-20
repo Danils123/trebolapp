@@ -31,13 +31,6 @@ export class JhiMainComponent implements OnInit {
         return title;
     }
 
-    cargarLocacion() {
-        this.deliveryMapService.enterCoordinates([
-            new google.maps.LatLng(9.9323215, -84.0332226),
-            new google.maps.LatLng(9.930858, -84.033738)
-        ]);
-    }
-
     ngOnInit() {
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {

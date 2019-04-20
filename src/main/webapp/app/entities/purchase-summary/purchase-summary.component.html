@@ -1,0 +1,103 @@
+<div class="">
+    <div class="card-body">
+        <div class="row mb-4">
+
+            <div class="col-sm-4">
+                <h6 class="mb-3"><strong>Origen:</strong></h6>
+                <div>{{origin}}</div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-4">
+                <h6 class="mb-3"><strong>Destino:</strong></h6>
+                <div>{{destionation}}</div>
+            </div>
+            <!--/.col-->
+
+            <div class="col-sm-4">
+                <h6 class="mb-3"><strong>Detalle:</strong></h6>
+                <div>Usuario: {{currentAccount.login}}</div>
+                <div>Correo electrónico: {{currentAccount.email}}</div>
+                <div>Comercio: {{productShop.commerce.name}}</div>
+                <div>Teléfono: {{productShop.commerce.phone}}</div>
+            </div>
+            <!--/.col-->
+
+        </div>
+        <!--/.row-->
+
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="center">#</th>
+                        <th>Producto</th>
+                        <th class="center">Cantidad</th>
+                        <th class="right">Costo unitario</th>
+                        <th class="right">Total</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="productShop !== null">
+                    <tr *ngFor="let item of productShop.listShop; let i = index">
+                        <td class="center">{{i + 1}}</td>
+                        <td class="left">{{item.product.name}}</td>
+                        <td class="center"> {{item.QtyBuy}}</td>
+                        <td class="right">{{item.price}}</td>
+                        <td class="right">{{item.price * item.QtyBuy}} colones</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="productShop == null">
+                    <tr>
+                        <td class="center">Sin datos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-4 col-sm-5">
+
+            </div>
+            <!--/.col-->
+
+            <div class="col-lg-4 offset-lg-4 col-sm-5 offset-sm-2">
+                <table class="table table-clear">
+                    <tbody>
+                        <tr *ngIf="isHomeDelivery">
+                            <td class="left"><strong>Costo por envió</strong></td>
+                            <td class="right">{{costDevelery}}</td>
+                        </tr>
+                        <tr>
+                            <td class="left"><strong>Subtotal</strong></td>
+                            <td class="right">{{totalCount}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="left"><strong>Descuento por oferta   <a href="javascript:void(0)" ></a> <i class="fa fa-info" placement="top" [ngbTooltip]="offer.description"></i></strong>
+                            </td>
+                            <td class="right" *ngIf="offer !== null">{{totalCount * (offer.discount / 100)}}</td>
+                        </tr>
+                        <tr>
+                            <td class="left"><strong>Total</strong></td>
+                            <td class="right"><strong>{{totalCount - totalCount * (offer.discount / 100)}} colones</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <a href="#" class="btn btn-success"><i class="fa fa-usd"></i> Proceed to Payment</a> -->
+            </div>
+            <!--/.col-->
+
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="checkbox checkbox-primary p-t-0">
+                    <input id="checkbox-delivery" type="checkbox" (click)="changeHomeDelivery()" [checked]="isHomeDelivery">
+                    <label for="checkbox-delivery">¿Desea entrega a domicilio?</label>
+                </div>
+
+
+            </div>
+            <!--/.row-->
+        </div>
+    </div>

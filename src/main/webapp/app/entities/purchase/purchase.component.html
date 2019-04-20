@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <aw-wizard #wizard [navBarLayout]="'large-empty-symbols'">
+                <aw-wizard-step [stepTitle]="'Comercios cercanos'" [canExit]="true" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF041;', fontFamily: 'FontAwesome' }">
+                    <br>
+                    <jhi-mapshop></jhi-mapshop>
+                    <button href="javascript:void(0)" class="pull-right btn btn-warning" (click)="toSummary()" (finalize)="productShop === null" [disabled]="productShop === null" awNextStep>Continuar</button>
+                    <!-- (finalize)="stateMap" [disabled]="!stateMap" -->
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="'Detalle'" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF040;', fontFamily: 'FontAwesome' }">
+                    <div class="centered-content">
+                        <br>
+                        <jhi-purchase-summary></jhi-purchase-summary>
+                        <button href="javascript:void(0)" class="pull-right btn btn-warning" (click)="toPayment()" awNextStep>Proceder con el pago</button>
+                        <!-- (finalize)="stateSummary" [disabled]="!stateSummary"  -->
+                    </div>
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="'Pago'" [disableNavigationBar]="true" [canEnter]="!statePayment" [navigationSymbol]="{ symbol: '&#XF283;', fontFamily: 'FontAwesome' }">
+                    <br>
+                    <button href="javascript:void(0)" class="pull-right btn btn-warning" *ngIf="isHomeDelivery" awNextStep (click)="toDelivery()">Continuar</button>
+                    <button href="javascript:void(0)" class="pull-right btn btn-warning" *ngIf="!isHomeDelivery" [awGoToStep]="{ stepIndex: 4 }" (click)="toFinish()">Continuar</button>
+                    <!-- (finalize)="statePayment" [disabled]="!statePayment" -->
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="'Entrega'" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF21C;', fontFamily: 'FontAwesome' }" awOptionalStep>
+                    <br>
+                    <jhi-delivery-map></jhi-delivery-map>
+                    <button href="javascript:void(0)" class="pull-right btn btn-warning" (finalize)="stateDelivery" [disabled]="!stateDelivery" awNextStep>Continuar</button>
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="'Finalización'" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#xf00c;', fontFamily: 'FontAwesome' }">
+
+                </aw-wizard-step>
+            </aw-wizard>
+        </div>
+    </div>
+</div>

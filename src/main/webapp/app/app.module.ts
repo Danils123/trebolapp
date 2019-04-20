@@ -38,7 +38,6 @@ import { PasswordStrengthBarComponent, PasswordComponent } from './account';
 import { PasswordResetInitComponent } from 'app/account/password-reset/init/password-reset-init.component';
 import { PasswordResetFinishComponent } from 'app/account/password-reset/finish/password-reset-finish.component';
 import { LoadingComponent } from './loading/loading.component';
-import { TrebolMapshopModule } from 'app/mapshop/mapshop.module';
 import { StripePaymentsModule } from 'app/payments/payments.module';
 import { NgxStripeModule } from 'ngx-stripe';
 
@@ -64,7 +63,6 @@ import { NgxStripeModule } from 'ngx-stripe';
         AngularFireModule.initializeApp(CONFIG_FIREBASE),
         AngularFireStorageModule, // imports firebase/storage only needed for storage features,
         AngularFirestoreModule,
-        TrebolMapshopModule,
         StripePaymentsModule,
         NgxStripeModule.forRoot('pk_test_BBpS1aWEtil3NtcgrBEisakn00PD7easrC')
     ],

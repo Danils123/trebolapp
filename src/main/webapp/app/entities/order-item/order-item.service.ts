@@ -57,7 +57,7 @@ export class OrderItemService {
 
     protected convertDateFromClient(orderItem: IOrderItem): IOrderItem {
         const copy: IOrderItem = Object.assign({}, orderItem, {
-            date: orderItem.date != null && orderItem.date.isValid() ? orderItem.date.toJSON() : null
+            date: orderItem.date != null ? orderItem.date.toJSON() : null
         });
         return copy;
     }
