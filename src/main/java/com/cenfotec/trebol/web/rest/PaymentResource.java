@@ -63,7 +63,7 @@ public class PaymentResource {
         // Set your secret key: remember to change this to your live secret key in
         // production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
-        Stripe.apiKey = "sk_test_AE84NHDAxna67jM1FsjJIqyp00sbdsJ9If";
+        Stripe.apiKey = "sk_test_0gM4B29NIyeDYhyCgkDEWi0h00RKXL2VRy";
 
         // Token is created using Checkout or Elements!
         // Get the payment token ID submitted by the form:
