@@ -97,6 +97,14 @@ import { RouterModule } from '@angular/router';
                 loadChildren: './payment/payment.module#StripePaymentModule'
             },
             {
+                path: 'purchase',
+                loadChildren: './purchase/purchase.module#TrebolPurchaseModule'
+            },
+            {
+                path: 'purchase-summary',
+                loadChildren: './purchase-summary/purchase-summary.module#TrebolPurchaseSummaryModule'
+            },
+            {
                 path: 'payment-view',
                 loadChildren: './payment/payment.module#TrebolPaymentModule'
             }

@@ -32,7 +32,7 @@ public class OrderService implements ApplicationListener<SessionDisconnectEvent>
     @SendTo("/topic/order_queue")
     public OrderItem sendOrder(@Payload OrderItem order, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
         log.debug("Sending order data {}", order);
-        OrderCounter(order, stompHeaderAccessor, principal);
+        messagingTemplate.convertAndSend("/topic/order_counter", order);
         return order;
     }
 
@@ -40,12 +40,7 @@ public class OrderService implements ApplicationListener<SessionDisconnectEvent>
     @SendTo("/topic/delivery")
     public OrderItem completeOrder(@Payload OrderItem order, StompHeaderAccessor stompHeaderAccessor,
             Principal principal) {
-        return order;
-    }
-
-    @SendTo("/topic/order_counter")
-    public OrderItem OrderCounter(@Payload OrderItem order, StompHeaderAccessor stompHeaderAccessor,
-            Principal principal) {
+        messagingTemplate.convertAndSend("/topic/order_counter_reduce", order);
         return order;
     }
 
