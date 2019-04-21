@@ -2,25 +2,25 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
-import { AccountService } from 'app/core';
 import { PurchaseService } from './purchase.service';
 import { DeliveryMapService } from '../delivery-map';
-import { OrdersService } from 'app/core/orders/orders.service';
-import { OrderItem } from 'app/shared/model/order-item.model';
-import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
-import { ProductCommerce } from 'app/shared/model/product-commerce.model';
-import { Commerce } from 'app/shared/model/commerce.model';
 import { PurchaseSummaryService } from '../purchase-summary/purchase-summary.service';
-import { ProductShop } from 'app/shared/model/ProductShop.model';
-import { MapshopService } from 'app/mapshop/mapshop.service';
 import { Purchase } from '../../shared/model/purchase.model';
 import { ProductCommerceService } from '../product-commerce';
 import { OrderItemService } from '../order-item';
-import { PaymentComponent } from 'app/entities/payment/payment.component';
+
 import { PaymentServiceService } from '../../payments/payment-service.service';
 import { CommerceUserService } from '../commerce-user/commerce-user.service';
 import { CommerceUser } from '../../shared/model/commerce-user.model';
 import { IDeliveryMap } from '../../shared/model/delivery-map.model';
+import { ProductShop } from 'app/shared/model/ProductShop.model';
+import { OrderItem } from 'app/shared/model/order-item.model';
+import { AccountService } from 'app/core';
+import { OrdersService } from 'app/core/orders/orders.service';
+import { MapshopService } from 'app/mapshop/mapshop.service';
+import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
+import { ProductCommerce } from 'app/shared/model/product-commerce.model';
+import { Commerce } from 'app/shared/model/commerce.model';
 
 @Component({
     selector: 'jhi-purchase',
@@ -182,6 +182,10 @@ export class PurchaseComponent implements OnInit, OnDestroy {
             idUser: this.accountService.userExtra.id
         };
         this.commerceUser.create(subscription).subscribe(result => {
+            this.eventManager.broadcast({
+                name: 'newOffer',
+                content: 'Sending New Offer Broadcast'
+            });
             this.router.navigate(['/product-list']);
         });
     }
