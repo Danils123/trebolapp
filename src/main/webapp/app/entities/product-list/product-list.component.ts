@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     currentAccount: any;
     eventSubscriber: Subscription;
     list: IListPurchase;
-
+    productlistView = false;
     productListarray: ProductList[];
     listpurchaseall: Ilistpurchaseall;
     listpurchaseallArray: Ilistpurchaseall[];
@@ -86,6 +86,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
                 (res: IProductList[]) => {
                     this.productLists = res;
                     this.loadAllPurchase();
+                    this.productlistView = true;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
