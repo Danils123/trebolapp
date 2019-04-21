@@ -113,7 +113,7 @@ export class CalendarComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.loadAll();
+        console.log(this.locale);
         this.listPurchaseService
             .query()
             .pipe(
@@ -121,6 +121,7 @@ export class CalendarComponent implements OnInit {
                 map((res: HttpResponse<IListPurchase[]>) => res.body)
             )
             .subscribe((res: IListPurchase[]) => {
+                this.loadAll();
                 this.listPurchase = res;
             });
     }
