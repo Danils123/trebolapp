@@ -183,9 +183,9 @@ export class CalendarComponent implements OnInit {
         this.refresh.next();
     }
 
-    addEvent(title, date): void {
+    addEvent(title1, date): void {
         this.events.push({
-            title: title,
+            title: title1,
             start: startOfDay(date),
             color: colors.red,
             actions: this.actions
