@@ -1,59 +1,41 @@
-
-    <div class="card">
-        <div class="card-header">
-            Agenda
+<div class="card">
+    <div class="card-header">
+        Agenda
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="btn-group">
+                    <div class="btn btn-outline-secondary" (click)="decrement()">
+                        Anterior
+                    </div>
+                    <div class="btn btn-primary" (click)="today()">
+                        Hoy
+                    </div>
+                    <div class="btn btn-outline-secondary" (click)="increment()">
+                        Siguiente
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
+            </div>
+            <div class="col-md-4">
+                <div class="btn-group float-right">
+                    <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">Mes</div>
+                    <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">Semana</div>
+                    <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">Día</div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="btn-group">
-                        <div class="btn btn-outline-secondary" (click)="decrement()">
-                            Anterior
-                        </div>
-                        <div class="btn btn-primary" (click)="today()">
-                            Hoy
-                        </div>
-                        <div class="btn btn-outline-secondary" (click)="increment()">
-                            Siguiente
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-                </div>
-                <div class="col-md-4">
-                    <div class="btn-group float-right">
-                        <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">Mes</div>
-                        <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">Semana</div>
-                        <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">Día</div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div [ngSwitch]="view">
-                <mwl-calendar-month-view
-                    *ngSwitchCase="'month'"
-                    [viewDate]="viewDate"
-                    [events]="events"
-                    [activeDayIsOpen]="activeDayIsOpen"
-                    (dayClicked)="dayClicked($event.day)"
-                    (eventTimesChanged)="eventTimesChanged($event)">
-                </mwl-calendar-month-view>
-                <mwl-calendar-week-view
-                    *ngSwitchCase="'week'"
-                    [viewDate]="viewDate"
-                    [events]="events"
-                    [refresh]="refresh"
-                    (eventTimesChanged)="eventTimesChanged($event)">
-                </mwl-calendar-week-view>
-                <mwl-calendar-day-view
-                    *ngSwitchCase="'day'"
-                    [viewDate]="viewDate"
-                    [events]="events"
-                    [refresh]="refresh"
-                    (eventTimesChanged)="eventTimesChanged($event)">
-                </mwl-calendar-day-view>
-            </div>
+        <br>
+        <div [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]="locale" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-day-view>
         </div>
     </div>
-
+</div>

@@ -40,6 +40,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     statePayment = false;
     stateDelivery = false;
     stateSummary = false;
+    stateFinish = false;
     order: OrderItem;
     totalCount: number;
     isSubscribed = true;
@@ -64,6 +65,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         this.orderServiceWS.connect();
         this.productShop = null;
         this.purchase = new Purchase();
+        this.purchase.paymentId = -1;
     }
 
     ngOnInit() {
@@ -111,6 +113,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     }
 
     toFinish() {
+        this.stateFinish = true;
         this.commerceUser.findCommercesByUser(this.accountService.userExtra.id).subscribe(result => {
             console.log(result.body.filter(x => x.idCommerce === this.productShop.commerce.id));
             if (result.body.filter(x => x.id === this.productShop.commerce.id).length === 0) {
@@ -124,6 +127,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     createOrder() {
         // this.purchase.
         this.order = new OrderItem();
+        this.order.seller = this.accountService.userExtra;
         this.productCommerceService.queryByCommerceId(this.productShop.commerce.id).subscribe(commerces => {
             const productsComerce = commerces.body;
             this.order.productsPerOrders = [];

@@ -1,20 +1,28 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <div class="card">
         <div class="card-header">
             <h1> Realizar pago </h1>
         </div>
         <div class="card-body">
-            <div>
-                <h3 style="text-align: center;"> Monto de la transacción: <b style="color:rgb(0, 182, 9)">{{amount}} colones</b></h3>
+            
+    </div>
+</div> -->
 
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col text-center">
+        <div class="card " style="max-width: 60rem;">
+            <div class="card-body">
+                <h4 class="card-title">Monto de la transacción: <strong>{{amount}} colones</strong></h4>
+                <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest">
+                    <input type="text" formControlName="name" class="form-control" placeholder="Titular de la tarjeta">
+                    <div id="card-element" class="field"></div>
+                    <button type="submit" class="btn btn-success btn-lg" id="btn-buy">
+                            Proceder con el pago
+                        </button>
+                </form>
             </div>
-            <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest" class="checkout">
-                <input type="text" formControlName="name" class="form-control" placeholder="Titular de la tarjeta">
-                <div id="card-element" class="field"></div>
-                <button type="submit" class="btn btn-success btn-lg" id="btn-buy">
-                  Pagar {{currencySymbol}} {{amount}} 
-                </button>
-            </form>
         </div>
     </div>
+    <div class="col-md-2"></div>
 </div>

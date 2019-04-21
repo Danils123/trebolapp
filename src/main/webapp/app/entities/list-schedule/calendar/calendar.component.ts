@@ -27,7 +27,6 @@ import { ListScheduleService } from 'app/entities/list-schedule';
 import { ListPurchaseService } from 'app/entities/list-purchase';
 import { JhiAlertService } from 'ng-jhipster';
 import { Router } from '@angular/router';
-
 const colors: any = {
     red: {
         primary: '#ad2121',
@@ -54,6 +53,7 @@ export class CalendarComponent implements OnInit {
     listSchedules: IListSchedule[];
     listPurchase: IListPurchase[];
     purchaseEvent: IListPurchase;
+    locale = 'es';
     @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
     CalendarView = CalendarView;
@@ -103,7 +103,6 @@ export class CalendarComponent implements OnInit {
     events: CalendarEvent[] = [];
 
     activeDayIsOpen = true;
-
     constructor(
         private modal: NgbModal,
         protected listScheduleService: ListScheduleService,
