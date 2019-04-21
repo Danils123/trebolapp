@@ -1,14 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
-
-import { IPurchase } from 'app/shared/model/purchase.model';
 import { AccountService } from 'app/core';
-
-import { ITEMS_PER_PAGE } from 'app/shared';
 import { PurchaseService } from './purchase.service';
 import { DeliveryMapService } from '../delivery-map';
 import { OrdersService } from 'app/core/orders/orders.service';
@@ -19,6 +13,14 @@ import { Commerce } from 'app/shared/model/commerce.model';
 import { PurchaseSummaryService } from '../purchase-summary/purchase-summary.service';
 import { ProductShop } from 'app/shared/model/ProductShop.model';
 import { MapshopService } from 'app/mapshop/mapshop.service';
+import { Purchase } from '../../shared/model/purchase.model';
+import { ProductCommerceService } from '../product-commerce';
+import { OrderItemService } from '../order-item';
+import { PaymentComponent } from 'app/entities/payment/payment.component';
+import { PaymentServiceService } from '../../payments/payment-service.service';
+import { CommerceUserService } from '../commerce-user/commerce-user.service';
+import { CommerceUser } from '../../shared/model/commerce-user.model';
+import { IDeliveryMap } from '../../shared/model/delivery-map.model';
 
 @Component({
     selector: 'jhi-purchase',
@@ -29,6 +31,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     currentAccount: any;
     eventSubscriber: Subscription;
     routeData: any;
+    purchase: Purchase;
     totalItems: any;
     idList: number;
     isHomeDelivery: boolean;
@@ -37,6 +40,9 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     statePayment = false;
     stateDelivery = false;
     stateSummary = false;
+    order: OrderItem;
+    totalCount: number;
+    isSubscribed = true;
 
     constructor(
         protected purchaseService: PurchaseService,
@@ -49,10 +55,15 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         private orderServiceWS: OrdersService,
         private deliveryService: DeliveryMapService,
         private summaryService: PurchaseSummaryService,
-        private mapShopService: MapshopService
+        private mapShopService: MapshopService,
+        private productCommerceService: ProductCommerceService,
+        private orderItemService: OrderItemService,
+        private paymentService: PaymentServiceService,
+        private commerceUser: CommerceUserService
     ) {
         this.orderServiceWS.connect();
         this.productShop = null;
+        this.purchase = new Purchase();
     }
 
     ngOnInit() {
@@ -75,23 +86,69 @@ export class PurchaseComponent implements OnInit, OnDestroy {
             this.productShop = productShop;
             this.summaryService.initProductShop(this.productShop);
         });
+
+        this.paymentService.idEmitter.subscribe(id => {
+            this.purchase.paymentId = id;
+        });
+
+        this.summaryService.totalEmitter.subscribe(total => {
+            this.totalCount = total;
+        });
     }
 
     toDelivery() {
         this.statePayment = true;
         this.deliveryService.enterCoordinates([
-            new google.maps.LatLng(9.9323215, -84.0332226),
-            new google.maps.LatLng(9.930858, -84.033738)
+            new google.maps.LatLng(this.productShop.commerce.latitude, this.productShop.commerce.longitud),
+            new google.maps.LatLng(this.productShop.user.lat, this.productShop.user.lng)
         ]);
         this.orderServiceWS.subscribeBuyer();
         this.orderServiceWS.receive().subscribe(order => {
             this.deliveryService.initDelivery();
         });
-        this.createOrderDummy();
+        // this.createOrderDummy();
+        this.createOrder();
     }
 
     toFinish() {
-        this.orderServiceWS.unsubscribe();
+        this.commerceUser.findCommercesByUser(this.accountService.userExtra.id).subscribe(result => {
+            console.log(result.body.filter(x => x.idCommerce === this.productShop.commerce.id));
+            if (result.body.filter(x => x.id === this.productShop.commerce.id).length === 0) {
+                this.isSubscribed = false;
+            } else {
+                this.isSubscribed = true;
+            }
+        });
+    }
+
+    createOrder() {
+        // this.purchase.
+        this.order = new OrderItem();
+        this.productCommerceService.queryByCommerceId(this.productShop.commerce.id).subscribe(commerces => {
+            const productsComerce = commerces.body;
+            this.order.productsPerOrders = [];
+            this.productShop.listShop.forEach(item => {
+                const productPerOrder = new ProductsPerOrder();
+                productPerOrder.productCommerce = productsComerce.filter(x => x.product.id === item.product.id)[0];
+                productPerOrder.quantity = item.QtyBuy;
+                this.order.productsPerOrders.push(productPerOrder);
+            });
+            this.order.commerce = this.productShop.commerce;
+            this.order.state = 0;
+            this.orderItemService.create(this.order).subscribe(orderResult => {
+                this.order.id = orderResult.body.id;
+                this.orderServiceWS.sendOrder(this.order);
+                this.purchase.orderId = this.order.id;
+                this.createPurchase();
+            });
+        });
+    }
+
+    createPurchase() {
+        this.purchase.homeDelivery = this.isHomeDelivery;
+        this.purchaseService.create(this.purchase).subscribe(response => {
+            this.purchase = response.body;
+        });
     }
 
     createOrderDummy() {
@@ -108,7 +165,10 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         this.orderServiceWS.sendOrder(newOrder);
     }
 
-    toPayment() {}
+    toPayment() {
+        this.purchase.state = 'Finalizada';
+        this.paymentService.enterAmount(this.totalCount);
+    }
 
     toSummary() {
         this.summaryService.isHomeDeliveryEmitter.subscribe(state => {
@@ -116,11 +176,25 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+    subscription() {
+        const subscription: CommerceUser = {
+            idCommerce: this.productShop.commerce.id,
+            idUser: this.accountService.userExtra.id
+        };
+        this.commerceUser.create(subscription).subscribe(result => {
+            this.router.navigate(['/product-list']);
+        });
     }
 
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
+    ngOnDestroy(): void {
+        this.deliveryService.stateEmitter.unsubscribe();
+
+        this.mapShopService.informationEmitter.unsubscribe();
+
+        this.paymentService.idEmitter.unsubscribe();
+
+        this.summaryService.totalEmitter.unsubscribe();
+
+        this.orderServiceWS.unsubscribe();
     }
 }

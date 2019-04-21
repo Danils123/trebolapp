@@ -7,7 +7,6 @@ import { LANDING_ROUTE } from './landing/landing.route';
 import { registerRoute } from './account/register';
 import { passwordRoute, passwordResetFinishRoute } from './account';
 import { passwordResetInitRoute } from './account/password-reset/init/password-reset-init.route';
-import { PAYMENTS_ROUTE } from 'app/payments';
 
 const LAYOUT_ROUTES = [
     navbarRoute,
@@ -17,7 +16,6 @@ const LAYOUT_ROUTES = [
     passwordResetFinishRoute,
     passwordResetInitRoute,
     LANDING_ROUTE,
-    PAYMENTS_ROUTE,
     ...errorRoute
 ];
 

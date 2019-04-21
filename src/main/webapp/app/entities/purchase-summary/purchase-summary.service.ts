@@ -14,9 +14,11 @@ type EntityArrayResponseType = HttpResponse<IPurchaseSummary[]>;
 export class PurchaseSummaryService {
     public resourceUrl = SERVER_API_URL + 'api/purchase-summaries';
     isHomeDelivery = false;
+    total = 0;
     productShop: ProductShop;
     @Output() isHomeDeliveryEmitter: EventEmitter<boolean> = new EventEmitter();
     @Output() productShopEmitter: EventEmitter<ProductShop> = new EventEmitter();
+    @Output() totalEmitter: EventEmitter<number> = new EventEmitter();
 
     constructor(protected http: HttpClient) {}
 
@@ -28,6 +30,11 @@ export class PurchaseSummaryService {
     initProductShop(pProductShop: ProductShop) {
         this.productShop = pProductShop;
         this.productShopEmitter.emit(this.productShop);
+    }
+
+    sendTotal(pTotal: number) {
+        this.total = pTotal;
+        this.totalEmitter.emit(this.total);
     }
 
     create(purchaseSummary: IPurchaseSummary): Observable<EntityResponseType> {

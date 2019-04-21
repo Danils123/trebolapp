@@ -1,4 +1,5 @@
 package com.cenfotec.trebol.web.rest;
+
 import com.cenfotec.trebol.domain.Payment;
 import com.cenfotec.trebol.domain.User;
 import com.cenfotec.trebol.repository.PaymentRepository;
@@ -34,7 +35,6 @@ public class PaymentResource {
 
     private static final String ENTITY_NAME = "payment";
 
-
     /**
      * PUT /payments/currentuser : Updates an existing payment.
      *
@@ -47,18 +47,18 @@ public class PaymentResource {
      */
     @PutMapping("/payments/currentuser")
     public ResponseEntity<Payment> createPaymentCurrentUser(@Valid @RequestBody Payment payment)
-        throws URISyntaxException {
+            throws URISyntaxException {
         log.debug("REST request to update Payment : {}", payment);
         ResponseEntity<Payment> p;
         if (payment.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         System.out.println("TEST");
-        Optional<String> userstr = SecurityUtils.getCurrentUserLogin();
-        if (userstr.isPresent()) {
-            Optional<User> user = userRepository.findOneByLogin(userstr.get());
-            payment.setUser(user.get());
-        }
+        // Optional<String> userstr = SecurityUtils.getCurrentUserLogin();
+        // if (userstr.isPresent()) {
+        // Optional<User> user = userRepository.findOneByLogin(userstr.get());
+        // payment.setUser(user.get());
+        // }
 
         // Set your secret key: remember to change this to your live secret key in
         // production
@@ -82,7 +82,7 @@ public class PaymentResource {
             Payment result = paymentRepository.save(payment);
 
             p = ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, payment.getId().toString()))
-                .body(result);
+                    .body(result);
             result.setReceipt(charge.toJson());
             this.updatePayment(result);
         } catch (CardException e) {
@@ -94,16 +94,16 @@ public class PaymentResource {
         } catch (RateLimitException e) {
             // Too many requests made to the API too quickly
             throw new BadRequestAlertException("RateLimitException", ENTITY_NAME,
-                "Too many requests made to the API too quickly");
+                    "Too many requests made to the API too quickly");
         } catch (InvalidRequestException e) {
             // Invalid parameters were supplied to Stripe's API
             throw new BadRequestAlertException("InvalidRequestException", ENTITY_NAME,
-                "Invalid parameters were supplied to Stripe's API");
+                    "Invalid parameters were supplied to Stripe's API");
         } catch (AuthenticationException e) {
             // Authentication with Stripe's API failed
             // (maybe you changed API keys recently)
             throw new BadRequestAlertException("AuthenticationException", ENTITY_NAME,
-                "Authentication with Stripe's API failed, maybe you changed API keys recently");
+                    "Authentication with Stripe's API failed, maybe you changed API keys recently");
         } catch (StripeException e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
@@ -114,6 +114,7 @@ public class PaymentResource {
         }
         return p;
     }
+
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
 
@@ -123,10 +124,12 @@ public class PaymentResource {
     }
 
     /**
-     * POST  /payments : Create a new payment.
+     * POST /payments : Create a new payment.
      *
      * @param payment the payment to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new payment, or with status 400 (Bad Request) if the payment has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new
+     *         payment, or with status 400 (Bad Request) if the payment has already
+     *         an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/payments")
@@ -137,17 +140,17 @@ public class PaymentResource {
         }
         Payment result = paymentRepository.save(payment);
         return ResponseEntity.created(new URI("/api/payments/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
-     * PUT  /payments : Updates an existing payment.
+     * PUT /payments : Updates an existing payment.
      *
      * @param payment the payment to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated payment,
-     * or with status 400 (Bad Request) if the payment is not valid,
-     * or with status 500 (Internal Server Error) if the payment couldn't be updated
+     * @return the ResponseEntity with status 200 (OK) and with body the updated
+     *         payment, or with status 400 (Bad Request) if the payment is not
+     *         valid, or with status 500 (Internal Server Error) if the payment
+     *         couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/payments")
@@ -157,15 +160,15 @@ public class PaymentResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Payment result = paymentRepository.save(payment);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, payment.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, payment.getId().toString()))
+                .body(result);
     }
 
     /**
-     * GET  /payments : get all the payments.
+     * GET /payments : get all the payments.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of payments in body
+     * @return the ResponseEntity with status 200 (OK) and the list of payments in
+     *         body
      */
     @GetMapping("/payments")
     public List<Payment> getAllPayments() {
@@ -174,10 +177,11 @@ public class PaymentResource {
     }
 
     /**
-     * GET  /payments/:id : get the "id" payment.
+     * GET /payments/:id : get the "id" payment.
      *
      * @param id the id of the payment to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the payment, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the payment, or
+     *         with status 404 (Not Found)
      */
     @GetMapping("/payments/{id}")
     public ResponseEntity<Payment> getPayment(@PathVariable Long id) {
@@ -187,10 +191,11 @@ public class PaymentResource {
     }
 
     /**
-     * GET  /payments/:id : get the "id" payment.
+     * GET /payments/:id : get the "id" payment.
      *
      * @param id the id of the user to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the payment, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the payment, or
+     *         with status 404 (Not Found)
      */
     @GetMapping("/payments-byuser/{id}")
     public List<Payment> getPaymentByUser(@PathVariable Long id) {
@@ -199,7 +204,7 @@ public class PaymentResource {
     }
 
     /**
-     * DELETE  /payments/:id : delete the "id" payment.
+     * DELETE /payments/:id : delete the "id" payment.
      *
      * @param id the id of the payment to delete
      * @return the ResponseEntity with status 200 (OK)

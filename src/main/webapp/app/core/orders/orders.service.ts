@@ -26,8 +26,7 @@ export class OrdersService {
         private router: Router,
         private $window: WindowRef,
         // tslint:disable-next-line: no-unused-variable
-        private csrfService: CSRFService,
-        private orderItemService: OrderItemService
+        private csrfService: CSRFService
     ) {
         this.connection = this.createConnection();
         this.listener = this.createListener();
@@ -73,16 +72,13 @@ export class OrdersService {
 
     // Este metodo permite enviar al metodo del websocket la order para ser procesada
     sendOrder(order: OrderItem) {
-        this.orderItemService.create(order).subscribe(orderResult => {
-            console.log(orderResult);
-            if (this.stompClient !== null && this.stompClient.connected) {
-                this.stompClient.send(
-                    '/topic/solicitude', // destination
-                    JSON.stringify(orderResult.body), // body
-                    {} // header
-                );
-            }
-        });
+        if (this.stompClient !== null && this.stompClient.connected) {
+            this.stompClient.send(
+                '/topic/solicitude', // destination
+                JSON.stringify(order), // body
+                {} // header
+            );
+        }
     }
 
     // Este metodo permite enviar al metodo del websocket para que notifique que la order fue realizada

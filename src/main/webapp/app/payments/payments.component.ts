@@ -38,7 +38,7 @@ export class PaymentsComponent implements OnInit {
     isSaving: boolean;
 
     elementsOptions: ElementsOptions = {
-        locale: 'en'
+        locale: 'es'
     };
 
     constructor(
@@ -63,33 +63,31 @@ export class PaymentsComponent implements OnInit {
         this.stripeTest = this.fb.group({
             name: ['', [Validators.required]]
         });
-        // this.paymentServiceLocal.amountEmitter.subscribe(pAmount => {
-        //     this.amount=pAmount;
-
-        // });
-        this.stripeService.elements(this.elementsOptions).subscribe(elements => {
-            this.elements = elements;
-            // Only mount the element the first time
-            if (!this.card) {
-                this.card = this.elements.create('card', {
-                    style: {
-                        base: {
-                            iconColor: '#666EE8',
-                            color: '#31325F',
-                            lineHeight: '40px',
-                            fontWeight: 300,
-                            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                            fontSize: '18px',
-                            '::placeholder': {
-                                color: '#CFD7E0'
+        this.paymentServiceLocal.amountEmitter.subscribe(pAmount => {
+            this.amount = pAmount;
+            this.stripeService.elements(this.elementsOptions).subscribe(elements => {
+                this.elements = elements;
+                // Only mount the element the first time
+                if (!this.card) {
+                    this.card = this.elements.create('card', {
+                        style: {
+                            base: {
+                                iconColor: '#666EE8',
+                                color: '#31325F',
+                                lineHeight: '40px',
+                                fontWeight: 300,
+                                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                                fontSize: '18px',
+                                '::placeholder': {
+                                    color: '#CFD7E0'
+                                }
                             }
                         }
-                    }
-                });
-                this.card.mount('#card-element');
-            }
+                    });
+                    this.card.mount('#card-element');
+                }
+            });
         });
-
         switch (this.currency) {
             case 'usd': {
                 this.currencySymbol = '$';
@@ -121,16 +119,19 @@ export class PaymentsComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
 
-    protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>) {
-        result.subscribe((res: HttpResponse<IPayment>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
-    }
-
     // protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>) {
-    //     result.subscribe((res: HttpResponse<IPayment>) => {
-    //         this.onSaveSuccess();
-    //         this.paymentServiceLocal.changeId(res.body.id);
-    //     }, (res: HttpErrorResponse) => this.onSaveError());
+    //     result.subscribe((res: HttpResponse<IPayment>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     // }
+
+    protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>) {
+        result.subscribe(
+            (res: HttpResponse<IPayment>) => {
+                this.onSaveSuccess();
+                this.paymentServiceLocal.changeId(res.body.id);
+            },
+            (res: HttpErrorResponse) => this.onSaveError()
+        );
+    }
 
     protected onSaveSuccess() {
         this.isSaving = false;
@@ -179,6 +180,8 @@ export class PaymentsComponent implements OnInit {
                 this.payment.currency = this.currency;
                 this.payment.token = result.token.id;
                 this.payment.date = moment();
+                this.payment.user = this.accountService.userExtra;
+                console.log(this.payment);
                 this.subscribeToSaveResponse(this.paymentService.createPaymentCurrentUser(this.payment));
             } else if (result.error) {
                 // Error creating the token

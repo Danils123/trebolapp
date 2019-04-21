@@ -66,17 +66,17 @@
                     <tbody>
                         <tr *ngIf="isHomeDelivery">
                             <td class="left"><strong>Costo por envió</strong></td>
-                            <td class="right">{{costDevelery}}</td>
+                            <td class="right">{{costDevelery}} colones</td>
                         </tr>
                         <tr>
                             <td class="left"><strong>Subtotal</strong></td>
-                            <td class="right">{{totalCount}}</td>
+                            <td class="right">{{totalCount}} colones</td>
                         </tr>
 
                         <tr>
                             <td class="left"><strong>Descuento por oferta   <a href="javascript:void(0)" ></a> <i class="fa fa-info" placement="top" [ngbTooltip]="offer.description"></i></strong>
                             </td>
-                            <td class="right" *ngIf="offer !== null">{{totalCount * (offer.discount / 100)}}</td>
+                            <td class="right" *ngIf="offer !== null">{{totalCount * (offer.discount / 100)}} colones</td>
                         </tr>
                         <tr>
                             <td class="left"><strong>Total</strong></td>
