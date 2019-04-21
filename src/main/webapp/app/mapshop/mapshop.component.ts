@@ -46,8 +46,9 @@ export class MapshopComponent implements OnInit {
     listsShop: IListShop[];
     listShop: IListShop;
     visibleCard = false;
-    markCommerce: ICommerce;
     scheduleEnable = false;
+    flagCommerce: boolean;
+
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success ml-3',
@@ -65,7 +66,8 @@ export class MapshopComponent implements OnInit {
         private productListService: ProductListService,
         private productService: ProductService,
         private _scrollToService: ScrollToService,
-        private mapShopService: MapshopService
+        private mapShopService: MapshopService,
+        private elRef: ElementRef
     ) {
         this.mapShopService.idListEmitter.subscribe(id => {
             this.listPurchase = new class implements IListPurchase {
@@ -83,6 +85,7 @@ export class MapshopComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.flagCommerce = true;
         this.loadMap();
         this.geoLocation();
     }
@@ -136,10 +139,10 @@ export class MapshopComponent implements OnInit {
                             const validation = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, item);
 
                             if (validation) {
+                                console.log(item);
                                 this.loadListShopCommerce(item);
                                 this.commercesInArea.push(item);
                                 this.loadScheduleCommerce(item);
-                                this.addMark(item);
                             }
                         }
                         this.map.setZoom(12);
@@ -165,10 +168,6 @@ export class MapshopComponent implements OnInit {
         });
 
         this.marks.push(marker);
-        this.markCommerce = markCommerce;
-
-        console.log('este es el costo');
-        console.log(this.costPurchase);
 
         const contentPlace = `<b class="tex"><strong>${markCommerce.name}</strong></b> <hr/>
                               <b>${this.costPurchase} colones</b>
@@ -197,6 +196,7 @@ export class MapshopComponent implements OnInit {
     }
 
     doubleClickEvet(markCommerce: ICommerce) {
+        this.flagCommerce = false;
         this.scheduleEnable = false;
         this.visibleCardDetail();
         this.productShop.commerce = markCommerce;
@@ -233,9 +233,6 @@ export class MapshopComponent implements OnInit {
             infoWindow.open(this.map, marker);
         });
 
-        google.maps.event.addDomListener(marker, 'dblclick', coors => {
-            marker.setMap(null);
-        });
         google.maps.event.addDomListener(marker, 'drag', coors => {
             this.markUser.lat = coors.latLng.lat();
             this.markUser.lng = coors.latLng.lng();
@@ -292,7 +289,7 @@ export class MapshopComponent implements OnInit {
             .subscribe(
                 (res: IProductCommerce[]) => {
                     this.productCommerceInArea = res;
-                    this.addPriceToList(this.productCommerceInArea);
+                    this.addPriceToList(this.productCommerceInArea, commerce);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -347,11 +344,10 @@ export class MapshopComponent implements OnInit {
             );
     }
 
-    addPriceToList(productCommerce: IProductCommerce[]) {
+    addPriceToList(productCommerce: IProductCommerce[], commerce: ICommerce) {
         this.listsShop = [];
         this.costPurchase = 0;
-        console.log('costo');
-        console.log(this.costPurchase);
+
         for (const item of this.productListforShop) {
             for (const product of this.allProducts) {
                 this.listShop = new ListShop();
@@ -369,8 +365,9 @@ export class MapshopComponent implements OnInit {
                 }
             }
         }
-        console.log('costo suma');
-        console.log(this.costPurchase);
+        if (this.flagCommerce) {
+            this.addMark(commerce);
+        }
     }
 
     sentData() {
