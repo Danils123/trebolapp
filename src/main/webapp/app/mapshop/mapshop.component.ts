@@ -19,6 +19,7 @@ import { ProductService } from 'app/entities/product';
 import { IListShop, ListShop } from 'app/shared/model/listShop.model';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { MapshopService } from './mapshop.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'jhi-mapshop',
@@ -47,6 +48,13 @@ export class MapshopComponent implements OnInit {
     visibleCard = false;
     markCommerce: ICommerce;
     scheduleEnable = false;
+    private swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success ml-3',
+            cancelButton: 'btn btn-danger ml-3'
+        },
+        buttonsStyling: false
+    });
 
     constructor(
         private http: HttpClient,
@@ -129,12 +137,16 @@ export class MapshopComponent implements OnInit {
 
                             if (validation) {
                                 this.loadListShopCommerce(item);
-                                this.loadScheduleCommerce(item);
                                 this.commercesInArea.push(item);
+                                this.loadScheduleCommerce(item);
                                 this.addMark(item);
                             }
                         }
                         this.map.setZoom(12);
+                    }
+
+                    if (this.commercesInArea.length === 0) {
+                        this.messageNotCommerce();
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -154,6 +166,9 @@ export class MapshopComponent implements OnInit {
 
         this.marks.push(marker);
         this.markCommerce = markCommerce;
+
+        console.log('este es el costo');
+        console.log(this.costPurchase);
 
         const contentPlace = `<b class="tex"><strong>${markCommerce.name}</strong></b> <hr/>
                               <b>${this.costPurchase} colones</b>
@@ -335,6 +350,8 @@ export class MapshopComponent implements OnInit {
     addPriceToList(productCommerce: IProductCommerce[]) {
         this.listsShop = [];
         this.costPurchase = 0;
+        console.log('costo');
+        console.log(this.costPurchase);
         for (const item of this.productListforShop) {
             for (const product of this.allProducts) {
                 this.listShop = new ListShop();
@@ -352,6 +369,8 @@ export class MapshopComponent implements OnInit {
                 }
             }
         }
+        console.log('costo suma');
+        console.log(this.costPurchase);
     }
 
     sentData() {
@@ -369,5 +388,15 @@ export class MapshopComponent implements OnInit {
     goToDetail() {
         const config: ScrollToConfigOptions = { target: 'bottom' };
         this._scrollToService.scrollTo(config);
+    }
+
+    messageNotCommerce() {
+        this.swalWithBootstrapButtons.fire({
+            title: 'No hay comercios cercanos',
+            text: 'Puede aumentar el rango de búsqueda',
+            type: 'warning',
+            confirmButtonText: 'Cerrar ventana',
+            reverseButtons: true
+        });
     }
 }
