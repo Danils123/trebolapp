@@ -18,9 +18,11 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
-
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 const ENTITY_STATES = [...listScheduleRoute, ...listSchedulePopupRoute];
 
+registerLocaleData(localeEs);
 @NgModule({
     imports: [
         TrebolSharedModule,
