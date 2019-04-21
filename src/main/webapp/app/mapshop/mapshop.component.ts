@@ -45,6 +45,7 @@ export class MapshopComponent implements OnInit {
     listsShop: IListShop[];
     listShop: IListShop;
     visibleCard = false;
+    markCommerce: ICommerce;
 
     constructor(
         private http: HttpClient,
@@ -151,13 +152,14 @@ export class MapshopComponent implements OnInit {
         });
 
         this.marks.push(marker);
+        this.markCommerce = markCommerce;
 
         const contentPlace = `<b class="tex"><strong>${markCommerce.name}</strong></b> <hr/>
                               <b>${this.costPurchase} colones</b>
                               <br><b> es el costo total de la lista</b>
                               <hr/>
-                              <a href="javascript:void(0)">Compra aquí      </a>|
-                              <a href="javascript:void(0)" >          Ver más</a>`;
+                              <a href="javascript:void(0)" (click)="sentData()">Seleccionar        </a>|
+                              <a href="javascript:void(0)" (click)="dummie()">          Ver más</a>`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });
@@ -170,16 +172,22 @@ export class MapshopComponent implements OnInit {
         });
 
         google.maps.event.addDomListener(marker, 'dblclick', () => {
-            this.visibleCardDetail();
-            this.productShop.commerce = markCommerce;
-            this.productShop.user = this.markUser;
-            this.loadListShopCommerce(markCommerce);
-            this.loadScheduleCommerce(markCommerce);
-            this.productShop.listShop = this.listsShop;
-            console.log('productshop en addmark');
-            console.log(this.productShop);
-            this.goToDetail();
+            this.doubleClickEvet(markCommerce);
         });
+    }
+
+    dummie() {
+        console.log('EVENT');
+    }
+
+    doubleClickEvet(markCommerce: ICommerce) {
+        this.visibleCardDetail();
+        this.productShop.commerce = markCommerce;
+        this.productShop.user = this.markUser;
+        this.loadListShopCommerce(markCommerce);
+        this.loadScheduleCommerce(markCommerce);
+        this.productShop.listShop = this.listsShop;
+        this.goToDetail();
     }
 
     addMarkUser(markUser: Markerplace) {
@@ -267,8 +275,6 @@ export class MapshopComponent implements OnInit {
             .subscribe(
                 (res: IProductCommerce[]) => {
                     this.productCommerceInArea = res;
-                    console.log('productCommerceInArea en loadlistshopcommerce');
-                    console.log(this.productCommerceInArea);
                     this.addPriceToList(this.productCommerceInArea);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -286,8 +292,6 @@ export class MapshopComponent implements OnInit {
             .subscribe(
                 (response: IScheduleCommerce[]) => {
                     this.scheduleCommerce.push(response);
-                    console.log('schedule in loadschedulecommerce');
-                    console.log(response);
                 },
                 (response: HttpErrorResponse) => this.onError(response.message)
             );
@@ -302,8 +306,6 @@ export class MapshopComponent implements OnInit {
             )
             .subscribe(
                 (res: IProductList[]) => {
-                    console.log('productlist in loadProductListPerBuy');
-                    console.log(res);
                     this.productListforShop = res;
                 },
                 (res1: HttpErrorResponse) => this.onError(res1.message)
@@ -345,10 +347,6 @@ export class MapshopComponent implements OnInit {
                 }
             }
         }
-        console.log('lista con precios');
-        console.log(this.listsShop);
-        console.log('costPurchase in addpricetolist');
-        console.log(this.costPurchase);
     }
 
     sentData() {
