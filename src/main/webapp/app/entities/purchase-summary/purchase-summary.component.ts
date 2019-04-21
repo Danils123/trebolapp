@@ -57,7 +57,7 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
 
             this.offerService.findByCommerce(this.productShop.commerce.id).subscribe(offer => {
                 this.offer = offer.body[0];
-                console.log(offer);
+                this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
             });
 
             this.getOrigingDestination();
@@ -78,7 +78,9 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+        this.purchaseSummaryService.isHomeDeliveryEmitter.unsubscribe();
+        this.purchaseSummaryService.productShopEmitter.unsubscribe();
+        this.purchaseSummaryService.totalEmitter.unsubscribe();
     }
 
     trackId(index: number, item: IPurchaseSummary) {
@@ -89,6 +91,7 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         this.isHomeDelivery = !this.isHomeDelivery;
         this.totalCount += this.isHomeDelivery ? this.costDevelery : 0;
         this.totalCount -= !this.isHomeDelivery ? this.costDevelery : 0;
+        this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
         this.purchaseSummaryService.initHomeDelivery(this.isHomeDelivery);
     }
 
