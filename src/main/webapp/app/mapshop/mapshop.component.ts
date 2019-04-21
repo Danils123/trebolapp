@@ -46,6 +46,7 @@ export class MapshopComponent implements OnInit {
     listShop: IListShop;
     visibleCard = false;
     markCommerce: ICommerce;
+    scheduleEnable = false;
 
     constructor(
         private http: HttpClient,
@@ -181,6 +182,7 @@ export class MapshopComponent implements OnInit {
     }
 
     doubleClickEvet(markCommerce: ICommerce) {
+        this.scheduleEnable = false;
         this.visibleCardDetail();
         this.productShop.commerce = markCommerce;
         this.productShop.user = this.markUser;
@@ -291,6 +293,9 @@ export class MapshopComponent implements OnInit {
             )
             .subscribe(
                 (response: IScheduleCommerce[]) => {
+                    if (response.length > 0) {
+                        this.scheduleEnable = true;
+                    }
                     this.scheduleCommerce.push(response);
                 },
                 (response: HttpErrorResponse) => this.onError(response.message)
