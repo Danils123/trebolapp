@@ -126,8 +126,20 @@ export class PaymentsComponent implements OnInit {
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>) {
         result.subscribe(
             (res: HttpResponse<IPayment>) => {
-                this.onSaveSuccess();
+                // this.onSaveSuccess();
                 this.paymentServiceLocal.changeId(res.body.id);
+                Swal.close();
+                const Toast = Swal.mixin({
+                    toast: false,
+                    position: 'center',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+                Toast.fire({
+                    type: 'success',
+                    title: '¡Éxito!',
+                    text: 'El pago fue realizado exitosamente, puede continuar.'
+                });
             },
             (res: HttpErrorResponse) => this.onSaveError()
         );
@@ -160,7 +172,7 @@ export class PaymentsComponent implements OnInit {
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
-            showConfirmButton: true
+            timer: 3000
         });
         Toast.fire({
             type: 'error',
@@ -171,39 +183,51 @@ export class PaymentsComponent implements OnInit {
     buy() {
         this.loading();
         const name = this.stripeTest.get('name').value;
+        console.log(this.card.on);
         this.stripeService.createToken(this.card, { name }).subscribe(result => {
             if (result.token) {
                 // Use the token to create a charge or a customer
                 // https://stripe.com/docs/charges
                 // console.log(result.token);
+                console.log('asdfasdfasdfasdf');
                 this.payment.amount = this.amount;
                 this.payment.currency = this.currency;
                 this.payment.token = result.token.id;
                 this.payment.date = moment();
-                this.payment.user = this.accountService.userExtra;
-                console.log(this.payment);
+                this.payment.user = this.accountService.user;
                 this.subscribeToSaveResponse(this.paymentService.createPaymentCurrentUser(this.payment));
             } else if (result.error) {
                 // Error creating the token
                 console.log('Error creating the token!');
                 console.log(result.error.message);
+                Swal.close();
+
+                const Toast = Swal.mixin({
+                    toast: false,
+                    position: 'center',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+                Toast.fire({
+                    type: 'error',
+                    title: 'Lo sentimos',
+                    text: result.error.message
+                });
+                // this.onSaveError();
             }
         });
     }
 
     loading() {
         Swal.fire({
-            title: 'Procesando..',
+            title: 'Procesando...',
             html: 'Por favor espere',
             showConfirmButton: false,
             onBeforeOpen: () => {
                 Swal.showLoading();
             }
         }).then(result => {
-            if (
-                // Read more about handling dismissals
-                result.dismiss === Swal.DismissReason.timer
-            ) {
+            if (result.dismiss === Swal.DismissReason.timer) {
                 console.log('I was closed by the timer');
             }
         });

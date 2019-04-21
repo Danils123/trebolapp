@@ -63,56 +63,61 @@ public class PaymentResource {
         // Set your secret key: remember to change this to your live secret key in
         // production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
-        Stripe.apiKey = "sk_test_0gM4B29NIyeDYhyCgkDEWi0h00RKXL2VRy";
+        // Stripe.apiKey = "sk_test_0gM4B29NIyeDYhyCgkDEWi0h00RKXL2VRy";
 
         // Token is created using Checkout or Elements!
         // Get the payment token ID submitted by the form:
         // String token = request.getParameter("stripeToken");
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("amount", payment.getAmount());
-        params.put("currency", payment.getCurrency());
-        params.put("description", payment.getDescription());
-        params.put("source", payment.getToken());
-        params.put("capture", payment.isCapture());
+        // Map<String, Object> params = new HashMap<>();
+        // params.put("amount", payment.getAmount());
+        // params.put("currency", payment.getCurrency());
+        // params.put("description", payment.getDescription());
+        // params.put("source", payment.getToken());
+        // params.put("capture", payment.isCapture());
+        Payment result = paymentRepository.save(payment);
+        // try {
+        // // Charge charge = Charge.create(params);
+        // // System.out.println(charge);
+        // Payment result = paymentRepository.save(payment);
 
-        try {
-            Charge charge = Charge.create(params);
-            // System.out.println(charge);
-            Payment result = paymentRepository.save(payment);
+        // // p =
+        // ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME,
+        // payment.getId().toString()))
+        // // .body(result);
+        // // result.setReceipt(charge.toJson());
+        // // this.updatePayment(result);
+        // } catch (CardException e) {
+        // // Since it's a decline, CardException will be caught
+        // System.out.println("Status is: " + e.getCode());
+        // System.out.println("Message is: " + e.getMessage());
+        // throw new BadRequestAlertException("CardException", ENTITY_NAME, "");
 
-            p = ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, payment.getId().toString()))
-                    .body(result);
-            result.setReceipt(charge.toJson());
-            this.updatePayment(result);
-        } catch (CardException e) {
-            // Since it's a decline, CardException will be caught
-            System.out.println("Status is: " + e.getCode());
-            System.out.println("Message is: " + e.getMessage());
-            throw new BadRequestAlertException("CardException", ENTITY_NAME, "");
-
-        } catch (RateLimitException e) {
-            // Too many requests made to the API too quickly
-            throw new BadRequestAlertException("RateLimitException", ENTITY_NAME,
-                    "Too many requests made to the API too quickly");
-        } catch (InvalidRequestException e) {
-            // Invalid parameters were supplied to Stripe's API
-            throw new BadRequestAlertException("InvalidRequestException", ENTITY_NAME,
-                    "Invalid parameters were supplied to Stripe's API");
-        } catch (AuthenticationException e) {
-            // Authentication with Stripe's API failed
-            // (maybe you changed API keys recently)
-            throw new BadRequestAlertException("AuthenticationException", ENTITY_NAME,
-                    "Authentication with Stripe's API failed, maybe you changed API keys recently");
-        } catch (StripeException e) {
-            // Display a very generic error to the user, and maybe send
-            // yourself an email
-            throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
-        } catch (Exception e) {
-            // Something else happened, completely unrelated to Stripe
-            throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
-        }
-        return p;
+        // } catch (RateLimitException e) {
+        // // Too many requests made to the API too quickly
+        // throw new BadRequestAlertException("RateLimitException", ENTITY_NAME,
+        // "Too many requests made to the API too quickly");
+        // } catch (InvalidRequestException e) {
+        // // Invalid parameters were supplied to Stripe's API
+        // throw new BadRequestAlertException("InvalidRequestException", ENTITY_NAME,
+        // "Invalid parameters were supplied to Stripe's API");
+        // } catch (AuthenticationException e) {
+        // // Authentication with Stripe's API failed
+        // // (maybe you changed API keys recently)
+        // throw new BadRequestAlertException("AuthenticationException", ENTITY_NAME,
+        // "Authentication with Stripe's API failed, maybe you changed API keys
+        // recently");
+        // } catch (StripeException e) {
+        // // Display a very generic error to the user, and maybe send
+        // // yourself an email
+        // throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
+        // } catch (Exception e) {
+        // // Something else happened, completely unrelated to Stripe
+        // throw new BadRequestAlertException("An error occured", ENTITY_NAME, "Error");
+        // }
+        // return p;
+        return ResponseEntity.created(new URI("/api/payment/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     private final UserRepository userRepository;

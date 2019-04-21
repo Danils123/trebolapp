@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import locale from '@angular/common/locales/en';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
+const config: SocketIoConfig = { url: 'https://socketsweb.herokuapp.com', options: {} };
 
 @NgModule({
     imports: [HttpClientModule, SocketIoModule.forRoot(config)],

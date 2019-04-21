@@ -37,6 +37,8 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         this.productShop = null;
         this.totalCount = 0;
         this.offer = new Offer();
+        this.offer.description = '';
+        this.offer.discount = 0;
         this.currentAccount = {};
         this.currentAccount.login = 'Cargando';
         this.currentAccount.email = 'Cargando';
@@ -56,8 +58,10 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
             });
 
             this.offerService.findByCommerce(this.productShop.commerce.id).subscribe(offer => {
-                this.offer = offer.body[0];
-                this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
+                if (offer.body[0] != null) {
+                    this.offer = offer.body[0];
+                    this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
+                }
             });
 
             this.getOrigingDestination();
@@ -89,9 +93,11 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
 
     changeHomeDelivery() {
         this.isHomeDelivery = !this.isHomeDelivery;
-        this.totalCount += this.isHomeDelivery ? this.costDevelery : 0;
-        this.totalCount -= !this.isHomeDelivery ? this.costDevelery : 0;
-        this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
+        if (this.offer !== undefined) {
+            this.totalCount += this.isHomeDelivery ? this.costDevelery : 0;
+            this.totalCount -= !this.isHomeDelivery ? this.costDevelery : 0;
+            this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
+        }
         this.purchaseSummaryService.initHomeDelivery(this.isHomeDelivery);
     }
 

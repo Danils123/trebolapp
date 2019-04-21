@@ -73,7 +73,7 @@
                             <td class="right">{{totalCount}} colones</td>
                         </tr>
 
-                        <tr>
+                        <tr *ngIf="offer.id !== undefined">
                             <td class="left"><strong>Descuento por oferta   <a href="javascript:void(0)" ></a> <i class="fa fa-info" placement="top" [ngbTooltip]="offer.description"></i></strong>
                             </td>
                             <td class="right" *ngIf="offer !== null">{{totalCount * (offer.discount / 100)}} colones</td>

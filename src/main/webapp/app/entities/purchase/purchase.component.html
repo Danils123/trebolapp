@@ -2,13 +2,13 @@
     <div class="card">
         <div class="card-body">
             <aw-wizard #wizard [navBarLayout]="'large-empty-symbols'">
-                <aw-wizard-step [stepTitle]="'Comercios cercanos'" [canExit]="true" [canEnter]="!statePayment" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF041;', fontFamily: 'FontAwesome' }">
+                <aw-wizard-step [stepTitle]="'Comercios cercanos'" [canExit]="true" [canEnter]="purchase.paymentId === -1" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF041;', fontFamily: 'FontAwesome' }">
                     <br>
                     <jhi-mapshop></jhi-mapshop>
                     <button href="javascript:void(0)" class="pull-right btn btn-warning" (click)="toSummary()" (finalize)="productShop === null" [disabled]="productShop === null" awNextStep>Continuar</button>
                     <!-- (finalize)="stateMap" [disabled]="!stateMap" -->
                 </aw-wizard-step>
-                <aw-wizard-step [stepTitle]="'Detalle'" [disableNavigationBar]="true" [canEnter]="!statePayment" [navigationSymbol]="{ symbol: '&#XF040;', fontFamily: 'FontAwesome' }">
+                <aw-wizard-step [stepTitle]="'Detalle'" [disableNavigationBar]="true" [canEnter]="purchase.paymentId === -1" [navigationSymbol]="{ symbol: '&#XF040;', fontFamily: 'FontAwesome' }">
                     <div class="centered-content">
                         <br>
                         <jhi-purchase-summary></jhi-purchase-summary>
@@ -16,23 +16,23 @@
                         <!-- (finalize)="stateSummary" [disabled]="!stateSummary"  -->
                     </div>
                 </aw-wizard-step>
-                <aw-wizard-step [stepTitle]="'Pago'" [disableNavigationBar]="true" [canEnter]="!statePayment" [navigationSymbol]="{ symbol: '&#XF283;', fontFamily: 'FontAwesome' }">
+                <aw-wizard-step [stepTitle]="'Pago'" [disableNavigationBar]="true" [canEnter]="!stateFinish" [navigationSymbol]="{ symbol: '&#XF283;', fontFamily: 'FontAwesome' }">
                     <br>
                     <jhi-payments></jhi-payments>
-                    <button href="javascript:void(0)" class="pull-right btn btn-warning" *ngIf="isHomeDelivery" awNextStep (click)="toDelivery()">Continuar</button>
-                    <button href="javascript:void(0)" class="pull-right btn btn-warning" *ngIf="!isHomeDelivery" [awGoToStep]="{ stepIndex: 4 }" (click)="toFinish()">Continuar</button>
+                    <button href="javascript:void(0)" [disabled]="purchase.paymentId === -1" class="pull-right btn btn-warning" *ngIf="isHomeDelivery" awNextStep (click)="toDelivery()">Continuar</button>
+                    <button href="javascript:void(0)" [disabled]="purchase.paymentId === -1" class="pull-right btn btn-warning" *ngIf="!isHomeDelivery" [awGoToStep]="{ stepIndex: 4 }" (click)="toFinish()">Continuar</button>
                     <!-- (finalize)="statePayment" [disabled]="!statePayment" -->
                 </aw-wizard-step>
-                <aw-wizard-step [stepTitle]="'Entrega'" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#XF21C;', fontFamily: 'FontAwesome' }" awOptionalStep>
+                <aw-wizard-step [stepTitle]="'Entrega'" [disableNavigationBar]="true" [canEnter]="!stateFinish" [navigationSymbol]="{ symbol: '&#XF21C;', fontFamily: 'FontAwesome' }" awOptionalStep>
                     <br>
                     <jhi-delivery-map></jhi-delivery-map>
                     <button href="javascript:void(0)" class="pull-right btn btn-warning" (click)="toFinish()" (finalize)="stateDelivery" [disabled]="!stateDelivery" awNextStep>Continuar</button>
                 </aw-wizard-step>
-                <aw-wizard-step [stepTitle]="'Finalización'" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#xf00c;', fontFamily: 'FontAwesome' }">
+                <aw-wizard-step [stepTitle]="'Finalización'" [canEnter]="!stateFinish" [disableNavigationBar]="true" [navigationSymbol]="{ symbol: '&#xf00c;', fontFamily: 'FontAwesome' }">
                     <br>
                     <div class="container text-center p-30">
                         <h4>¡Felicidades por comprar con nosotros!</h4>
-                        <p>¿Desea recibir notificaciones sobre nuevas ofertas de este comercio?</p>
+                        <p *ngIf="!isSubscribed">¿Desea recibir notificaciones sobre nuevas ofertas de este comercio?</p>
                         <div class="row">
                             <div class="col">
                                 <button class="btn btn-outline-secundary" [ngClass]="{'pull-right': !isSubscribed}" [routerLink]="['/product-list']"><i class="fa fa-arrow-left"></i> Lista de compras</button>
