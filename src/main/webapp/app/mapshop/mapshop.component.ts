@@ -164,7 +164,7 @@ export class MapshopComponent implements OnInit {
             animation: google.maps.Animation.DROP,
             position: latLng,
             draggable: false,
-            title: markCommerce.name
+            title: 'Comercio: ' + markCommerce.name + '\nClick para ver información'
         });
 
         this.marks.push(marker);
@@ -173,8 +173,9 @@ export class MapshopComponent implements OnInit {
                               <b>${this.costPurchase} colones</b>
                               <br><b> es el costo total de la lista</b>
                               <hr/>
-                              <a href="javascript:void(0)" (click)="sentData()">Seleccionar        </a>|
-                              <a href="javascript:void(0)" (click)="dummie()">          Ver más</a>`;
+                              <b class="tex" style="color: #3b5998"><strong>Doble click sobre el marcador para seleccionar</strong></b>
+                              <!--<a href="javascript:void(0)" (click)="sentData()">Seleccionar        </a>|
+                              <a href="javascript:void(0)" (click)="dummie()">          Ver más</a>-->`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });
