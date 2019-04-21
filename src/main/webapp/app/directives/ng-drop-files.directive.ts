@@ -38,7 +38,7 @@ export class NgDropFilesDirective {
         return event.dataTransfer ? event.dataTransfer : event.originalEvent.dataTransfer;
     }
 
-    //Validations
+    // Validations
 
     private _fileCanBeUploaded(file: File): boolean {
         if (!this.imageHasBeenDropped(file.name) && this._isImage(file.type)) {

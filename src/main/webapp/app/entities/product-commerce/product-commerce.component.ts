@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -18,7 +18,7 @@ import { IUserExtra } from 'app/shared/model/user-extra.model';
     selector: 'jhi-product-commerce',
     templateUrl: './product-commerce.component.html'
 })
-export class ProductCommerceComponent implements OnInit, OnDestroy {
+export class ProductCommerceComponent implements OnInit {
     productCommerces: IProductCommerce[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -114,10 +114,6 @@ export class ProductCommerceComponent implements OnInit, OnDestroy {
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
-    }
-
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
     }
 
     trackId(index: number, item: IProductCommerce) {
