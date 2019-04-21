@@ -329,7 +329,7 @@ export class MapshopComponent implements OnInit {
                             this.listShop.inventoryQty = productcommer.quantity;
                             this.listShop.QtyBuy = item.quantity;
                             this.listsShop.push(this.listShop);
-                            this.costPurchase = this.costPurchase + this.listShop.price;
+                            this.costPurchase = this.costPurchase + this.listShop.price * this.listShop.QtyBuy;
                         }
                     }
                 }
