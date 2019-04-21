@@ -4,11 +4,11 @@
         <div class="card-header">
 
             <div *ngIf="listpurchaseAll.listpurchase != null">
-                <a data-toggle="tooltip" title= "{{listpurchaseAll.listpurchase.description}}"> {{listpurchaseAll.listpurchase.name}}</a>
+                <a data-toggle="tooltip" title="{{listpurchaseAll.listpurchase.description}}"> {{listpurchaseAll.listpurchase.name}}</a>
             </div>
 
             <a data-toggle="tooltip" title="Eliminar" (click)='deleteItem(listpurchaseAll.listpurchase)'>
-                <i class="col-md-1 float-right icon-trash icons font-2xl " ></i>
+                <i class="col-md-1 float-right icon-trash icons font-2xl "></i>
             </a>
             <a data-toggle="tooltip" title="Editar" [routerLink]="['/product-list', listpurchaseAll.listpurchase.id, 'edit']">
                 <i class="col-md-1 float-right icon-pencil icons font-2xl "></i>
@@ -17,57 +17,49 @@
                 <i class="col-md-1 float-right icon-clock icons font-2xl "></i>
             </a>
 
-            <button  class="btn btn-sm btn-pill btn-danger" >
-                <i class="icon-basket icons font-2xl"></i>
+            <button class="btn btn-sm btn-pill btn-danger" [routerLink]="['/purchase', listpurchaseAll.listpurchase.id]">
+                <i class="icon-basket icons"></i>
             </button>
 
 
         </div>
         <tbody>
-        <div *ngIf="calendarVisible">
-        <tr>
-            <td class="form-control-sm">
-                <input id="field_time"
-                       type="datetime-local"
-                       class="form-control-sm"
-                       name="time"
-                       [(ngModel)]="listSchedule.time"
-                       placeholder="YYYY-MM-DD HH:mm"
-                       value="{{listSchedule.time}}"
-                       #field_time="ngModel"
-                       [ngClass]="{'is-invalid': field_time.errors?.required && field_time.touched}" required
-                />
-            </td>
-            <td class="form-control-sm">
-                <a data-toggle="tooltip" title="Calendarizar" (click)="saveCalendar()">
-                    <i class="col-md-1 float-center icon-clock icons font-2xl "></i>
-                </a>
-                <a data-toggle="tooltip" title="Cancelar" (click)="cancelCalendar()">
-                    <i class="col-md-1 float-center icon-close icons font-2xl"></i>
-                </a>
-            </td>
-        </tr>
-        </div>
+            <div *ngIf="calendarVisible">
+                <tr>
+                    <td class="form-control-sm">
+                        <input id="field_time" type="datetime-local" class="form-control-sm" name="time" [(ngModel)]="listSchedule.time" placeholder="YYYY-MM-DD HH:mm" value="{{listSchedule.time}}" #field_time="ngModel" [ngClass]="{'is-invalid': field_time.errors?.required && field_time.touched}"
+                            required />
+                    </td>
+                    <td class="form-control-sm">
+                        <a data-toggle="tooltip" title="Calendarizar" (click)="saveCalendar()">
+                            <i class="col-md-1 float-center icon-clock icons font-2xl "></i>
+                        </a>
+                        <a data-toggle="tooltip" title="Cancelar" (click)="cancelCalendar()">
+                            <i class="col-md-1 float-center icon-close icons font-2xl"></i>
+                        </a>
+                    </td>
+                </tr>
+            </div>
         </tbody>
 
         <div class="card-body">
-            <div class="table-responsive" >
+            <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
-                    <tr>
-                        <th style="min-width:2vh; max-width: 2vh"><span><a data-toggle="tooltip" title="Todos"><i class="icon-check icons font-2xl  mt-4"></i></a></span></th>
-                        <th style="min-width:7vh; max-width: 7vh"><span>Nombre</span></th>
-                        <th style="min-width:7vh; max-width: 7vh"><span>Marca</span></th>
-                        <th style="min-width:8vh; max-width: 8vh"><span>Cantidad</span></th>
-                    </tr>
+                        <tr>
+                            <th style="min-width:2vh; max-width: 2vh"><span><a data-toggle="tooltip" title="Todos"><i class="icon-check icons font-2xl  mt-4"></i></a></span></th>
+                            <th style="min-width:7vh; max-width: 7vh"><span>Nombre</span></th>
+                            <th style="min-width:7vh; max-width: 7vh"><span>Marca</span></th>
+                            <th style="min-width:8vh; max-width: 8vh"><span>Cantidad</span></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let productMaster of listpurchaseAll.productlist">
-                        <td style="min-width:2vh; max-width: 2vh" align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
-                        <td style="min-width:7vh; max-width: 7vh">{{productMaster.name}}</td>
-                        <td style="min-width:7vh; max-width: 7vh">{{productMaster.brand}}</td>
-                        <td style="min-width:8vh; max-width: 8vh" align="center">{{productMaster.quantity}}</td>
-                    </tr>
+                        <tr *ngFor="let productMaster of listpurchaseAll.productlist">
+                            <td style="min-width:2vh; max-width: 2vh" align="center"><a data-toggle="tooltip" title="Agregar a compra"><i class="icon-check icons font-2xl  mt-4"></i></a></td>
+                            <td style="min-width:7vh; max-width: 7vh">{{productMaster.name}}</td>
+                            <td style="min-width:7vh; max-width: 7vh">{{productMaster.brand}}</td>
+                            <td style="min-width:8vh; max-width: 8vh" align="center">{{productMaster.quantity}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

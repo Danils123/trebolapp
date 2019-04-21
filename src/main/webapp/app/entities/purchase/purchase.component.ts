@@ -17,6 +17,8 @@ import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 import { ProductCommerce } from 'app/shared/model/product-commerce.model';
 import { Commerce } from 'app/shared/model/commerce.model';
 import { PurchaseSummaryService } from '../purchase-summary/purchase-summary.service';
+import { ProductShop } from 'app/shared/model/ProductShop.model';
+import { MapshopService } from 'app/mapshop/mapshop.service';
 
 @Component({
     selector: 'jhi-purchase',
@@ -28,12 +30,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     routeData: any;
     totalItems: any;
-    purchase: any;
+    idList: number;
     isHomeDelivery: boolean;
-
+    productShop: ProductShop;
     // Los estados de los diferentes componentes de la compra
     statePayment = false;
-    stateMap = false;
     stateDelivery = false;
     stateSummary = false;
 
@@ -47,24 +48,32 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         protected eventManager: JhiEventManager,
         private orderServiceWS: OrdersService,
         private deliveryService: DeliveryMapService,
-        private summaryService: PurchaseSummaryService
+        private summaryService: PurchaseSummaryService,
+        private mapShopService: MapshopService
     ) {
         this.orderServiceWS.connect();
+        this.productShop = null;
     }
 
     ngOnInit() {
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
-        this.routeData = this.activatedRoute.data.subscribe(purchase => {
-            this.purchase = purchase;
-            console.log(this.purchase);
+        this.routeData = this.activatedRoute.params.subscribe(params => {
+            this.idList = params['id'];
+            this.mapShopService.enterIdList(this.idList);
+            console.log('id lista', this.idList);
         });
 
         // Segmento para subscribir los diferentes estado de los componentes de compras
         this.deliveryService.stateEmitter.subscribe(state => {
             this.stateDelivery = state;
             console.log(this.stateDelivery);
+        });
+
+        this.mapShopService.informationEmitter.subscribe(productShop => {
+            this.productShop = productShop;
+            this.summaryService.initProductShop(this.productShop);
         });
     }
 

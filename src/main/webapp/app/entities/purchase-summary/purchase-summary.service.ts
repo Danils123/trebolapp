@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IPurchaseSummary } from 'app/shared/model/purchase-summary.model';
+import { ProductShop } from 'app/shared/model/ProductShop.model';
 
 type EntityResponseType = HttpResponse<IPurchaseSummary>;
 type EntityArrayResponseType = HttpResponse<IPurchaseSummary[]>;
@@ -13,13 +14,20 @@ type EntityArrayResponseType = HttpResponse<IPurchaseSummary[]>;
 export class PurchaseSummaryService {
     public resourceUrl = SERVER_API_URL + 'api/purchase-summaries';
     isHomeDelivery = false;
+    productShop: ProductShop;
     @Output() isHomeDeliveryEmitter: EventEmitter<boolean> = new EventEmitter();
+    @Output() productShopEmitter: EventEmitter<ProductShop> = new EventEmitter();
 
     constructor(protected http: HttpClient) {}
 
     initHomeDelivery(state: boolean) {
         this.isHomeDelivery = state;
         this.isHomeDeliveryEmitter.emit(this.isHomeDelivery);
+    }
+
+    initProductShop(pProductShop: ProductShop) {
+        this.productShop = pProductShop;
+        this.productShopEmitter.emit(this.productShop);
     }
 
     create(purchaseSummary: IPurchaseSummary): Observable<EntityResponseType> {

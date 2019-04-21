@@ -64,7 +64,7 @@ import { NgxStripeModule } from 'ngx-stripe';
         AngularFireStorageModule, // imports firebase/storage only needed for storage features,
         AngularFirestoreModule,
         StripePaymentsModule,
-        NgxStripeModule.forRoot('pk_test_oR2YNX8ibcqRhWkV964yPRvI001hbD1d3h')
+        NgxStripeModule.forRoot('pk_test_BBpS1aWEtil3NtcgrBEisakn00PD7easrC')
     ],
 
     declarations: [

@@ -13,22 +13,6 @@ type EntityArrayResponseType = HttpResponse<IPurchase[]>;
 export class PurchaseService {
     public resourceUrl = SERVER_API_URL + 'api/purchases';
 
-    // Los estados de los diferentes componentes de la compra
-    statePayment = false;
-    stateMap = false;
-    stateDelivery = false;
-    stateSummary = false;
-
-    // // Los eventEmmitter para cada estado
-    // @Output() emitterStatePayment: EventEmitter<boolean> = new EventEmitter();
-    // @Output() emitterStateMap: EventEmitter<boolean> = new EventEmitter();
-    // @Output() emitterStateDelivery: EventEmitter<boolean> = new EventEmitter();
-    // @Output() emitterStateSummary: EventEmitter<boolean> = new EventEmitter();
-
-    LantLng: google.maps.LatLng[];
-    @Output() process: EventEmitter<boolean> = new EventEmitter();
-    @Output() changeCoordinates: EventEmitter<google.maps.LatLng[]> = new EventEmitter();
-
     constructor(protected http: HttpClient) {}
 
     create(purchase: IPurchase): Observable<EntityResponseType> {

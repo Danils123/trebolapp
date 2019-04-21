@@ -18,6 +18,7 @@ import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
 import { IListShop, ListShop } from 'app/shared/model/listShop.model';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { MapshopService } from './mapshop.service';
 
 @Component({
     selector: 'jhi-mapshop',
@@ -26,7 +27,6 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 })
 export class MapshopComponent implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
-    @Output() information: EventEmitter<ProductShop> = new EventEmitter();
     map: google.maps.Map;
     commerces: ICommerce[];
     radio = 3;
@@ -54,23 +54,27 @@ export class MapshopComponent implements OnInit {
         private productCommerceService: ProductCommerceService,
         private productListService: ProductListService,
         private productService: ProductService,
-        private _scrollToService: ScrollToService
-    ) {}
+        private _scrollToService: ScrollToService,
+        private mapShopService: MapshopService
+    ) {
+        this.mapShopService.idListEmitter.subscribe(id => {
+            this.listPurchase = new class implements IListPurchase {
+                description: string;
+                id = id;
+                name: string;
+                productList: IProductList;
+                seller: IUserExtra;
+                state: boolean;
+            }();
+            this.productShop = new ProductShop();
+            this.loadProductListPerBuy();
+            this.loadAllProducts();
+        });
+    }
 
     ngOnInit() {
-        this.listPurchase = new class implements IListPurchase {
-            description: string;
-            id = 1501;
-            name: string;
-            productList: IProductList;
-            seller: IUserExtra;
-            state: boolean;
-        }();
-        this.productShop = new ProductShop();
         this.loadMap();
         this.geoLocation();
-        this.loadProductListPerBuy();
-        this.loadAllProducts();
     }
 
     protected onError(errorMessage: string) {
@@ -148,7 +152,12 @@ export class MapshopComponent implements OnInit {
 
         this.marks.push(marker);
 
-        const contentPlace = `<b>${markCommerce.name}</b><br><b>${this.costPurchase} Colones</b><br><b> es el costo de la lista</b>`;
+        const contentPlace = `<b class="tex"><strong>${markCommerce.name}</strong></b> <hr/>
+                              <b>${this.costPurchase} colones</b>
+                              <br><b> es el costo total de la lista</b>
+                              <hr/>
+                              <a href="javascript:void(0)">Compra aquí      </a>|
+                              <a href="javascript:void(0)" >          Ver más</a>`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });
@@ -237,6 +246,7 @@ export class MapshopComponent implements OnInit {
             // Browser doesn't support Geolocation
             this.handleLocationError(false, infoWindow, this.map.getCenter());
         }
+        this.map.setZoom(8);
     }
 
     handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -342,7 +352,7 @@ export class MapshopComponent implements OnInit {
     }
 
     sentData() {
-        this.information.emit(this.productShop);
+        this.mapShopService.sendInformation(this.productShop);
     }
 
     visibleCardDetail() {

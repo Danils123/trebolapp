@@ -15,6 +15,7 @@ import { LoginModalService, AccountService, Account } from 'app/core';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 import Swal from 'sweetalert2';
+import { PaymentServiceService } from './payment-service.service';
 
 @Component({
     selector: 'jhi-payments',
@@ -27,7 +28,7 @@ export class PaymentsComponent implements OnInit {
     elements: Elements;
     card: StripeElement;
     stripeTest: FormGroup;
-    amount = 9.99;
+    amount: number;
     currencySymbol: string;
 
     currency = 'usd';
@@ -47,8 +48,11 @@ export class PaymentsComponent implements OnInit {
         private fb: FormBuilder,
         private stripeService: StripeService,
         protected paymentService: PaymentService,
-        private router: Router
-    ) {}
+        private router: Router,
+        private paymentServiceLocal: PaymentServiceService
+    ) {
+        this.amount = 10;
+    }
 
     ngOnInit() {
         this.accountService.identity().then((account: Account) => {
@@ -59,6 +63,10 @@ export class PaymentsComponent implements OnInit {
         this.stripeTest = this.fb.group({
             name: ['', [Validators.required]]
         });
+        // this.paymentServiceLocal.amountEmitter.subscribe(pAmount => {
+        //     this.amount=pAmount;
+
+        // });
         this.stripeService.elements(this.elementsOptions).subscribe(elements => {
             this.elements = elements;
             // Only mount the element the first time
@@ -117,6 +125,13 @@ export class PaymentsComponent implements OnInit {
         result.subscribe((res: HttpResponse<IPayment>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
+    // protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>) {
+    //     result.subscribe((res: HttpResponse<IPayment>) => {
+    //         this.onSaveSuccess();
+    //         this.paymentServiceLocal.changeId(res.body.id);
+    //     }, (res: HttpErrorResponse) => this.onSaveError());
+    // }
+
     protected onSaveSuccess() {
         this.isSaving = false;
         const Toast = Swal.mixin({
@@ -160,7 +175,7 @@ export class PaymentsComponent implements OnInit {
                 // Use the token to create a charge or a customer
                 // https://stripe.com/docs/charges
                 // console.log(result.token);
-                this.payment.amount = this.amount * 100;
+                this.payment.amount = this.amount;
                 this.payment.currency = this.currency;
                 this.payment.token = result.token.id;
                 this.payment.date = moment();
