@@ -46,8 +46,11 @@ export class MapshopComponent implements OnInit {
     listsShop: IListShop[];
     listShop: IListShop;
     visibleCard = false;
-    markCommerce: ICommerce;
     scheduleEnable = false;
+    flagCommerce: boolean;
+    minCost: number;
+    listCosts: number[];
+
     private swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success ml-3',
@@ -79,6 +82,7 @@ export class MapshopComponent implements OnInit {
             this.productShop = new ProductShop();
             this.loadProductListPerBuy();
             this.loadAllProducts();
+            this.loadCommers();
         });
     }
 
@@ -122,38 +126,35 @@ export class MapshopComponent implements OnInit {
 
         this.addMarkUser(this.markUser);
 
-        this.commerceService
-            .queryByState(false)
-            .pipe(
-                filter((res: HttpResponse<ICommerce[]>) => res.ok),
-                map((res: HttpResponse<ICommerce[]>) => res.body)
-            )
-            .subscribe(
-                (res: ICommerce[]) => {
-                    this.commerces = res;
-                    if (this.commerces.length !== 0) {
-                        for (const item of this.commerces) {
-                            const validation = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, item);
+        if (this.commerces.length !== 0) {
+            this.flagCommerce = true;
+            for (const item of this.commerces) {
+                const validation = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, item);
 
-                            if (validation) {
-                                this.loadListShopCommerce(item);
-                                this.commercesInArea.push(item);
-                                this.loadScheduleCommerce(item);
-                                this.addMark(item);
-                            }
-                        }
-                        this.map.setZoom(12);
-                    }
+                if (validation) {
+                    this.loadListShopCommerce(item);
+                    this.commercesInArea.push(item);
+                    this.loadScheduleCommerce(item);
+                }
+            }
+            this.map.setZoom(12);
+        }
 
-                    if (this.commercesInArea.length === 0) {
-                        this.messageNotCommerce();
-                    }
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+        if (this.commercesInArea.length === 0) {
+            this.messageNotCommerce();
+        }
     }
 
     addMark(markCommerce: ICommerce) {
+        let iconMark;
+
+        if (this.costPurchase === this.minCost) {
+            iconMark = '../content/images/cheap.png';
+        } else {
+            iconMark = '../content/images/default.png';
+        }
+        this.minCost = this.listCosts[0];
+
         const latLng = new google.maps.LatLng(markCommerce.latitude, markCommerce.longitud);
 
         const marker = new google.maps.Marker({
@@ -161,21 +162,19 @@ export class MapshopComponent implements OnInit {
             animation: google.maps.Animation.DROP,
             position: latLng,
             draggable: false,
-            title: markCommerce.name
+            title: 'Comercio: ' + markCommerce.name + '\nClick para ver información',
+            icon: iconMark
         });
 
         this.marks.push(marker);
-        this.markCommerce = markCommerce;
-
-        console.log('este es el costo');
-        console.log(this.costPurchase);
 
         const contentPlace = `<b class="tex"><strong>${markCommerce.name}</strong></b> <hr/>
                               <b>${this.costPurchase} colones</b>
                               <br><b> es el costo total de la lista</b>
                               <hr/>
-                              <a href="javascript:void(0)" (click)="sentData()">Seleccionar        </a>|
-                              <a href="javascript:void(0)" (click)="dummie()">          Ver más</a>`;
+                              <b class="tex" style="color: #3b5998"><strong>Doble click sobre el marcador para seleccionar</strong></b>
+                              <!--<a href="javascript:void(0)" (click)="sentData()">Seleccionar        </a>|
+                              <a href="javascript:void(0)" (click)="dummie()">          Ver más</a>-->`;
         const infoWindow = new google.maps.InfoWindow({
             content: contentPlace
         });
@@ -188,15 +187,13 @@ export class MapshopComponent implements OnInit {
         });
 
         google.maps.event.addDomListener(marker, 'dblclick', () => {
+            infoWindow.close();
             this.doubleClickEvet(markCommerce);
         });
     }
 
-    dummie() {
-        console.log('EVENT');
-    }
-
     doubleClickEvet(markCommerce: ICommerce) {
+        this.flagCommerce = false;
         this.scheduleEnable = false;
         this.visibleCardDetail();
         this.productShop.commerce = markCommerce;
@@ -233,9 +230,6 @@ export class MapshopComponent implements OnInit {
             infoWindow.open(this.map, marker);
         });
 
-        google.maps.event.addDomListener(marker, 'dblclick', coors => {
-            marker.setMap(null);
-        });
         google.maps.event.addDomListener(marker, 'drag', coors => {
             this.markUser.lat = coors.latLng.lat();
             this.markUser.lng = coors.latLng.lng();
@@ -261,14 +255,15 @@ export class MapshopComponent implements OnInit {
                     };
 
                     this.markUser = markUser;
-                    this.addMarkUser(markUser);
+                    this.addMarkUser(this.markUser);
+                    this.listCosts = [];
+                    this.cheapCost();
                 },
                 function() {
                     this.handleLocationError(true, infoWindow, this.map.getCenter());
                 }
             );
         } else {
-            // Browser doesn't support Geolocation
             this.handleLocationError(false, infoWindow, this.map.getCenter());
         }
         this.map.setZoom(8);
@@ -292,7 +287,7 @@ export class MapshopComponent implements OnInit {
             .subscribe(
                 (res: IProductCommerce[]) => {
                     this.productCommerceInArea = res;
-                    this.addPriceToList(this.productCommerceInArea);
+                    this.addPriceToList(this.productCommerceInArea, commerce);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -347,11 +342,10 @@ export class MapshopComponent implements OnInit {
             );
     }
 
-    addPriceToList(productCommerce: IProductCommerce[]) {
+    addPriceToList(productCommerce: IProductCommerce[], commerce: ICommerce) {
         this.listsShop = [];
         this.costPurchase = 0;
-        console.log('costo');
-        console.log(this.costPurchase);
+
         for (const item of this.productListforShop) {
             for (const product of this.allProducts) {
                 this.listShop = new ListShop();
@@ -369,8 +363,12 @@ export class MapshopComponent implements OnInit {
                 }
             }
         }
-        console.log('costo suma');
-        console.log(this.costPurchase);
+        this.listCosts.push(this.costPurchase);
+        this.listCosts = this.listCosts.sort();
+
+        if (this.flagCommerce) {
+            this.addMark(commerce);
+        }
     }
 
     sentData() {
@@ -398,5 +396,30 @@ export class MapshopComponent implements OnInit {
             confirmButtonText: 'Cerrar ventana',
             reverseButtons: true
         });
+    }
+
+    cheapCost() {
+        this.flagCommerce = false;
+        for (const commerce of this.commerces) {
+            const valid = this.isInArea(this.markUser, this.radio * this.convertionFactorkm, commerce);
+            if (valid) {
+                this.loadListShopCommerce(commerce);
+            }
+        }
+    }
+
+    loadCommers() {
+        this.commerceService
+            .queryByState(false)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe(
+                (res: ICommerce[]) => {
+                    this.commerces = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 }
