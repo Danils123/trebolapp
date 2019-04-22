@@ -13,6 +13,7 @@ import { IProduct } from 'app/shared/model/product.model';
 import { ICommerce, Commerce } from 'app/shared/model/commerce.model';
 import { CommerceService } from '../commerce/commerce.service';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { UserExtraService } from '../user-extra/user-extra.service';
 
 @Component({
     selector: 'jhi-product-commerce',
@@ -41,39 +42,54 @@ export class ProductCommerceComponent implements OnInit {
         protected eventManager: JhiEventManager,
         protected productService: ProductService,
         protected accountService: AccountService,
-        protected commerceService: CommerceService
+        protected commerceService: CommerceService,
+        private userExtraService: UserExtraService
     ) {}
 
     loadAll() {
-        let commerces: ICommerce[];
-        commerces = this.accountService.userExtra.commerces;
-        if (this.isVendedor) {
-            this.productCommerceService
-                .queryByCommerceId(commerces[0].id)
-                .pipe(
-                    filter((res: HttpResponse<IProductCommerce[]>) => res.ok),
-                    map((res: HttpResponse<IProductCommerce[]>) => res.body)
-                )
-                .subscribe(
-                    (res: IProductCommerce[]) => {
-                        this.productCommerces = res;
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
-        } else {
-            this.productCommerceService
-                .query()
-                .pipe(
-                    filter((res: HttpResponse<IProductCommerce[]>) => res.ok),
-                    map((res: HttpResponse<IProductCommerce[]>) => res.body)
-                )
-                .subscribe(
-                    (res: IProductCommerce[]) => {
-                        this.productCommerces = res;
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
-        }
+        this.accountService.fetch().subscribe(user => {
+            this.userExtraService.findByUserId(user.body.id).subscribe(userExtraResponse => {
+                this.commerceService
+                    .queryByCommerce(userExtraResponse.body.id)
+                    .pipe(
+                        filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                        map((res: HttpResponse<ICommerce[]>) => res.body)
+                    )
+                    .subscribe(
+                        (res: ICommerce[]) => {
+                            this.commerce = res;
+                            if (this.isVendedor) {
+                                this.productCommerceService
+                                    .queryByCommerceId(this.commerce[0].id)
+                                    .pipe(
+                                        filter((res2: HttpResponse<IProductCommerce[]>) => res2.ok),
+                                        map((res2: HttpResponse<IProductCommerce[]>) => res2.body)
+                                    )
+                                    .subscribe(
+                                        (res2: IProductCommerce[]) => {
+                                            this.productCommerces = res2;
+                                        },
+                                        (res2: HttpErrorResponse) => this.onError(res2.message)
+                                    );
+                            } else {
+                                this.productCommerceService
+                                    .query()
+                                    .pipe(
+                                        filter((res2: HttpResponse<IProductCommerce[]>) => res2.ok),
+                                        map((res2: HttpResponse<IProductCommerce[]>) => res2.body)
+                                    )
+                                    .subscribe(
+                                        (res2: IProductCommerce[]) => {
+                                            this.productCommerces = res;
+                                        },
+                                        (res2: HttpErrorResponse) => this.onError(res2.message)
+                                    );
+                            }
+                        },
+                        (res: HttpErrorResponse) => this.onError(res.message)
+                    );
+            });
+        });
 
         this.productService
             .query()

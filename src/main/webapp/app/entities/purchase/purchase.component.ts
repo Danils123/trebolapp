@@ -21,6 +21,7 @@ import { MapshopService } from 'app/mapshop/mapshop.service';
 import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 import { ProductCommerce } from 'app/shared/model/product-commerce.model';
 import { Commerce } from 'app/shared/model/commerce.model';
+import { UserExtra } from '../../shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-purchase',
@@ -29,7 +30,6 @@ import { Commerce } from 'app/shared/model/commerce.model';
 })
 export class PurchaseComponent implements OnInit, OnDestroy {
     currentAccount: any;
-    eventSubscriber: Subscription;
     routeData: any;
     purchase: Purchase;
     totalItems: any;
@@ -91,6 +91,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
 
         this.paymentService.idEmitter.subscribe(id => {
             this.purchase.paymentId = id;
+            this.createOrder();
         });
 
         this.summaryService.totalEmitter.subscribe(total => {
@@ -109,14 +110,12 @@ export class PurchaseComponent implements OnInit, OnDestroy {
             this.deliveryService.initDelivery();
         });
         // this.createOrderDummy();
-        this.createOrder();
     }
 
     toFinish() {
         this.stateFinish = true;
         this.commerceUser.findCommercesByUser(this.accountService.userExtra.id).subscribe(result => {
-            console.log(result.body.filter(x => x.idCommerce === this.productShop.commerce.id));
-            if (result.body.filter(x => x.id === this.productShop.commerce.id).length === 0) {
+            if (result.body == undefined) {
                 this.isSubscribed = false;
             } else {
                 this.isSubscribed = true;
@@ -127,7 +126,8 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     createOrder() {
         // this.purchase.
         this.order = new OrderItem();
-        this.order.seller = this.accountService.userExtra;
+        this.order.seller = new UserExtra();
+        this.order.seller.id = this.accountService.userExtra.id;
         this.productCommerceService.queryByCommerceId(this.productShop.commerce.id).subscribe(commerces => {
             const productsComerce = commerces.body;
             this.order.productsPerOrders = [];
@@ -136,6 +136,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
                 productPerOrder.productCommerce = productsComerce.filter(x => x.product.id === item.product.id)[0];
                 productPerOrder.quantity = item.QtyBuy;
                 this.order.productsPerOrders.push(productPerOrder);
+                this.updatInventory(productsComerce.filter(x => x.product.id === item.product.id)[0], item.QtyBuy);
             });
             this.order.commerce = this.productShop.commerce;
             this.order.state = 0;
@@ -145,6 +146,13 @@ export class PurchaseComponent implements OnInit, OnDestroy {
                 this.purchase.orderId = this.order.id;
                 this.createPurchase();
             });
+        });
+    }
+
+    updatInventory(productComerce: ProductCommerce, quantity: number) {
+        productComerce.quantity = productComerce.quantity - quantity;
+        this.productCommerceService.update(productComerce).subscribe(resp => {
+            console.log(resp);
         });
     }
 
@@ -203,6 +211,8 @@ export class PurchaseComponent implements OnInit, OnDestroy {
 
         this.summaryService.totalEmitter.unsubscribe();
 
-        this.orderServiceWS.unsubscribe();
+        // this.orderServiceWS.unsubscribe();
+
+        this.routeData = null;
     }
 }

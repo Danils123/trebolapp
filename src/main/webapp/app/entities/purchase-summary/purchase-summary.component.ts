@@ -61,6 +61,8 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
                 if (offer.body[0] != null) {
                     this.offer = offer.body[0];
                     this.purchaseSummaryService.sendTotal(this.totalCount - this.totalCount * (this.offer.discount / 100));
+                } else {
+                    this.purchaseSummaryService.sendTotal(this.totalCount);
                 }
             });
 

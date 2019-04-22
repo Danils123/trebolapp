@@ -95,16 +95,27 @@ export class ProductCommerceUpdateComponent implements OnInit {
     }
 
     save() {
-        this.getCommerce();
-        let commerces: ICommerce[];
-        commerces = this.accountService.userExtra.commerces;
-        this.isSaving = true;
-        if (this.productCommerce.id !== undefined) {
-            this.subscribeToSaveResponse(this.productCommerceService.update(this.productCommerce));
-        } else {
-            this.productCommerce.commerce_id = commerces[0].id;
-            this.subscribeToSaveResponse(this.productCommerceService.create(this.productCommerce));
-        }
+        this.commerceService
+            .queryByCommerce(this.accountService.userExtra.id)
+            .pipe(
+                filter((res: HttpResponse<ICommerce[]>) => res.ok),
+                map((res: HttpResponse<ICommerce[]>) => res.body)
+            )
+            .subscribe(
+                (res: ICommerce[]) => {
+                    this.commerce = res;
+                    let commerces: ICommerce[];
+                    commerces = this.accountService.userExtra.commerces;
+                    this.isSaving = true;
+                    if (this.productCommerce.id !== undefined) {
+                        this.subscribeToSaveResponse(this.productCommerceService.update(this.productCommerce));
+                    } else {
+                        this.productCommerce.commerce_id = this.commerce[0].id;
+                        this.subscribeToSaveResponse(this.productCommerceService.create(this.productCommerce));
+                    }
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IProductCommerce>>) {

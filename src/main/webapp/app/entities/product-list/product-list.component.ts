@@ -42,6 +42,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     loadAllPurchase() {
+        console.log('a');
         this.listpurchaseallArray = [];
         this.productListarray = [];
         this.listpurchaseArray = [];

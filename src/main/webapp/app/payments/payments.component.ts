@@ -30,7 +30,7 @@ export class PaymentsComponent implements OnInit {
     stripeTest: FormGroup;
     amount: number;
     currencySymbol: string;
-
+    idPayment: number;
     currency = 'usd';
 
     payment: IPayment = new Payment(0, moment(), '', '', 0, 'Orden Trebol', false);
@@ -52,6 +52,7 @@ export class PaymentsComponent implements OnInit {
         private paymentServiceLocal: PaymentServiceService
     ) {
         this.amount = 10;
+        this.idPayment = -1;
     }
 
     ngOnInit() {
@@ -127,6 +128,7 @@ export class PaymentsComponent implements OnInit {
         result.subscribe(
             (res: HttpResponse<IPayment>) => {
                 // this.onSaveSuccess();
+                this.idPayment = res.body.id;
                 this.paymentServiceLocal.changeId(res.body.id);
                 Swal.close();
                 const Toast = Swal.mixin({
