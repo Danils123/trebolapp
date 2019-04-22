@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +22,7 @@ import { PaymentServiceService } from './payment-service.service';
     templateUrl: './payments.component.html',
     styleUrls: ['payments.scss']
 })
-export class PaymentsComponent implements OnInit, OnDestroy {
+export class PaymentsComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     elements: Elements;
@@ -254,7 +254,7 @@ export class PaymentsComponent implements OnInit, OnDestroy {
         });
     }
     
-    ngOnDestroy(): void {
-       this.paymentServiceLocal.amountEmitter.unsubscribe();
-    }
+    //ngOnDestroy(): void {
+       //this.paymentServiceLocal.amountEmitter.unsubscribe();
+   // }
 }
