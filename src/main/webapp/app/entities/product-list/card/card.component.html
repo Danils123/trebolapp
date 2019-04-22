@@ -27,7 +27,7 @@
             <div *ngIf="calendarVisible">
                 <tr>
                     <td class="form-control-sm">
-                        <input id="field_time" type="datetime-local" class="form-control-sm" name="time" [(ngModel)]="listSchedule.time" placeholder="YYYY-MM-DD HH:mm" value="{{listSchedule.time}}" #field_time="ngModel" [ngClass]="{'is-invalid': field_time.errors?.required && field_time.touched}"
+                        <input id="field_time" [min]="today" type="datetime-local" class="form-control form-control-sm" name="time" [(ngModel)]="listSchedule.time" placeholder="YYYY-MM-DD HH:mm" value="{{listSchedule.time}}" #field_time="ngModel" [ngClass]="{'is-invalid': field_time.errors?.required && field_time.touched}"
                             required />
                     </td>
                     <td class="form-control-sm">

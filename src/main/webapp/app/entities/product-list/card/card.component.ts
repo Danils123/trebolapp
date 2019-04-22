@@ -52,8 +52,11 @@ export class CardComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('ab');
         this.loadPurchase(this.listpurchaseAll.listpurchase);
+    }
+
+    get today() {
+        return new Date();
     }
 
     deleteItem(listpurchase: IListPurchase) {
