@@ -53,6 +53,7 @@ export class CardComponent implements OnInit {
 
     ngOnInit() {
         this.loadPurchase(this.listpurchaseAll.listpurchase);
+        console.log(this.listpurchaseAll.productlist);
     }
 
     get today() {

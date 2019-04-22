@@ -14,8 +14,8 @@
         <div class="card " style="max-width: 60rem;">
             <div class="card-body">
                 <h4 class="card-title">Monto de la transacción: <strong>{{amount}} colones</strong></h4>
-                <form novalidate (ngSubmit)="buy()" [formGroup]="stripeTest">
-                    <input type="text" formControlName="name" class="form-control" placeholder="Titular de la tarjeta">
+                <form novalidate (ngSubmit)="buy()" #settingsForm="ngForm" [formGroup]="stripeTest">
+                    <input type="text" #pay formControlName="name" (keyup)="changeInput(pay.value)" class="form-control" placeholder="Titular de la tarjeta">
                     <div id="card-element" class="field"></div>
                     <button [disabled]="idPayment !== -1" type="submit" class="btn btn-success btn-lg" id="btn-buy">
                             Proceder con el pago

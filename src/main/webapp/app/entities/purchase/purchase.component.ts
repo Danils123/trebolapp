@@ -115,7 +115,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     toFinish() {
         this.stateFinish = true;
         this.commerceUser.findCommercesByUser(this.accountService.userExtra.id).subscribe(result => {
-            if (result.body == undefined) {
+            if (result.body === undefined) {
                 this.isSubscribed = false;
             } else {
                 this.isSubscribed = true;

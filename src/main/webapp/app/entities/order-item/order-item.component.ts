@@ -130,11 +130,18 @@ export class OrderItemComponent implements OnInit, OnDestroy {
         this.orderItems.map((order, index, array) => {
             if (order.id === id) {
                 order.state += 1;
-                this.orderItemService.update(order).subscribe(response => {
-                    if (order.state === 2) {
-                        this.completeOrder(order);
-                        this.orderItems.splice(index, 1);
-                    }
+                this.accountService.fetch().subscribe(user => {
+                    this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
+                        this.commerceService.queryByCommerce(userExtra.body.id).subscribe(commerces => {
+                            order.seller.commerces = commerces.body;
+                            this.orderItemService.update(order).subscribe(response => {
+                                if (order.state === 2) {
+                                    this.completeOrder(order);
+                                    this.orderItems.splice(index, 1);
+                                }
+                            });
+                        });
+                    });
                 });
             }
         });

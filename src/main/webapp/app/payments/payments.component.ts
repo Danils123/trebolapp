@@ -13,7 +13,7 @@ import { PaymentService } from '../entities/payment/payment.service';
 import * as moment from 'moment';
 import { LoginModalService, AccountService, Account } from 'app/core';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
-
+import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { PaymentServiceService } from './payment-service.service';
 
@@ -32,7 +32,7 @@ export class PaymentsComponent implements OnInit {
     currencySymbol: string;
     idPayment: number;
     currency = 'usd';
-
+    inputValid = false;
     payment: IPayment = new Payment(0, moment(), '', '', 0, 'Orden Trebol', false);
     moment: moment.Moment;
     isSaving: boolean;
@@ -120,6 +120,11 @@ export class PaymentsComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
 
+    changeInput(value: string) {
+        console.log(value);
+        this.inputValid = value.length > 0 ? true : false;
+    }
+
     // protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>) {
     //     result.subscribe((res: HttpResponse<IPayment>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     // }
@@ -183,41 +188,55 @@ export class PaymentsComponent implements OnInit {
     }
 
     buy() {
-        this.loading();
-        const name = this.stripeTest.get('name').value;
-        console.log(this.card.on);
-        this.stripeService.createToken(this.card, { name }).subscribe(result => {
-            if (result.token) {
-                // Use the token to create a charge or a customer
-                // https://stripe.com/docs/charges
-                // console.log(result.token);
-                console.log('asdfasdfasdfasdf');
-                this.payment.amount = this.amount;
-                this.payment.currency = this.currency;
-                this.payment.token = result.token.id;
-                this.payment.date = moment();
-                this.payment.user = this.accountService.user;
-                this.subscribeToSaveResponse(this.paymentService.createPaymentCurrentUser(this.payment));
-            } else if (result.error) {
-                // Error creating the token
-                console.log('Error creating the token!');
-                console.log(result.error.message);
-                Swal.close();
+        if (this.inputValid) {
+            this.loading();
+            const name = this.stripeTest.get('name').value;
+            console.log(this.card.on);
+            this.stripeService.createToken(this.card, { name }).subscribe(result => {
+                if (result.token) {
+                    // Use the token to create a charge or a customer
+                    // https://stripe.com/docs/charges
+                    // console.log(result.token);
+                    console.log('asdfasdfasdfasdf');
+                    this.payment.amount = this.amount;
+                    this.payment.currency = this.currency;
+                    this.payment.token = result.token.id;
+                    this.payment.date = moment();
+                    this.payment.user = this.accountService.user;
+                    this.subscribeToSaveResponse(this.paymentService.createPaymentCurrentUser(this.payment));
+                } else if (result.error) {
+                    // Error creating the token
+                    console.log('Error creating the token!');
+                    console.log(result.error.message);
+                    Swal.close();
 
-                const Toast = Swal.mixin({
-                    toast: false,
-                    position: 'center',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-                Toast.fire({
-                    type: 'error',
-                    title: 'Lo sentimos',
-                    text: result.error.message
-                });
-                // this.onSaveError();
-            }
-        });
+                    const Toast = Swal.mixin({
+                        toast: false,
+                        position: 'center',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    Toast.fire({
+                        type: 'error',
+                        title: 'Lo sentimos',
+                        text: result.error.message
+                    });
+                    // this.onSaveError();
+                }
+            });
+        } else {
+            const Toast = Swal.mixin({
+                toast: false,
+                position: 'center',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            Toast.fire({
+                type: 'error',
+                title: 'Error',
+                text: 'Favor ingrese el nombre del titular'
+            });
+        }
     }
 
     loading() {
