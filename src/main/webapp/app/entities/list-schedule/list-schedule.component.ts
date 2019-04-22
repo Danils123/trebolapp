@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IListSchedule } from 'app/shared/model/list-schedule.model';
 import { AccountService } from 'app/core';
 import { ListScheduleService } from './list-schedule.service';
+import { UserExtraService } from '../user-extra';
 
 @Component({
     selector: 'jhi-list-schedule',
@@ -21,7 +22,8 @@ export class ListScheduleComponent implements OnInit, OnDestroy {
         protected listScheduleService: ListScheduleService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        private userExtraService: UserExtraService
     ) {}
 
     loadAll() {

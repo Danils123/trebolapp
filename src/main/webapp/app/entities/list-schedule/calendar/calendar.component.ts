@@ -18,7 +18,7 @@ import {
 import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IUser, UserService } from 'app/core';
+import { IUser, UserService, AccountService } from 'app/core';
 import { IListPurchase } from 'app/shared/model/list-purchase.model';
 import { IListSchedule } from 'app/shared/model/list-schedule.model';
 import { filter, map } from 'rxjs/operators';
@@ -27,6 +27,7 @@ import { ListScheduleService } from 'app/entities/list-schedule';
 import { ListPurchaseService } from 'app/entities/list-purchase';
 import { JhiAlertService } from 'ng-jhipster';
 import { Router } from '@angular/router';
+import { UserExtraService } from 'app/entities/user-extra';
 const colors: any = {
     red: {
         primary: '#ad2121',
@@ -108,7 +109,9 @@ export class CalendarComponent implements OnInit {
         protected listPurchaseService: ListPurchaseService,
         protected userService: UserService,
         protected jhiAlertService: JhiAlertService,
-        private router: Router
+        private router: Router,
+        protected accountService: AccountService,
+        private userExtraService: UserExtraService
     ) {}
 
     ngOnInit() {
@@ -203,6 +206,7 @@ export class CalendarComponent implements OnInit {
                 (res: IListSchedule[]) => {
                     this.listSchedules = res;
                     for (const schedule of this.listSchedules) {
+                        console.log(schedule);
                         this.listPurchaseService
                             .find(schedule.purchaseid)
                             .pipe(
@@ -211,25 +215,31 @@ export class CalendarComponent implements OnInit {
                             )
                             .subscribe((res1: IListPurchase) => {
                                 const purchase = res1;
-                                const userExtra = purchase.seller;
-
-                                this.userService
-                                    .query()
-                                    .pipe(
-                                        filter((res2: HttpResponse<IUser[]>) => res2.ok),
-                                        map((res2: HttpResponse<IUser[]>) => res2.body)
-                                    )
-                                    .subscribe((res2: IUser[]) => {
-                                        const users = res2;
-                                        for (const user of users) {
-                                            if (purchase.state && user.id === userExtra.userId) {
-                                                console.log(purchase.state);
-                                                console.log(user.id);
-                                                console.log(userExtra.userId);
-                                                this.addEvent(purchase.name, schedule.time.toDate());
-                                            }
+                                // const userExtra = purchase.seller;
+                                this.accountService.fetch().subscribe(user => {
+                                    this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
+                                        if (purchase.state && userExtra.body.id === purchase.seller.id) {
+                                            this.addEvent(purchase.name, schedule.time.toDate());
                                         }
                                     });
+                                });
+                                // this.userService
+                                //     .query()
+                                //     .pipe(
+                                //         filter((res2: HttpResponse<IUser[]>) => res2.ok),
+                                //         map((res2: HttpResponse<IUser[]>) => res2.body)
+                                //     )
+                                //     .subscribe((res2: IUser[]) => {
+                                //         const users = res2;
+                                //         for (const user of users) {
+                                //             if (purchase.state && user.id === userExtra.userId) {
+                                //                 console.log(purchase);
+                                //                 console.log(user.id);
+                                //                 console.log(userExtra.userId);
+                                //                 this.addEvent(purchase.name, schedule.time.toDate());
+                                //             }
+                                //         }
+                                //     });
                             });
                     }
                 },

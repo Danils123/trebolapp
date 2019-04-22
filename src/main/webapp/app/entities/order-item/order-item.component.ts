@@ -19,6 +19,7 @@ import moment = require('moment');
 import { Commerce } from 'app/shared/model/commerce.model';
 import { ProductsPerOrder } from 'app/shared/model/products-per-order.model';
 import { UserExtraService } from '../user-extra/user-extra.service';
+import { UserExtra } from '../../shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-order-item',
@@ -132,14 +133,13 @@ export class OrderItemComponent implements OnInit, OnDestroy {
                 order.state += 1;
                 this.accountService.fetch().subscribe(user => {
                     this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
-                        this.commerceService.queryByCommerce(userExtra.body.id).subscribe(commerces => {
-                            order.seller.commerces = commerces.body;
-                            this.orderItemService.update(order).subscribe(response => {
-                                if (order.state === 2) {
-                                    this.completeOrder(order);
-                                    this.orderItems.splice(index, 1);
-                                }
-                            });
+                        order.seller = new UserExtra();
+                        order.seller.id = userExtra.body.id;
+                        this.orderItemService.update(order).subscribe(response => {
+                            if (order.state === 2) {
+                                this.completeOrder(order);
+                                this.orderItems.splice(index, 1);
+                            }
                         });
                     });
                 });

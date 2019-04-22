@@ -55,22 +55,25 @@ export class ProductListComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: IListPurchase[]) => {
-                    for (const purchase of res) {
-                        this.listpurchaseall = new ListPurchaseAll(new ListPurchase(), []);
-                        for (const product of this.productLists) {
-                            if (purchase.id === product.idlistpurchase) {
-                                this.listpurchaseall.productlist.push(product);
+                    this.accountService.fetch().subscribe(user => {
+                        this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
+                            for (const purchase of res) {
+                                this.listpurchaseall = new ListPurchaseAll(new ListPurchase(), []);
+                                for (const product of this.productLists) {
+                                    if (purchase.seller.id === userExtra.body.id && purchase.id === product.idlistpurchase) {
+                                        this.listpurchaseall.productlist.push(product);
+                                    }
+                                }
+                                this.listpurchaseall.listpurchase = purchase;
+                                this.listpurchaseallArray.push(this.listpurchaseall);
                             }
-                        }
-                        this.listpurchaseall.listpurchase = purchase;
-                        this.listpurchaseallArray.push(this.listpurchaseall);
-                    }
-
-                    for (const item of this.listpurchaseallArray) {
-                        if (item.listpurchase.state === true && item.listpurchase.seller.id === this.userExtra.id) {
-                            this.listpurchaseArray.push(item);
-                        }
-                    }
+                            for (const item of this.listpurchaseallArray) {
+                                if (item.listpurchase.state === true && item.listpurchase.seller.id === userExtra.body.id) {
+                                    this.listpurchaseArray.push(item);
+                                }
+                            }
+                        });
+                    });
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );

@@ -11,7 +11,7 @@ import { ProductCommerceService } from 'app/entities/product-commerce';
 import Swal from 'sweetalert2';
 import { ListPurchaseService } from 'app/entities/list-purchase';
 import { IListPurchase } from 'app/shared/model/list-purchase.model';
-import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { IUserExtra, UserExtra } from 'app/shared/model/user-extra.model';
 import { AccountService } from 'app/core';
 import { UserExtraService } from 'app/entities/user-extra';
 import { ProductService } from 'app/entities/product';
@@ -102,9 +102,14 @@ export class ProductListUpdateComponent implements OnInit {
         if (this.listPurchase.id !== undefined) {
             this.subscribeToSaveResponsePurchase(this.listPurchaseService.update(this.listPurchase));
         } else {
-            this.listPurchase.seller = this.idUser;
-            this.listPurchase.state = true;
-            this.subscribeToSaveResponsePurchase(this.listPurchaseService.create(this.listPurchase));
+            this.accountService.fetch().subscribe(user => {
+                this.userExtraService.findByUserId(user.body.id).subscribe(userExtra => {
+                    this.listPurchase.seller = new UserExtra();
+                    this.listPurchase.seller.id = userExtra.body.id;
+                    this.listPurchase.state = true;
+                    this.subscribeToSaveResponsePurchase(this.listPurchaseService.create(this.listPurchase));
+                });
+            });
         }
     }
 
