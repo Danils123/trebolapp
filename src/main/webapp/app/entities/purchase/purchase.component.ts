@@ -203,13 +203,13 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // this.deliveryService.stateEmitter.unsubscribe();
+         this.deliveryService.stateEmitter.unsubscribe();
 
-        // this.mapShopService.informationEmitter.unsubscribe();
+         this.mapShopService.informationEmitter.unsubscribe();
 
-        // this.paymentService.idEmitter.unsubscribe();
+         this.paymentService.idEmitter.unsubscribe();
 
-        // this.summaryService.totalEmitter.unsubscribe();
+         this.summaryService.totalEmitter.unsubscribe();
 
         // this.orderServiceWS.unsubscribe();
 
