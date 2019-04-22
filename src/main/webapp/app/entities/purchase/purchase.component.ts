@@ -211,7 +211,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
 
          this.summaryService.totalEmitter.unsubscribe();
 
-         this.orderServiceWS.unsubscribe();
+         this.orderServiceWS.disconnect();
 
        // this.routeData = null;
     }
