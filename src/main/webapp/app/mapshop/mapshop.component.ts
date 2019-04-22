@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Markerplace } from 'app/shared/model/markerplace.model';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
@@ -26,7 +26,7 @@ import Swal from 'sweetalert2';
     templateUrl: './mapshop.component.html',
     styleUrls: ['./mapshop.scss']
 })
-export class MapshopComponent implements OnInit, OnDestroy {
+export class MapshopComponent implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
     map: google.maps.Map;
     commerces: ICommerce[];
@@ -422,7 +422,7 @@ export class MapshopComponent implements OnInit, OnDestroy {
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
     }
-    ngOnDestroy(): void {
-        this.mapShopService.idListEmitter.unsubscribe();
-    }
+    //ngOnDestroy(): void {
+        //this.mapShopService.idListEmitter.unsubscribe();
+    //}
 }
