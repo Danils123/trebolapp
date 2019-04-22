@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { Commerce } from '../../shared/model/commerce.model';
     selector: 'jhi-purchase-summary',
     templateUrl: './purchase-summary.component.html'
 })
-export class PurchaseSummaryComponent implements OnInit, OnDestroy {
+export class PurchaseSummaryComponent implements OnInit {
     purchaseSummaries: IPurchaseSummary[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -83,11 +83,11 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-         this.purchaseSummaryService.isHomeDeliveryEmitter.unsubscribe();
-         this.purchaseSummaryService.productShopEmitter.unsubscribe();
-         this.purchaseSummaryService.totalEmitter.unsubscribe();
-    }
+    //ngOnDestroy() {
+         //this.purchaseSummaryService.isHomeDeliveryEmitter.unsubscribe();
+         //this.purchaseSummaryService.productShopEmitter.unsubscribe();
+        // this.purchaseSummaryService.totalEmitter.unsubscribe();
+    //}
 
     trackId(index: number, item: IPurchaseSummary) {
         return item.id;
