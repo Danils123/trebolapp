@@ -423,6 +423,6 @@ export class MapshopComponent implements OnInit, OnDestroy {
             );
     }
     ngOnDestroy(): void {
-        // this.mapShopService.idListEmitter.unsubscribe();
+        this.mapShopService.idListEmitter.unsubscribe();
     }
 }
