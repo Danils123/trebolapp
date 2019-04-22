@@ -71,7 +71,6 @@ export class CalendarComponent implements OnInit {
         {
             label: '<i class="fa fa-fw fa-pencil"></i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
-                console.log('event');
                 for (const purchase of this.listPurchase) {
                     if (event.title === purchase.name) {
                         this.router.navigate(['/product-list/' + purchase.id + '/edit']);
@@ -113,7 +112,6 @@ export class CalendarComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        console.log(this.locale);
         this.listPurchaseService
             .query()
             .pipe(
@@ -225,6 +223,9 @@ export class CalendarComponent implements OnInit {
                                         const users = res2;
                                         for (const user of users) {
                                             if (purchase.state && user.id === userExtra.userId) {
+                                                console.log(purchase.state);
+                                                console.log(user.id);
+                                                console.log(userExtra.userId);
                                                 this.addEvent(purchase.name, schedule.time.toDate());
                                             }
                                         }
