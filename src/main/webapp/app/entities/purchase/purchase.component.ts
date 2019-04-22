@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
@@ -28,7 +28,7 @@ import { UserExtra } from '../../shared/model/user-extra.model';
     templateUrl: './purchase.component.html',
     styleUrls: ['./purchase.scss']
 })
-export class PurchaseComponent implements OnInit, OnDestroy {
+export class PurchaseComponent implements OnInit {
     currentAccount: any;
     routeData: any;
     purchase: Purchase;
@@ -200,19 +200,5 @@ export class PurchaseComponent implements OnInit, OnDestroy {
             });
             this.router.navigate(['/product-list']);
         });
-    }
-
-    ngOnDestroy(): void {
-         this.deliveryService.stateEmitter.unsubscribe();
-
-         this.mapShopService.informationEmitter.unsubscribe();
-
-         this.paymentService.idEmitter.unsubscribe();
-
-         this.summaryService.totalEmitter.unsubscribe();
-
-         this.orderServiceWS.disconnect();
-
-       // this.routeData = null;
     }
 }
