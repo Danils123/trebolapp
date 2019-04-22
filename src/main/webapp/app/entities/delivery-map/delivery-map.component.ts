@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
@@ -12,7 +12,7 @@ import { WebsocketNodeJSService } from '../../core/services/websocket-node-js.se
     templateUrl: './delivery-map.component.html',
     styleUrls: ['./delivery-map.scss']
 })
-export class DeliveryMapComponent implements OnInit, OnDestroy {
+export class DeliveryMapComponent implements OnInit {
     deliveryMaps: IDeliveryMap[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -158,8 +158,8 @@ export class DeliveryMapComponent implements OnInit, OnDestroy {
         });
     }
     
-    ngOnDestroy(): void {
-       this.deliveryMapService.initDeliveryEmitter.unsubscribe();
-       this.deliveryMapService.changeCoordinates.unsubscribe();
-    }
+    //ngOnDestroy(): void {
+       //this.deliveryMapService.initDeliveryEmitter.unsubscribe();
+       //this.deliveryMapService.changeCoordinates.unsubscribe();
+    //}
 }
