@@ -84,9 +84,9 @@ export class PurchaseSummaryComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.purchaseSummaryService.isHomeDeliveryEmitter.unsubscribe();
-        this.purchaseSummaryService.productShopEmitter.unsubscribe();
-        this.purchaseSummaryService.totalEmitter.unsubscribe();
+        // this.purchaseSummaryService.isHomeDeliveryEmitter.unsubscribe();
+        // this.purchaseSummaryService.productShopEmitter.unsubscribe();
+        // this.purchaseSummaryService.totalEmitter.unsubscribe();
     }
 
     trackId(index: number, item: IPurchaseSummary) {
