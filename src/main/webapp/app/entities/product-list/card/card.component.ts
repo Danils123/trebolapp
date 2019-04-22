@@ -52,6 +52,7 @@ export class CardComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('ab');
         this.loadPurchase(this.listpurchaseAll.listpurchase);
     }
 
